@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="control_margin">4dp</dimen>
+    <dimen name="control_padding">8dp</dimen>
+    <dimen name="app_icon_size">64dp</dimen>
+</resources>
