@@ -55,6 +55,7 @@ class AppsAdapter(private val mList: MutableList<PackageInfo>) :
                     applicationInfo.loadLabel(context.packageManager)
                 findViewById<TextView>(R.id.app_desc).text = packageName
                 findViewById<CheckBox>(R.id.app_star).run {
+                    setOnCheckedChangeListener(null)
                     isChecked = HData.isChecked(packageName)
                     setOnCheckedChangeListener { buttonView, isChecked ->
                         mOnItemCheckedChangeListener?.onItemCheckedChange(

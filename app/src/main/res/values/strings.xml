@@ -11,10 +11,10 @@
     <string name="running_mode">Running mode</string>
     <string name="mode_default">Default</string>
     <string name="mode_dpm_hide">DPM - Hide</string>
-    <string name="title_set_dpm">Set DPM</string>
+    <string name="title_set_dpm">Set Device Owner</string>
     <string name="msg_set_dpm">adb shell dpm set-device-owner com.aistra.hail/.receiver.DeviceAdminReceiver</string>
-    <string name="title_remove_dpm">Remove DPM</string>
-    <string name="msg_remove_dpm">DPM will be removed, it might be difficult to set DPM again after removal.\nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
+    <string name="title_remove_dpm">Remove Device Owner</string>
+    <string name="msg_remove_dpm">Device Owner will be removed, it might be difficult to set Device Owner again after removal.\nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
     <string name="show_system_apps">Show system apps</string>
     <string name="operation_failed">Operation failed</string>
     <string name="toast_dpm_hide">DPM Hide: %s</string>

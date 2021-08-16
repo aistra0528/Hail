@@ -11,8 +11,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 30
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
         resourceConfigurations += arrayOf("en", "zh-rCN")
     }
     signingConfigs {
@@ -38,6 +38,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+    applicationVariants.all {
+        outputs.all {
+            if (this is com.android.build.gradle.internal.api.ApkVariantOutputImpl)
+                outputFileName = "Hail-v$versionName.apk"
         }
     }
     compileOptions {
