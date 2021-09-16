@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#4DD0E1</color>
+    <color name="colorError">@color/error_color_material_light</color>
 </resources>

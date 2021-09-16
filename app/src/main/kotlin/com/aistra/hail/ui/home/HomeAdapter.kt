@@ -41,12 +41,8 @@ class HomeAdapter(private val mList: MutableList<String>) :
                 if (AppManager.isAppHiddenOrDisabled(mList[position]))
                     ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
                 else null
-            findViewById<TextView>(R.id.app_name).run {
-                if (AppManager.isAppHiddenOrDisabled(mList[position]))
-                    setTextColor(context.getColorStateList(R.color.colorPrimary))
-                else
-                    setTextAppearance(R.style.TextAppearance_MaterialComponents_Body2)
-            }
+            findViewById<TextView>(R.id.app_name).isEnabled =
+                !AppManager.isAppHiddenOrDisabled(mList[position])
         }
     }
 
@@ -83,15 +79,16 @@ class HomeAdapter(private val mList: MutableList<String>) :
                     }
                     findViewById<TextView>(R.id.app_name).run {
                         text = applicationInfo.loadLabel(context.packageManager)
-                        if (AppManager.isAppHiddenOrDisabled(packageName))
-                            setTextColor(context.getColorStateList(R.color.colorPrimary))
+                        isEnabled = !AppManager.isAppHiddenOrDisabled(packageName)
                     }
                 }
             } catch (e: Exception) {
+                setOnClickListener(null)
+                setOnLongClickListener(null)
                 findViewById<ImageView>(R.id.app_icon).setImageResource(R.drawable.ic_baseline_android_24)
                 findViewById<TextView>(R.id.app_name).run {
                     text = mList[position]
-                    setTextColor(context.getColorStateList(R.color.error_color_material_light))
+                    setTextColor(context.getColorStateList(R.color.colorError))
                 }
             }
         }

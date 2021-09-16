@@ -55,7 +55,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 #### 移除雹的 Device Owner
 
-在雹的应用页面找到雹，点击后在弹出的选项中选择卸载。
+在雹的应用页面找到雹，点按后在弹出的选项中选择卸载。
 
 ### Root - 停用（开发中）
 
