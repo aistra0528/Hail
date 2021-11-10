@@ -14,6 +14,7 @@ object HData {
     const val RUNNING_MODE = "running_mode"
     private const val MODE_DEFAULT = "default"
     const val MODE_DPM_HIDE = "dpm_hide"
+    const val MODE_ROOT_DISABLE = "root_disable"
     private const val SHOW_SYSTEM_APPS = "show_system_apps"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
