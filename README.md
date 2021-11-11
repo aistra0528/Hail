@@ -4,7 +4,7 @@
 
 ## 运行模式
 
-雹目前仅能以`DPM - 隐藏`模式运行，`Root - 停用`模式还在开发中。
+雹支持以`DPM - 隐藏`和`Root - 停用`模式运行。
 
 ### DPM - 隐藏
 
@@ -36,7 +36,7 @@ public class DevicePolicyManager {
 
 #### 通过 ADB 将雹设置为 Device Owner
 
-在雹的设置页面将运行模式设置为`DPM - 隐藏`，然后在开发者选项中启用 USB 调试。（如不熟悉 ADB、开发者选项、USB 调试等相关内容，请使用搜索引擎自行查阅。）
+在雹的设置页面将运行模式设置为`DPM - 隐藏`，然后在开发者选项中启用 USB 调试。
 
 输入命令：
 
@@ -57,7 +57,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 在雹的应用页面找到雹，点按后在弹出的选项中选择卸载。
 
-### Root - 停用（开发中）
+### Root - 停用
 
 此模式通过授予雹 Root 权限，调用`pm`中的`disable`命令停用应用。
 
@@ -77,4 +77,3 @@ pm disable com.android.htmlviewer
 
 - 应用搜索与排序
 - 快捷方式
-- `Root - 停用`模式
