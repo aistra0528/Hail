@@ -1,42 +1,34 @@
 # 雹 Hail
 
-雹是一款通过 DPM / Root “冻结”应用的自由软件。
+雹是一款用于冻结 Android 应用的自由软件。
+
+## 冻结
+
+“冻结”（Freeze）是一个营销术语，用于描述使**应用在用户不需要时不可运行**的行为，以此减少内存占用并节省电量。用户可在需要时“解冻”（Unfreeze）应用。通过“停用”和“隐藏”两种方式，都能达到所谓“冻结”的效果，但两者之间也存在些许差异。
+
+### 停用
+
+被“停用”（Disable）的应用不可使用，也不会出现在启动器中。在已安装应用列表中应用会显示“已停用”（Disabled）状态。“启用”（Enable）应用即可恢复。
+
+### 隐藏
+
+被“隐藏”（Hide）的应用不可使用，也不会出现在启动器和已安装应用列表中。“取消隐藏”（Unhide）应用即可恢复，但**已授予应用的权限会被重置，需要重新授予**。
 
 ## 运行模式
 
-雹支持以`DPM - 隐藏`和`Root - 停用`模式运行。
+雹支持以`超级用户 - 停用`和`设备所有者 - 隐藏`模式运行。
 
-### DPM - 隐藏
+### 超级用户 - 停用
 
-此模式通过 ADB 将雹设置为 Device Owner，调用`DevicePolicyManager`中的`setApplicationHidden`方法隐藏应用。
+此模式通过授予雹“超级用户”（Superuser）权限，执行`pm disable`命令停用应用。
 
-```java
-package android.app.admin;
+### 设备所有者 - 隐藏
 
-public class DevicePolicyManager {
-    public boolean setApplicationHidden(@NonNull ComponentName admin, String packageName, boolean hidden) {
-        // ...
-    }
-}
-```
+此模式通过将雹设置为“设备所有者”（Device Owner），调用`DevicePolicyManager`的`setApplicationHidden`方法隐藏应用。
 
-#### 特征
+**设置为设备所有者的应用需要移除设备所有者后方可卸载。**
 
-被隐藏的应用不可使用，也不会出现在启动器和已安装应用列表中。（通过`PackageManager.MATCH_UNINSTALLED_PACKAGES`，雹仍可获取被隐藏应用的信息）
-
-#### 优点
-
-- 无需 Root。
-
-#### 缺点
-
-- 设置 Device Owner 较为繁琐。
-- 设置为 Device Owner 的应用需要移除 Device Owner 后才能卸载。
-- 取消隐藏应用时，已授予应用的权限会被重置，需要重新授予。
-
-#### 通过 ADB 将雹设置为 Device Owner
-
-在雹的设置页面将运行模式设置为`DPM - 隐藏`，然后在开发者选项中启用 USB 调试。
+#### 通过 ADB 将雹设置为设备所有者
 
 输入命令：
 
@@ -53,27 +45,14 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 如输出其他内容，请使用搜索引擎自行查阅与解决。
 
-#### 移除雹的 Device Owner
+#### 移除雹的设备所有者
 
-在雹的应用页面找到雹，点按后在弹出的选项中选择卸载。
+在雹的“应用”页面找到雹，点按后在弹出的选项中选择“卸载”。
 
-### Root - 停用
+## 待办
 
-此模式通过授予雹 Root 权限，调用`pm`中的`disable`命令停用应用。
+雹还处于早期开发阶段，我们计划通过更新提升其易用性：
 
-以停用 HTML Viewer 为例：
-
-```shell
-pm disable com.android.htmlviewer
-```
-
-#### 特征
-
-被停用的应用不可使用，也不会出现在启动器中。在已安装应用列表中应用会显示已停用状态。
-
-## TODO
-
-雹还处于早期开发阶段。
-
-- 应用搜索与排序
-- 快捷方式
+1. “设置”页面更多设置
+2. “首页”页面更多选项
+3. 启动器快捷方式

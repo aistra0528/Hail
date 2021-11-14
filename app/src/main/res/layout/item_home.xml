@@ -22,6 +22,5 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="center_horizontal"
-        android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+        android:maxLines="2" />
 </LinearLayout>

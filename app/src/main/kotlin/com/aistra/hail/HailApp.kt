@@ -9,6 +9,6 @@ class HailApp : Application() {
     }
 
     companion object {
-        lateinit var app: HailApp
+        lateinit var app: HailApp private set
     }
 }

@@ -12,39 +12,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
+import com.aistra.hail.app.HData
 
-class HomeAdapter(private val mList: MutableList<String>) :
-    RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
-
-    private var mOnItemClickListener: OnItemClickListener? = null
-    private var mOnItemLongClickListener: OnItemLongClickListener? = null
-
-    interface OnItemClickListener {
-        fun onItemClick(itemView: View, position: Int)
-    }
-
-    interface OnItemLongClickListener {
-        fun onItemLongClick(itemView: View, position: Int): Boolean
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener?) {
-        mOnItemClickListener = listener
-    }
-
-    fun setOnItemLongClickListener(listener: OnItemLongClickListener?) {
-        mOnItemLongClickListener = listener
-    }
-
-    fun updateItem(itemView: View, position: Int) {
-        itemView.run {
-            findViewById<ImageView>(R.id.app_icon).colorFilter =
-                if (AppManager.isAppHiddenOrDisabled(mList[position]))
-                    ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
-                else null
-            findViewById<TextView>(R.id.app_name).isEnabled =
-                !AppManager.isAppHiddenOrDisabled(mList[position])
-        }
-    }
+object HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+    private val list = HData.checkedList
+    lateinit var onItemClickListener: OnItemClickListener
+    lateinit var onItemLongClickListener: OnItemLongClickListener
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -54,45 +27,56 @@ class HomeAdapter(private val mList: MutableList<String>) :
         )
     }
 
-
     @SuppressLint("InlinedApi")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.run {
             setOnClickListener {
-                mOnItemClickListener?.onItemClick(it, position)
+                onItemClickListener.onItemClick(position)
             }
             setOnLongClickListener {
-                mOnItemLongClickListener?.onItemLongClick(it, position) ?: false
+                onItemLongClickListener.onItemLongClick(position)
             }
             try {
                 context.packageManager.getPackageInfo(
-                    mList[position],
+                    list[position],
                     PackageManager.MATCH_UNINSTALLED_PACKAGES
                 ).run {
-                    findViewById<ImageView>(R.id.app_icon).run {
-                        setImageDrawable(
-                            applicationInfo.loadIcon(context.packageManager)
-                        )
-                        if (AppManager.isAppHiddenOrDisabled(packageName))
-                            colorFilter =
-                                ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
-                    }
-                    findViewById<TextView>(R.id.app_name).run {
-                        text = applicationInfo.loadLabel(context.packageManager)
-                        isEnabled = !AppManager.isAppHiddenOrDisabled(packageName)
+                    AppManager.isAppHiddenOrDisabled(packageName).let {
+                        findViewById<ImageView>(R.id.app_icon).run {
+                            setImageDrawable(applicationInfo.loadIcon(context.packageManager))
+                            colorFilter = ColorMatrixColorFilter(ColorMatrix().apply {
+                                setSaturation(if (it) 0f else 1f)
+                            })
+                        }
+                        findViewById<TextView>(R.id.app_name).run {
+                            setTextAppearance(R.style.TextAppearance_MaterialComponents_Body2)
+                            text = applicationInfo.loadLabel(context.packageManager)
+                            isEnabled = !it
+                        }
                     }
                 }
             } catch (e: Exception) {
                 setOnClickListener(null)
                 setOnLongClickListener(null)
-                findViewById<ImageView>(R.id.app_icon).setImageResource(R.drawable.ic_baseline_android_24)
+                findViewById<ImageView>(R.id.app_icon).run {
+                    setImageResource(R.drawable.ic_baseline_android_24)
+                    colorFilter = null
+                }
                 findViewById<TextView>(R.id.app_name).run {
-                    text = mList[position]
+                    text = list[position]
                     setTextColor(context.getColorStateList(R.color.colorError))
                 }
             }
         }
     }
 
-    override fun getItemCount(): Int = mList.size
+    override fun getItemCount(): Int = list.size
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    interface OnItemLongClickListener {
+        fun onItemLongClick(position: Int): Boolean
+    }
 }

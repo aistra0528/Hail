@@ -11,8 +11,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 30
-        versionCode = 2
-        versionName = "0.1.2"
+        versionCode = 3
+        versionName = "0.2.0"
         resourceConfigurations += arrayOf("en", "zh-rCN")
     }
     signingConfigs {
@@ -70,5 +70,6 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
     implementation("androidx.preference:preference:1.1.1")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.google.android.material:material:1.4.0")
 }

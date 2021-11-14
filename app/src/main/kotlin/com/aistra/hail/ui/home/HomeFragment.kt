@@ -6,56 +6,53 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HData
 import com.aistra.hail.ui.main.MainFragment
 
-class HomeFragment : MainFragment() {
+class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
+    HomeAdapter.OnItemLongClickListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(false)
-        return RecyclerView(activity).apply {
-            layoutManager = GridLayoutManager(activity, 4)
-            adapter = HomeAdapter(HData.checkedList).apply {
-                HomeFragment.adapter = this
-                setOnItemClickListener(object : HomeAdapter.OnItemClickListener {
-                    override fun onItemClick(itemView: View, position: Int) {
-                        this@HomeFragment.onItemClick(itemView, position)
-                    }
-                })
-                setOnItemLongClickListener(object : HomeAdapter.OnItemLongClickListener {
-                    override fun onItemLongClick(itemView: View, position: Int): Boolean {
-                        return this@HomeFragment.onItemLongClick(itemView, position)
-                    }
-                })
+        return SwipeRefreshLayout(activity).apply {
+            addView(RecyclerView(activity).apply {
+                layoutManager =
+                    GridLayoutManager(activity, activity.resources.getInteger(R.integer.home_span))
+                adapter = HomeAdapter.apply {
+                    onItemClickListener = this@HomeFragment
+                    onItemLongClickListener = this@HomeFragment
+                }
+            })
+            setOnRefreshListener {
+                HomeAdapter.notifyItemRangeChanged(0, HomeAdapter.itemCount)
+                isRefreshing = false
             }
         }
     }
 
-    private fun onItemClick(itemView: View, position: Int) {
+    override fun onItemClick(position: Int) {
         HData.checkedList[position].let {
             if (AppManager.isAppHiddenOrDisabled(it)) {
                 AppManager.setAppHiddenOrDisabled(it, false)
-                adapter?.updateItem(itemView, position)
+                HomeAdapter.notifyItemChanged(position)
             }
-            pm.getLaunchIntentForPackage(it)?.run {
+            app.packageManager.getLaunchIntentForPackage(it)?.run {
                 startActivity(this)
             }
         }
     }
 
-    private fun onItemLongClick(itemView: View, position: Int): Boolean {
+    override fun onItemLongClick(position: Int): Boolean {
         HData.checkedList[position].let {
             AppManager.setAppHiddenOrDisabled(it, !AppManager.isAppHiddenOrDisabled(it))
-            adapter?.updateItem(itemView, position)
+            HomeAdapter.notifyItemChanged(position)
         }
         return true
-    }
-
-    companion object {
-        var adapter: HomeAdapter? = null
     }
 }

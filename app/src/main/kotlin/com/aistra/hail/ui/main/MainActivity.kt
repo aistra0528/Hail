@@ -14,7 +14,6 @@ import com.aistra.hail.ui.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : HailActivity() {
-    lateinit var nav: BottomNavigationView
     private val array by lazy {
         arrayOf(
             R.id.navigation_home to HomeFragment(),
@@ -22,6 +21,7 @@ class MainActivity : HailActivity() {
             R.id.navigation_settings to SettingsFragment()
         )
     }
+    lateinit var nav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

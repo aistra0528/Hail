@@ -1,16 +1,19 @@
 package com.aistra.hail.app
 
-import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
-import android.content.pm.PackageInfo
+import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.widget.Toast
 import com.aistra.hail.HailApp
 import com.aistra.hail.R
 import com.aistra.hail.receiver.DeviceAdminReceiver
+import com.aistra.hail.utils.Shell
 
 object AppManager {
     private val app = HailApp.app
@@ -31,80 +34,85 @@ object AppManager {
         }
     }
 
-    fun isAppHiddenOrDisabled(packageName: String): Boolean {
-        return when (HData.runningMode) {
-            HData.MODE_DPM_HIDE -> isAppHidden(packageName)
-            HData.MODE_ROOT_DISABLE -> isAppDisabled(packageName)
-            else -> false
-        }
-    }
+    fun isAppHiddenOrDisabled(packageName: String): Boolean =
+        isAppHidden(packageName) || isAppDisabled(packageName)
 
-    private fun getPackageInfo(packageName: String): PackageInfo =
+    private fun getAppInfo(packageName: String): ApplicationInfo =
         app.packageManager.getPackageInfo(
             packageName,
             PackageManager.MATCH_UNINSTALLED_PACKAGES
-        )
+        ).applicationInfo
 
     private fun isAppHidden(packageName: String): Boolean =
         isDeviceOwnerApp && dpm.isApplicationHidden(admin, packageName)
 
-    private fun isAppDisabled(packageName: String): Boolean =
-        !getPackageInfo(packageName).applicationInfo.enabled
+    private fun isAppDisabled(packageName: String): Boolean = !getAppInfo(packageName).enabled
 
     fun setAppHiddenOrDisabled(packageName: String, hiddenOrDisabled: Boolean) {
         if (packageName == app.packageName) return
         when (HData.runningMode) {
-            HData.MODE_DPM_HIDE -> setAppHidden(packageName, hiddenOrDisabled)
-            HData.MODE_ROOT_DISABLE -> setAppDisabled(packageName, hiddenOrDisabled)
+            HData.MODE_DO_HIDE -> setAppHidden(packageName, hiddenOrDisabled)
+            HData.MODE_SU_DISABLE -> setAppDisabled(packageName, hiddenOrDisabled)
         }
     }
 
-    @SuppressLint("InlinedApi")
     private fun setAppHidden(packageName: String, hidden: Boolean) {
-        Toast.makeText(
-            app,
-            if (isDeviceOwnerApp && dpm.setApplicationHidden(
-                    admin,
-                    packageName,
-                    hidden
-                )
-            ) {
-                app.getString(
-                    if (hidden) R.string.toast_dpm_hide else R.string.toast_dpm_unhide,
-                    getPackageInfo(packageName).applicationInfo.loadLabel(app.packageManager)
-                )
-            } else {
-                app.getString(R.string.operation_failed)
-            }, Toast.LENGTH_SHORT
-        ).show()
+        val failed = !isDeviceOwnerApp || !dpm.setApplicationHidden(
+            admin,
+            packageName,
+            hidden
+        )
+        showOperationToast(
+            packageName,
+            when {
+                failed -> R.string.operation_failed
+                hidden -> R.string.toast_do_hide
+                else -> R.string.toast_do_unhide
+            }
+        )
     }
 
     private fun setAppDisabled(packageName: String, disabled: Boolean) {
-        var i = -1
-        try {
-            i = Runtime.getRuntime()
-                .exec(
-                    arrayOf(
-                        "su",
-                        "-c",
-                        "pm ${if (disabled) "disable" else "enable"} $packageName"
-                    )
-                ).waitFor()
-        } catch (e: Exception) {
-        }
-        Toast.makeText(
-            app,
-            if (i == 0) {
-                app.getString(
-                    if (disabled) R.string.toast_root_disable else R.string.toast_root_enable,
-                    getPackageInfo(packageName).applicationInfo.loadLabel(app.packageManager)
+        if (!disabled) Shell.execSU("pm unhide $packageName")
+        val failed = !Shell.execSU("pm ${if (disabled) "disable" else "enable"} $packageName")
+        showOperationToast(
+            packageName,
+            when {
+                failed -> R.string.operation_failed
+                disabled -> R.string.toast_su_disable
+                else -> R.string.toast_su_enable
+            }
+        )
+    }
+
+    private fun showOperationToast(packageName: String, resId: Int) = Toast.makeText(
+        app,
+        app.getString(
+            resId,
+            getAppInfo(packageName).loadLabel(app.packageManager)
+        ), Toast.LENGTH_SHORT
+    ).show()
+
+    fun uninstallApp(packageName: String) {
+        when (HData.runningMode) {
+            HData.MODE_DO_HIDE -> if (isDeviceOwnerApp) {
+                app.packageManager.packageInstaller.uninstall(
+                    packageName,
+                    PendingIntent.getActivity(app, 0, Intent(), 0).intentSender
                 )
-            } else app.getString(R.string.operation_failed), Toast.LENGTH_SHORT
-        ).show()
+                return
+            }
+            HData.MODE_SU_DISABLE -> if (Shell.execSU("pm uninstall $packageName")) return
+        }
+        app.startActivity(
+            Intent(
+                Intent.ACTION_DELETE,
+                Uri.parse("package:$packageName")
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
     }
 
     fun clearDeviceOwnerApp() {
-        if (isDeviceOwnerApp)
-            dpm.clearDeviceOwnerApp(app.packageName)
+        if (isDeviceOwnerApp) dpm.clearDeviceOwnerApp(app.packageName)
     }
 }
