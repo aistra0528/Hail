@@ -4,75 +4,78 @@ import android.annotation.SuppressLint
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.aistra.hail.HailApp
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.R
-import com.aistra.hail.app.HData
-import com.aistra.hail.app.HLog
+import com.aistra.hail.app.AppManager
+import com.aistra.hail.app.HailData
+import com.aistra.hail.utils.HLog
+import com.aistra.hail.utils.NameComparator
+import java.util.*
 
 object AppsAdapter : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
-    private val pm = HailApp.app.packageManager
-    val list = mutableListOf<PackageInfo>()
+    var list = listOf<PackageInfo>()
     lateinit var onItemClickListener: OnItemClickListener
+    lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
-
-    init {
-        updateList(HData.showSystemApps, null)
-    }
+    private val timer = Timer()
+    private var debounce: TimerTask? = null
 
     @SuppressLint("InlinedApi")
-    fun updateList(sysApp: Boolean, query: String?) {
-        list.clear()
-        val ms = System.currentTimeMillis()
-        pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES).forEach {
-            if ((sysApp || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != ApplicationInfo.FLAG_SYSTEM)
-                && (query.isNullOrEmpty()
-                        || it.applicationInfo.loadLabel(pm).toString().lowercase()
-                    .contains(query.lowercase())
-                        || it.packageName.lowercase().contains(query.lowercase()))
-            )
-                list.add(it)
+    private fun updateList(query: String? = null, pm: PackageManager) {
+        list = pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES).filter {
+            (HailData.showSystemApps || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != ApplicationInfo.FLAG_SYSTEM)
+                    && (HailData.showUnfrozenApps || AppManager.isAppFrozen(it.packageName))
+                    && (query.isNullOrEmpty()
+                    || it.packageName.contains(query, true)
+                    || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
+        }.sortedWith(NameComparator)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshList(layout: SwipeRefreshLayout, query: String? = null) {
+        layout.isRefreshing = true
+        debounce?.cancel()
+        debounce = object : TimerTask() {
+            override fun run() {
+                val ms = SystemClock.elapsedRealtime()
+                updateList(query, layout.context.packageManager)
+                HLog.i("Filter ${list.size} apps in ${SystemClock.elapsedRealtime() - ms}ms")
+                layout.post {
+                    notifyDataSetChanged()
+                    layout.isRefreshing = false
+                }
+            }
         }
-        list.sortByDescending { it.lastUpdateTime }
-        HLog.i("Update ${list.size} items in ${System.currentTimeMillis() - ms}ms")
+        timer.schedule(debounce, 1000)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_apps, parent, false)
-        )
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.item_apps, parent, false)
+    )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        list[position].run {
-            holder.itemView.run {
-                setOnClickListener {
-                    onItemClickListener.onItemClick(position)
-                }
-                findViewById<ImageView>(R.id.app_icon).setImageDrawable(
-                    applicationInfo.loadIcon(pm)
-                )
-                findViewById<TextView>(R.id.app_name).text =
-                    applicationInfo.loadLabel(pm)
+        holder.itemView.run {
+            setOnClickListener { onItemClickListener.onItemClick(position) }
+            setOnLongClickListener { onItemLongClickListener.onItemLongClick(position) }
+            list[position].applicationInfo.run {
+                findViewById<ImageView>(R.id.app_icon).setImageDrawable(loadIcon(context.packageManager))
+                findViewById<TextView>(R.id.app_name).text = loadLabel(context.packageManager)
                 findViewById<TextView>(R.id.app_desc).text = packageName
-                findViewById<CheckBox>(R.id.app_star).run {
+                findViewById<CompoundButton>(R.id.app_star).run {
                     setOnCheckedChangeListener(null)
-                    isChecked = HData.isChecked(packageName)
-                    setOnCheckedChangeListener { buttonView, isChecked ->
-                        onItemCheckedChangeListener.onItemCheckedChange(
-                            buttonView,
-                            isChecked,
-                            position
-                        )
+                    isChecked = HailData.isChecked(packageName)
+                    setOnCheckedChangeListener { button, isChecked ->
+                        onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, position)
                     }
                 }
             }
@@ -83,6 +86,10 @@ object AppsAdapter : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+    }
+
+    interface OnItemLongClickListener {
+        fun onItemLongClick(position: Int): Boolean
     }
 
     interface OnItemCheckedChangeListener {

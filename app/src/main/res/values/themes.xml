@@ -2,27 +2,29 @@
 
     <style name="Theme.Base" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">?colorSurface</item>
+        <item name="colorPrimaryVariant">?colorPrimary</item>
         <item name="colorOnPrimary">@android:color/white</item>
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimary</item>
-        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="colorSecondary">?colorPrimary</item>
+        <item name="colorSecondaryVariant">?colorPrimary</item>
+        <item name="colorOnSecondary">?colorOnPrimary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?colorPrimaryDark</item>
         <item name="android:windowLightStatusBar">?isLightTheme</item>
-        <item name="android:windowSplashscreenContent" tools:targetApi="o">@null</item>
-        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">?isLightTheme</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="Theme.Hail" parent="Theme.Base">
-        <item name="toolbarStyle">@style/Widget.Hail.Toolbar</item>
         <item name="alertDialogTheme">@style/Theme.Hail.AlertDialogOverlay</item>
     </style>
 
-    <style name="Widget.Hail.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">?colorSurface</item>
+    <style name="Theme.Hail.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
     <style name="Theme.Hail.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />

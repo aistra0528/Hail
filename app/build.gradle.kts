@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -10,15 +12,14 @@ android {
     defaultConfig {
         applicationId = "com.aistra.hail"
         minSdk = 23
-        targetSdk = 30
-        versionCode = 3
-        versionName = "0.2.0"
+        targetSdk = 31
+        versionCode = 5
+        versionName = "0.5.0"
         resourceConfigurations += arrayOf("en", "zh-rCN")
     }
     signingConfigs {
         create("release") {
-            val props =
-                `java.util`.Properties().apply { load(file("../signing.properties").reader()) }
+            val props = Properties().apply { load(file("../signing.properties").reader()) }
             storeFile = file(props.getProperty("storeFile"))
             storePassword = props.getProperty("storePassword")
             keyAlias = props.getProperty("keyAlias")
@@ -26,11 +27,11 @@ android {
         }
     }
     buildTypes {
-        getByName("debug") {
+        debug {
             versionNameSuffix = "-alpha"
             signingConfig = signingConfigs.getByName("release")
         }
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
@@ -46,12 +47,12 @@ android {
                 outputFileName = "Hail-v$versionName.apk"
         }
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
     buildFeatures {
         viewBinding = true
@@ -63,13 +64,17 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0")
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
+    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.preference:preference:1.1.1")
+    implementation("androidx.preference:preference-ktx:1.1.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
     implementation("com.google.android.material:material:1.4.0")
+    implementation("com.airbnb.android:lottie:4.2.2")
+    implementation("dev.rikka.shizuku:api:12.1.0")
+    implementation("dev.rikka.shizuku:provider:12.1.0")
 }

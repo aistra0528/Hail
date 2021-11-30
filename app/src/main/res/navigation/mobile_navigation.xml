@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.aistra.hail.ui.home.HomeFragment"
+        android:label="@string/app_name" />
+
+    <fragment
+        android:id="@+id/nav_apps"
+        android:name="com.aistra.hail.ui.apps.AppsFragment"
+        android:label="@string/title_apps" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.aistra.hail.ui.settings.SettingsFragment"
+        android:label="@string/title_settings" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.aistra.hail.ui.about.AboutFragment"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about" />
+</navigation>

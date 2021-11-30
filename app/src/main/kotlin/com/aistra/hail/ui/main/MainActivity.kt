@@ -1,27 +1,21 @@
 package com.aistra.hail.ui.main
 
 import android.os.Bundle
-import androidx.core.view.get
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
 import com.aistra.hail.databinding.ActivityMainBinding
-import com.aistra.hail.ui.HailActivity
-import com.aistra.hail.ui.apps.AppsFragment
-import com.aistra.hail.ui.home.HomeFragment
-import com.aistra.hail.ui.settings.SettingsFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
-class MainActivity : HailActivity() {
-    private val array by lazy {
-        arrayOf(
-            R.id.navigation_home to HomeFragment(),
-            R.id.navigation_apps to AppsFragment(),
-            R.id.navigation_settings to SettingsFragment()
-        )
-    }
-    lateinit var nav: BottomNavigationView
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
+    lateinit var fab: ExtendedFloatingActionButton
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,37 +23,29 @@ class MainActivity : HailActivity() {
     }
 
     private fun initView() {
-        ActivityMainBinding.inflate(layoutInflater).run {
+        with(ActivityMainBinding.inflate(layoutInflater)) {
             setContentView(root)
-            setSupportActionBar(toolbar)
-            viewpager.run {
-                isUserInputEnabled = false
-                adapter = object : FragmentStateAdapter(activity) {
-                    override fun createFragment(position: Int): Fragment {
-                        return array[position].second
-                    }
-
-                    override fun getItemCount(): Int {
-                        return array.size
-                    }
-                }
-                registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        navView.menu[position].isChecked = true
-                    }
-                })
-            }
-            nav = navView
-            navView.setOnItemSelectedListener {
-                viewpager.currentItem = with(array) {
-                    for (i in 0 until size) {
-                        if (it.itemId == get(i).first) return@with i
-                    }
-                    0
-                }
-                true
-            }
+            setSupportActionBar(appBarMain.toolbar)
+            fab = appBarMain.fab
+            val navController = findNavController(R.id.nav_host_fragment_content_main)
+            navController.addOnDestinationChangedListener(this@MainActivity)
+            appBarConfiguration = AppBarConfiguration(
+                setOf(R.id.nav_home, R.id.nav_apps, R.id.nav_settings), drawerLayout
+            )
+            setupActionBarWithNavController(navController, appBarConfiguration)
+            navView.setupWithNavController(navController)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean =
+        findNavController(R.id.nav_host_fragment_content_main).navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
+
+
+    override fun onDestinationChanged(
+        controller: NavController, destination: NavDestination, arguments: Bundle?
+    ) {
+        if (destination.id == R.id.nav_home) fab.show()
+        else fab.hide()
     }
 }

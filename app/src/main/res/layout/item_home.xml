@@ -16,11 +16,12 @@
         android:contentDescription="@null"
         android:padding="@dimen/control_padding" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="center_horizontal"
-        android:maxLines="2" />
+        android:maxLines="2"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 </LinearLayout>

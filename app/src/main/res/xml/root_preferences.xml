@@ -2,11 +2,11 @@
 
     <ListPreference
         app:defaultValue="default"
-        app:entries="@array/running_mode_entries"
-        app:entryValues="@array/running_mode_values"
-        app:icon="@drawable/ic_baseline_android_24"
-        app:key="running_mode"
-        app:title="@string/running_mode"
+        app:entries="@array/working_mode_entries"
+        app:entryValues="@array/working_mode_values"
+        app:icon="@drawable/ic_outline_adb"
+        app:key="working_mode"
+        app:title="@string/working_mode"
         app:useSimpleSummaryProvider="true" />
 
     <PreferenceCategory app:title="@string/title_apps">
@@ -14,5 +14,10 @@
         <SwitchPreferenceCompat
             app:key="show_system_apps"
             app:title="@string/show_system_apps" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="show_unfrozen_apps"
+            app:title="@string/show_unfrozen_apps" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -1,17 +1,38 @@
 <resources>
+    <integer-array name="deferred_task_values">
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+        <item>90</item>
+        <item>120</item>
+    </integer-array>
+    <string-array name="create_shortcut_entries">
+        <item>@string/action_freeze_all</item>
+        <item>@string/action_unfreeze_all</item>
+    </string-array>
     <string-array name="apps_action_entries">
         <item>@string/action_details</item>
         <item>@string/action_extract_apk</item>
         <item>@string/action_uninstall</item>
     </string-array>
-    <string-array name="running_mode_entries">
+    <string-array name="working_mode_entries">
         <item>@string/mode_default</item>
         <item>@string/mode_do_hide</item>
         <item>@string/mode_su_disable</item>
+        <item>@string/mode_shizuku_disable</item>
     </string-array>
-    <string-array name="running_mode_values">
+    <string-array name="working_mode_values">
         <item>default</item>
         <item>do_hide</item>
         <item>su_disable</item>
+        <item>shizuku_disable</item>
+    </string-array>
+    <string-array name="donate_payment_entries">
+        <item>@string/donate_alipay</item>
+        <item>@string/donate_wechat</item>
+        <item>@string/donate_bilibili</item>
+        <item>@string/donate_paypal</item>
     </string-array>
 </resources>

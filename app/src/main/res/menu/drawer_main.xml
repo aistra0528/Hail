@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_round_frozen"
+            android:title="@string/title_home" />
+        <item
+            android:id="@+id/nav_apps"
+            android:icon="@drawable/ic_outline_view"
+            android:title="@string/title_apps" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_outline_settings"
+            android:title="@string/title_settings" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_outline_info"
+            android:title="@string/title_about" />
+    </group>
+</menu>

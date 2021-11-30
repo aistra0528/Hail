@@ -20,7 +20,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,9 +37,8 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
     </LinearLayout>
 
-    <CheckBox
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/app_star"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@drawable/btn_app_star" />
+        android:layout_height="wrap_content" />
 </LinearLayout>

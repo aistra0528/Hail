@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_create_shortcut"
+        android:title="@string/action_create_shortcut"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_unfreeze_all"
+        android:title="@string/action_unfreeze_all"
+        app:showAsAction="never" />
+</menu>

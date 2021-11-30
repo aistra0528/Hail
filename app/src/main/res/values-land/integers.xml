@@ -1,3 +1,4 @@
 <resources>
-    <integer name="home_span">6</integer>
+    <integer name="home_span">8</integer>
+    <integer name="apps_span">2</integer>
 </resources>

@@ -1,0 +1,80 @@
+package com.aistra.hail.ui.api
+
+import android.content.ActivityNotFoundException
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.aistra.hail.R
+import com.aistra.hail.app.AppManager
+import com.aistra.hail.app.HailApi
+import com.aistra.hail.app.HailData
+import com.aistra.hail.utils.HPackages
+import com.aistra.hail.utils.HUI
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
+class ApiActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        try {
+            when (intent.action) {
+                HailApi.ACTION_LAUNCH -> launchApp(targetPackage)
+                HailApi.ACTION_FREEZE -> setAppFrozen(targetPackage, true)
+                HailApi.ACTION_UNFREEZE -> setAppFrozen(targetPackage, false)
+                HailApi.ACTION_FREEZE_ALL -> setAllFrozen(true)
+                HailApi.ACTION_UNFREEZE_ALL -> setAllFrozen(false)
+                else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
+            }
+            finish()
+        } catch (t: Throwable) {
+            MaterialAlertDialogBuilder(this)
+                .setMessage(t.message ?: t.stackTraceToString())
+                .setPositiveButton(android.R.string.ok, null)
+                .setOnDismissListener { finish() }
+                .create().show()
+        }
+    }
+
+    private val targetPackage: String
+        get() = intent?.extras?.getString(HailData.KEY_PACKAGE)?.also {
+            HPackages.getPackageInfoOrNull(it)
+                ?: throw ActivityNotFoundException(getString(R.string.app_not_installed))
+        } ?: throw IllegalArgumentException("package cannot be null")
+
+    private fun launchApp(target: String) {
+        if (AppManager.isAppFrozen(target) && AppManager.setAppFrozen(target, false).not())
+            throw IllegalStateException(getString(R.string.permission_denied))
+        packageManager.getLaunchIntentForPackage(target)?.let {
+            startActivity(it)
+        } ?: throw ActivityNotFoundException("launch activity not found")
+    }
+
+    private fun setAppFrozen(target: String, frozen: Boolean) = when {
+        frozen && HailData.isChecked(target).not() ->
+            throw SecurityException("package not checked")
+        AppManager.isAppFrozen(target) != frozen && AppManager.setAppFrozen(target, frozen).not() ->
+            throw IllegalStateException(getString(R.string.permission_denied))
+        else -> HUI.showToast(
+            getString(
+                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
+                HPackages.getApplicationInfoOrNull(target)?.loadLabel(packageManager)
+                    ?: target
+            )
+        )
+    }
+
+    private fun setAllFrozen(frozen: Boolean) {
+        var i = 0
+        HailData.checkedList.forEach {
+            if (AppManager.isAppFrozen(it.packageName) != frozen) {
+                if (AppManager.setAppFrozen(it.packageName, frozen)) i++
+                else if (it.packageName != packageName && it.applicationInfo != null)
+                    throw IllegalStateException(getString(R.string.permission_denied))
+            }
+        }
+        HUI.showToast(
+            getString(
+                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
+                i.toString()
+            )
+        )
+    }
+}

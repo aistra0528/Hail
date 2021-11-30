@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.aistra.hail">
+    package="com.aistra.hail"
+    tools:ignore="QueryAllPackagesPermission">
 
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
     <application
@@ -27,6 +26,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.api.ApiActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Hail.Dialog">
+            <intent-filter>
+                <action android:name="${applicationId}.action.LAUNCH" />
+                <action android:name="${applicationId}.action.FREEZE" />
+                <action android:name="${applicationId}.action.UNFREEZE" />
+                <action android:name="${applicationId}.action.FREEZE_ALL" />
+                <action android:name="${applicationId}.action.UNFREEZE_ALL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
         <receiver
             android:name=".receiver.DeviceAdminReceiver"
             android:exported="true"

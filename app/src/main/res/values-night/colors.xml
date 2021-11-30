@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorError">@color/error_color_material_dark</color>
+    <color name="colorPrimary">#FFA000</color>
+    <color name="colorWarn">@color/error_color_material_dark</color>
 </resources>
