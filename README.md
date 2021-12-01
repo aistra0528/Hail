@@ -112,6 +112,50 @@ adb shell su -c pm enable com.package.name
 
 ## API
 
+替换 com.package.name 为目标应用的包名，您可在应用界面长按复制。
+
+Java
+
+```java
+public class MainActivity extends AppCompatActivity {
+   private void launchApp() {
+      try {
+         Intent intent = new Intent();
+         intent.setAction("com.aistra.hail.action.LAUNCH");
+         intent.putExtra("package", "com.package.name");
+         startActivity(intent);
+      } catch (Exception e) {
+         Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show();
+      }
+   }
+}
+```
+
+Kotlin
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+   private fun launchApp() {
+      try {
+         val intent = Intent()
+         intent.setAction("com.aistra.hail.action.LAUNCH")
+         intent.putExtra("package", "com.package.name")
+         startActivity(intent)
+      } catch (e: Exception) {
+         Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show()
+      }
+   }
+}
+```
+
+`action`可为：
+
+- `com.aistra.hail.action.LAUNCH`：解冻并启动目标应用。应用未冻结时会直接启动。
+- `com.aistra.hail.action.FREEZE`：冻结目标应用。应用需处于首页。
+- `com.aistra.hail.action.UNFREEZE`：解冻目标应用。
+- `com.aistra.hail.action.FREEZE_ALL`：冻结首页全部应用。无需`extra`。
+- `com.aistra.hail.action.UNFREEZE_ALL`：解冻首页全部应用。无需`extra`。
+
 ## 翻译 Translate
 
 ## 许可证 LICENSE
