@@ -151,14 +151,30 @@ class MainActivity : AppCompatActivity() {
 `action`可为：
 
 - `com.aistra.hail.action.LAUNCH`：解冻并启动目标应用。应用未冻结时会直接启动。
+
 - `com.aistra.hail.action.FREEZE`：冻结目标应用。应用需处于首页。
+
 - `com.aistra.hail.action.UNFREEZE`：解冻目标应用。
+
 - `com.aistra.hail.action.FREEZE_ALL`：冻结首页全部应用。无需`extra`。
+
 - `com.aistra.hail.action.UNFREEZE_ALL`：解冻首页全部应用。无需`extra`。
 
-## 翻译 Translate
+## Help Translate
 
-## 许可证 LICENSE
+Translate `app/src/main/res/values/strings.xml` and put it in the corresponding path.
+
+or
+
+1. Create an issue about which language you want to translate into.
+
+2. We will create a string resource file in the corresponding path.
+
+3. Translate it and create a pull request.
+
+Thank you!
+
+## License
 
     Hail - Freeze Android apps
     Copyright (C) 2021 艾星Aistra
