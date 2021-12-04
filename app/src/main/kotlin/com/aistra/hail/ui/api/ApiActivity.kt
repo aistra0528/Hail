@@ -1,6 +1,7 @@
 package com.aistra.hail.ui.api
 
 import android.content.ActivityNotFoundException
+import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.aistra.hail.R
@@ -36,7 +37,7 @@ class ApiActivity : AppCompatActivity() {
     private val targetPackage: String
         get() = intent?.extras?.getString(HailData.KEY_PACKAGE)?.also {
             HPackages.getPackageInfoOrNull(it)
-                ?: throw ActivityNotFoundException(getString(R.string.app_not_installed))
+                ?: throw NameNotFoundException(getString(R.string.app_not_installed))
         } ?: throw IllegalArgumentException("package cannot be null")
 
     private fun launchApp(target: String) {
@@ -72,8 +73,7 @@ class ApiActivity : AppCompatActivity() {
         }
         HUI.showToast(
             getString(
-                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                i.toString()
+                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
             )
         )
     }
