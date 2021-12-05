@@ -1,3 +1,5 @@
+简体中文 | [English](README_EN.md)
+
 # 雹 Hail
 
 雹是一款用于冻结 Android 应用的自由软件，您可自由享用所有功能。
@@ -22,10 +24,9 @@
 
 **由于隐藏和停用的原理存在差异，冻结的应用需要通过相同原理的方式解冻。**
 
-1. 如果您的设备支持无线调试或已 root，可选择`Shizuku - 停用`。
+1. 如果您的设备支持无线调试或已 root，推荐选择`Shizuku - 停用`。[关于 Shizuku](https://github.com/RikkaApps/Shizuku)
 
-2. [Shizuku](https://github.com/RikkaApps/Shizuku) 是自由及开放源代码软件。如果您仍不愿安装 Shizuku 且设备已
-   root，可选择`超级用户 - 停用`。**此模式性能相对较差。**
+2. 如果您的设备已 root，可选择`超级用户 - 停用`。**此模式性能相对较差。**
 
 3. 如果您的设备不支持无线调试且未 root，可选择`设备所有者 - 隐藏`。**此模式兼容性相对较差。**
 
@@ -100,15 +101,13 @@ adb shell su -c pm enable com.package.name
 
 访问`/data/system/users/0/package-restrictions.xml`，此文件存储了隐藏和停用应用的信息。您可修改、重命名或直接删除此文件。
 
-通过`name`属性为 com.package.name 的值定位目标，然后：
-
 - 取消隐藏应用：修改`hidden`属性为 true 的值为 false
 
 - 启用应用：修改`enabled`属性为 2 (DISABLED) 或 3 (DISABLED_USER) 的值为 1 (ENABLED)
 
-### 最后手段：通过恢复模式清除数据 (wipe data)
+### 通过恢复模式清除数据 (wipe data)
 
-**希望您能谨慎地选择冻结应用，以避免陷入此状况。**
+**希望您能谨慎地选择冻结应用，以免陷入此窘境。**
 
 ## API
 
@@ -118,16 +117,16 @@ Java
 
 ```java
 public class MainActivity extends AppCompatActivity {
-   private void launchApp() {
-      try {
-         Intent intent = new Intent();
-         intent.setAction("com.aistra.hail.action.LAUNCH");
-         intent.putExtra("package", "com.package.name");
-         startActivity(intent);
-      } catch (Exception e) {
-         Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show();
-      }
-   }
+    private void launchApp() {
+        try {
+            Intent intent = new Intent();
+            intent.setAction("com.aistra.hail.action.LAUNCH");
+            intent.putExtra("package", "com.package.name");
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 ```
 
@@ -135,16 +134,16 @@ Kotlin
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
-   private fun launchApp() {
-      try {
-         val intent = Intent()
-         intent.setAction("com.aistra.hail.action.LAUNCH")
-         intent.putExtra("package", "com.package.name")
-         startActivity(intent)
-      } catch (e: Exception) {
-         Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show()
-      }
-   }
+    private fun launchApp() {
+        try {
+            val intent = Intent()
+            intent.setAction("com.aistra.hail.action.LAUNCH")
+            intent.putExtra("package", "com.package.name")
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
 ```
 
@@ -177,7 +176,7 @@ Thank you!
 ## License
 
     Hail - Freeze Android apps
-    Copyright (C) 2021 艾星Aistra
+    Copyright (C) 2021 AxAistra
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
