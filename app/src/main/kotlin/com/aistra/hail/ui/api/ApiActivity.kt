@@ -45,7 +45,7 @@ class ApiActivity : AppCompatActivity() {
             throw IllegalStateException(getString(R.string.permission_denied))
         packageManager.getLaunchIntentForPackage(target)?.let {
             startActivity(it)
-        } ?: throw ActivityNotFoundException("launch activity not found")
+        } ?: throw ActivityNotFoundException(getString(R.string.activity_not_found))
     }
 
     private fun setAppFrozen(target: String, frozen: Boolean) = when {
@@ -65,9 +65,10 @@ class ApiActivity : AppCompatActivity() {
     private fun setAllFrozen(frozen: Boolean) {
         var i = 0
         HailData.checkedList.forEach {
-            if (AppManager.isAppFrozen(it.packageName) != frozen) {
-                if (AppManager.setAppFrozen(it.packageName, frozen)) i++
-                else if (it.packageName != packageName && it.applicationInfo != null)
+            when {
+                AppManager.isAppFrozen(it.packageName) == frozen -> return@forEach
+                AppManager.setAppFrozen(it.packageName, frozen) -> i++
+                it.packageName != packageName && it.applicationInfo != null ->
                     throw IllegalStateException(getString(R.string.permission_denied))
             }
         }

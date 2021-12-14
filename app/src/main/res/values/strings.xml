@@ -51,6 +51,7 @@
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">Permission denied</string>
     <string name="app_not_installed">App not installed</string>
+    <string name="activity_not_found">Launch activity not found</string>
     <string name="shizuku_missing">Shizuku missing :(</string>
     <string name="operation_failed">Operation failed: %s</string>
     <string name="msg_text_copied">Copied: %s</string>

@@ -75,7 +75,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
             HomeAdapter.notifyItemChanged(position)
         app.packageManager.getLaunchIntentForPackage(pkg)?.let {
             startActivity(it)
-        }
+        } ?: Snackbar.make(activity.fab, R.string.activity_not_found, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onItemLongClick(position: Int): Boolean {
@@ -143,17 +143,17 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         }
     )
 
-    private fun setAllFrozen(frozen: Boolean) =
-        HailData.checkedList.forEachIndexed { position, info ->
-            if (AppManager.isAppFrozen(info.packageName) != frozen) {
-                if (AppManager.setAppFrozen(info.packageName, frozen))
-                    HomeAdapter.notifyItemChanged(position)
-                else if (info.packageName != app.packageName && info.applicationInfo != null) {
-                    HUI.showToast(R.string.permission_denied)
-                    return
-                }
+    private fun setAllFrozen(frozen: Boolean) = HailData.checkedList.forEachIndexed { index, info ->
+        when {
+            AppManager.isAppFrozen(info.packageName) == frozen -> return@forEachIndexed
+            AppManager.setAppFrozen(info.packageName, frozen) ->
+                HomeAdapter.notifyItemChanged(index)
+            info.packageName != app.packageName && info.applicationInfo != null -> {
+                HUI.showToast(R.string.permission_denied)
+                return
             }
         }
+    }
 
     private fun createShortcut(icon: Drawable, id: String, label: CharSequence, intent: Intent) {
         if (ShortcutManagerCompat.isRequestPinShortcutSupported(app)) {
