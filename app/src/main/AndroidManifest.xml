@@ -38,6 +38,8 @@
                 <action android:name="${applicationId}.action.UNFREEZE" />
                 <action android:name="${applicationId}.action.FREEZE_ALL" />
                 <action android:name="${applicationId}.action.UNFREEZE_ALL" />
+                <action android:name="${applicationId}.action.LOCK" />
+                <action android:name="${applicationId}.action.LOCK_FREEZE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

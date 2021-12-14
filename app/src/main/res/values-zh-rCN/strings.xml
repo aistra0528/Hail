@@ -17,6 +17,8 @@
     <string name="action_licenses">许可证</string>
     <string name="action_freeze_all">全部冻结</string>
     <string name="action_unfreeze_all">全部解冻</string>
+    <string name="action_lock">锁屏</string>
+    <string name="action_lock_freeze">锁屏冻结</string>
     <string name="action_freeze">冻结</string>
     <string name="action_unfreeze">解冻</string>
     <string name="action_deferred_task">延期任务</string>

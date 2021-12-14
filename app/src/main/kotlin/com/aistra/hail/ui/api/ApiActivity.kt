@@ -22,6 +22,8 @@ class ApiActivity : AppCompatActivity() {
                 HailApi.ACTION_UNFREEZE -> setAppFrozen(targetPackage, false)
                 HailApi.ACTION_FREEZE_ALL -> setAllFrozen(true)
                 HailApi.ACTION_UNFREEZE_ALL -> setAllFrozen(false)
+                HailApi.ACTION_LOCK -> lockScreen(false)
+                HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
                 else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
             }
             finish()
@@ -77,5 +79,11 @@ class ApiActivity : AppCompatActivity() {
                 if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
             )
         )
+    }
+
+    private fun lockScreen(freezeAll: Boolean) {
+        if (freezeAll) setAllFrozen(true)
+        if (AppManager.lockScreen.not())
+            throw IllegalStateException(getString(R.string.permission_denied))
     }
 }

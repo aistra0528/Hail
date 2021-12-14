@@ -17,6 +17,8 @@
     <string name="action_licenses">Licenses</string>
     <string name="action_freeze_all">Freeze all</string>
     <string name="action_unfreeze_all">Unfreeze all</string>
+    <string name="action_lock">Lock</string>
+    <string name="action_lock_freeze">Lock &amp; Freeze</string>
     <string name="action_freeze">Freeze</string>
     <string name="action_unfreeze">Unfreeze</string>
     <string name="action_deferred_task">Deferred task</string>

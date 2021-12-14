@@ -204,6 +204,18 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                                 getString(R.string.action_unfreeze_all),
                                 Intent(HailApi.ACTION_UNFREEZE_ALL)
                             )
+                            2 -> createShortcut(
+                                app.applicationInfo.loadIcon(app.packageManager),
+                                HailApi.ACTION_LOCK,
+                                getString(R.string.action_lock),
+                                Intent(HailApi.ACTION_LOCK)
+                            )
+                            3 -> createShortcut(
+                                app.applicationInfo.loadIcon(app.packageManager),
+                                HailApi.ACTION_LOCK_FREEZE,
+                                getString(R.string.action_lock_freeze),
+                                Intent(HailApi.ACTION_LOCK_FREEZE)
+                            )
                         }
                     }
                     .setNegativeButton(android.R.string.cancel, null)

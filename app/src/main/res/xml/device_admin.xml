@@ -1,3 +1,5 @@
 <device-admin>
-    <uses-policies />
+    <uses-policies>
+        <force-lock />
+    </uses-policies>
 </device-admin>

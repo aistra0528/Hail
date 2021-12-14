@@ -11,6 +11,8 @@ object HShell {
 
     val checkSU get() = execSU("clear")
 
+    val lockScreen get() = execSU("input keyevent KEYCODE_POWER")
+
     fun setAppDisabledAsUser(packageName: String, disabled: Boolean): Boolean =
         execSU("pm ${if (disabled) "disable-user" else "enable"} $packageName")
 

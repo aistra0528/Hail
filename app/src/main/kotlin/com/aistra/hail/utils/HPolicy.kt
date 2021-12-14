@@ -16,7 +16,10 @@ object HPolicy {
     private val admin = ComponentName(HailApp.app, DeviceAdminReceiver::class.java)
 
     private val isDeviceOwner get() = dpm.isDeviceOwnerApp(HailApp.app.packageName)
-    val isDeviceOwnerActive get() = isDeviceOwner && dpm.isAdminActive(admin)
+    private val isAdminActive get() = dpm.isAdminActive(admin)
+    val isDeviceOwnerActive get() = isDeviceOwner && isAdminActive
+
+    val lockScreen get() = isAdminActive.also { if (it) dpm.lockNow() }
 
     fun isAppHidden(packageName: String): Boolean =
         isDeviceOwnerActive && dpm.isApplicationHidden(admin, packageName)

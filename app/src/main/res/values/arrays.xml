@@ -11,6 +11,8 @@
     <string-array name="create_shortcut_entries">
         <item>@string/action_freeze_all</item>
         <item>@string/action_unfreeze_all</item>
+        <item>@string/action_lock</item>
+        <item>@string/action_lock_freeze</item>
     </string-array>
     <string-array name="apps_action_entries">
         <item>@string/action_details</item>

@@ -5,6 +5,12 @@ import com.aistra.hail.BuildConfig
 import com.aistra.hail.utils.*
 
 object AppManager {
+    val lockScreen: Boolean
+        get() = when (HailData.workingMode) {
+            HailData.MODE_SU_DISABLE -> HShell.lockScreen
+            else -> HPolicy.lockScreen
+        }
+
     fun isAppFrozen(packageName: String): Boolean = when (HailData.workingMode) {
         HailData.MODE_DO_HIDE -> HPolicy.isAppHidden(packageName)
         else -> HPackages.isAppDisabled(packageName)
