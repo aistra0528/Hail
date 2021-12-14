@@ -17,8 +17,6 @@ object HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onItemLongClickListener: OnItemLongClickListener
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false)
     )
@@ -47,6 +45,8 @@ object HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int = HailData.checkedList.size
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)

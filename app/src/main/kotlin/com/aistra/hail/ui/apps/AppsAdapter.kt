@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.R
@@ -20,8 +22,14 @@ import com.aistra.hail.utils.HLog
 import com.aistra.hail.utils.NameComparator
 import java.util.*
 
-object AppsAdapter : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
-    var list = listOf<PackageInfo>()
+object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
+    object : DiffUtil.ItemCallback<PackageInfo>() {
+        override fun areItemsTheSame(oldItem: PackageInfo, newItem: PackageInfo): Boolean =
+            oldItem.packageName == newItem.packageName
+
+        override fun areContentsTheSame(oldItem: PackageInfo, newItem: PackageInfo): Boolean =
+            areItemsTheSame(oldItem, newItem)
+    }) {
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
@@ -29,35 +37,31 @@ object AppsAdapter : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
     private var debounce: TimerTask? = null
 
     @SuppressLint("InlinedApi")
-    private fun updateList(query: String? = null, pm: PackageManager) {
-        list = pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES).filter {
+    private fun filterList(query: String? = null, pm: PackageManager): List<PackageInfo> =
+        pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES).filter {
             (HailData.showSystemApps || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != ApplicationInfo.FLAG_SYSTEM)
                     && (HailData.showUnfrozenApps || AppManager.isAppFrozen(it.packageName))
                     && (query.isNullOrEmpty()
                     || it.packageName.contains(query, true)
                     || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
         }.sortedWith(NameComparator)
-    }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun refreshList(layout: SwipeRefreshLayout, query: String? = null) {
         layout.isRefreshing = true
         debounce?.cancel()
         debounce = object : TimerTask() {
             override fun run() {
                 val ms = SystemClock.elapsedRealtime()
-                updateList(query, layout.context.packageManager)
-                HLog.i("Filter ${list.size} apps in ${SystemClock.elapsedRealtime() - ms}ms")
+                val list = filterList(query, layout.context.packageManager)
+                HLog.i("Filter ${currentList.size} apps in ${SystemClock.elapsedRealtime() - ms}ms")
                 layout.post {
-                    notifyDataSetChanged()
+                    submitList(list)
                     layout.isRefreshing = false
                 }
             }
         }
         timer.schedule(debounce, 1000)
     }
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_apps, parent, false)
@@ -67,7 +71,7 @@ object AppsAdapter : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
         holder.itemView.run {
             setOnClickListener { onItemClickListener.onItemClick(position) }
             setOnLongClickListener { onItemLongClickListener.onItemLongClick(position) }
-            list[position].applicationInfo.run {
+            currentList[position].applicationInfo.run {
                 findViewById<ImageView>(R.id.app_icon).setImageDrawable(loadIcon(context.packageManager))
                 findViewById<TextView>(R.id.app_name).text = loadLabel(context.packageManager)
                 findViewById<TextView>(R.id.app_desc).text = packageName
@@ -82,7 +86,7 @@ object AppsAdapter : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int = list.size
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)

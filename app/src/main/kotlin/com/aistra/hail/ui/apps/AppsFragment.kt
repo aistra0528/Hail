@@ -50,7 +50,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        with(AppsAdapter.list[position]) {
+        with(AppsAdapter.currentList[position]) {
             val name = applicationInfo.loadLabel(app.packageManager)
             MaterialAlertDialogBuilder(activity).setTitle(name)
                 .setItems(R.array.apps_action_entries) { _, which ->
@@ -100,7 +100,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     override fun onItemLongClick(position: Int): Boolean =
-        AppsAdapter.list[position].packageName.let {
+        AppsAdapter.currentList[position].packageName.let {
             HUI.copyText(it)
             HUI.showToast(getString(R.string.msg_text_copied, it))
             true
@@ -109,7 +109,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     override fun onItemCheckedChange(
         buttonView: CompoundButton, isChecked: Boolean, position: Int
     ) {
-        AppsAdapter.list[position].packageName.let {
+        AppsAdapter.currentList[position].packageName.let {
             if (isChecked) HailData.addCheckedApp(it)
             else HailData.removeCheckedApp(it)
             buttonView.isChecked = HailData.isChecked(it)
