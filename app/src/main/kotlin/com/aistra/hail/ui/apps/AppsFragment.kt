@@ -72,27 +72,35 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                                 ), Snackbar.LENGTH_LONG
                             ).show()
                         }
-                        2 -> {
-                            if (packageName == app.packageName && HPolicy.isDeviceOwnerActive) {
-                                MaterialAlertDialogBuilder(activity).setTitle(R.string.title_remove_do)
-                                    .setMessage(R.string.msg_remove_do)
-                                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                                        HPolicy.setOrganizationName()
-                                        HPolicy.clearDeviceOwnerApp()
-                                    }
-                                    .setNegativeButton(android.R.string.cancel, null)
-                                    .create().show()
-                            } else if (HailData.workingMode == HailData.MODE_DEFAULT) {
-                                AppManager.uninstallApp(packageName)
-                            } else {
-                                MaterialAlertDialogBuilder(activity).setTitle(name)
-                                    .setMessage(R.string.msg_uninstall)
-                                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        2 -> when {
+                            packageName == app.packageName -> {
+                                when {
+                                    HPolicy.isDeviceOwnerActive ->
+                                        MaterialAlertDialogBuilder(activity).setTitle(R.string.title_remove_do)
+                                            .setMessage(R.string.msg_remove_do)
+                                            .setPositiveButton(android.R.string.ok) { _, _ ->
+                                                HPolicy.setOrganizationName()
+                                                HPolicy.clearDeviceOwnerApp()
+                                                AppManager.uninstallApp(packageName)
+                                            }
+                                            .setNegativeButton(android.R.string.cancel, null)
+                                            .create().show()
+                                    HPolicy.isAdminActive -> {
+                                        HPolicy.removeActiveAdmin()
                                         AppManager.uninstallApp(packageName)
                                     }
-                                    .setNegativeButton(android.R.string.cancel, null)
-                                    .create().show()
+                                    else -> AppManager.uninstallApp(packageName)
+                                }
                             }
+                            HailData.workingMode == HailData.MODE_DEFAULT ->
+                                AppManager.uninstallApp(packageName)
+                            else -> MaterialAlertDialogBuilder(activity).setTitle(name)
+                                .setMessage(R.string.msg_uninstall)
+                                .setPositiveButton(android.R.string.ok) { _, _ ->
+                                    AppManager.uninstallApp(packageName)
+                                }
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .create().show()
                         }
                     }
                 }.create().show()

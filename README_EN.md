@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-`action` could be:
+`action` can be one of the following constants:
 
 - `com.aistra.hail.action.LAUNCH`: Unfreeze and launch target app. If it is unfrozen, it will launch
   directly.
@@ -166,6 +166,11 @@ class MainActivity : AppCompatActivity() {
 - `com.aistra.hail.action.FREEZE_ALL`: Freeze all apps at Home. `extra` is not necessary.
 
 - `com.aistra.hail.action.UNFREEZE_ALL`: Unfreeze all apps at Home. `extra` is not necessary.
+
+- `com.aistra.hail.action.LOCK`: Lock screen. `extra` is not necessary.
+
+- `com.aistra.hail.action.LOCK_FREEZE`: Freeze all apps at Home and lock screen. `extra` is not
+  necessary.
 
 ## Help Translate
 

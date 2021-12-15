@@ -16,7 +16,7 @@ object HPolicy {
     private val admin = ComponentName(HailApp.app, DeviceAdminReceiver::class.java)
 
     private val isDeviceOwner get() = dpm.isDeviceOwnerApp(HailApp.app.packageName)
-    private val isAdminActive get() = dpm.isAdminActive(admin)
+    val isAdminActive get() = dpm.isAdminActive(admin)
     val isDeviceOwnerActive get() = isDeviceOwner && isAdminActive
 
     val lockScreen get() = isAdminActive.also { if (it) dpm.lockNow() }
@@ -53,6 +53,10 @@ object HPolicy {
         if (isDeviceOwnerActive
             && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
         ) dpm.setOrganizationName(admin, name)
+    }
+
+    fun removeActiveAdmin() {
+        if (isAdminActive) dpm.removeActiveAdmin(admin)
     }
 
     fun clearDeviceOwnerApp() {

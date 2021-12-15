@@ -53,6 +53,7 @@
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
         <receiver
             android:name=".receiver.DeviceAdminReceiver"
+            android:description="@string/action_lock"
             android:exported="true"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data

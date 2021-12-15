@@ -42,13 +42,13 @@ class AboutFragment : MainFragment(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view) {
-            binding.actionLibre -> HUI.launchBrowser(HailData.URL_WHY_FREE_SOFTWARE)
-            binding.actionTelegram -> HUI.launchBrowser(HailData.URL_TELEGRAM)
-            binding.actionQq -> HUI.launchBrowser(HailData.URL_QQ)
-            binding.actionCoolapk -> HUI.launchBrowser(HailData.URL_COOLAPK)
+            binding.actionLibre -> HUI.openLink(HailData.URL_WHY_FREE_SOFTWARE)
+            binding.actionTelegram -> HUI.openLink(HailData.URL_TELEGRAM)
+            binding.actionQq -> HUI.openLink(HailData.URL_QQ)
+            binding.actionCoolapk -> HUI.openLink(HailData.URL_COOLAPK)
             binding.actionDonate -> onDonate()
-            binding.actionGithub -> HUI.launchBrowser(HailData.URL_GITHUB)
-            binding.actionTranslate -> HUI.launchBrowser(HailData.URL_README)
+            binding.actionGithub -> HUI.openLink(HailData.URL_GITHUB)
+            binding.actionTranslate -> HUI.openLink(HailData.URL_README)
             binding.actionLicenses -> MaterialAlertDialogBuilder(activity).setTitle(R.string.action_licenses)
                 .setView(MaterialTextView(activity).apply {
                     val padding = resources.getDimensionPixelOffset(R.dimen.dialog_padding)
@@ -66,8 +66,8 @@ class AboutFragment : MainFragment(), View.OnClickListener {
             .setSingleChoiceItems(R.array.donate_payment_entries, 0) { dialog, which ->
                 dialog.cancel()
                 when (which) {
-                    0 -> if (HUI.launchBrowser(HailData.URL_ALIPAY_API).not()) {
-                        HUI.launchBrowser(HailData.URL_ALIPAY)
+                    0 -> if (HUI.openLink(HailData.URL_ALIPAY_API).not()) {
+                        HUI.openLink(HailData.URL_ALIPAY)
                     }
                     1 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setView(ShapeableImageView(activity).apply {
@@ -88,11 +88,11 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                     2 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setMessage(R.string.donate_bilibili_msg)
                         .setPositiveButton(R.string.donate_bilibili_space) { _, _ ->
-                            HUI.launchBrowser(HailData.URL_BILIBILI)
+                            HUI.openLink(HailData.URL_BILIBILI)
                         }
                         .setNegativeButton(R.string.donate_bilibili_cancel, null)
                         .create().show()
-                    3 -> HUI.launchBrowser(HailData.URL_PAYPAL)
+                    3 -> HUI.openLink(HailData.URL_PAYPAL)
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)

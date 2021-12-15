@@ -27,7 +27,7 @@ object HUI {
         false
     }
 
-    fun launchBrowser(url: String): Boolean = startActivity(uri = url)
+    fun openLink(url: String): Boolean = startActivity(uri = url)
 
     fun copyText(text: String) = HailApp.app.getSystemService<ClipboardManager>()?.setPrimaryClip(
         ClipData.newPlainText(HailApp.app.getString(R.string.app_name), text)

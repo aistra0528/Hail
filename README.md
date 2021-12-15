@@ -159,6 +159,10 @@ class MainActivity : AppCompatActivity() {
 
 - `com.aistra.hail.action.UNFREEZE_ALL`：解冻首页全部应用。无需`extra`。
 
+- `com.aistra.hail.action.LOCK`：锁定屏幕。无需`extra`。
+
+- `com.aistra.hail.action.LOCK_FREEZE`：冻结首页全部应用并锁定屏幕。无需`extra`。
+
 ## Help Translate
 
 Translate `app/src/main/res/values/strings.xml` and put it in the corresponding path.

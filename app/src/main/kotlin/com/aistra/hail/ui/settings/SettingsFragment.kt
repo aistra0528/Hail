@@ -30,7 +30,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_do)
                     .setMessage(getString(R.string.msg_set_do, HPolicy.ADB_SET_DO))
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(R.string.action_help) { _, _ -> HUI.launchBrowser(HailData.URL_README) }
+                    .setNeutralButton(R.string.action_help) { _, _ -> HUI.openLink(HailData.URL_README) }
                     .create().show()
                 return false
             }
@@ -65,7 +65,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_help -> HUI.launchBrowser(HailData.URL_README)
+            R.id.action_help -> HUI.openLink(HailData.URL_README)
         }
         return super.onOptionsItemSelected(item)
     }
