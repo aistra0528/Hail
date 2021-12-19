@@ -8,7 +8,7 @@
 
 冻结`freeze`是一个营销用语，用于描述使**应用在用户不需要时不可运行**的行为，以此控制设备使用、减少内存占用和节省电量。用户可在需要时解冻`unfreeze`应用。
 
-通过隐藏和停用两种方式，都能达到所谓冻结的效果，但其原理存在差异。
+通过隐藏和停用两种方式，都能达到所谓冻结的效果，但其实现存在差异。
 
 ### 隐藏
 
@@ -22,7 +22,7 @@
 
 雹支持以`设备所有者 - 隐藏`、`超级用户 - 停用`和`Shizuku - 停用`模式工作。
 
-**由于隐藏和停用的原理存在差异，冻结的应用需要通过相同原理的方式解冻。**
+**由于隐藏和停用的实现存在差异，冻结的应用需要通过相同方式解冻。**
 
 1. 如果您的设备支持无线调试或已 root，推荐选择`Shizuku - 停用`。[关于 Shizuku](https://github.com/RikkaApps/Shizuku)
 
@@ -67,7 +67,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 ### Shizuku - 停用
 
-此模式通过 Shizuku 调用系统非 SDK 接口`IPackageManager.setApplicationEnabledSetting`方法停用应用。
+此模式通过 Shizuku 调用非 SDK 接口`IPackageManager.setApplicationEnabledSetting`方法停用应用。
 
 ## 恢复
 
@@ -99,7 +99,7 @@ adb shell su -c pm enable com.package.name
 
 ### 通过提供文件管理功能的恢复模式 (recovery)
 
-访问`/data/system/users/0/package-restrictions.xml`，此文件存储了隐藏和停用应用的信息。您可修改、重命名或直接删除此文件。
+访问`/data/system/users/0/package-restrictions.xml`，此文件存储了应用限制相关信息。您可修改、重命名或直接删除此文件。
 
 - 取消隐藏应用：修改`hidden`属性为 true 的值为 false
 

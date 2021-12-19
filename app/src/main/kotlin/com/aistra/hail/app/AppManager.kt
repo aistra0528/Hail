@@ -7,8 +7,10 @@ import com.aistra.hail.utils.*
 object AppManager {
     val lockScreen: Boolean
         get() = when (HailData.workingMode) {
+            HailData.MODE_DO_HIDE -> HPolicy.lockScreen
             HailData.MODE_SU_DISABLE -> HShell.lockScreen
-            else -> HPolicy.lockScreen
+            HailData.MODE_SHIZUKU_DISABLE -> HShizuku.lockScreen
+            else -> false
         }
 
     fun isAppFrozen(packageName: String): Boolean = when (HailData.workingMode) {

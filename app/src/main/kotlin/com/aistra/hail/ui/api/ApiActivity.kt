@@ -40,7 +40,7 @@ class ApiActivity : AppCompatActivity() {
         get() = intent?.extras?.getString(HailData.KEY_PACKAGE)?.also {
             HPackages.getPackageInfoOrNull(it)
                 ?: throw NameNotFoundException(getString(R.string.app_not_installed))
-        } ?: throw IllegalArgumentException("package cannot be null")
+        } ?: throw IllegalArgumentException("package must not be null")
 
     private fun launchApp(target: String) {
         if (AppManager.isAppFrozen(target) && AppManager.setAppFrozen(target, false).not())
