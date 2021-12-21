@@ -3,8 +3,8 @@ package com.aistra.hail.app
 import androidx.preference.PreferenceManager
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.HailApp
+import com.aistra.hail.R
 import com.aistra.hail.utils.HFiles
-import com.aistra.hail.utils.HLog
 import com.aistra.hail.utils.NameComparator
 import org.json.JSONArray
 import org.json.JSONObject
@@ -29,6 +29,8 @@ object HailData {
     const val MODE_DO_HIDE = "do_hide"
     const val MODE_SU_DISABLE = "su_disable"
     const val MODE_SHIZUKU_DISABLE = "shizuku_disable"
+    private const val KEY_ID = "id"
+    private const val KEY_TAG = "tag"
     private const val SHOW_SYSTEM_APPS = "show_system_apps"
     private const val SHOW_UNFROZEN_APPS = "show_unfrozen_apps"
 
@@ -38,34 +40,22 @@ object HailData {
     val showUnfrozenApps get() = sp.getBoolean(SHOW_UNFROZEN_APPS, true)
 
     private val dir = "${HailApp.app.filesDir.path}/v1"
-    private val path = "$dir/apps.json"
-
-    private val array by lazy {
-        JSONArray(HFiles.read(path) ?: "[]").apply {
-            if (!HFiles.exists(dir))
-                HFiles.createDirectories(dir)
-            if (!HFiles.exists(path))
-                HFiles.write(path, toString())
-        }
-    }
+    private val appsPath = "$dir/apps.json"
+    private val tagsPath = "$dir/tags.json"
 
     val checkedList: MutableList<AppInfo> by lazy {
         mutableListOf<AppInfo>().apply {
-            for (i in 0 until array.length()) {
-                with(array.getJSONObject(i)) {
-                    add(AppInfo(getString(KEY_PACKAGE)))
+            try {
+                val json = JSONArray(HFiles.read(appsPath))
+                for (i in 0 until json.length()) {
+                    add(with(json.getJSONObject(i)) {
+                        AppInfo(getString(KEY_PACKAGE), optInt(KEY_TAG))
+                    })
                 }
+                sortWith(NameComparator)
+            } catch (t: Throwable) {
             }
-            sortWith(NameComparator)
         }
-    }
-
-    private fun getArrayIndex(packageName: String): Int {
-        for (i in 0 until array.length()) {
-            if (array.getJSONObject(i).getString(KEY_PACKAGE) == packageName)
-                return i
-        }
-        return -1
     }
 
     private fun getCheckedPosition(packageName: String): Int {
@@ -79,17 +69,48 @@ object HailData {
     fun isChecked(packageName: String): Boolean = getCheckedPosition(packageName) != -1
 
     fun addCheckedApp(packageName: String) {
-        array.put(JSONObject().put(KEY_PACKAGE, packageName))
-        checkedList.add(AppInfo(packageName))
+        checkedList.add(AppInfo(packageName, 0))
         checkedList.sortWith(NameComparator)
-        HFiles.write(path, array.toString())
-        HLog.i(array.toString())
+        saveApps()
     }
 
-    fun removeCheckedApp(packageName: String): Int = getCheckedPosition(packageName).also {
-        array.remove(getArrayIndex(packageName))
-        checkedList.removeAt(it)
-        HFiles.write(path, array.toString())
-        HLog.i(array.toString())
+    fun removeCheckedApp(packageName: String) {
+        checkedList.removeAt(getCheckedPosition(packageName))
+        saveApps()
+    }
+
+    fun saveApps() {
+        if (!HFiles.exists(dir))
+            HFiles.createDirectories(dir)
+        HFiles.write(appsPath, JSONArray().run {
+            checkedList.forEach {
+                put(JSONObject().put(KEY_PACKAGE, it.packageName).put(KEY_TAG, it.tagId))
+            }
+            toString()
+        })
+    }
+
+    val tags: MutableList<Pair<String, Int>> by lazy {
+        mutableListOf<Pair<String, Int>>().apply {
+            try {
+                val json = JSONArray(HFiles.read(tagsPath))
+                for (i in 0 until json.length()) {
+                    add(with(json.getJSONObject(i)) { getString(KEY_TAG) to getInt(KEY_ID) })
+                }
+            } catch (t: Throwable) {
+                add(HailApp.app.getString(R.string.label_default) to 0)
+            }
+        }
+    }
+
+    fun saveTags() {
+        if (!HFiles.exists(dir))
+            HFiles.createDirectories(dir)
+        HFiles.write(tagsPath, JSONArray().run {
+            tags.forEach {
+                put(JSONObject().put(KEY_TAG, it.first).put(KEY_ID, it.second))
+            }
+            toString()
+        })
     }
 }

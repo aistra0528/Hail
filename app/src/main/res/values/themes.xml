@@ -31,5 +31,7 @@
 
     <style name="Theme.Hail.PopupOverlay" parent="ThemeOverlay.MaterialComponents" />
 
-    <style name="Theme.Hail.AlertDialogOverlay" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog" />
+    <style name="Theme.Hail.AlertDialogOverlay" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="dialogCornerRadius">4dp</item>
+    </style>
 </resources>

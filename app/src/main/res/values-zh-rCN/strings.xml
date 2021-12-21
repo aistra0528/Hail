@@ -6,6 +6,7 @@
     <string name="title_apps">应用</string>
     <string name="title_settings">设置</string>
     <string name="title_about">关于</string>
+    <string name="label_default">默认</string>
     <string name="label_version">版本</string>
     <string name="label_time">安装时间</string>
     <string name="action_telegram">Telegram 群组</string>
@@ -22,6 +23,9 @@
     <string name="action_freeze">冻结</string>
     <string name="action_unfreeze">解冻</string>
     <string name="action_deferred_task">延期任务</string>
+    <string name="action_tag_add">添加标签</string>
+    <string name="action_tag_remove">移除标签</string>
+    <string name="action_tag_set">设置标签</string>
     <string name="action_create_shortcut">创建快捷方式</string>
     <string name="action_remove_home">从首页中移除</string>
     <string name="action_undo">撤销</string>

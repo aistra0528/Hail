@@ -7,12 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.R
-import com.aistra.hail.app.AppManager
-import com.aistra.hail.app.HailData
+import com.aistra.hail.app.AppInfo
 
-object HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(
+    object : DiffUtil.ItemCallback<AppInfo>() {
+        override fun areItemsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
+            oldItem == newItem
+
+        override fun areContentsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
+            oldItem.state == newItem.getCurrentState()
+    }) {
     private val cf by lazy { ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) }) }
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onItemLongClickListener: OnItemLongClickListener
@@ -25,26 +33,25 @@ object HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
         holder.itemView.run {
             setOnClickListener { onItemClickListener.onItemClick(holder.adapterPosition) }
             setOnLongClickListener { onItemLongClickListener.onItemLongClick(holder.adapterPosition) }
-            with(HailData.checkedList[position]) {
+            with(currentList[position]) {
+                state = getCurrentState()
                 findViewById<ImageView>(R.id.app_icon).run {
                     setImageDrawable(icon)
-                    colorFilter = if (AppManager.isAppFrozen(packageName)) cf else null
+                    colorFilter = if (state == AppInfo.STATE_FROZEN) cf else null
                 }
                 findViewById<TextView>(R.id.app_name).run {
                     text = name
-                    isEnabled = if (applicationInfo == null) {
+                    isEnabled = if (state == AppInfo.STATE_UNKNOWN) {
                         setTextColor(context.getColorStateList(R.color.colorWarn))
                         true
                     } else {
                         setTextAppearance(R.style.TextAppearance_MaterialComponents_Body2)
-                        !AppManager.isAppFrozen(packageName)
+                        state != AppInfo.STATE_FROZEN
                     }
                 }
             }
         }
     }
-
-    override fun getItemCount(): Int = HailData.checkedList.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 

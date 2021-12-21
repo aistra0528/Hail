@@ -13,8 +13,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 31
-        versionCode = 5
-        versionName = "0.5.0"
+        versionCode = 6
+        versionName = "0.6.0"
         resourceConfigurations += arrayOf("en", "zh-rCN")
     }
     signingConfigs {
@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")

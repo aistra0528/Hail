@@ -53,7 +53,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
             override fun run() {
                 val ms = SystemClock.elapsedRealtime()
                 val list = filterList(query, layout.context.packageManager)
-                HLog.i("Filter ${currentList.size} apps in ${SystemClock.elapsedRealtime() - ms}ms")
+                HLog.i("Filter ${list.size} apps in ${SystemClock.elapsedRealtime() - ms}ms")
                 layout.post {
                     submitList(list)
                     layout.isRefreshing = false

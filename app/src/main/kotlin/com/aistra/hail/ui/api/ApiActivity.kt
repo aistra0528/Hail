@@ -66,19 +66,22 @@ class ApiActivity : AppCompatActivity() {
 
     private fun setAllFrozen(frozen: Boolean) {
         var i = 0
+        var denied = false
         HailData.checkedList.forEach {
             when {
                 AppManager.isAppFrozen(it.packageName) == frozen -> return@forEach
                 AppManager.setAppFrozen(it.packageName, frozen) -> i++
-                it.packageName != packageName && it.applicationInfo != null ->
-                    throw IllegalStateException(getString(R.string.permission_denied))
+                it.packageName != packageName && it.applicationInfo != null -> denied = true
             }
         }
-        HUI.showToast(
-            getString(
-                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
+        when {
+            denied && i == 0 -> throw IllegalStateException(getString(R.string.permission_denied))
+            i > 0 -> HUI.showToast(
+                getString(
+                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
+                )
             )
-        )
+        }
     }
 
     private fun lockScreen(freezeAll: Boolean) {
