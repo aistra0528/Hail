@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -28,6 +29,7 @@ import com.google.android.material.tabs.TabLayout
 
 class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
     HomeAdapter.OnItemLongClickListener {
+    private var query: String = String()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -82,17 +84,17 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         super.onStart()
         activity.fab.run {
             if (hasOnClickListeners()) updateCurrentList()
-            else setOnClickListener { freezeSelectedTab() }
+            else setOnClickListener { setAllFrozen(true, HomeAdapter.currentList) }
         }
     }
 
     private fun updateCurrentList() {
         HomeAdapter.submitList(HailData.checkedList.filter {
-            it.tagId == HailData.tags[binding.tabs.selectedTabPosition].second
+            (query.isEmpty() && it.tagId == HailData.tags[binding.tabs.selectedTabPosition].second)
+                    || (query.isNotEmpty() &&
+                    (it.packageName.contains(query, true) || it.name.contains(query, true)))
         })
     }
-
-    private fun freezeSelectedTab() = setAllFrozen(true, HomeAdapter.currentList)
 
     override fun onItemClick(position: Int) {
         val info = HomeAdapter.currentList[position]
@@ -151,10 +153,18 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                         .create().show()
                 }
                 2 -> {
+                    var checked = binding.tabs.selectedTabPosition
+                    if (query.isNotEmpty() && binding.tabs.tabCount > 1) {
+                        HailData.tags.forEachIndexed { i, it ->
+                            if (info.tagId == it.second) {
+                                checked = i
+                            }
+                        }
+                    }
                     MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
                         .setSingleChoiceItems(
                             HailData.tags.map { it.first }.toTypedArray(),
-                            binding.tabs.selectedTabPosition
+                            checked
                         ) { dialog, index ->
                             if (info.tagId != HailData.tags[index].second) {
                                 info.setTag(HailData.tags[index].second)
@@ -339,6 +349,23 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_home, menu)
+        (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
+            private var once = false
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (once) {
+                    query = newText
+                    binding.tabs.run {
+                        visibility =
+                            if (query.isEmpty() && tabCount > 1) View.VISIBLE else View.GONE
+                    }
+                    updateCurrentList()
+                } else once = true
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean = true
+        })
     }
 
     override fun onDestroyView() {
