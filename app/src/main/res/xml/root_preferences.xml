@@ -11,11 +11,22 @@
 
     <PreferenceCategory app:title="@string/title_apps">
 
-        <SwitchPreferenceCompat
-            app:key="show_system_apps"
-            app:title="@string/show_system_apps" />
+        <ListPreference
+            app:defaultValue="name"
+            app:entries="@array/sort_by_entries"
+            app:entryValues="@array/sort_by_values"
+            app:icon="@drawable/ic_outline_sort"
+            app:key="sort_by"
+            app:title="@string/sort_by"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="show_system_apps"
+            app:summary="@string/msg_system_apps"
+            app:title="@string/title_system_apps" />
+
+        <CheckBoxPreference
             app:defaultValue="true"
             app:key="show_unfrozen_apps"
             app:title="@string/show_unfrozen_apps" />

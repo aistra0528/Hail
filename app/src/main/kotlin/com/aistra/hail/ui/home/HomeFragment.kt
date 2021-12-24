@@ -92,7 +92,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         })
     }
 
-    private fun freezeSelectedTab() = setAllFrozen(true, justSelectedTab = true)
+    private fun freezeSelectedTab() = setAllFrozen(true, HomeAdapter.currentList)
 
     override fun onItemClick(position: Int) {
         val info = HomeAdapter.currentList[position]
@@ -192,24 +192,21 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         }
     )
 
-    private fun setAllFrozen(frozen: Boolean, justSelectedTab: Boolean = false) {
+    private fun setAllFrozen(frozen: Boolean, list: List<AppInfo> = HailData.checkedList) {
         var i = 0
         var denied = false
-        (if (justSelectedTab) HomeAdapter.currentList else HailData.checkedList).forEachIndexed { index, info ->
+        list.forEach {
             when {
-                AppManager.isAppFrozen(info.packageName) == frozen -> return@forEachIndexed
-                AppManager.setAppFrozen(info.packageName, frozen) ->
-                    if (justSelectedTab)
-                        HomeAdapter.notifyItemChanged(index)
-                    else i++
-                info.packageName != app.packageName && info.applicationInfo != null -> denied = true
+                AppManager.isAppFrozen(it.packageName) == frozen -> return@forEach
+                AppManager.setAppFrozen(it.packageName, frozen) -> i++
+                it.packageName != app.packageName && it.applicationInfo != null -> denied = true
             }
         }
         when {
             denied && i == 0 -> HUI.showToast(getString(R.string.permission_denied))
-            justSelectedTab.not() && i > 0 -> {
+            i > 0 -> {
                 updateCurrentList()
-                HUI.showToast(
+                if (list == HailData.checkedList) HUI.showToast(
                     getString(
                         if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
                     )

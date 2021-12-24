@@ -44,7 +44,12 @@
     <string name="msg_set_do">Issue the command from adb:\n%s</string>
     <string name="title_remove_do">Remove Device Owner</string>
     <string name="msg_remove_do">Device Owner will be removed, it might be difficult to set it again after removal.\nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
-    <string name="show_system_apps">Show system apps</string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort_name">Name</string>
+    <string name="sort_install">First install</string>
+    <string name="sort_update">Last update</string>
+    <string name="title_system_apps">System apps only</string>
+    <string name="msg_system_apps">Freezing system apps may cause bootloop</string>
     <string name="show_unfrozen_apps">Show unfrozen apps</string>
     <string name="title_donate">Thank you!</string>
     <string name="donate_alipay">Alipay</string>

@@ -36,15 +36,24 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     private val timer = Timer()
     private var debounce: TimerTask? = null
 
+    private val PackageInfo.isSystemApp: Boolean
+        get() = applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
+
     @SuppressLint("InlinedApi")
     private fun filterList(query: String? = null, pm: PackageManager): List<PackageInfo> =
         pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES).filter {
-            (HailData.showSystemApps || it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != ApplicationInfo.FLAG_SYSTEM)
+            ((HailData.showSystemApps && it.isSystemApp) || (!HailData.showSystemApps && !it.isSystemApp))
                     && (HailData.showUnfrozenApps || AppManager.isAppFrozen(it.packageName))
                     && (query.isNullOrEmpty()
                     || it.packageName.contains(query, true)
                     || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
-        }.sortedWith(NameComparator)
+        }.run {
+            when (HailData.sortBy) {
+                HailData.SORT_INSTALL -> sortedBy { it.firstInstallTime }
+                HailData.SORT_UPDATE -> sortedByDescending { it.lastUpdateTime }
+                else -> sortedWith(NameComparator)
+            }
+        }
 
     fun refreshList(layout: SwipeRefreshLayout, query: String? = null) {
         layout.isRefreshing = true

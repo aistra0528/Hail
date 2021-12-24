@@ -29,6 +29,10 @@ object HailData {
     const val MODE_DO_HIDE = "do_hide"
     const val MODE_SU_DISABLE = "su_disable"
     const val MODE_SHIZUKU_DISABLE = "shizuku_disable"
+    private const val SORT_BY = "sort_by"
+    private const val SORT_NAME = "name"
+    const val SORT_INSTALL = "install"
+    const val SORT_UPDATE = "update"
     private const val KEY_ID = "id"
     private const val KEY_TAG = "tag"
     private const val SHOW_SYSTEM_APPS = "show_system_apps"
@@ -36,6 +40,7 @@ object HailData {
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
+    val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
     val showSystemApps get() = sp.getBoolean(SHOW_SYSTEM_APPS, false)
     val showUnfrozenApps get() = sp.getBoolean(SHOW_UNFROZEN_APPS, true)
 

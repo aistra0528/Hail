@@ -44,7 +44,12 @@
     <string name="msg_set_do">通过 adb 发出命令：\n%s</string>
     <string name="title_remove_do">移除设备所有者</string>
     <string name="msg_remove_do">将移除雹的设备所有者，移除后可能难以再次设置。\n已隐藏的应用在移除后仍会隐藏，请确保您已将重要的应用取消隐藏。</string>
-    <string name="show_system_apps">显示系统应用</string>
+    <string name="sort_by">排序方式</string>
+    <string name="sort_name">名称</string>
+    <string name="sort_install">首次安装</string>
+    <string name="sort_update">最近更新</string>
+    <string name="title_system_apps">仅系统应用</string>
+    <string name="msg_system_apps">冻结系统应用可能导致设备无法启动</string>
     <string name="show_unfrozen_apps">显示未冻结应用</string>
     <string name="title_donate">谢谢你。</string>
     <string name="donate_alipay">支付宝</string>
