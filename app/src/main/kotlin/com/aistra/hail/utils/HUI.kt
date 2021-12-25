@@ -10,13 +10,16 @@ import com.aistra.hail.HailApp
 import com.aistra.hail.R
 
 object HUI {
-    fun showToast(text: String, isLengthLong: Boolean = false) = Toast.makeText(
+    fun showToast(text: CharSequence, isLengthLong: Boolean = false) = Toast.makeText(
         HailApp.app, text,
         if (isLengthLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
     ).show()
 
     fun showToast(resId: Int, isLengthLong: Boolean = false) =
         showToast(HailApp.app.getString(resId), isLengthLong)
+
+    fun showToast(resId: Int, text: CharSequence, isLengthLong: Boolean = false) =
+        showToast(HailApp.app.getString(resId, text), isLengthLong)
 
     fun startActivity(action: String = Intent.ACTION_VIEW, uri: String): Boolean = try {
         HailApp.app.startActivity(

@@ -18,6 +18,9 @@ class AppInfo(val packageName: String, var tagId: Int) {
         else -> STATE_UNFROZEN
     }
 
+    var selected: Boolean = false
+    fun isNowSelected(selectedList: List<AppInfo>): Boolean = this in selectedList
+
     fun setTag(id: Int) {
         tagId = id
         HailData.saveApps()

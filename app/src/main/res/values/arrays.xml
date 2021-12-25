@@ -8,6 +8,15 @@
         <item>90</item>
         <item>120</item>
     </integer-array>
+    <string-array name="home_action_entries">
+        <item>@string/action_launch</item>
+        <item>@string/action_freeze</item>
+        <item>@string/action_unfreeze</item>
+        <item>@string/action_deferred_task</item>
+        <item>@string/action_tag_set</item>
+        <item>@string/action_create_shortcut</item>
+        <item>@string/action_remove_home</item>
+    </string-array>
     <string-array name="create_shortcut_entries">
         <item>@string/action_freeze_all</item>
         <item>@string/action_unfreeze_all</item>

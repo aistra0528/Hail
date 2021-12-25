@@ -77,19 +77,20 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val info = currentList[position]
+        val app = info.applicationInfo
+        val pkg = info.packageName
         holder.itemView.run {
-            setOnClickListener { onItemClickListener.onItemClick(position) }
-            setOnLongClickListener { onItemLongClickListener.onItemLongClick(position) }
-            currentList[position].applicationInfo.run {
-                findViewById<ImageView>(R.id.app_icon).setImageDrawable(loadIcon(context.packageManager))
-                findViewById<TextView>(R.id.app_name).text = loadLabel(context.packageManager)
-                findViewById<TextView>(R.id.app_desc).text = packageName
-                findViewById<CompoundButton>(R.id.app_star).run {
-                    setOnCheckedChangeListener(null)
-                    isChecked = HailData.isChecked(packageName)
-                    setOnCheckedChangeListener { button, isChecked ->
-                        onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, position)
-                    }
+            setOnClickListener { onItemClickListener.onItemClick(info) }
+            setOnLongClickListener { onItemLongClickListener.onItemLongClick(pkg) }
+            findViewById<ImageView>(R.id.app_icon).setImageDrawable(app.loadIcon(context.packageManager))
+            findViewById<TextView>(R.id.app_name).text = app.loadLabel(context.packageManager)
+            findViewById<TextView>(R.id.app_desc).text = pkg
+            findViewById<CompoundButton>(R.id.app_star).run {
+                setOnCheckedChangeListener(null)
+                isChecked = HailData.isChecked(pkg)
+                setOnCheckedChangeListener { button, isChecked ->
+                    onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, pkg)
                 }
             }
         }
@@ -98,14 +99,14 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(info: PackageInfo)
     }
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(position: Int): Boolean
+        fun onItemLongClick(packageName: String): Boolean
     }
 
     interface OnItemCheckedChangeListener {
-        fun onItemCheckedChange(buttonView: CompoundButton, isChecked: Boolean, position: Int)
+        fun onItemCheckedChange(buttonView: CompoundButton, isChecked: Boolean, packageName: String)
     }
 }

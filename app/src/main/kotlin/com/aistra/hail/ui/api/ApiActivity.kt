@@ -56,11 +56,8 @@ class ApiActivity : AppCompatActivity() {
         AppManager.isAppFrozen(target) != frozen && AppManager.setAppFrozen(target, frozen).not() ->
             throw IllegalStateException(getString(R.string.permission_denied))
         else -> HUI.showToast(
-            getString(
-                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                HPackages.getApplicationInfoOrNull(target)?.loadLabel(packageManager)
-                    ?: target
-            )
+            if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
+            HPackages.getApplicationInfoOrNull(target)?.loadLabel(packageManager) ?: target
         )
     }
 
@@ -77,9 +74,8 @@ class ApiActivity : AppCompatActivity() {
         when {
             denied && i == 0 -> throw IllegalStateException(getString(R.string.permission_denied))
             i > 0 -> HUI.showToast(
-                getString(
-                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
-                )
+                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
+                i.toString()
             )
         }
     }

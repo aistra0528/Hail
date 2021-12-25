@@ -20,6 +20,7 @@
     <string name="action_unfreeze_all">全部解冻</string>
     <string name="action_lock">锁屏</string>
     <string name="action_lock_freeze">锁屏冻结</string>
+    <string name="action_launch">启动</string>
     <string name="action_freeze">冻结</string>
     <string name="action_unfreeze">解冻</string>
     <string name="action_deferred_task">延期任务</string>
@@ -28,6 +29,7 @@
     <string name="action_tag_set">设置标签</string>
     <string name="action_create_shortcut">创建快捷方式</string>
     <string name="action_remove_home">从首页中移除</string>
+    <string name="action_deselect">取消选择</string>
     <string name="action_undo">撤销</string>
     <string name="action_help">帮助</string>
     <string name="action_search">搜索</string>
@@ -65,6 +67,7 @@
     <string name="activity_not_found">无可启动活动</string>
     <string name="shizuku_missing">Shizuku 失踪了（</string>
     <string name="operation_failed">操作失败：%s</string>
+    <string name="msg_multi_select">已选择：%s</string>
     <string name="msg_text_copied">已复制：%s</string>
     <string name="msg_extract_apk">已提取至：%s</string>
     <string name="msg_freeze">已冻结：%s</string>

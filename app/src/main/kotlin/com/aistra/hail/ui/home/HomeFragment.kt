@@ -64,9 +64,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         }
         binding.tabs.run {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    updateCurrentList()
-                }
+                override fun onTabSelected(tab: TabLayout.Tab) = updateCurrentList()
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {}
 
@@ -96,47 +94,54 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         })
     }
 
-    override fun onItemClick(position: Int) {
-        val info = HomeAdapter.currentList[position]
+    private fun updateBarTitle() {
+        activity.supportActionBar?.title = HomeAdapter.selectedList.size.let {
+            if (it == 0) getString(R.string.app_name)
+            else getString(R.string.msg_multi_select, it.toString())
+        }
+    }
+
+    override fun onItemClick(info: AppInfo) {
         val pkg = info.packageName
         if (info.applicationInfo == null) {
             Snackbar.make(activity.fab, R.string.app_not_installed, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_remove_home) { removeCheckedApp(pkg) }.show()
             return
         }
-        if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false))
-            HomeAdapter.notifyItemChanged(position)
-        app.packageManager.getLaunchIntentForPackage(pkg)?.let {
-            startActivity(it)
-        } ?: Snackbar.make(activity.fab, R.string.activity_not_found, Snackbar.LENGTH_SHORT).show()
+        HomeAdapter.run {
+            if (info in selectedList) selectedList.remove(info)
+            else selectedList.add(info)
+            updateCurrentList()
+            updateBarTitle()
+        }
     }
 
-    override fun onItemLongClick(position: Int): Boolean {
-        val info = HomeAdapter.currentList[position]
+    override fun onItemLongClick(info: AppInfo): Boolean {
         info.applicationInfo ?: return false
+        val actions = resources.getStringArray(R.array.home_action_entries)
+        if (onMultiSelect(info, actions)) return true
         val pkg = info.packageName
         val frozen = AppManager.isAppFrozen(pkg)
         val action = getString(if (frozen) R.string.action_unfreeze else R.string.action_freeze)
         MaterialAlertDialogBuilder(activity).setTitle(info.name).setItems(
-            arrayOf(
-                action,
-                getString(R.string.action_deferred_task),
-                getString(R.string.action_tag_set),
-                getString(R.string.action_create_shortcut),
-                getString(R.string.action_remove_home)
-            )
+            actions.toMutableList().apply { removeAt(if (frozen) 1 else 2) }.toTypedArray()
         ) { _, which ->
             when (which) {
-                0 -> setAppFrozen(position, pkg, !frozen)
-                1 -> {
+                0 -> {
+                    if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false))
+                        updateCurrentList()
+                    app.packageManager.getLaunchIntentForPackage(pkg)?.let {
+                        startActivity(it)
+                    } ?: HUI.showToast(R.string.activity_not_found)
+                }
+                1 -> setAppFrozen(info.name, pkg, !frozen)
+                2 -> {
                     val values = resources.getIntArray(R.array.deferred_task_values)
                     val entries = arrayOfNulls<String>(values.size)
-                    for (i in values.indices)
-                        entries[i] = resources.getQuantityString(
-                            R.plurals.deferred_task_entry,
-                            values[i],
-                            values[i]
-                        )
+                    values.forEachIndexed { i, it ->
+                        entries[i] =
+                            resources.getQuantityString(R.plurals.deferred_task_entry, it, it)
+                    }
                     MaterialAlertDialogBuilder(activity).setTitle(R.string.action_deferred_task)
                         .setItems(entries) { _, i ->
                             HWork.setDeferredFrozen(pkg, !frozen, values[i].toLong())
@@ -152,12 +157,14 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                         .setNegativeButton(android.R.string.cancel, null)
                         .create().show()
                 }
-                2 -> {
+                3 -> {
                     var checked = binding.tabs.selectedTabPosition
-                    if (query.isNotEmpty() && binding.tabs.tabCount > 1) {
-                        HailData.tags.forEachIndexed { i, it ->
-                            if (info.tagId == it.second) {
+                    if (info.tagId != HailData.tags[checked].second) {
+                        checked = -1
+                        for (i in HailData.tags.indices) {
+                            if (info.tagId == HailData.tags[i].second) {
                                 checked = i
+                                break
                             }
                         }
                     }
@@ -173,28 +180,98 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                             dialog.cancel()
                         }
                         .setNeutralButton(R.string.action_tag_add) { _, _ ->
-                            showTagDialog(info)
+                            showTagDialog(listOf(info))
                         }
                         .setNegativeButton(android.R.string.cancel, null)
                         .create().show()
                 }
-                3 -> createShortcut(
+                4 -> createShortcut(
                     info.icon, pkg, info.name,
                     HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
-                4 -> removeCheckedApp(pkg)
+                5 -> removeCheckedApp(pkg)
             }
         }.create().show()
         return true
     }
 
-    private fun setAppFrozen(position: Int, pkg: String, frozen: Boolean) = HUI.showToast(
+    private fun deselect(updateList: Boolean = true) = HomeAdapter.run {
+        selectedList.clear()
+        if (updateList) updateCurrentList()
+        updateBarTitle()
+    }
+
+    private fun onMultiSelect(info: AppInfo, actions: Array<String>): Boolean = HomeAdapter.run {
+        if (info in selectedList && selectedList.size > 1) {
+            MaterialAlertDialogBuilder(activity)
+                .setTitle(getString(R.string.msg_multi_select, selectedList.size.toString()))
+                .setItems(actions.filter {
+                    it != getString(R.string.action_launch)
+                            && it != getString(R.string.action_deferred_task)
+                            && it != getString(R.string.action_create_shortcut)
+                }.toTypedArray()) { _, which ->
+                    when (which) {
+                        0 -> {
+                            setAllFrozen(true, selectedList, false)
+                            deselect()
+                        }
+                        1 -> {
+                            setAllFrozen(false, selectedList, false)
+                            deselect()
+                        }
+                        2 -> {
+                            var checked = -1
+                            for (i in HailData.tags.indices) {
+                                if (selectedList[0].tagId == HailData.tags[i].second) {
+                                    checked = i
+                                    break
+                                }
+                            }
+                            if (checked != -1) {
+                                for (it in selectedList) {
+                                    if (it.tagId != HailData.tags[checked].second) {
+                                        checked = -1
+                                        break
+                                    }
+                                }
+                            }
+                            MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
+                                .setSingleChoiceItems(
+                                    HailData.tags.map { it.first }.toTypedArray(),
+                                    checked
+                                ) { dialog, index ->
+                                    selectedList.forEach {
+                                        if (it.tagId != HailData.tags[index].second)
+                                            it.setTag(HailData.tags[index].second)
+                                    }
+                                    deselect()
+                                    dialog.cancel()
+                                }
+                                .setNeutralButton(R.string.action_tag_add) { _, _ ->
+                                    showTagDialog(selectedList)
+                                }
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .create().show()
+                        }
+                        3 -> {
+                            selectedList.forEach { removeCheckedApp(it.packageName) }
+                            deselect(false)
+                        }
+                    }
+                }
+                .setNegativeButton(R.string.action_deselect) { _, _ -> deselect() }
+                .create().show()
+            true
+        } else false
+    }
+
+    private fun setAppFrozen(name: CharSequence, pkg: String, frozen: Boolean) = HUI.showToast(
         when {
             AppManager.isAppFrozen(pkg) == frozen || AppManager.setAppFrozen(pkg, frozen) -> {
-                HomeAdapter.notifyItemChanged(position)
+                updateCurrentList()
                 getString(
                     if (AppManager.isAppFrozen(pkg)) R.string.msg_freeze else R.string.msg_unfreeze,
-                    HomeAdapter.currentList[position].name
+                    name
                 )
             }
             pkg == app.packageName -> getString(R.string.app_slogan)
@@ -202,7 +279,9 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         }
     )
 
-    private fun setAllFrozen(frozen: Boolean, list: List<AppInfo> = HailData.checkedList) {
+    private fun setAllFrozen(
+        frozen: Boolean, list: List<AppInfo> = HailData.checkedList, updateList: Boolean = true
+    ) {
         var i = 0
         var denied = false
         list.forEach {
@@ -213,23 +292,21 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
             }
         }
         when {
-            denied && i == 0 -> HUI.showToast(getString(R.string.permission_denied))
+            denied && i == 0 -> HUI.showToast(R.string.permission_denied)
             i > 0 -> {
-                updateCurrentList()
-                if (list == HailData.checkedList) HUI.showToast(
-                    getString(
-                        if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
-                    )
+                if (updateList) updateCurrentList()
+                HUI.showToast(
+                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
                 )
             }
         }
     }
 
-    private fun showTagDialog(info: AppInfo? = null) {
-        val isAdd = info != null
+    private fun showTagDialog(list: List<AppInfo>? = null) {
+        val isMultiSelect = list?.size ?: 0 > 1
         val input = DialogInputBinding.inflate(layoutInflater, FrameLayout(activity), true)
-        input.inputLayout.setHint(if (isAdd) R.string.action_tag_add else R.string.action_tag_set)
-        if (isAdd.not()) input.editText.append(HailData.tags[binding.tabs.selectedTabPosition].first)
+        input.inputLayout.setHint(if (list != null) R.string.action_tag_add else R.string.action_tag_set)
+        list ?: input.editText.setText(HailData.tags[binding.tabs.selectedTabPosition].first)
         MaterialAlertDialogBuilder(activity)
             .setView(input.root.parent as View)
             .setPositiveButton(android.R.string.ok) { _, _ ->
@@ -237,20 +314,18 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                 val tagId = tagName.hashCode()
                 if (tagName in HailData.tags.map { it.first } || tagId in HailData.tags.map { it.second }) return@setPositiveButton
                 binding.tabs.run {
-                    if (isAdd) {
+                    if (list != null) {
                         HailData.tags.add(tagName to tagId)
-                        info!!.setTag(tagId)
+                        list.forEach { it.setTag(tagId) }
                         addTab(newTab().setText(tagName), false)
-                        if (tabCount == 2) visibility = View.VISIBLE
-                        updateCurrentList()
+                        if (query.isEmpty() && tabCount == 2) visibility = View.VISIBLE
+                        if (isMultiSelect) deselect() else updateCurrentList()
                     } else {
                         HailData.tags.run {
                             removeAt(selectedTabPosition)
                             add(selectedTabPosition, tagName to tagId)
                         }
-                        HomeAdapter.currentList.forEach {
-                            it.setTag(tagId)
-                        }
+                        HomeAdapter.currentList.forEach { it.setTag(tagId) }
                         getTabAt(selectedTabPosition)!!.text = tagName
                     }
                 }
@@ -258,10 +333,8 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
             }
             .apply {
                 with(binding.tabs) {
-                    if (isAdd.not()) setNeutralButton(R.string.action_tag_remove) { _, _ ->
-                        HailData.checkedList.forEach {
-                            if (it in HomeAdapter.currentList) it.setTag(0)
-                        }
+                    list ?: setNeutralButton(R.string.action_tag_remove) { _, _ ->
+                        HomeAdapter.currentList.forEach { it.setTag(0) }
                         HailData.tags.removeAt(selectedTabPosition)
                         HailData.saveTags()
                         removeTabAt(selectedTabPosition)
@@ -282,12 +355,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                     .setIntent(intent)
                     .build(), null
             )
-        } else HUI.showToast(
-            getString(
-                R.string.operation_failed,
-                getString(R.string.action_create_shortcut)
-            )
-        )
+        } else HUI.showToast(R.string.operation_failed, getString(R.string.action_create_shortcut))
     }
 
     private fun getAppIcon(drawable: Drawable): IconCompat =
