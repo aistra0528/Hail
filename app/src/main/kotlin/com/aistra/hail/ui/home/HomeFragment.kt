@@ -27,11 +27,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 
-class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
-    HomeAdapter.OnItemLongClickListener {
+class HomeFragment : MainFragment(),
+    HomeAdapter.OnItemClickListener, HomeAdapter.OnItemLongClickListener {
+
     private var query: String = String()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -80,10 +82,8 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
 
     override fun onStart() {
         super.onStart()
-        activity.fab.run {
-            if (hasOnClickListeners()) updateCurrentList()
-            else setOnClickListener { setAllFrozen(true, HomeAdapter.currentList) }
-        }
+        if (activity.fab.hasOnClickListeners()) updateCurrentList()
+        activity.fab.setOnClickListener { setAllFrozen(true, HomeAdapter.currentList) }
     }
 
     private fun updateCurrentList() {
@@ -332,14 +332,14 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                 HailData.saveTags()
             }
             .apply {
-                with(binding.tabs) {
-                    list ?: setNeutralButton(R.string.action_tag_remove) { _, _ ->
-                        HomeAdapter.currentList.forEach { it.setTag(0) }
+                list ?: setNeutralButton(R.string.action_tag_remove) { _, _ ->
+                    HomeAdapter.currentList.forEach { it.setTag(0) }
+                    binding.tabs.run {
                         HailData.tags.removeAt(selectedTabPosition)
-                        HailData.saveTags()
                         removeTabAt(selectedTabPosition)
                         if (tabCount == 1) visibility = View.GONE
                     }
+                    HailData.saveTags()
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
@@ -423,10 +423,8 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
             override fun onQueryTextChange(newText: String): Boolean {
                 if (once) {
                     query = newText
-                    binding.tabs.run {
-                        visibility =
-                            if (query.isEmpty() && tabCount > 1) View.VISIBLE else View.GONE
-                    }
+                    binding.tabs.visibility =
+                        if (query.isEmpty() && binding.tabs.tabCount > 1) View.VISIBLE else View.GONE
                     updateCurrentList()
                 } else once = true
                 return true

@@ -74,8 +74,7 @@ class ApiActivity : AppCompatActivity() {
         when {
             denied && i == 0 -> throw IllegalStateException(getString(R.string.permission_denied))
             i > 0 -> HUI.showToast(
-                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                i.toString()
+                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
             )
         }
     }
