@@ -1,5 +1,6 @@
 package com.aistra.hail.app
 
+import android.provider.Settings
 import androidx.preference.PreferenceManager
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.HailApp
@@ -21,6 +22,7 @@ object HailData {
     const val URL_ALIPAY_API = "alipays://platformapi/startapp?saId=10000007&qrcode=$URL_ALIPAY"
     const val URL_BILIBILI = "https://space.bilibili.com/9261272"
     const val URL_PAYPAL = "https://paypal.me/aistra0528"
+    const val URL_REDEEM_CODE = "https://aistra0528.github.io/hail/code"
     const val VERSION = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     const val KEY_PACKAGE = "package"
     const val KEY_FROZEN = "frozen"
@@ -35,6 +37,7 @@ object HailData {
     const val SORT_UPDATE = "update"
     private const val KEY_ID = "id"
     private const val KEY_TAG = "tag"
+    private const val KEY_ACTIVATED_ID = "activated_id"
     private const val SHOW_SYSTEM_APPS = "show_system_apps"
     private const val SHOW_UNFROZEN_APPS = "show_unfrozen_apps"
 
@@ -43,6 +46,18 @@ object HailData {
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
     val showSystemApps get() = sp.getBoolean(SHOW_SYSTEM_APPS, false)
     val showUnfrozenApps get() = sp.getBoolean(SHOW_UNFROZEN_APPS, true)
+
+    val isActivated: Boolean
+        get() = sp.getString(KEY_ACTIVATED_ID, null).let {
+            it != null && (it == androidId || it.length == 64)
+        }
+
+    fun setActivatedId(id: String = androidId) = sp.edit().putString(KEY_ACTIVATED_ID, id).apply()
+
+    private val androidId: String
+        get() = Settings.System.getString(
+            HailApp.app.contentResolver, Settings.Secure.ANDROID_ID
+        )
 
     private val dir = "${HailApp.app.filesDir.path}/v1"
     private val appsPath = "$dir/apps.json"

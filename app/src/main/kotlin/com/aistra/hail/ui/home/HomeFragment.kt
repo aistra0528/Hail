@@ -202,7 +202,7 @@ class HomeFragment : MainFragment(),
     }
 
     private fun onMultiSelect(info: AppInfo, actions: Array<String>): Boolean = HomeAdapter.run {
-        if (info in selectedList && selectedList.size > 1) {
+        if (info in selectedList) {
             MaterialAlertDialogBuilder(activity)
                 .setTitle(getString(R.string.msg_multi_select, selectedList.size.toString()))
                 .setItems(actions.filter {
