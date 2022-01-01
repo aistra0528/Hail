@@ -21,11 +21,6 @@ class AppInfo(val packageName: String, var tagId: Int) {
     var selected: Boolean = false
     fun isNowSelected(selectedList: List<AppInfo>): Boolean = this in selectedList
 
-    fun setTag(id: Int) {
-        tagId = id
-        HailData.saveApps()
-    }
-
     override fun equals(other: Any?): Boolean = other is AppInfo && other.packageName == packageName
     override fun hashCode(): Int = packageName.hashCode()
 

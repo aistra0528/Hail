@@ -23,6 +23,7 @@ import com.aistra.hail.databinding.FragmentHomeBinding
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HUI
+import com.aistra.hail.utils.NameComparator
 import com.aistra.hail.work.HWork
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -113,9 +114,9 @@ class HomeFragment : MainFragment(),
         HomeAdapter.run {
             if (info in selectedList) selectedList.remove(info)
             else selectedList.add(info)
-            updateCurrentList()
-            updateBarTitle()
         }
+        updateCurrentList()
+        updateBarTitle()
     }
 
     override fun onItemLongClick(info: AppInfo): Boolean {
@@ -176,7 +177,8 @@ class HomeFragment : MainFragment(),
                             checked
                         ) { dialog, index ->
                             if (info.tagId != HailData.tags[index].second) {
-                                info.setTag(HailData.tags[index].second)
+                                info.tagId = HailData.tags[index].second
+                                HailData.saveApps()
                                 updateCurrentList()
                             }
                             dialog.cancel()
@@ -198,9 +200,9 @@ class HomeFragment : MainFragment(),
         return true
     }
 
-    private fun deselect(updateList: Boolean = true) = HomeAdapter.run {
-        selectedList.clear()
-        if (updateList) updateCurrentList()
+    private fun deselect() {
+        HomeAdapter.selectedList.clear()
+        updateCurrentList()
         updateBarTitle()
     }
 
@@ -245,8 +247,9 @@ class HomeFragment : MainFragment(),
                                 ) { dialog, index ->
                                     selectedList.forEach {
                                         if (it.tagId != HailData.tags[index].second)
-                                            it.setTag(HailData.tags[index].second)
+                                            it.tagId = HailData.tags[index].second
                                     }
+                                    HailData.saveApps()
                                     deselect()
                                     dialog.cancel()
                                 }
@@ -261,8 +264,9 @@ class HomeFragment : MainFragment(),
                             deselect()
                         }
                         4 -> {
-                            selectedList.forEach { removeCheckedApp(it.packageName) }
-                            deselect(false)
+                            selectedList.forEach { removeCheckedApp(it.packageName, false) }
+                            HailData.saveApps()
+                            deselect()
                         }
                     }
                 }
@@ -323,7 +327,7 @@ class HomeFragment : MainFragment(),
                 binding.tabs.run {
                     if (list != null) {
                         HailData.tags.add(tagName to tagId)
-                        list.forEach { it.setTag(tagId) }
+                        list.forEach { it.tagId = tagId }
                         addTab(newTab().setText(tagName), false)
                         if (query.isEmpty() && tabCount == 2) visibility = View.VISIBLE
                         if (isMultiSelect) deselect() else updateCurrentList()
@@ -332,20 +336,22 @@ class HomeFragment : MainFragment(),
                             removeAt(selectedTabPosition)
                             add(selectedTabPosition, tagName to tagId)
                         }
-                        HomeAdapter.currentList.forEach { it.setTag(tagId) }
+                        HomeAdapter.currentList.forEach { it.tagId = tagId }
                         getTabAt(selectedTabPosition)!!.text = tagName
                     }
                 }
+                HailData.saveApps()
                 HailData.saveTags()
             }
             .apply {
                 list ?: setNeutralButton(R.string.action_tag_remove) { _, _ ->
-                    HomeAdapter.currentList.forEach { it.setTag(0) }
+                    HomeAdapter.currentList.forEach { it.tagId = 0 }
                     binding.tabs.run {
                         HailData.tags.removeAt(selectedTabPosition)
                         removeTabAt(selectedTabPosition)
                         if (tabCount == 1) visibility = View.GONE
                     }
+                    HailData.saveApps()
                     HailData.saveTags()
                 }
             }
@@ -393,18 +399,22 @@ class HomeFragment : MainFragment(),
         for (index in 0 until json.length()) {
             val pkg = json.getString(index)
             if (HPackages.getPackageInfoOrNull(pkg) != null && pkg !in HailData.checkedList.map { it.packageName }) {
-                HailData.addCheckedApp(pkg)
+                HailData.addCheckedApp(pkg, false)
                 i++
             }
         }
-        if (i > 0) updateCurrentList()
+        if (i > 0) {
+            HailData.checkedList.sortWith(NameComparator)
+            HailData.saveApps()
+            updateCurrentList()
+        }
         HUI.showToast(getString(R.string.msg_imported, i.toString()))
     } catch (t: Throwable) {
     }
 
-    private fun removeCheckedApp(packageName: String) {
-        HailData.removeCheckedApp(packageName)
-        updateCurrentList()
+    private fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
+        HailData.removeCheckedApp(packageName, saveApps)
+        if (saveApps) updateCurrentList()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -412,27 +422,28 @@ class HomeFragment : MainFragment(),
             R.id.action_create_shortcut -> {
                 MaterialAlertDialogBuilder(activity).setTitle(R.string.action_create_shortcut)
                     .setItems(R.array.create_shortcut_entries) { _, which ->
+                        val icon = app.applicationInfo.loadIcon(app.packageManager)
                         when (which) {
                             0 -> createShortcut(
-                                app.applicationInfo.loadIcon(app.packageManager),
+                                icon,
                                 HailApi.ACTION_FREEZE_ALL,
                                 getString(R.string.action_freeze_all),
                                 Intent(HailApi.ACTION_FREEZE_ALL)
                             )
                             1 -> createShortcut(
-                                app.applicationInfo.loadIcon(app.packageManager),
+                                icon,
                                 HailApi.ACTION_UNFREEZE_ALL,
                                 getString(R.string.action_unfreeze_all),
                                 Intent(HailApi.ACTION_UNFREEZE_ALL)
                             )
                             2 -> createShortcut(
-                                app.applicationInfo.loadIcon(app.packageManager),
+                                icon,
                                 HailApi.ACTION_LOCK,
                                 getString(R.string.action_lock),
                                 Intent(HailApi.ACTION_LOCK)
                             )
                             3 -> createShortcut(
-                                app.applicationInfo.loadIcon(app.packageManager),
+                                icon,
                                 HailApi.ACTION_LOCK_FREEZE,
                                 getString(R.string.action_lock_freeze),
                                 Intent(HailApi.ACTION_LOCK_FREEZE)

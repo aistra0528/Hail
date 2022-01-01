@@ -88,15 +88,17 @@ object HailData {
 
     fun isChecked(packageName: String): Boolean = getCheckedPosition(packageName) != -1
 
-    fun addCheckedApp(packageName: String) {
+    fun addCheckedApp(packageName: String, sortAndSave: Boolean = true) {
         checkedList.add(AppInfo(packageName, 0))
-        checkedList.sortWith(NameComparator)
-        saveApps()
+        if (sortAndSave) {
+            checkedList.sortWith(NameComparator)
+            saveApps()
+        }
     }
 
-    fun removeCheckedApp(packageName: String) {
+    fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
         checkedList.removeAt(getCheckedPosition(packageName))
-        saveApps()
+        if (saveApps) saveApps()
     }
 
     fun saveApps() {
