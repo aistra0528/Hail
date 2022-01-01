@@ -21,11 +21,13 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentHomeBinding
 import com.aistra.hail.ui.main.MainFragment
+import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HUI
 import com.aistra.hail.work.HWork
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import org.json.JSONArray
 
 class HomeFragment : MainFragment(),
     HomeAdapter.OnItemClickListener, HomeAdapter.OnItemLongClickListener {
@@ -189,7 +191,8 @@ class HomeFragment : MainFragment(),
                     info.icon, pkg, info.name,
                     HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
-                5 -> removeCheckedApp(pkg)
+                5 -> exportToClipboard(listOf(info))
+                6 -> removeCheckedApp(pkg)
             }
         }.create().show()
         return true
@@ -254,6 +257,10 @@ class HomeFragment : MainFragment(),
                                 .create().show()
                         }
                         3 -> {
+                            exportToClipboard(selectedList)
+                            deselect()
+                        }
+                        4 -> {
                             selectedList.forEach { removeCheckedApp(it.packageName) }
                             deselect(false)
                         }
@@ -368,6 +375,33 @@ class HomeFragment : MainFragment(),
             }
         })
 
+    private fun exportToClipboard(list: List<AppInfo>) {
+        HUI.copyText(JSONArray().run {
+            list.forEach { put(it.packageName) }
+            toString()
+        })
+        HUI.showToast(
+            R.string.msg_exported,
+            if (list.size > 1) list.size.toString() else list[0].name
+        )
+    }
+
+    private fun importFromClipboard() = try {
+        val str = HUI.pasteText() ?: throw IllegalArgumentException()
+        val json = JSONArray(str.substring(str.indexOf('[')..str.indexOf(']', str.indexOf('['))))
+        var i = 0
+        for (index in 0 until json.length()) {
+            val pkg = json.getString(index)
+            if (HPackages.getPackageInfoOrNull(pkg) != null && pkg !in HailData.checkedList.map { it.packageName }) {
+                HailData.addCheckedApp(pkg)
+                i++
+            }
+        }
+        if (i > 0) updateCurrentList()
+        HUI.showToast(getString(R.string.msg_imported, i.toString()))
+    } catch (t: Throwable) {
+    }
+
     private fun removeCheckedApp(packageName: String) {
         HailData.removeCheckedApp(packageName)
         updateCurrentList()
@@ -408,6 +442,7 @@ class HomeFragment : MainFragment(),
                     .setNegativeButton(android.R.string.cancel, null)
                     .create().show()
             }
+            R.id.action_import_clipboard -> importFromClipboard()
             R.id.action_freeze_all -> setAllFrozen(true)
             R.id.action_unfreeze_all -> setAllFrozen(false)
         }

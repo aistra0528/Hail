@@ -29,6 +29,8 @@
     <string name="action_tag_remove">移除标签</string>
     <string name="action_tag_set">设置标签</string>
     <string name="action_create_shortcut">创建快捷方式</string>
+    <string name="action_export_clipboard">导出到剪切板</string>
+    <string name="action_import_clipboard">从剪切板导入</string>
     <string name="action_remove_home">从首页中移除</string>
     <string name="action_deselect">取消选择</string>
     <string name="action_undo">撤销</string>
@@ -73,6 +75,8 @@
     <string name="shizuku_missing">Shizuku 失踪了（</string>
     <string name="operation_failed">操作失败：%s</string>
     <string name="msg_multi_select">已选择：%s</string>
+    <string name="msg_exported">已导出：%s</string>
+    <string name="msg_imported">已导入：%s</string>
     <string name="msg_text_copied">已复制：%s</string>
     <string name="msg_extract_apk">已提取至：%s</string>
     <string name="msg_freeze">已冻结：%s</string>

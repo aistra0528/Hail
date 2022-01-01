@@ -29,6 +29,8 @@
     <string name="action_tag_remove">Remove tag</string>
     <string name="action_tag_set">Set tag</string>
     <string name="action_create_shortcut">Create shortcut</string>
+    <string name="action_export_clipboard">Export to Clipboard</string>
+    <string name="action_import_clipboard">Import from Clipboard</string>
     <string name="action_remove_home">Remove from Home</string>
     <string name="action_deselect">Deselect</string>
     <string name="action_undo">Undo</string>
@@ -73,6 +75,8 @@
     <string name="shizuku_missing">Shizuku missing :(</string>
     <string name="operation_failed">Operation failed: %s</string>
     <string name="msg_multi_select">Selected: %s</string>
+    <string name="msg_exported">Exported: %s</string>
+    <string name="msg_imported">Imported: %s</string>
     <string name="msg_text_copied">Copied: %s</string>
     <string name="msg_extract_apk">Extracted to: %s</string>
     <string name="msg_freeze">Froze: %s</string>

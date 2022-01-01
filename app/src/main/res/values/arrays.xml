@@ -15,6 +15,7 @@
         <item>@string/action_deferred_task</item>
         <item>@string/action_tag_set</item>
         <item>@string/action_create_shortcut</item>
+        <item>@string/action_export_clipboard</item>
         <item>@string/action_remove_home</item>
     </string-array>
     <string-array name="create_shortcut_entries">

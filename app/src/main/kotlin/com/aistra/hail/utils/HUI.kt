@@ -32,7 +32,9 @@ object HUI {
 
     fun openLink(url: String): Boolean = startActivity(uri = url)
 
-    fun copyText(text: String) = HailApp.app.getSystemService<ClipboardManager>()?.setPrimaryClip(
-        ClipData.newPlainText(HailApp.app.getString(R.string.app_name), text)
-    )
+    fun copyText(text: String) = HailApp.app.getSystemService<ClipboardManager>()
+        ?.setPrimaryClip(ClipData.newPlainText(HailApp.app.getString(R.string.app_name), text))
+
+    fun pasteText(): String? = HailApp.app.getSystemService<ClipboardManager>()
+        ?.primaryClip?.getItemAt(0)?.text?.toString()
 }
