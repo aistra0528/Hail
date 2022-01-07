@@ -111,7 +111,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
     }
 
     private fun onRedeem(): Boolean {
-        if (HailData.isActivated) {
+        if (HailData.isDeviceAid) {
             aboutViewModel.snack.value = R.string.msg_redeem
             return true
         }

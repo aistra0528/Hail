@@ -100,23 +100,27 @@ class HomeFragment : MainFragment(),
     private fun updateBarTitle() {
         activity.supportActionBar?.title = HomeAdapter.selectedList.size.let {
             if (it == 0) getString(R.string.app_name)
-            else getString(R.string.msg_multi_select, it.toString())
+            else getString(R.string.msg_selected, it.toString())
         }
     }
 
     override fun onItemClick(info: AppInfo) {
-        val pkg = info.packageName
         if (info.applicationInfo == null) {
             Snackbar.make(activity.fab, R.string.app_not_installed, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_remove_home) { removeCheckedApp(pkg) }.show()
+                .setAction(R.string.action_remove_home) { removeCheckedApp(info.packageName) }
+                .show()
             return
         }
-        HomeAdapter.run {
-            if (info in selectedList) selectedList.remove(info)
-            else selectedList.add(info)
+        if (HailData.tapToSelect) {
+            HomeAdapter.run {
+                if (info in selectedList) selectedList.remove(info)
+                else selectedList.add(info)
+            }
+            updateCurrentList()
+            updateBarTitle()
+            return
         }
-        updateCurrentList()
-        updateBarTitle()
+        launchApp(info.packageName)
     }
 
     override fun onItemLongClick(info: AppInfo): Boolean {
@@ -130,13 +134,7 @@ class HomeFragment : MainFragment(),
             actions.toMutableList().apply { removeAt(if (frozen) 1 else 2) }.toTypedArray()
         ) { _, which ->
             when (which) {
-                0 -> {
-                    if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false))
-                        updateCurrentList()
-                    app.packageManager.getLaunchIntentForPackage(pkg)?.let {
-                        startActivity(it)
-                    } ?: HUI.showToast(R.string.activity_not_found)
-                }
+                0 -> launchApp(pkg)
                 1 -> setAppFrozen(info.name, pkg, !frozen)
                 2 -> {
                     val values = resources.getIntArray(R.array.deferred_task_values)
@@ -161,14 +159,11 @@ class HomeFragment : MainFragment(),
                         .create().show()
                 }
                 3 -> {
-                    var checked = binding.tabs.selectedTabPosition
-                    if (info.tagId != HailData.tags[checked].second) {
-                        checked = -1
-                        for (i in HailData.tags.indices) {
-                            if (info.tagId == HailData.tags[i].second) {
-                                checked = i
-                                break
-                            }
+                    var checked = -1
+                    for (i in HailData.tags.indices) {
+                        if (info.tagId == HailData.tags[i].second) {
+                            checked = i
+                            break
                         }
                     }
                     MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
@@ -209,7 +204,7 @@ class HomeFragment : MainFragment(),
     private fun onMultiSelect(info: AppInfo, actions: Array<String>): Boolean = HomeAdapter.run {
         if (info in selectedList) {
             MaterialAlertDialogBuilder(activity)
-                .setTitle(getString(R.string.msg_multi_select, selectedList.size.toString()))
+                .setTitle(getString(R.string.msg_selected, selectedList.size.toString()))
                 .setItems(actions.filter {
                     it != getString(R.string.action_launch)
                             && it != getString(R.string.action_deferred_task)
@@ -227,17 +222,9 @@ class HomeFragment : MainFragment(),
                         2 -> {
                             var checked = -1
                             for (i in HailData.tags.indices) {
-                                if (selectedList[0].tagId == HailData.tags[i].second) {
+                                if (selectedList.all { it.tagId == HailData.tags[i].second }) {
                                     checked = i
                                     break
-                                }
-                            }
-                            if (checked != -1) {
-                                for (it in selectedList) {
-                                    if (it.tagId != HailData.tags[checked].second) {
-                                        checked = -1
-                                        break
-                                    }
                                 }
                             }
                             MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
@@ -245,10 +232,7 @@ class HomeFragment : MainFragment(),
                                     HailData.tags.map { it.first }.toTypedArray(),
                                     checked
                                 ) { dialog, index ->
-                                    selectedList.forEach {
-                                        if (it.tagId != HailData.tags[index].second)
-                                            it.tagId = HailData.tags[index].second
-                                    }
+                                    selectedList.forEach { it.tagId = HailData.tags[index].second }
                                     HailData.saveApps()
                                     deselect()
                                     dialog.cancel()
@@ -274,6 +258,14 @@ class HomeFragment : MainFragment(),
                 .create().show()
             true
         } else false
+    }
+
+    private fun launchApp(packageName: String) {
+        if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false))
+            updateCurrentList()
+        app.packageManager.getLaunchIntentForPackage(packageName)?.let {
+            startActivity(it)
+        } ?: HUI.showToast(R.string.activity_not_found)
     }
 
     private fun setAppFrozen(name: CharSequence, pkg: String, frozen: Boolean) = HUI.showToast(
@@ -323,7 +315,7 @@ class HomeFragment : MainFragment(),
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val tagName = input.editText.text.toString()
                 val tagId = tagName.hashCode()
-                if (tagName in HailData.tags.map { it.first } || tagId in HailData.tags.map { it.second }) return@setPositiveButton
+                if (HailData.tags.any { it.first == tagName || it.second == tagId }) return@setPositiveButton
                 binding.tabs.run {
                     if (list != null) {
                         HailData.tags.add(tagName to tagId)
@@ -398,7 +390,7 @@ class HomeFragment : MainFragment(),
         var i = 0
         for (index in 0 until json.length()) {
             val pkg = json.getString(index)
-            if (HPackages.getPackageInfoOrNull(pkg) != null && pkg !in HailData.checkedList.map { it.packageName }) {
+            if (HPackages.getPackageInfoOrNull(pkg) != null && HailData.checkedList.all { it.packageName != pkg }) {
                 HailData.addCheckedApp(pkg, false)
                 i++
             }

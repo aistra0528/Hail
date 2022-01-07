@@ -55,7 +55,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
             }
         }
 
-    fun refreshList(layout: SwipeRefreshLayout, query: String? = null) {
+    fun updateCurrentList(layout: SwipeRefreshLayout, query: String? = null) {
         layout.isRefreshing = true
         debounce?.cancel()
         debounce = object : TimerTask() {
@@ -69,7 +69,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
                 }
             }
         }
-        timer.schedule(debounce, 1000)
+        timer.schedule(debounce, 100)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(

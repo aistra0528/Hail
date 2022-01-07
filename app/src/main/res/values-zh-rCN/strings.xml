@@ -49,6 +49,7 @@
     <string name="msg_set_do">通过 adb 发出命令：\n%s</string>
     <string name="title_remove_do">移除设备所有者</string>
     <string name="msg_remove_do">将移除雹的设备所有者，移除后可能难以再次设置。\n已隐藏的应用在移除后仍会隐藏，请确保您已将重要的应用取消隐藏。</string>
+    <string name="tap_to_select">点按多选</string>
     <string name="sort_by">排序方式</string>
     <string name="sort_name">名称</string>
     <string name="sort_install">首次安装</string>
@@ -74,7 +75,7 @@
     <string name="activity_not_found">无可启动活动</string>
     <string name="shizuku_missing">Shizuku 失踪了（</string>
     <string name="operation_failed">操作失败：%s</string>
-    <string name="msg_multi_select">已选择：%s</string>
+    <string name="msg_selected">已选择：%s</string>
     <string name="msg_exported">已导出：%s</string>
     <string name="msg_imported">已导入：%s</string>
     <string name="msg_text_copied">已复制：%s</string>

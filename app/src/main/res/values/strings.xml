@@ -49,6 +49,7 @@
     <string name="msg_set_do">Issue the command from adb:\n%s</string>
     <string name="title_remove_do">Remove Device Owner</string>
     <string name="msg_remove_do">Device Owner will be removed, it might be difficult to set it again after removal.\nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
+    <string name="tap_to_select">Tap to multiselect</string>
     <string name="sort_by">Sort by</string>
     <string name="sort_name">Name</string>
     <string name="sort_install">First install</string>
@@ -74,7 +75,7 @@
     <string name="activity_not_found">Launch activity not found</string>
     <string name="shizuku_missing">Shizuku missing :(</string>
     <string name="operation_failed">Operation failed: %s</string>
-    <string name="msg_multi_select">Selected: %s</string>
+    <string name="msg_selected">Selected: %s</string>
     <string name="msg_exported">Exported: %s</string>
     <string name="msg_imported">Imported: %s</string>
     <string name="msg_text_copied">Copied: %s</string>

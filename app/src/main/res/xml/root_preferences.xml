@@ -9,6 +9,15 @@
         app:title="@string/working_mode"
         app:useSimpleSummaryProvider="true" />
 
+    <PreferenceCategory app:title="@string/title_home">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_outline_select_all"
+            app:key="tap_to_select"
+            app:title="@string/tap_to_select" />
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/title_apps">
 
         <ListPreference

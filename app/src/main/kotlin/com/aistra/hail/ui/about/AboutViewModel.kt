@@ -39,15 +39,12 @@ class AboutViewModel(val app: Application) : AndroidViewModel(app) {
         snack.value = when {
             result is String && result.isDigitsOnly() -> {
                 when (result.toInt()) {
-                    0 -> {
-                        HailData.setActivatedId()
-                        R.string.msg_redeem
-                    }
+                    0 -> R.string.msg_redeem_expired
                     1 -> {
-                        HailData.setActivatedId(hash)
+                        HailData.setAid()
                         R.string.msg_redeem
                     }
-                    else -> R.string.msg_redeem_expired
+                    else -> R.string.msg_redeem_invalid
                 }
             }
             result is FileNotFoundException -> R.string.msg_redeem_invalid

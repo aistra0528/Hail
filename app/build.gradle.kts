@@ -13,8 +13,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 31
-        versionCode = 8
-        versionName = "0.7.1"
+        versionCode = 9
+        versionName = "0.7.2"
         resourceConfigurations += arrayOf("en", "zh-rCN")
     }
     signingConfigs {
@@ -43,8 +43,8 @@ android {
     }
     applicationVariants.all {
         outputs.all {
-            if (this is com.android.build.gradle.internal.api.ApkVariantOutputImpl)
-                outputFileName = "Hail-v$versionName.apk"
+            (this as? com.android.build.gradle.internal.api.ApkVariantOutputImpl)
+                ?.outputFileName = "Hail-v$versionName.apk"
         }
     }
     kotlinOptions {

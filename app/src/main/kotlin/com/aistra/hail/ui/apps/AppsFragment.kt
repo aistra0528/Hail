@@ -40,13 +40,13 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                     onItemCheckedChangeListener = this@AppsFragment
                 }
             })
-            setOnRefreshListener { AppsAdapter.refreshList(this) }
+            setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AppsAdapter.refreshList(refreshLayout)
+        AppsAdapter.updateCurrentList(refreshLayout)
     }
 
     override fun onItemClick(info: PackageInfo) {
@@ -124,7 +124,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             SearchView.OnQueryTextListener {
             private var once = false
             override fun onQueryTextChange(newText: String): Boolean {
-                if (once) AppsAdapter.refreshList(refreshLayout, newText) else once = true
+                if (once) AppsAdapter.updateCurrentList(refreshLayout, newText) else once = true
                 refreshLayout.isEnabled = newText.isNullOrEmpty()
                 return true
             }

@@ -37,27 +37,24 @@ object HailData {
     const val SORT_UPDATE = "update"
     private const val KEY_ID = "id"
     private const val KEY_TAG = "tag"
-    private const val KEY_ACTIVATED_ID = "activated_id"
+    private const val KEY_AID = "aid"
+    private const val KEY_TAP_TO_SELECT = "tap_to_select"
     private const val SHOW_SYSTEM_APPS = "show_system_apps"
     private const val SHOW_UNFROZEN_APPS = "show_unfrozen_apps"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
+    val tapToSelect get() = sp.getBoolean(KEY_TAP_TO_SELECT, false)
     val showSystemApps get() = sp.getBoolean(SHOW_SYSTEM_APPS, false)
     val showUnfrozenApps get() = sp.getBoolean(SHOW_UNFROZEN_APPS, true)
 
-    val isActivated: Boolean
-        get() = sp.getString(KEY_ACTIVATED_ID, null).let {
-            it != null && (it == androidId || it.length == 64)
-        }
+    val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
-    fun setActivatedId(id: String = androidId) = sp.edit().putString(KEY_ACTIVATED_ID, id).apply()
+    fun setAid() = sp.edit().putString(KEY_AID, androidId).apply()
 
     private val androidId: String
-        get() = Settings.System.getString(
-            HailApp.app.contentResolver, Settings.Secure.ANDROID_ID
-        )
+        get() = Settings.System.getString(HailApp.app.contentResolver, Settings.Secure.ANDROID_ID)
 
     private val dir = "${HailApp.app.filesDir.path}/v1"
     private val appsPath = "$dir/apps.json"
