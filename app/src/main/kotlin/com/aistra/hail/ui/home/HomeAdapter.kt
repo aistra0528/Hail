@@ -40,7 +40,7 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
                 when {
                     info.selected -> setTextColor(context.getColorStateList(R.color.colorPrimary))
                     info.state == AppInfo.STATE_UNKNOWN -> setTextColor(context.getColorStateList(R.color.colorWarn))
-                    else -> setTextAppearance(R.style.TextAppearance_MaterialComponents_Body2)
+                    else -> setTextAppearance(R.style.TextAppearance_Material3_BodyMedium)
                 }
             }
         }
