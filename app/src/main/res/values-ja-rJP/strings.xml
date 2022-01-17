@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">雹</string>
-    <string name="app_libre">全ての機能を自由に使える！</string>
+    <string name="app_libre">全ての機能が自由に使える！</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="title_home">ホーム</string>
     <string name="title_apps">アプリ</string>
@@ -21,7 +21,7 @@
     <string name="action_freeze_all">全部無効化</string>
     <string name="action_unfreeze_all">全部有効化</string>
     <string name="action_lock">ロック</string>
-    <string name="action_lock_freeze">ロック時無効化</string>
+    <string name="action_lock_freeze">ロック＆無効化</string>
     <string name="action_launch">開く</string>
     <string name="action_freeze">無効化</string>
     <string name="action_unfreeze">有効化</string>
@@ -47,7 +47,7 @@
     <string name="mode_su_disable">スーパーユーザー - 無効化</string>
     <string name="mode_shizuku_disable">Shizuku - 無効化</string>
     <string name="title_set_do">デバイス管理者に設定</string>
-    <string name="msg_set_do">adb でコマンドを実行する\n%s</string>
+    <string name="msg_set_do">adb でコマンドを実行する：\n%s</string>
     <string name="title_remove_do">デバイス管理者を削除</string>
     <string name="msg_remove_do">これから「雹」のデバイス管理者権限を削除する、もう一度設定するには難しくなるかもしれません。\n「雹」で無効化したアプリは引き続き「隠す」状態になる、削除前に重要なアプリを有効化にするの確認してください。</string>
     <string name="tap_to_select">タップして複数選択</string>
@@ -89,4 +89,7 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分あと%2$s：%3$s</item>
     </plurals>
+    <string name="action_add_dynamic_shortcut">動的ショートカットに追加</string>
+    <string name="action_delete_dynamic_shortcut">動的ショートカットから削除</string>
+    <string name="action_delete_all_dynamic_shortcut">全ての動的ショートカットを削除</string>
 </resources>

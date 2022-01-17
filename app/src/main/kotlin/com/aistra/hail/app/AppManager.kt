@@ -1,6 +1,8 @@
 package com.aistra.hail.app
 
 import android.content.Intent
+import androidx.core.content.pm.ShortcutManagerCompat
+import android.content.Context
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.utils.*
 
@@ -33,4 +35,16 @@ object AppManager {
         }
         HUI.startActivity(Intent.ACTION_DELETE, HPackages.packageUri(packageName))
     }
+
+    fun isAddDynamicShortcut(packageName: String, context: Context): Boolean {
+        var check = false
+        val shortcutList = ShortcutManagerCompat.getDynamicShortcuts(context)
+        shortcutList.forEach{info ->
+            if (info.id == packageName) check = true}
+        return check
+    }
+
+    fun isMaxDynamicShortcutCount(context: Context): Boolean =
+        ShortcutManagerCompat.getDynamicShortcuts(context).size + 1 >=
+                ShortcutManagerCompat.getMaxShortcutCountPerActivity(context)
 }

@@ -88,4 +88,7 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分钟后%2$s：%3$s</item>
     </plurals>
+    <string name="action_add_dynamic_shortcut">添加到动态快捷方式</string>
+    <string name="action_delete_dynamic_shortcut">从动态快捷方式删除</string>
+    <string name="action_delete_all_dynamic_shortcut">删除全部动态快捷方式</string>
 </resources>

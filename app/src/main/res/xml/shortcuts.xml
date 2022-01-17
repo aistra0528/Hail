@@ -1,0 +1,10 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_round_frozen_shortcut">
+        <intent
+            android:targetPackage="com.aistra.hail"
+            android:action="com.aistra.hail.action.FREEZE_ALL" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

@@ -1,5 +1,6 @@
 package com.aistra.hail.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -129,9 +130,15 @@ class HomeFragment : MainFragment(),
         if (onMultiSelect(info, actions)) return true
         val pkg = info.packageName
         val frozen = AppManager.isAppFrozen(pkg)
+        val dynamicCheck = AppManager.isAddDynamicShortcut(pkg, app)
         val action = getString(if (frozen) R.string.action_unfreeze else R.string.action_freeze)
         MaterialAlertDialogBuilder(activity).setTitle(info.name).setItems(
-            actions.toMutableList().apply { removeAt(if (frozen) 1 else 2) }.toTypedArray()
+            actions.toMutableList().apply {
+                removeAt(if (frozen) 1 else 2)
+                if (!dynamicCheck) removeAt(8)
+                if (AppManager.isMaxDynamicShortcutCount(app) || dynamicCheck)
+                    removeAt(7)
+            }.toTypedArray()
         ) { _, which ->
             when (which) {
                 0 -> launchApp(pkg)
@@ -190,6 +197,7 @@ class HomeFragment : MainFragment(),
                 )
                 5 -> exportToClipboard(listOf(info))
                 6 -> removeCheckedApp(pkg)
+                7 -> setDynamicShortcut(info, dynamicCheck)
             }
         }.create().show()
         return true
@@ -209,6 +217,8 @@ class HomeFragment : MainFragment(),
                     it != getString(R.string.action_launch)
                             && it != getString(R.string.action_deferred_task)
                             && it != getString(R.string.action_create_shortcut)
+                            && it != getString(R.string.action_add_dynamic_shortcut)
+                            && it != getString(R.string.action_delete_dynamic_shortcut)
                 }.toTypedArray()) { _, which ->
                     when (which) {
                         0 -> {
@@ -448,6 +458,7 @@ class HomeFragment : MainFragment(),
             R.id.action_import_clipboard -> importFromClipboard()
             R.id.action_freeze_all -> setAllFrozen(true)
             R.id.action_unfreeze_all -> setAllFrozen(false)
+            R.id.action_delete_all_dynamic_shortcut -> deleteAllDynamicShortcut()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -475,5 +486,35 @@ class HomeFragment : MainFragment(),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setDynamicShortcut(info: AppInfo, flag: Boolean) {
+        if (flag) {
+            ShortcutManagerCompat.removeDynamicShortcuts(app, listOf(info.packageName))
+        } else {
+            val shortcut = ShortcutInfoCompat.Builder(app, info.packageName)
+                .setShortLabel(info.name)
+                .setLongLabel(info.name)
+                .setIcon(IconCompat.createWithBitmap(getBitmapFromDrawable(info.icon)))
+                .setIntent(Intent("com.aistra.hail.action.LAUNCH").putExtra("package",info.packageName))
+                .build()
+            ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
+        }
+    }
+
+    private fun getBitmapFromDrawable(drawable: Drawable): Bitmap {
+        val bmp = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bmp)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bmp
+    }
+
+    private fun deleteAllDynamicShortcut() {
+        ShortcutManagerCompat.removeAllDynamicShortcuts(app)
     }
 }
