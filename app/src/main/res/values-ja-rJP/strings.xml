@@ -1,12 +1,13 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">雹</string>
-    <string name="app_libre">全ての機能を自由に使える！</string>
+    <string name="app_libre">全ての機能が自由に使える！</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="title_home">ホーム</string>
     <string name="title_apps">アプリ</string>
     <string name="title_settings">設定</string>
-    <string name="title_about">雹について</string>
+    <string name="title_about">情報</string>
     <string name="label_default">デフォルト</string>
     <string name="label_version">バージョン</string>
     <string name="label_time">インストール日</string>
@@ -21,7 +22,7 @@
     <string name="action_freeze_all">全部無効化</string>
     <string name="action_unfreeze_all">全部有効化</string>
     <string name="action_lock">ロック</string>
-    <string name="action_lock_freeze">ロック時無効化</string>
+    <string name="action_lock_freeze">ロック＆無効化</string>
     <string name="action_launch">開く</string>
     <string name="action_freeze">無効化</string>
     <string name="action_unfreeze">有効化</string>
@@ -47,7 +48,7 @@
     <string name="mode_su_disable">スーパーユーザー - 無効化</string>
     <string name="mode_shizuku_disable">Shizuku - 無効化</string>
     <string name="title_set_do">デバイス管理者に設定</string>
-    <string name="msg_set_do">adb でコマンドを実行する\n%s</string>
+    <string name="msg_set_do">adb でコマンドを実行する：\n%s</string>
     <string name="title_remove_do">デバイス管理者を削除</string>
     <string name="msg_remove_do">これから「雹」のデバイス管理者権限を削除する、もう一度設定するには難しくなるかもしれません。\n「雹」で無効化したアプリは引き続き「隠す」状態になる、削除前に重要なアプリを有効化にするの確認してください。</string>
     <string name="tap_to_select">タップして複数選択</string>
@@ -57,7 +58,7 @@
     <string name="sort_update">更新時間</string>
     <string name="title_system_apps">システムアプリのみ</string>
     <string name="msg_system_apps">システムアプリを無効化すると、「ブートループ」が発生する可能性があります。</string>
-    <string name="show_unfrozen_apps">有効したアプリを表示する</string>
+    <string name="show_unfrozen_apps">有効なアプリを表示</string>
     <string name="title_donate">サポートを感謝する！</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
