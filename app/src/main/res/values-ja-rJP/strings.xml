@@ -6,7 +6,7 @@
     <string name="title_home">ホーム</string>
     <string name="title_apps">アプリ</string>
     <string name="title_settings">設定</string>
-    <string name="title_about">雹について</string>
+    <string name="title_about">情報</string>
     <string name="label_default">デフォルト</string>
     <string name="label_version">バージョン</string>
     <string name="label_time">インストール日</string>
@@ -57,7 +57,7 @@
     <string name="sort_update">更新時間</string>
     <string name="title_system_apps">システムアプリのみ</string>
     <string name="msg_system_apps">システムアプリを無効化すると、「ブートループ」が発生する可能性があります。</string>
-    <string name="show_unfrozen_apps">有効したアプリを表示する</string>
+    <string name="show_unfrozen_apps">有効したアプリを表示</string>
     <string name="title_donate">サポートを感謝する！</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
