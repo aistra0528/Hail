@@ -35,16 +35,4 @@ object AppManager {
         }
         HUI.startActivity(Intent.ACTION_DELETE, HPackages.packageUri(packageName))
     }
-
-    fun isAddDynamicShortcut(packageName: String, context: Context): Boolean {
-        var check = false
-        val shortcutList = ShortcutManagerCompat.getDynamicShortcuts(context)
-        shortcutList.forEach{info ->
-            if (info.id == packageName) check = true}
-        return check
-    }
-
-    fun isMaxDynamicShortcutCount(context: Context): Boolean =
-        ShortcutManagerCompat.getDynamicShortcuts(context).size + 1 >=
-                ShortcutManagerCompat.getMaxShortcutCountPerActivity(context)
 }

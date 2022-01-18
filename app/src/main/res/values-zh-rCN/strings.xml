@@ -91,4 +91,9 @@
     <string name="action_add_dynamic_shortcut">添加到动态快捷方式</string>
     <string name="action_delete_dynamic_shortcut">从动态快捷方式删除</string>
     <string name="action_delete_all_dynamic_shortcut">删除全部动态快捷方式</string>
+    <string name="auto_freeze_after_lock">锁屏后自动冻结</string>
+    <string name="foreground_service_channel_name">前台服务</string>
+    <string name="foreground_service_channel_description">包含计划任务</string>
+    <string name="foreground_service_notification_title">正在运行任务</string>
+    <string name="foreground_service_notification_message">长按进入设置来隐藏通知</string>
 </resources>

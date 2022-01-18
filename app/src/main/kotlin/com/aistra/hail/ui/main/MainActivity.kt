@@ -1,5 +1,7 @@
 package com.aistra.hail.ui.main
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -9,8 +11,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.aistra.hail.HailApp
 import com.aistra.hail.R
+import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
+import com.aistra.hail.services.AutoFreezeService
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -47,5 +52,22 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     ) {
         if (destination.id == R.id.nav_home) fab.show()
         else fab.hide()
+    }
+
+    fun startAutoFreezeService() {
+        if (HailData.autoFreezeAfterLock) {
+            val intent = Intent(HailApp.app, AutoFreezeService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                applicationContext.startForegroundService(intent)
+            else
+                applicationContext.startService(intent)
+        }
+    }
+
+    fun stopAutoFreezeService() {
+        if (HailData.autoFreezeAfterLock) {
+            val intent = Intent(HailApp.app, AutoFreezeService::class.java)
+            applicationContext.stopService(intent)
+        }
     }
 }

@@ -77,4 +77,5 @@ dependencies {
     implementation("com.airbnb.android:lottie:4.2.2")
     implementation("dev.rikka.shizuku:api:12.1.0")
     implementation("dev.rikka.shizuku:provider:12.1.0")
+    implementation("com.android.support:support-compat:31.0.0")
 }
