@@ -84,7 +84,7 @@ class ApiActivity : AppCompatActivity() {
                 HUI.showToast(
                     if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
                 )
-                stopAutoFreezeService()
+                if (frozen) stopAutoFreezeService() else startAutoFreezeService()
             }
         }
     }
