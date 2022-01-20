@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">雹</string>
-    <string name="app_libre">您可自由享用所有功能！</string>
     <string name="app_slogan">实现冻结自由！</string>
     <string name="title_home">首页</string>
     <string name="title_apps">应用</string>
@@ -28,7 +27,7 @@
     <string name="action_tag_add">添加标签</string>
     <string name="action_tag_remove">移除标签</string>
     <string name="action_tag_set">设置标签</string>
-    <string name="action_create_shortcut">创建快捷方式</string>
+    <string name="action_add_pin_shortcut">添加到主屏幕</string>
     <string name="action_export_clipboard">导出到剪切板</string>
     <string name="action_import_clipboard">从剪切板导入</string>
     <string name="action_remove_home">从首页中移除</string>
@@ -88,4 +87,9 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分钟后%2$s：%3$s</item>
     </plurals>
+    <string name="action_clear_dynamic_shortcut">清除主屏幕动态</string>
+    <string name="auto_freeze_after_lock">锁屏后自动冻结</string>
+    <string name="auto_freeze_channel_name">自动冻结</string>
+    <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
+    <string name="auto_freeze_notification_message">长按显示通知设置</string>
 </resources>

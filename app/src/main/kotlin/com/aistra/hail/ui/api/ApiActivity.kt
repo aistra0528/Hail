@@ -3,16 +3,16 @@ package com.aistra.hail.ui.api
 import android.content.ActivityNotFoundException
 import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
+import com.aistra.hail.ui.HailActivity
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class ApiActivity : AppCompatActivity() {
+class ApiActivity : HailActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
@@ -43,8 +43,10 @@ class ApiActivity : AppCompatActivity() {
         } ?: throw IllegalArgumentException("package must not be null")
 
     private fun launchApp(target: String) {
-        if (AppManager.isAppFrozen(target) && AppManager.setAppFrozen(target, false).not())
-            throw IllegalStateException(getString(R.string.permission_denied))
+        if (AppManager.isAppFrozen(target)) {
+            if (AppManager.setAppFrozen(target, false)) setAutoFreezeService(true)
+            else throw IllegalStateException(getString(R.string.permission_denied))
+        }
         packageManager.getLaunchIntentForPackage(target)?.let {
             startActivity(it)
         } ?: throw ActivityNotFoundException(getString(R.string.activity_not_found))
@@ -55,33 +57,43 @@ class ApiActivity : AppCompatActivity() {
             throw SecurityException("package not checked")
         AppManager.isAppFrozen(target) != frozen && AppManager.setAppFrozen(target, frozen).not() ->
             throw IllegalStateException(getString(R.string.permission_denied))
-        else -> HUI.showToast(
-            if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-            HPackages.getApplicationInfoOrNull(target)?.loadLabel(packageManager) ?: target
-        )
+        else -> {
+            HUI.showToast(
+                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
+                HPackages.getApplicationInfoOrNull(target)?.loadLabel(packageManager) ?: target
+            )
+            setAutoFreezeService()
+        }
     }
 
     private fun setAllFrozen(frozen: Boolean) {
         var i = 0
         var denied = false
+        var name = String()
         HailData.checkedList.forEach {
             when {
                 AppManager.isAppFrozen(it.packageName) == frozen -> return@forEach
-                AppManager.setAppFrozen(it.packageName, frozen) -> i++
+                AppManager.setAppFrozen(it.packageName, frozen) -> {
+                    i++
+                    name = it.name.toString()
+                }
                 it.packageName != packageName && it.applicationInfo != null -> denied = true
             }
         }
         when {
             denied && i == 0 -> throw IllegalStateException(getString(R.string.permission_denied))
-            i > 0 -> HUI.showToast(
-                if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
-            )
+            i > 0 -> {
+                HUI.showToast(
+                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
+                    if (i > 1) i.toString() else name
+                )
+                setAutoFreezeService(!frozen)
+            }
         }
     }
 
     private fun lockScreen(freezeAll: Boolean) {
         if (freezeAll) setAllFrozen(true)
-        if (AppManager.lockScreen.not())
-            throw IllegalStateException(getString(R.string.permission_denied))
+        if (AppManager.lockScreen.not()) throw IllegalStateException(getString(R.string.permission_denied))
     }
 }

@@ -14,7 +14,7 @@
         <item>@string/action_unfreeze</item>
         <item>@string/action_deferred_task</item>
         <item>@string/action_tag_set</item>
-        <item>@string/action_create_shortcut</item>
+        <item>@string/action_add_pin_shortcut</item>
         <item>@string/action_export_clipboard</item>
         <item>@string/action_remove_home</item>
     </string-array>

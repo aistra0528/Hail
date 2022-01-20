@@ -86,7 +86,7 @@ class HomeFragment : MainFragment(),
     override fun onStart() {
         super.onStart()
         if (activity.fab.hasOnClickListeners()) updateCurrentList()
-        activity.fab.setOnClickListener { setAllFrozen(true, HomeAdapter.currentList) }
+        activity.fab.setOnClickListener { setListFrozen(true) }
     }
 
     private fun updateCurrentList() {
@@ -95,6 +95,7 @@ class HomeFragment : MainFragment(),
                     || (query.isNotEmpty() &&
                     (it.packageName.contains(query, true) || it.name.contains(query, true)))
         })
+        activity.setAutoFreezeService()
     }
 
     private fun updateBarTitle() {
@@ -120,7 +121,7 @@ class HomeFragment : MainFragment(),
             updateBarTitle()
             return
         }
-        launchApp(info.packageName)
+        launchApp(info)
     }
 
     override fun onItemLongClick(info: AppInfo): Boolean {
@@ -134,8 +135,8 @@ class HomeFragment : MainFragment(),
             actions.toMutableList().apply { removeAt(if (frozen) 1 else 2) }.toTypedArray()
         ) { _, which ->
             when (which) {
-                0 -> launchApp(pkg)
-                1 -> setAppFrozen(info.name, pkg, !frozen)
+                0 -> launchApp(info)
+                1 -> setListFrozen(!frozen, listOf(info))
                 2 -> {
                     val values = resources.getIntArray(R.array.deferred_task_values)
                     val entries = arrayOfNulls<String>(values.size)
@@ -184,7 +185,7 @@ class HomeFragment : MainFragment(),
                         .setNegativeButton(android.R.string.cancel, null)
                         .create().show()
                 }
-                4 -> createShortcut(
+                4 -> addPinShortcut(
                     info.icon, pkg, info.name,
                     HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
@@ -208,15 +209,15 @@ class HomeFragment : MainFragment(),
                 .setItems(actions.filter {
                     it != getString(R.string.action_launch)
                             && it != getString(R.string.action_deferred_task)
-                            && it != getString(R.string.action_create_shortcut)
+                            && it != getString(R.string.action_add_pin_shortcut)
                 }.toTypedArray()) { _, which ->
                     when (which) {
                         0 -> {
-                            setAllFrozen(true, selectedList, false)
+                            setListFrozen(true, selectedList, false)
                             deselect()
                         }
                         1 -> {
-                            setAllFrozen(false, selectedList, false)
+                            setListFrozen(false, selectedList, false)
                             deselect()
                         }
                         2 -> {
@@ -260,37 +261,31 @@ class HomeFragment : MainFragment(),
         } else false
     }
 
-    private fun launchApp(packageName: String) {
-        if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false))
+    private fun launchApp(info: AppInfo) {
+        if (AppManager.isAppFrozen(info.packageName)
+            && AppManager.setAppFrozen(info.packageName, false)
+        ) {
             updateCurrentList()
-        app.packageManager.getLaunchIntentForPackage(packageName)?.let {
+        }
+        app.packageManager.getLaunchIntentForPackage(info.packageName)?.let {
+            addDynamicShortcut(info)
             startActivity(it)
         } ?: HUI.showToast(R.string.activity_not_found)
     }
 
-    private fun setAppFrozen(name: CharSequence, pkg: String, frozen: Boolean) = HUI.showToast(
-        when {
-            AppManager.isAppFrozen(pkg) == frozen || AppManager.setAppFrozen(pkg, frozen) -> {
-                updateCurrentList()
-                getString(
-                    if (AppManager.isAppFrozen(pkg)) R.string.msg_freeze else R.string.msg_unfreeze,
-                    name
-                )
-            }
-            pkg == app.packageName -> getString(R.string.app_slogan)
-            else -> getString(R.string.permission_denied)
-        }
-    )
-
-    private fun setAllFrozen(
+    private fun setListFrozen(
         frozen: Boolean, list: List<AppInfo> = HailData.checkedList, updateList: Boolean = true
     ) {
         var i = 0
         var denied = false
+        var name = String()
         list.forEach {
             when {
                 AppManager.isAppFrozen(it.packageName) == frozen -> return@forEach
-                AppManager.setAppFrozen(it.packageName, frozen) -> i++
+                AppManager.setAppFrozen(it.packageName, frozen) -> {
+                    i++
+                    name = it.name.toString()
+                }
                 it.packageName != app.packageName && it.applicationInfo != null -> denied = true
             }
         }
@@ -299,7 +294,8 @@ class HomeFragment : MainFragment(),
             i > 0 -> {
                 if (updateList) updateCurrentList()
                 HUI.showToast(
-                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
+                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
+                    if (i > 1) i.toString() else name
                 )
             }
         }
@@ -351,27 +347,45 @@ class HomeFragment : MainFragment(),
             .create().show()
     }
 
-    private fun createShortcut(icon: Drawable, id: String, label: CharSequence, intent: Intent) {
+    private fun addPinShortcut(icon: Drawable, id: String, label: CharSequence, intent: Intent) {
         if (ShortcutManagerCompat.isRequestPinShortcutSupported(app)) {
-            ShortcutManagerCompat.requestPinShortcut(
-                app, ShortcutInfoCompat.Builder(app, id)
-                    .setIcon(getAppIcon(icon))
-                    .setShortLabel(label)
-                    .setIntent(intent)
-                    .build(), null
-            )
-        } else HUI.showToast(R.string.operation_failed, getString(R.string.action_create_shortcut))
+            val shortcut = ShortcutInfoCompat.Builder(app, id)
+                .setIcon(getAppIcon(icon))
+                .setShortLabel(label)
+                .setIntent(intent)
+                .build()
+            ShortcutManagerCompat.requestPinShortcut(app, shortcut, null)
+        } else HUI.showToast(R.string.operation_failed, getString(R.string.action_add_pin_shortcut))
+    }
+
+    private fun addDynamicShortcut(info: AppInfo) {
+        if (isMaxDynamicShortcutCount()) removeAllDynamicShortcuts()
+        val shortcut = ShortcutInfoCompat.Builder(app, info.packageName)
+            .setIcon(getAppIcon(info.icon))
+            .setShortLabel(info.name)
+            .setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, info.packageName))
+            .build()
+        ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
+    }
+
+    private fun isMaxDynamicShortcutCount(): Boolean =
+        ShortcutManagerCompat.getDynamicShortcuts(app).size + 1 >=
+                ShortcutManagerCompat.getMaxShortcutCountPerActivity(app)
+
+    private fun removeAllDynamicShortcuts() {
+        ShortcutManagerCompat.removeAllDynamicShortcuts(app)
     }
 
     private fun getAppIcon(drawable: Drawable): IconCompat =
-        IconCompat.createWithBitmap(Bitmap.createBitmap(
-            drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
-        ).also {
-            with(Canvas(it)) {
-                drawable.setBounds(0, 0, width, height)
-                drawable.draw(this)
-            }
-        })
+        IconCompat.createWithBitmap(
+            Bitmap.createBitmap(
+                drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+            ).also {
+                with(Canvas(it)) {
+                    drawable.setBounds(0, 0, width, height)
+                    drawable.draw(this)
+                }
+            })
 
     private fun exportToClipboard(list: List<AppInfo>) {
         HUI.copyText(JSONArray().run {
@@ -411,30 +425,33 @@ class HomeFragment : MainFragment(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_create_shortcut -> {
-                MaterialAlertDialogBuilder(activity).setTitle(R.string.action_create_shortcut)
+            R.id.action_freeze_all -> setListFrozen(true)
+            R.id.action_unfreeze_all -> setListFrozen(false)
+            R.id.action_import_clipboard -> importFromClipboard()
+            R.id.action_add_pin_shortcut -> {
+                MaterialAlertDialogBuilder(activity).setTitle(R.string.action_add_pin_shortcut)
                     .setItems(R.array.create_shortcut_entries) { _, which ->
                         val icon = app.applicationInfo.loadIcon(app.packageManager)
                         when (which) {
-                            0 -> createShortcut(
+                            0 -> addPinShortcut(
                                 icon,
                                 HailApi.ACTION_FREEZE_ALL,
                                 getString(R.string.action_freeze_all),
                                 Intent(HailApi.ACTION_FREEZE_ALL)
                             )
-                            1 -> createShortcut(
+                            1 -> addPinShortcut(
                                 icon,
                                 HailApi.ACTION_UNFREEZE_ALL,
                                 getString(R.string.action_unfreeze_all),
                                 Intent(HailApi.ACTION_UNFREEZE_ALL)
                             )
-                            2 -> createShortcut(
+                            2 -> addPinShortcut(
                                 icon,
                                 HailApi.ACTION_LOCK,
                                 getString(R.string.action_lock),
                                 Intent(HailApi.ACTION_LOCK)
                             )
-                            3 -> createShortcut(
+                            3 -> addPinShortcut(
                                 icon,
                                 HailApi.ACTION_LOCK_FREEZE,
                                 getString(R.string.action_lock_freeze),
@@ -445,9 +462,7 @@ class HomeFragment : MainFragment(),
                     .setNegativeButton(android.R.string.cancel, null)
                     .create().show()
             }
-            R.id.action_import_clipboard -> importFromClipboard()
-            R.id.action_freeze_all -> setAllFrozen(true)
-            R.id.action_unfreeze_all -> setAllFrozen(false)
+            R.id.action_clear_dynamic_shortcut -> removeAllDynamicShortcuts()
         }
         return super.onOptionsItemSelected(item)
     }

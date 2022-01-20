@@ -23,5 +23,5 @@
         android:ellipsize="end"
         android:gravity="center_horizontal"
         android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 </LinearLayout>
