@@ -44,9 +44,6 @@
                 <action android:name="${applicationId}.action.UNFREEZE_ALL" />
                 <action android:name="${applicationId}.action.LOCK" />
                 <action android:name="${applicationId}.action.LOCK_FREEZE" />
-                <action android:name="${applicationId}.action.START_AUTO_FREEZE_SERVICE" />
-                <action android:name="${applicationId}.action.STOP_AUTO_FREEZE_SERVICE" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -71,12 +68,9 @@
         </receiver>
         <receiver
             android:name=".receiver.ScreenOffReceiver"
-            android:description="@string/auto_freeze_after_lock"
-            android:exported="false"
-            android:enabled="true" />
+            android:exported="false" />
         <service
             android:name=".services.AutoFreezeService"
-            android:description="@string/auto_freeze_after_lock"
             android:exported="false" />
     </application>
 

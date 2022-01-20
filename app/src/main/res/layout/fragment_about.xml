@@ -38,12 +38,12 @@
                     android:layout_marginTop="@dimen/control_margin"
                     android:layout_marginBottom="@dimen/control_margin"
                     android:text="@string/app_name"
-                    android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_libre" />
+                    android:text="@string/app_slogan" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -85,7 +85,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/label_version"
-                            android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/desc_version"
@@ -119,7 +119,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/label_time"
-                            android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/desc_time"
@@ -165,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_telegram"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -190,7 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_qq"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -215,7 +215,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_coolapk"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -240,7 +240,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_donate"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -278,7 +278,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_github"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -303,7 +303,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_translate"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -328,7 +328,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/action_licenses"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

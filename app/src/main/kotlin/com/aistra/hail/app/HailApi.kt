@@ -27,8 +27,4 @@ object HailApi {
 
     fun getIntentForPackage(action: String, packageName: String) =
         Intent(action).putExtra(HailData.KEY_PACKAGE, packageName)
-
-    const val ACTION_START_AUTO_FREEZE_SERVICE = "${BuildConfig.APPLICATION_ID}.action.START_AUTO_FREEZE_SERVICE"
-
-    const val ACTION_STOP_AUTO_FREEZE_SERVICE = "${BuildConfig.APPLICATION_ID}.action.STOP_AUTO_FREEZE_SERVICE"
 }

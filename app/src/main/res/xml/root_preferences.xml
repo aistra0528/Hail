@@ -11,7 +11,7 @@
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
-        app:icon="@drawable/ic_round_frozen"
+        app:icon="@drawable/ic_outline_lock"
         app:key="auto_freeze_after_lock"
         app:title="@string/auto_freeze_after_lock" />
 

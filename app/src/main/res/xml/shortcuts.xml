@@ -1,10 +1,11 @@
-<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="n_mr1">
     <shortcut
-        android:enabled="true"
-        android:icon="@drawable/ic_round_frozen_shortcut">
-        <intent
-            android:targetPackage="com.aistra.hail"
-            android:action="com.aistra.hail.action.FREEZE_ALL" />
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutId="static_freeze_all"
+        android:shortcutShortLabel="@string/action_freeze_all">
+        <intent android:action="com.aistra.hail.action.FREEZE_ALL" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
 </shortcuts>

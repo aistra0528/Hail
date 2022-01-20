@@ -14,7 +14,7 @@ android {
         minSdk = 23
         targetSdk = 31
         versionCode = 9
-        versionName = "0.7.2"
+        versionName = "0.8.0"
         resourceConfigurations += arrayOf("en", "ja-rJP", "zh-rCN")
     }
     signingConfigs {
@@ -74,8 +74,6 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.work:work-runtime-ktx:2.7.1")
     implementation("com.google.android.material:material:1.5.0")
-    implementation("com.airbnb.android:lottie:4.2.2")
     implementation("dev.rikka.shizuku:api:12.1.0")
     implementation("dev.rikka.shizuku:provider:12.1.0")
-    implementation("com.android.support:support-compat:31.0.0")
 }

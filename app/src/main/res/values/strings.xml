@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Hail</string>
-    <string name="app_libre">Enjoy all features freely!</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="title_home">Home</string>
     <string name="title_apps">Apps</string>
@@ -28,7 +27,7 @@
     <string name="action_tag_add">Add tag</string>
     <string name="action_tag_remove">Remove tag</string>
     <string name="action_tag_set">Set tag</string>
-    <string name="action_create_shortcut">Create shortcut</string>
+    <string name="action_add_pin_shortcut">Add to Home screen</string>
     <string name="action_export_clipboard">Export to Clipboard</string>
     <string name="action_import_clipboard">Import from Clipboard</string>
     <string name="action_remove_home">Remove from Home</string>
@@ -90,12 +89,9 @@
         <item quantity="one">%2$s after %1$d minute: %3$s</item>
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
-    <string name="action_add_dynamic_shortcut">Add to dynamic shortcut</string>
-    <string name="action_delete_dynamic_shortcut">Delete from dynamic shortcut</string>
-    <string name="action_delete_all_dynamic_shortcut">Delete all dynamic shortcut</string>
-    <string name="auto_freeze_after_lock">Auto freeze after Screen Locked</string>
-    <string name="foreground_service_channel_name">Foreground Service</string>
-    <string name="foreground_service_channel_description">Include scheduled tasks</string>
-    <string name="foreground_service_notification_title">running task</string>
-    <string name="foreground_service_notification_message">Long press to hide notification</string>
+    <string name="action_clear_dynamic_shortcut">Clear all dynamic shortcut</string>
+    <string name="auto_freeze_after_lock">Auto freeze after Screen locked</string>
+    <string name="auto_freeze_channel_name">Auto freeze</string>
+    <string name="auto_freeze_notification_title">Auto freeze service is running</string>
+    <string name="auto_freeze_notification_message">Long press to show notification settings</string>
 </resources>

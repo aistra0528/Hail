@@ -9,14 +9,6 @@
         app:showAsAction="always|collapseActionView"
         tools:ignore="AlwaysShowAction" />
     <item
-        android:id="@+id/action_create_shortcut"
-        android:title="@string/action_create_shortcut"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_import_clipboard"
-        android:title="@string/action_import_clipboard"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_freeze_all"
         android:title="@string/action_freeze_all"
         app:showAsAction="never" />
@@ -25,7 +17,15 @@
         android:title="@string/action_unfreeze_all"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_delete_all_dynamic_shortcut"
-        android:title="@string/action_delete_all_dynamic_shortcut"
+        android:id="@+id/action_import_clipboard"
+        android:title="@string/action_import_clipboard"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_add_pin_shortcut"
+        android:title="@string/action_add_pin_shortcut"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_clear_dynamic_shortcut"
+        android:title="@string/action_clear_dynamic_shortcut"
         app:showAsAction="never" />
 </menu>

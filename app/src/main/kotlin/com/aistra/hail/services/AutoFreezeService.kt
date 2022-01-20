@@ -3,19 +3,18 @@ package com.aistra.hail.services
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.content.getSystemService
 import com.aistra.hail.R
 import com.aistra.hail.receiver.ScreenOffReceiver
 
 class AutoFreezeService : Service() {
-    private val channelID = "foregroundService"
-    private lateinit var mReceiver : ScreenOffReceiver
-    private lateinit var mIntentFilter : IntentFilter
+    private val channelID = javaClass.simpleName
+    private lateinit var lockReceiver: ScreenOffReceiver
 
     override fun onBind(intent: Intent?): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")
@@ -24,8 +23,8 @@ class AutoFreezeService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
         val notification = NotificationCompat.Builder(this, channelID)
-            .setContentTitle(getString(R.string.foreground_service_notification_title))
-            .setContentText(getString(R.string.foreground_service_notification_message))
+            .setContentTitle(getString(R.string.auto_freeze_notification_title))
+            .setContentText(getString(R.string.auto_freeze_notification_message))
             .setSmallIcon(R.drawable.ic_round_frozen)
             .build()
         startForeground(100, notification)
@@ -36,16 +35,12 @@ class AutoFreezeService : Service() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.foreground_service_channel_name)
-            val descriptionText = getString(R.string.foreground_service_channel_description)
+            val name = getString(R.string.auto_freeze_channel_name)
             val importance = NotificationManager.IMPORTANCE_LOW
-            val channel = NotificationChannel(channelID, name, importance).apply {
-                description = descriptionText
-            }
+            val channel = NotificationChannel(channelID, name, importance)
             // Register the channel with the system
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+            val notificationManager = getSystemService<NotificationManager>()
+            notificationManager?.createNotificationChannel(channel)
         }
     }
 
@@ -55,15 +50,13 @@ class AutoFreezeService : Service() {
     }
 
     private fun registerScreenReceiver() {
-        mReceiver = ScreenOffReceiver()
-        mIntentFilter = IntentFilter()
-        mIntentFilter.addAction(Intent.ACTION_SCREEN_OFF)
-        registerReceiver(mReceiver, mIntentFilter)
+        lockReceiver = ScreenOffReceiver()
+        registerReceiver(lockReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(mReceiver)
+        unregisterReceiver(lockReceiver)
         stopForeground(true)
     }
 }

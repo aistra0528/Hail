@@ -1,8 +1,6 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">雹</string>
-    <string name="app_libre">全ての機能が自由に使える！</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="title_home">ホーム</string>
     <string name="title_apps">アプリ</string>
@@ -30,7 +28,7 @@
     <string name="action_tag_add">タグを追加</string>
     <string name="action_tag_remove">タグを削除</string>
     <string name="action_tag_set">タグを設定</string>
-    <string name="action_create_shortcut">ショートカットを作成</string>
+    <string name="action_add_pin_shortcut">ショートカットを作成</string>
     <string name="action_export_clipboard">クリップボードにエクスポート</string>
     <string name="action_import_clipboard">クリップボードからインポート</string>
     <string name="action_remove_home">ホームから削除</string>
@@ -90,12 +88,9 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分あと%2$s：%3$s</item>
     </plurals>
-    <string name="action_add_dynamic_shortcut">動的ショートカットに追加</string>
-    <string name="action_delete_dynamic_shortcut">動的ショートカットから削除</string>
-    <string name="action_delete_all_dynamic_shortcut">全ての動的ショートカットを削除</string>
+    <string name="action_clear_dynamic_shortcut">全ての動的ショートカットを削除</string>
     <string name="auto_freeze_after_lock">画面ロック後自動無効化</string>
-    <string name="foreground_service_channel_name">フォアグラウンド サービス</string>
-    <string name="foreground_service_channel_description">スケジュールされたタスクが含めている</string>
-    <string name="foreground_service_notification_title">実行中のタスク</string>
-    <string name="foreground_service_notification_message">長押して通知を非表示</string>
+    <string name="auto_freeze_channel_name">自動無効化</string>
+    <string name="auto_freeze_notification_title">実行中のタスク</string>
+    <string name="auto_freeze_notification_message">長押して通知を非表示</string>
 </resources>
