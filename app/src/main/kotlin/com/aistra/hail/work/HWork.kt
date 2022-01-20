@@ -24,4 +24,13 @@ object HWork {
             ).setInitialDelay(minutes, TimeUnit.MINUTES).build()
         )
     }
+
+    fun setAutoFreeze() {
+        WorkManager.getInstance(HailApp.app).enqueueUniqueWork(
+            "AutoFreeze",
+            ExistingWorkPolicy.KEEP,
+            OneTimeWorkRequestBuilder<AutoFreezeWorker>()
+                .setInitialDelay(5, TimeUnit.SECONDS).build()
+        )
+    }
 }

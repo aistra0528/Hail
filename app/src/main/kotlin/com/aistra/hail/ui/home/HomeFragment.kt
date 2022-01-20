@@ -95,6 +95,14 @@ class HomeFragment : MainFragment(),
                     || (query.isNotEmpty() &&
                     (it.packageName.contains(query, true) || it.name.contains(query, true)))
         })
+        if (HailData.autoFreezeAfterLock) {
+            var hasUnFrozen = false
+            HailData.checkedList.forEach {
+                if (!AppManager.isAppFrozen(it.packageName)) hasUnFrozen = true
+            }
+            if (hasUnFrozen) activity.startAutoFreezeService()
+            else activity.stopAutoFreezeService()
+        }
     }
 
     private fun updateBarTitle() {
@@ -129,9 +137,15 @@ class HomeFragment : MainFragment(),
         if (onMultiSelect(info, actions)) return true
         val pkg = info.packageName
         val frozen = AppManager.isAppFrozen(pkg)
+        val dynamicCheck = isAddDynamicShortcut(pkg)
         val action = getString(if (frozen) R.string.action_unfreeze else R.string.action_freeze)
         MaterialAlertDialogBuilder(activity).setTitle(info.name).setItems(
-            actions.toMutableList().apply { removeAt(if (frozen) 1 else 2) }.toTypedArray()
+            actions.toMutableList().apply {
+                removeAt(if (frozen) 1 else 2)
+                if (!dynamicCheck) removeAt(8)
+                if (isMaxDynamicShortcutCount() || dynamicCheck)
+                    removeAt(7)
+            }.toTypedArray()
         ) { _, which ->
             when (which) {
                 0 -> launchApp(pkg)
@@ -190,6 +204,7 @@ class HomeFragment : MainFragment(),
                 )
                 5 -> exportToClipboard(listOf(info))
                 6 -> removeCheckedApp(pkg)
+                7 -> setDynamicShortcut(info, dynamicCheck)
             }
         }.create().show()
         return true
@@ -209,6 +224,8 @@ class HomeFragment : MainFragment(),
                     it != getString(R.string.action_launch)
                             && it != getString(R.string.action_deferred_task)
                             && it != getString(R.string.action_create_shortcut)
+                            && it != getString(R.string.action_add_dynamic_shortcut)
+                            && it != getString(R.string.action_delete_dynamic_shortcut)
                 }.toTypedArray()) { _, which ->
                     when (which) {
                         0 -> {
@@ -261,8 +278,10 @@ class HomeFragment : MainFragment(),
     }
 
     private fun launchApp(packageName: String) {
-        if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false))
+        if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false)) {
             updateCurrentList()
+            activity.startAutoFreezeService()
+        }
         app.packageManager.getLaunchIntentForPackage(packageName)?.let {
             startActivity(it)
         } ?: HUI.showToast(R.string.activity_not_found)
@@ -301,6 +320,7 @@ class HomeFragment : MainFragment(),
                 HUI.showToast(
                     if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, i.toString()
                 )
+                if (frozen) activity.stopAutoFreezeService() else activity.startAutoFreezeService()
             }
         }
     }
@@ -448,6 +468,7 @@ class HomeFragment : MainFragment(),
             R.id.action_import_clipboard -> importFromClipboard()
             R.id.action_freeze_all -> setAllFrozen(true)
             R.id.action_unfreeze_all -> setAllFrozen(false)
+            R.id.action_delete_all_dynamic_shortcut -> deleteAllDynamicShortcut()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -475,5 +496,47 @@ class HomeFragment : MainFragment(),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun isAddDynamicShortcut(packageName: String): Boolean {
+        var check = false
+        val shortcutList = ShortcutManagerCompat.getDynamicShortcuts(app)
+        shortcutList.forEach{info ->
+            if (info.id == packageName) check = true}
+        return check
+    }
+
+    private fun isMaxDynamicShortcutCount(): Boolean =
+        ShortcutManagerCompat.getDynamicShortcuts(app).size + 1 >=
+                ShortcutManagerCompat.getMaxShortcutCountPerActivity(app)
+
+    private fun setDynamicShortcut(info: AppInfo, flag: Boolean) {
+        if (flag) {
+            ShortcutManagerCompat.removeDynamicShortcuts(app, listOf(info.packageName))
+        } else {
+            val shortcut = ShortcutInfoCompat.Builder(app, info.packageName)
+                .setShortLabel(info.name)
+                .setLongLabel(info.name)
+                .setIcon(IconCompat.createWithBitmap(getBitmapFromDrawable(info.icon)))
+                .setIntent(Intent("com.aistra.hail.action.LAUNCH").putExtra("package",info.packageName))
+                .build()
+            ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
+        }
+    }
+
+    private fun getBitmapFromDrawable(drawable: Drawable): Bitmap {
+        val bmp = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bmp)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bmp
+    }
+
+    private fun deleteAllDynamicShortcut() {
+        ShortcutManagerCompat.removeAllDynamicShortcuts(app)
     }
 }

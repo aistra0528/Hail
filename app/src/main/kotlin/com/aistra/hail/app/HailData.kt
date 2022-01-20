@@ -41,6 +41,7 @@ object HailData {
     private const val KEY_TAP_TO_SELECT = "tap_to_select"
     private const val SHOW_SYSTEM_APPS = "show_system_apps"
     private const val SHOW_UNFROZEN_APPS = "show_unfrozen_apps"
+    private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
@@ -48,6 +49,7 @@ object HailData {
     val tapToSelect get() = sp.getBoolean(KEY_TAP_TO_SELECT, false)
     val showSystemApps get() = sp.getBoolean(SHOW_SYSTEM_APPS, false)
     val showUnfrozenApps get() = sp.getBoolean(SHOW_UNFROZEN_APPS, true)
+    val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 

@@ -1,6 +1,8 @@
 package com.aistra.hail.app
 
 import android.content.Intent
+import androidx.core.content.pm.ShortcutManagerCompat
+import android.content.Context
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.utils.*
 

@@ -24,4 +24,8 @@
         android:id="@+id/action_unfreeze_all"
         android:title="@string/action_unfreeze_all"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_delete_all_dynamic_shortcut"
+        android:title="@string/action_delete_all_dynamic_shortcut"
+        app:showAsAction="never" />
 </menu>

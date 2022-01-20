@@ -90,4 +90,12 @@
         <item quantity="one">%2$s after %1$d minute: %3$s</item>
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
+    <string name="action_add_dynamic_shortcut">Add to dynamic shortcut</string>
+    <string name="action_delete_dynamic_shortcut">Delete from dynamic shortcut</string>
+    <string name="action_delete_all_dynamic_shortcut">Delete all dynamic shortcut</string>
+    <string name="auto_freeze_after_lock">Auto freeze after Screen Locked</string>
+    <string name="foreground_service_channel_name">Foreground Service</string>
+    <string name="foreground_service_channel_description">Include scheduled tasks</string>
+    <string name="foreground_service_notification_title">running task</string>
+    <string name="foreground_service_notification_message">Long press to hide notification</string>
 </resources>

@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+            android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_desc"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
     </LinearLayout>
 
     <com.google.android.material.checkbox.MaterialCheckBox
