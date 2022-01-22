@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -21,7 +20,6 @@ import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.HLog
 import com.aistra.hail.utils.NameComparator
-import com.google.android.material.color.MaterialColors
 import java.util.*
 
 object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
@@ -94,12 +92,6 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
                 setOnCheckedChangeListener { button, isChecked ->
                     onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, pkg)
                 }
-            }
-            findViewById<LinearLayout>(R.id.app_view).run {
-                if (AppManager.isAppFrozen(pkg))
-                    setBackgroundColor(
-                        MaterialColors.getColor(this, R.attr.colorPrimaryContainer)
-                    )
             }
         }
     }

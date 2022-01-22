@@ -25,7 +25,6 @@ import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HUI
 import com.aistra.hail.utils.NameComparator
 import com.aistra.hail.work.HWork
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -469,20 +468,10 @@ class HomeFragment : MainFragment(),
             R.id.action_multiselect -> {
                 if (multiselect) {
                     multiselect = false
-                    item.icon.setTint(
-                        MaterialColors.getColor(
-                            activity.findViewById(R.id.toolbar),
-                            R.attr.colorOnSurface
-                        )
-                    )
+                    item.setIcon(R.drawable.ic_outline_select_all)
                 } else {
                     multiselect = true
-                    item.icon.setTint(
-                        MaterialColors.getColor(
-                            activity.findViewById(R.id.toolbar),
-                            R.attr.colorPrimary
-                        )
-                    )
+                    item.icon.setTint(resources.getColor(R.color.colorPrimary, app.theme))
                 }
             }
         }
