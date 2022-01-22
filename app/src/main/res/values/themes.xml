@@ -4,8 +4,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorPrimaryDark">?colorSurface</item>
-        <item name="colorPrimaryContainer">?colorPrimary</item>
-        <item name="colorOnPrimaryContainer">?colorOnPrimary</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>
         <item name="colorSecondary">?colorPrimary</item>
         <item name="colorOnSecondary">?colorOnPrimary</item>
         <item name="colorSecondaryContainer">?colorPrimary</item>
