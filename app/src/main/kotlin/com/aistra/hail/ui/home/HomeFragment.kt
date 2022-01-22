@@ -36,6 +36,7 @@ class HomeFragment : MainFragment(),
     private var query: String = String()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var multiselect: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -63,6 +64,7 @@ class HomeFragment : MainFragment(),
         }
         binding.refresh.run {
             setOnRefreshListener {
+                HomeAdapter.selectedList.clear()
                 updateCurrentList()
                 isRefreshing = false
             }
@@ -112,7 +114,7 @@ class HomeFragment : MainFragment(),
                 .show()
             return
         }
-        if (HailData.tapToSelect) {
+        if (multiselect) {
             HomeAdapter.run {
                 if (info in selectedList) selectedList.remove(info)
                 else selectedList.add(info)
@@ -463,6 +465,15 @@ class HomeFragment : MainFragment(),
                     .create().show()
             }
             R.id.action_clear_dynamic_shortcut -> removeAllDynamicShortcuts()
+            R.id.action_multiselect -> {
+                if (multiselect) {
+                    multiselect = false
+                    item.setIcon(R.drawable.ic_outline_select_all)
+                } else {
+                    multiselect = true
+                    item.icon.setTint(resources.getColor(R.color.colorPrimary, app.theme))
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }

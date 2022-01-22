@@ -94,4 +94,7 @@
     <string name="auto_freeze_channel_name">自動無効化</string>
     <string name="auto_freeze_notification_title">実行中のタスク</string>
     <string name="auto_freeze_notification_message">長押して通知を非表示</string>
+    <string name="menu_apps_view">表示オプション</string>
+    <string name="dialog_title_warn">⚠警告</string>
+    <string name="dialog_not_show">二度と表示しない</string>
 </resources>

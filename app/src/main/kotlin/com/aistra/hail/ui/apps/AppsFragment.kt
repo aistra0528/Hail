@@ -24,6 +24,7 @@ import java.util.*
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener {
     private lateinit var refreshLayout: SwipeRefreshLayout
+    private val sortByValue: Array<String> = arrayOf("name", "install", "update")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -131,5 +132,57 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
 
             override fun onQueryTextSubmit(query: String): Boolean = true
         })
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        when (HailData.sortBy) {
+            sortByValue[0] -> menu.findItem(R.id.sort_by_name).isChecked = true
+            sortByValue[1] -> menu.findItem(R.id.sort_by_install).isChecked = true
+            sortByValue[2] -> menu.findItem(R.id.sort_by_update).isChecked = true
+            else -> menu.findItem(R.id.sort_by_name).isChecked = true
+        }
+        menu.findItem(R.id.show_system_apps).isChecked =
+            HailData.showSystemApps
+        menu.findItem(R.id.show_unfrozen_apps).isChecked =
+            HailData.showUnfrozenApps
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.sort_by_name -> changeAppsSort(sortByValue[0], item)
+            R.id.sort_by_install -> changeAppsSort(sortByValue[1], item)
+            R.id.sort_by_update -> changeAppsSort(sortByValue[2], item)
+            R.id.show_system_apps -> {
+                if (HailData.showSystemAppsDialog && !item.isChecked)
+                    MaterialAlertDialogBuilder(activity).setTitle(R.string.dialog_title_warn)
+                        .setMessage(R.string.msg_system_apps)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            changeAppsPref(HailData.SHOW_SYSTEM_APPS, item)
+                        }.setNegativeButton(android.R.string.cancel, null)
+                        .setNeutralButton(R.string.dialog_not_show) { _, _ ->
+                            run {
+                                HailData.notShowSystemAppsDialog()
+                                changeAppsPref(HailData.SHOW_SYSTEM_APPS, item)
+                            }
+                        }.create().show()
+                else changeAppsPref(HailData.SHOW_SYSTEM_APPS, item)
+            }
+            R.id.show_unfrozen_apps -> changeAppsPref(HailData.SHOW_UNFROZEN_APPS, item)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun changeAppsSort(pref: String, item: MenuItem) {
+        item.isChecked = true
+        HailData.changeAppsSort(pref)
+        AppsAdapter.updateCurrentList(refreshLayout)
+    }
+
+    private fun changeAppsPref(key: String, item: MenuItem) {
+        item.isChecked = !item.isChecked
+        HailData.changeAppsPref(key, item.isChecked)
+        AppsAdapter.updateCurrentList(refreshLayout)
     }
 }

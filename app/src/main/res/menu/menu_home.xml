@@ -9,6 +9,12 @@
         app:showAsAction="always|collapseActionView"
         tools:ignore="AlwaysShowAction" />
     <item
+        android:id="@+id/action_multiselect"
+        android:icon="@drawable/ic_outline_select_all"
+        android:title="@string/tap_to_select"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
         android:id="@+id/action_freeze_all"
         android:title="@string/action_freeze_all"
         app:showAsAction="never" />

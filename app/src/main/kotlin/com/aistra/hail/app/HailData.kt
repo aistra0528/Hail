@@ -38,18 +38,18 @@ object HailData {
     private const val KEY_ID = "id"
     private const val KEY_TAG = "tag"
     private const val KEY_AID = "aid"
-    private const val KEY_TAP_TO_SELECT = "tap_to_select"
-    private const val SHOW_SYSTEM_APPS = "show_system_apps"
-    private const val SHOW_UNFROZEN_APPS = "show_unfrozen_apps"
+    const val SHOW_SYSTEM_APPS = "show_system_apps"
+    const val SHOW_UNFROZEN_APPS = "show_unfrozen_apps"
     private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
+    private const val SHOW_SYSTEM_APPS_DIALOG = "show_system_apps_dialog"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
-    val tapToSelect get() = sp.getBoolean(KEY_TAP_TO_SELECT, false)
     val showSystemApps get() = sp.getBoolean(SHOW_SYSTEM_APPS, false)
     val showUnfrozenApps get() = sp.getBoolean(SHOW_UNFROZEN_APPS, true)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+    val showSystemAppsDialog get() = sp.getBoolean(SHOW_SYSTEM_APPS_DIALOG, true)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
@@ -134,4 +134,10 @@ object HailData {
             toString()
         })
     }
+
+    fun changeAppsSort(pref: String) = sp.edit().putString(SORT_BY, pref).apply()
+
+    fun changeAppsPref(key: String, pref: Boolean) = sp.edit().putBoolean(key, pref).apply()
+
+    fun notShowSystemAppsDialog() = sp.edit().putBoolean(SHOW_SYSTEM_APPS_DIALOG, false).apply()
 }

@@ -94,4 +94,7 @@
     <string name="auto_freeze_channel_name">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
     <string name="auto_freeze_notification_message">Long press to show notification settings</string>
+    <string name="menu_apps_view">View options</string>
+    <string name="dialog_title_warn">⚠Warn</string>
+    <string name="dialog_not_show">Don\'t show agin</string>
 </resources>

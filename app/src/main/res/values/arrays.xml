@@ -41,16 +41,6 @@
         <item>su_disable</item>
         <item>shizuku_disable</item>
     </string-array>
-    <string-array name="sort_by_entries">
-        <item>@string/sort_name</item>
-        <item>@string/sort_install</item>
-        <item>@string/sort_update</item>
-    </string-array>
-    <string-array name="sort_by_values">
-        <item>name</item>
-        <item>install</item>
-        <item>update</item>
-    </string-array>
     <string-array name="donate_payment_entries">
         <item>@string/donate_alipay</item>
         <item>@string/donate_wechat</item>
