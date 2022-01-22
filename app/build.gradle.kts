@@ -13,7 +13,7 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 31
-        versionCode = 9
+        versionCode = 10
         versionName = "0.8.0"
         resourceConfigurations += arrayOf("en", "ja-rJP", "zh-rCN")
     }
