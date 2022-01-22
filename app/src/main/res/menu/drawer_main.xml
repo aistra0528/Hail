@@ -6,14 +6,14 @@
         android:title="@string/title_home" />
     <item
         android:id="@+id/nav_apps"
-        android:icon="@drawable/ic_outline_view"
+        android:icon="@drawable/ic_view_selector"
         android:title="@string/title_apps" />
     <item
         android:id="@+id/nav_settings"
-        android:icon="@drawable/ic_outline_settings"
+        android:icon="@drawable/ic_settings_selector"
         android:title="@string/title_settings" />
     <item
         android:id="@+id/nav_about"
-        android:icon="@drawable/ic_outline_info"
+        android:icon="@drawable/ic_info_selector"
         android:title="@string/title_about" />
 </menu>
