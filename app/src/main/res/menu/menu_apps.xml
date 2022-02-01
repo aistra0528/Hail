@@ -6,4 +6,34 @@
         android:title="@string/action_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
+    <item
+        android:title="@string/menu_apps_view"
+        android:icon="@drawable/ic_outline_sort"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:title="@string/sort_by"
+                app:showAsAction="never" />
+            <group
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sort_by_name"
+                    android:title="@string/sort_name" />
+                <item
+                    android:id="@+id/sort_by_install"
+                    android:title="@string/sort_install" />
+                <item
+                    android:id="@+id/sort_by_update"
+                    android:title="@string/sort_update" />
+            </group>
+            <item
+                android:id="@+id/show_system_apps"
+                android:title="@string/title_system_apps"
+                android:checkable="true" />
+            <item
+                android:id="@+id/show_unfrozen_apps"
+                android:title="@string/show_unfrozen_apps"
+                android:checkable="true" />
+        </menu>
+    </item>
 </menu>

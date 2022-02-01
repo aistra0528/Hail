@@ -92,4 +92,7 @@
     <string name="auto_freeze_channel_name">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
     <string name="auto_freeze_notification_message">长按显示通知设置</string>
+    <string name="menu_apps_view">视图选项</string>
+    <string name="dialog_title_warn">⚠注意</string>
+    <string name="dialog_not_show">不再显示</string>
 </resources>

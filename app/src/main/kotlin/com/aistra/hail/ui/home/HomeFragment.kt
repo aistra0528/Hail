@@ -25,6 +25,7 @@ import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HUI
 import com.aistra.hail.utils.NameComparator
 import com.aistra.hail.work.HWork
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -36,6 +37,7 @@ class HomeFragment : MainFragment(),
     private var query: String = String()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var multiselect: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -63,6 +65,7 @@ class HomeFragment : MainFragment(),
         }
         binding.refresh.run {
             setOnRefreshListener {
+                HomeAdapter.selectedList.clear()
                 updateCurrentList()
                 isRefreshing = false
             }
@@ -112,7 +115,7 @@ class HomeFragment : MainFragment(),
                 .show()
             return
         }
-        if (HailData.tapToSelect) {
+        if (multiselect) {
             HomeAdapter.run {
                 if (info in selectedList) selectedList.remove(info)
                 else selectedList.add(info)
@@ -463,6 +466,25 @@ class HomeFragment : MainFragment(),
                     .create().show()
             }
             R.id.action_clear_dynamic_shortcut -> removeAllDynamicShortcuts()
+            R.id.action_multiselect -> {
+                if (multiselect) {
+                    multiselect = false
+                    item.icon.setTint(
+                        MaterialColors.getColor(
+                            activity.findViewById(R.id.toolbar),
+                            R.attr.colorOnSurface
+                        )
+                    )
+                } else {
+                    multiselect = true
+                    item.icon.setTint(
+                        MaterialColors.getColor(
+                            activity.findViewById(R.id.toolbar),
+                            R.attr.colorPrimary
+                        )
+                    )
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }

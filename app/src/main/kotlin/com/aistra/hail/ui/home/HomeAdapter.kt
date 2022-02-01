@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
+import com.google.android.material.color.MaterialColors
 
 object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
     private val cf by lazy { ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) }) }
@@ -38,7 +39,9 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
                 text = info.name
                 isEnabled = info.state != AppInfo.STATE_FROZEN
                 when {
-                    info.selected -> setTextColor(context.getColorStateList(R.color.colorPrimary))
+                    info.selected -> setTextColor(
+                        MaterialColors.getColor(this, R.attr.colorPrimary)
+                    )
                     info.state == AppInfo.STATE_UNKNOWN -> setTextColor(context.getColorStateList(R.color.colorWarn))
                     else -> setTextAppearance(R.style.TextAppearance_Material3_BodyMedium)
                 }
