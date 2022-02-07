@@ -5,12 +5,13 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.aistra.hail.HailApp
+import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import java.util.concurrent.TimeUnit
 
 object HWork {
-    fun cancelWork(packageName: String) =
-        WorkManager.getInstance(HailApp.app).cancelUniqueWork(packageName)
+    fun cancelWork(name: String) =
+        WorkManager.getInstance(HailApp.app).cancelUniqueWork(name)
 
     fun setDeferredFrozen(packageName: String, frozen: Boolean = true, minutes: Long) {
         WorkManager.getInstance(HailApp.app).enqueueUniqueWork(
@@ -27,10 +28,11 @@ object HWork {
 
     fun setAutoFreeze() {
         WorkManager.getInstance(HailApp.app).enqueueUniqueWork(
-            "AutoFreeze",
+            HailApi.ACTION_FREEZE_ALL,
             ExistingWorkPolicy.KEEP,
             OneTimeWorkRequestBuilder<AutoFreezeWorker>()
-                .setInitialDelay(5, TimeUnit.SECONDS).build()
+                .setInitialDelay(3, TimeUnit.SECONDS)
+                .build()
         )
     }
 }
