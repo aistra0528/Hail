@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -21,7 +22,6 @@ import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.HLog
 import com.aistra.hail.utils.NameComparator
-import com.google.android.material.color.MaterialColors
 import java.util.*
 
 object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
@@ -35,6 +35,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
+    private val cf by lazy { ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) }) }
     private val timer = Timer()
     private var debounce: TimerTask? = null
 
@@ -44,8 +45,10 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     @SuppressLint("InlinedApi")
     private fun filterList(query: String? = null, pm: PackageManager): List<PackageInfo> =
         pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES).filter {
-            ((HailData.showSystemApps && it.isSystemApp) || (!HailData.showSystemApps && !it.isSystemApp))
-                    && (HailData.showUnfrozenApps || AppManager.isAppFrozen(it.packageName))
+            ((HailData.filterUserApps && !it.isSystemApp)
+                    || (HailData.filterSystemApps && it.isSystemApp))
+                    && ((HailData.filterFrozenApps && AppManager.isAppFrozen(it.packageName))
+                    || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName)))
                     && (query.isNullOrEmpty()
                     || it.packageName.contains(query, true)
                     || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
@@ -82,28 +85,28 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
         val info = currentList[position]
         val app = info.applicationInfo
         val pkg = info.packageName
+        val frozen = AppManager.isAppFrozen(pkg)
         holder.itemView.run {
             setOnClickListener { onItemClickListener.onItemClick(info) }
             setOnLongClickListener { onItemLongClickListener.onItemLongClick(pkg) }
-            findViewById<ImageView>(R.id.app_icon).setImageDrawable(app.loadIcon(context.packageManager))
-            findViewById<TextView>(R.id.app_name).text = app.loadLabel(context.packageManager)
-            findViewById<TextView>(R.id.app_desc).text = pkg
+            findViewById<ImageView>(R.id.app_icon).run {
+                setImageDrawable(app.loadIcon(context.packageManager))
+                colorFilter = if (frozen) cf else null
+            }
+            findViewById<TextView>(R.id.app_name).run {
+                text = app.loadLabel(context.packageManager)
+                isEnabled = !frozen
+            }
+            findViewById<TextView>(R.id.app_desc).run {
+                text = pkg
+                isEnabled = !frozen
+            }
             findViewById<CompoundButton>(R.id.app_star).run {
                 setOnCheckedChangeListener(null)
                 isChecked = HailData.isChecked(pkg)
                 setOnCheckedChangeListener { button, isChecked ->
                     onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, pkg)
                 }
-            }
-            findViewById<LinearLayout>(R.id.app_view).run {
-                if (AppManager.isAppFrozen(pkg))
-                    setBackgroundColor(
-                        MaterialColors.getColor(this, R.attr.colorPrimaryContainer)
-                    )
-                else
-                    setBackgroundColor(
-                        MaterialColors.getColor(this, R.attr.colorSurface)
-                    )
             }
         }
     }

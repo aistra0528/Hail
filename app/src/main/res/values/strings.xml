@@ -18,6 +18,8 @@
     <string name="action_licenses">Licenses</string>
     <string name="action_freeze_all">Freeze all</string>
     <string name="action_unfreeze_all">Unfreeze all</string>
+    <string name="action_freeze_current">Freeze current</string>
+    <string name="action_unfreeze_current">Unfreeze current</string>
     <string name="action_lock">Lock</string>
     <string name="action_lock_freeze">Lock &amp; Freeze</string>
     <string name="action_launch">Launch</string>
@@ -49,13 +51,15 @@
     <string name="title_remove_do">Remove Device Owner</string>
     <string name="msg_remove_do">Device Owner will be removed, it might be difficult to set it again after removal.\nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
     <string name="tap_to_select">Tap to multiselect</string>
+    <string name="filter_by">Filter</string>
+    <string name="filter_user_apps">User</string>
+    <string name="filter_system_apps">System</string>
+    <string name="filter_frozen_apps">Frozen</string>
+    <string name="filter_unfrozen_apps">Unfrozen</string>
     <string name="sort_by">Sort by</string>
     <string name="sort_name">Name</string>
     <string name="sort_install">First install</string>
     <string name="sort_update">Last update</string>
-    <string name="title_system_apps">System apps only</string>
-    <string name="msg_system_apps">Freezing system apps may cause bootloop</string>
-    <string name="show_unfrozen_apps">Show unfrozen apps</string>
     <string name="title_donate">Thank you!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
@@ -94,7 +98,4 @@
     <string name="auto_freeze_channel_name">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
     <string name="auto_freeze_notification_message">Long press to show notification settings</string>
-    <string name="menu_apps_view">View options</string>
-    <string name="dialog_title_warn">⚠Warn</string>
-    <string name="dialog_not_show">Don\'t show agin</string>
 </resources>

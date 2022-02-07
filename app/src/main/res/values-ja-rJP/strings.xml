@@ -19,6 +19,8 @@
     <string name="action_licenses">ライセンス</string>
     <string name="action_freeze_all">全部無効化</string>
     <string name="action_unfreeze_all">全部有効化</string>
+    <string name="action_freeze_current">カレント無効化</string>
+    <string name="action_unfreeze_current">カレント有効化</string>
     <string name="action_lock">ロック</string>
     <string name="action_lock_freeze">ロック＆無効化</string>
     <string name="action_launch">開く</string>
@@ -50,13 +52,15 @@
     <string name="title_remove_do">デバイス管理者を削除</string>
     <string name="msg_remove_do">これから「雹」のデバイス管理者権限を削除する、もう一度設定するには難しくなるかもしれません。\n「雹」で無効化したアプリは引き続き「隠す」状態になる、削除前に重要なアプリを有効化にするの確認してください。</string>
     <string name="tap_to_select">タップして複数選択</string>
+    <string name="filter_by">フィルター</string>
+    <string name="filter_user_apps">ユーザー</string>
+    <string name="filter_system_apps">システム</string>
+    <string name="filter_frozen_apps">無効</string>
+    <string name="filter_unfrozen_apps">有効</string>
     <string name="sort_by">並び替え</string>
     <string name="sort_name">名前</string>
     <string name="sort_install">インストール時間</string>
     <string name="sort_update">更新時間</string>
-    <string name="title_system_apps">システムアプリのみ</string>
-    <string name="msg_system_apps">システムアプリを無効化すると、「ブートループ」が発生する可能性があります。</string>
-    <string name="show_unfrozen_apps">有効なアプリを表示</string>
     <string name="title_donate">サポートを感謝する！</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
@@ -93,7 +97,4 @@
     <string name="auto_freeze_channel_name">自動無効化</string>
     <string name="auto_freeze_notification_title">自動無効化を待つ</string>
     <string name="auto_freeze_notification_message">長押して通知を非表示</string>
-    <string name="menu_apps_view">表示オプション</string>
-    <string name="dialog_title_warn">⚠警告</string>
-    <string name="dialog_not_show">二度と表示しない</string>
 </resources>

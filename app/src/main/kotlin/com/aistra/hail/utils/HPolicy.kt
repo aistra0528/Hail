@@ -59,6 +59,7 @@ object HPolicy {
         if (isAdminActive) dpm.removeActiveAdmin(admin)
     }
 
+    @Suppress("DEPRECATION")
     fun clearDeviceOwnerApp() {
         if (isDeviceOwnerActive) dpm.clearDeviceOwnerApp(HailApp.app.packageName)
     }

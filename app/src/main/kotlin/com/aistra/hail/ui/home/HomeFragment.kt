@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -65,8 +66,7 @@ class HomeFragment : MainFragment(),
         }
         binding.refresh.run {
             setOnRefreshListener {
-                HomeAdapter.selectedList.clear()
-                updateCurrentList()
+                if (multiselect) updateCurrentList() else deselect()
                 isRefreshing = false
             }
         }
@@ -89,7 +89,7 @@ class HomeFragment : MainFragment(),
     override fun onStart() {
         super.onStart()
         if (activity.fab.hasOnClickListeners()) updateCurrentList()
-        activity.fab.setOnClickListener { setListFrozen(true) }
+        activity.fab.setOnClickListener { setListFrozen(true, HomeAdapter.currentList) }
     }
 
     private fun updateCurrentList() {
@@ -353,7 +353,7 @@ class HomeFragment : MainFragment(),
     private fun addPinShortcut(icon: Drawable, id: String, label: CharSequence, intent: Intent) {
         if (ShortcutManagerCompat.isRequestPinShortcutSupported(app)) {
             val shortcut = ShortcutInfoCompat.Builder(app, id)
-                .setIcon(getAppIcon(icon))
+                .setIcon(getDrawableIcon(icon))
                 .setShortLabel(label)
                 .setIntent(intent)
                 .build()
@@ -364,22 +364,35 @@ class HomeFragment : MainFragment(),
     private fun addDynamicShortcut(info: AppInfo) {
         if (isMaxDynamicShortcutCount()) removeAllDynamicShortcuts()
         val shortcut = ShortcutInfoCompat.Builder(app, info.packageName)
-            .setIcon(getAppIcon(info.icon))
+            .setIcon(getDrawableIcon(info.icon))
             .setShortLabel(info.name)
             .setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, info.packageName))
             .build()
         ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
+        val freezeAll = ShortcutInfoCompat.Builder(app, HailApi.ACTION_FREEZE_ALL)
+            .setIcon(
+                getDrawableIcon(
+                    AppCompatResources.getDrawable(
+                        app,
+                        R.drawable.ic_round_frozen_shortcut
+                    )!!
+                )
+            )
+            .setShortLabel(getString(R.string.action_freeze_all))
+            .setIntent(Intent(HailApi.ACTION_FREEZE_ALL))
+            .build()
+        ShortcutManagerCompat.pushDynamicShortcut(app, freezeAll)
     }
 
     private fun isMaxDynamicShortcutCount(): Boolean =
-        ShortcutManagerCompat.getDynamicShortcuts(app).size + 1 >=
+        ShortcutManagerCompat.getDynamicShortcuts(app).size >=
                 ShortcutManagerCompat.getMaxShortcutCountPerActivity(app)
 
     private fun removeAllDynamicShortcuts() {
         ShortcutManagerCompat.removeAllDynamicShortcuts(app)
     }
 
-    private fun getAppIcon(drawable: Drawable): IconCompat =
+    private fun getDrawableIcon(drawable: Drawable): IconCompat =
         IconCompat.createWithBitmap(
             Bitmap.createBitmap(
                 drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
@@ -428,63 +441,57 @@ class HomeFragment : MainFragment(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_multiselect -> {
+                multiselect = !multiselect
+                item.icon.setTint(
+                    MaterialColors.getColor(
+                        activity.findViewById(R.id.toolbar),
+                        if (multiselect) R.attr.colorPrimary else R.attr.colorOnSurface
+                    )
+                )
+            }
+            R.id.action_freeze_current -> setListFrozen(true, HomeAdapter.currentList)
+            R.id.action_unfreeze_current -> setListFrozen(false, HomeAdapter.currentList)
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)
             R.id.action_import_clipboard -> importFromClipboard()
-            R.id.action_add_pin_shortcut -> {
-                MaterialAlertDialogBuilder(activity).setTitle(R.string.action_add_pin_shortcut)
-                    .setItems(R.array.create_shortcut_entries) { _, which ->
-                        val icon = app.applicationInfo.loadIcon(app.packageManager)
-                        when (which) {
-                            0 -> addPinShortcut(
-                                icon,
-                                HailApi.ACTION_FREEZE_ALL,
-                                getString(R.string.action_freeze_all),
-                                Intent(HailApi.ACTION_FREEZE_ALL)
-                            )
-                            1 -> addPinShortcut(
-                                icon,
-                                HailApi.ACTION_UNFREEZE_ALL,
-                                getString(R.string.action_unfreeze_all),
-                                Intent(HailApi.ACTION_UNFREEZE_ALL)
-                            )
-                            2 -> addPinShortcut(
-                                icon,
-                                HailApi.ACTION_LOCK,
-                                getString(R.string.action_lock),
-                                Intent(HailApi.ACTION_LOCK)
-                            )
-                            3 -> addPinShortcut(
-                                icon,
-                                HailApi.ACTION_LOCK_FREEZE,
-                                getString(R.string.action_lock_freeze),
-                                Intent(HailApi.ACTION_LOCK_FREEZE)
-                            )
-                        }
-                    }
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .create().show()
-            }
+            R.id.pin_freeze_all -> addPinShortcut(
+                AppCompatResources.getDrawable(
+                    app,
+                    R.drawable.ic_round_frozen_shortcut
+                )!!,
+                HailApi.ACTION_FREEZE_ALL,
+                getString(R.string.action_freeze_all),
+                Intent(HailApi.ACTION_FREEZE_ALL)
+            )
+            R.id.pin_unfreeze_all -> addPinShortcut(
+                AppCompatResources.getDrawable(
+                    app,
+                    R.drawable.ic_round_frozen_shortcut
+                )!!,
+                HailApi.ACTION_UNFREEZE_ALL,
+                getString(R.string.action_unfreeze_all),
+                Intent(HailApi.ACTION_UNFREEZE_ALL)
+            )
+            R.id.pin_lock -> addPinShortcut(
+                AppCompatResources.getDrawable(
+                    app,
+                    R.drawable.ic_outline_lock_shortcut
+                )!!,
+                HailApi.ACTION_LOCK,
+                getString(R.string.action_lock),
+                Intent(HailApi.ACTION_LOCK)
+            )
+            R.id.pin_lock_freeze -> addPinShortcut(
+                AppCompatResources.getDrawable(
+                    app,
+                    R.drawable.ic_outline_lock_shortcut
+                )!!,
+                HailApi.ACTION_LOCK_FREEZE,
+                getString(R.string.action_lock_freeze),
+                Intent(HailApi.ACTION_LOCK_FREEZE)
+            )
             R.id.action_clear_dynamic_shortcut -> removeAllDynamicShortcuts()
-            R.id.action_multiselect -> {
-                if (multiselect) {
-                    multiselect = false
-                    item.icon.setTint(
-                        MaterialColors.getColor(
-                            activity.findViewById(R.id.toolbar),
-                            R.attr.colorOnSurface
-                        )
-                    )
-                } else {
-                    multiselect = true
-                    item.icon.setTint(
-                        MaterialColors.getColor(
-                            activity.findViewById(R.id.toolbar),
-                            R.attr.colorPrimary
-                        )
-                    )
-                }
-            }
         }
         return super.onOptionsItemSelected(item)
     }

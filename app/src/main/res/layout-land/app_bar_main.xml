@@ -29,7 +29,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        android:text="@string/action_freeze_all"
+        android:text="@string/action_freeze_current"
         app:icon="@drawable/ic_round_frozen" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

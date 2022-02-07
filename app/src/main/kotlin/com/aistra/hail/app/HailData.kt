@@ -32,24 +32,26 @@ object HailData {
     const val MODE_SU_DISABLE = "su_disable"
     const val MODE_SHIZUKU_DISABLE = "shizuku_disable"
     private const val SORT_BY = "sort_by"
-    private const val SORT_NAME = "name"
+    const val SORT_NAME = "name"
     const val SORT_INSTALL = "install"
     const val SORT_UPDATE = "update"
     private const val KEY_ID = "id"
     private const val KEY_TAG = "tag"
     private const val KEY_AID = "aid"
-    const val SHOW_SYSTEM_APPS = "show_system_apps"
-    const val SHOW_UNFROZEN_APPS = "show_unfrozen_apps"
+    const val FILTER_USER_APPS = "filter_user_apps"
+    const val FILTER_SYSTEM_APPS = "filter_system_apps"
+    const val FILTER_FROZEN_APPS = "filter_frozen_apps"
+    const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
     private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
-    private const val SHOW_SYSTEM_APPS_DIALOG = "show_system_apps_dialog"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
-    val showSystemApps get() = sp.getBoolean(SHOW_SYSTEM_APPS, false)
-    val showUnfrozenApps get() = sp.getBoolean(SHOW_UNFROZEN_APPS, true)
+    val filterUserApps get() = sp.getBoolean(FILTER_USER_APPS, true)
+    val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)
+    val filterFrozenApps get() = sp.getBoolean(FILTER_FROZEN_APPS, true)
+    val filterUnfrozenApps get() = sp.getBoolean(FILTER_UNFROZEN_APPS, true)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
-    val showSystemAppsDialog get() = sp.getBoolean(SHOW_SYSTEM_APPS_DIALOG, true)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
@@ -135,9 +137,8 @@ object HailData {
         })
     }
 
-    fun changeAppsSort(pref: String) = sp.edit().putString(SORT_BY, pref).apply()
+    fun changeAppsSort(sort: String) = sp.edit().putString(SORT_BY, sort).apply()
 
-    fun changeAppsPref(key: String, pref: Boolean) = sp.edit().putBoolean(key, pref).apply()
-
-    fun notShowSystemAppsDialog() = sp.edit().putBoolean(SHOW_SYSTEM_APPS_DIALOG, false).apply()
+    fun changeAppsFilter(filter: String, enabled: Boolean) =
+        sp.edit().putBoolean(filter, enabled).apply()
 }
