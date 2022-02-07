@@ -54,7 +54,7 @@
         <receiver
             android:name=".receiver.DeviceAdminReceiver"
             android:description="@string/action_lock"
-            android:exported="true"
+            android:exported="false"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data
                 android:name="android.app.device_admin"
@@ -66,6 +66,16 @@
         <receiver
             android:name=".receiver.ScreenOffReceiver"
             android:exported="false" />
+
+        <service
+            android:name=".services.QSTileService"
+            android:exported="false"
+            android:icon="@drawable/ic_round_frozen"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
         <service
             android:name=".services.AutoFreezeService"
             android:exported="false" />

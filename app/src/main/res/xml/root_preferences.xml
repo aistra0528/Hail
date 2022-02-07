@@ -11,8 +11,14 @@
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
-        app:icon="@drawable/ic_outline_lock"
+        app:icon="@drawable/ic_round_frozen"
         app:key="auto_freeze_after_lock"
         app:title="@string/auto_freeze_after_lock" />
+
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:icon="@drawable/ic_outline_lock"
+        app:key="tile_lock"
+        app:title="@string/tile_lock" />
 
 </PreferenceScreen>

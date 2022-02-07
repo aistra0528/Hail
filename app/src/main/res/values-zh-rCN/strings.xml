@@ -93,6 +93,7 @@
     </plurals>
     <string name="action_clear_dynamic_shortcut">清除主屏幕动态</string>
     <string name="auto_freeze_after_lock">锁屏后自动冻结</string>
+    <string name="tile_lock">图块冻结后锁屏</string>
     <string name="auto_freeze_channel_name">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
     <string name="auto_freeze_notification_message">长按显示通知设置</string>

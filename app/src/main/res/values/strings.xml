@@ -95,6 +95,7 @@
     </plurals>
     <string name="action_clear_dynamic_shortcut">Clear all dynamic shortcut</string>
     <string name="auto_freeze_after_lock">Auto freeze after Screen locked</string>
+    <string name="tile_lock">Lock after freeze by tile</string>
     <string name="auto_freeze_channel_name">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
     <string name="auto_freeze_notification_message">Long press to show notification settings</string>

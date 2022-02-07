@@ -94,6 +94,7 @@
     </plurals>
     <string name="action_clear_dynamic_shortcut">全ての動的ショートカットを削除</string>
     <string name="auto_freeze_after_lock">画面ロック後自動無効化</string>
+    <string name="tile_lock">タイル無効化後ロック</string>
     <string name="auto_freeze_channel_name">自動無効化</string>
     <string name="auto_freeze_notification_title">自動無効化を待つ</string>
     <string name="auto_freeze_notification_message">長押して通知を非表示</string>
