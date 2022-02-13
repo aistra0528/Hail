@@ -1,0 +1,68 @@
+<p>雹是一款用于冻结 Android 应用的自由软件，您可自由享用所有功能。</p>
+<h3>冻结</h3>
+<p>冻结<code>freeze</code>是一个营销用语，用于描述使<strong>应用在用户不需要时不可运行</strong>的行为，以此控制设备使用、减少内存占用和节省电量。用户可在需要时解冻<code>unfreeze</code>应用。</p>
+<p>通过隐藏和停用两种方式，都能达到所谓冻结的效果，但其实现存在差异。</p>
+<h4>隐藏</h4>
+<p>被隐藏<code>hide</code>的应用不可使用，也不会出现在启动器和已安装应用列表中。取消隐藏<code>unhide</code>应用即可恢复。</p>
+<h4>停用</h4>
+<p>被停用<code>disable</code>的应用不可使用，也不会出现在启动器中。在已安装应用列表中应用会显示已停用<code>disabled</code>状态。启用<code>enable</code>应用即可恢复。</p>
+<h3>工作模式</h3>
+<p>雹支持以<code>设备所有者 - 隐藏</code>、<code>超级用户 - 停用</code>和<code>Shizuku - 停用</code>模式工作。</p>
+<p><strong>由于隐藏和停用的实现存在差异，冻结的应用需要通过相同方式解冻。</strong></p>
+<ol>
+<li>
+<p>如果您的设备支持无线调试或已 root，推荐选择<code>Shizuku - 停用</code>。<a href="https://github.com/RikkaApps/Shizuku">关于 Shizuku</a></p>
+</li>
+<li>
+<p>如果您的设备已 root，可选择<code>超级用户 - 停用</code>。<strong>此模式性能相对较差。</strong></p>
+</li>
+<li>
+<p>如果您的设备不支持无线调试且未 root，可选择<code>设备所有者 - 隐藏</code>。<strong>此模式兼容性相对较差。</strong></p>
+</li>
+</ol>
+<h4>设备所有者 - 隐藏</h4>
+<p>此模式通过将雹设置为设备所有者 (Device Owner)，调用<code>DevicePolicyManager.setApplicationHidden</code>方法隐藏应用。</p>
+<p><strong>设置为设备所有者的应用需要移除设备所有者后方可卸载。</strong></p>
+<h5>通过 adb 将雹设置为设备所有者</h5>
+<p><a href="https://developer.android.google.cn/studio/command-line/adb">Android 调试桥 (adb) 指南</a></p>
+<p><a href="https://developer.android.google.cn/studio/releases/platform-tools">下载 Android SDK 平台工具</a></p>
+<p>通过 adb 发出命令：</p>
+<pre><code><div>adb shell dpm set-device-owner com.aistra.hail/.receiver.DeviceAdminReceiver
+</div></code></pre>
+<p>设置成功后会输出以下信息：</p>
+<pre><code><code><div>Success: Device owner set to package com.aistra.hail
+Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAdminReceiver}
+</div></code></code></pre>
+<p>如输出其他信息，请使用搜索引擎自行查阅与解决。</p>
+<h5>移除雹的设备所有者</h5>
+<p>在雹的应用界面点按雹，在弹出的选项中选择卸载。</p>
+<h4>超级用户 - 停用</h4>
+<p>此模式通过授予雹超级用户 (Superuser) 权限，执行<code>pm disable-user</code>命令停用应用。</p>
+<h4>Shizuku - 停用</h4>
+<p>此模式通过 Shizuku 调用非 SDK 接口<code>IPackageManager.setApplicationEnabledSetting</code>方法停用应用。</p>
+<h3>恢复</h3>
+<p>替换 com.package.name 为目标应用的包名，您可在应用界面长按复制。</p>
+<h4>通过 adb 取消隐藏应用</h4>
+<pre><code><div>adb shell pm unhide com.package.name
+</div></code></pre>
+<p>已 root 设备：</p>
+<pre><code><div>adb shell su -c pm unhide com.package.name
+</div></code></pre>
+<h4>通过 adb 启用应用</h4>
+<pre><code><div>adb shell pm enable com.package.name
+</div></code></pre>
+<p>已 root 设备：</p>
+<pre><code><div>adb shell su -c pm enable com.package.name
+</div></code></pre>
+<h4>通过提供文件管理功能的恢复模式 (recovery)</h4>
+<p>访问<code>/data/system/users/0/package-restrictions.xml</code>，此文件存储了应用限制相关信息。您可修改、重命名或直接删除此文件。</p>
+<ul>
+<li>
+<p>取消隐藏应用：修改<code>hidden</code>属性为 true 的值为 false</p>
+</li>
+<li>
+<p>启用应用：修改<code>enabled</code>属性为 2 (DISABLED) 或 3 (DISABLED_USER) 的值为 1 (ENABLED)</p>
+</li>
+</ul>
+<h4>通过恢复模式清除数据 (wipe data)</h4>
+<p><strong>希望您能谨慎地选择冻结应用，以免陷入此窘境。</strong></p>
