@@ -8,7 +8,7 @@ Hail is a free software to freeze Android apps. Enjoy all features freely!
 
 ## Freeze
 
-Freeze is a word to describe the action of ** forbid apps when they are unnecessary** to use device
+Freeze is a word to describe the action of **forbid apps when they are unnecessary** to use device
 in a better way, cut down the usage of ram and save power. User can unfreeze it to revert.
 
 There are two ways to "freeze" apps, hide and disable.
