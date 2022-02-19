@@ -187,11 +187,12 @@ or
 Thank you!
 
 - 日本語 [@AokiFuru](https://github.com/AokiFuru)
+- русский [@tommynok](https://github.com/tommynok)
 
 ## License
 
     Hail - Freeze Android apps
-    Copyright (C) 2021-2022 AxAistra
+    Copyright (C) 2021-2022 Aistra
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
