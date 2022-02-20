@@ -11,6 +11,9 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".HailApp"
@@ -44,6 +47,7 @@
                 <action android:name="${applicationId}.action.UNFREEZE_ALL" />
                 <action android:name="${applicationId}.action.LOCK" />
                 <action android:name="${applicationId}.action.LOCK_FREEZE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -54,6 +58,7 @@
             android:exported="true"
             android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
         <receiver
             android:name=".receiver.DeviceAdminReceiver"
             android:description="@string/action_lock"

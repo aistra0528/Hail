@@ -44,6 +44,8 @@ object HailData {
     const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
     private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     private const val TILE_LOCK = "tile_lock"
+    private const val SKIP_WHILE_CHARGING = "skip_while_charging"
+    const val SKIP_FOREGROUND_app = "skip_foreground_app"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
@@ -54,6 +56,8 @@ object HailData {
     val filterUnfrozenApps get() = sp.getBoolean(FILTER_UNFROZEN_APPS, true)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
     val tileLock get() = sp.getBoolean(TILE_LOCK, false)
+    val skip_while_charging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
+    val skip_foreground_app get() = sp.getBoolean(SKIP_FOREGROUND_app, false)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 

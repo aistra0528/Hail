@@ -97,4 +97,6 @@
     <string name="auto_freeze_channel_name">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
     <string name="auto_freeze_notification_message">长按显示通知设置</string>
+    <string name="skip_while_charging">充电时跳过</string>
+    <string name="skip_foreground_app">跳过前台应用</string>
 </resources>
