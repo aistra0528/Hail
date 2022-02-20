@@ -24,18 +24,21 @@
             app:defaultValue="false"
             app:icon="@drawable/ic_baseline_screen_lock"
             app:key="auto_freeze_after_lock"
+            app:singleLineTitle="false"
             app:title="@string/auto_freeze_after_lock" />
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:dependency="auto_freeze_after_lock"
             app:icon="@drawable/ic_baseline_battery_charging"
             app:key="skip_while_charging"
+            app:singleLineTitle="false"
             app:title="@string/skip_while_charging" />
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:dependency="auto_freeze_after_lock"
             app:icon="@drawable/ic_baseline_android"
             app:key="skip_foreground_app"
+            app:singleLineTitle="false"
             app:title="@string/skip_foreground_app" />
     </PreferenceCategory>
 

@@ -100,6 +100,6 @@
     <string name="auto_freeze">Автозаморозка</string>
     <string name="auto_freeze_notification_title">Служба автозаморозки работает</string>
     <string name="auto_freeze_after_lock">После блокировки экрана</string>
-    <string name="skip_while_charging">Skip while charging</string>
-    <string name="skip_foreground_app">Skip foreground app</string>
+    <string name="skip_while_charging">Не замораживать во время зарядки</string>
+    <string name="skip_foreground_app">Не замораживать приложения переднего плана</string>
 </resources>
