@@ -1,8 +1,10 @@
 package com.aistra.hail.ui.settings
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.SystemClock
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -10,10 +12,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
-import com.aistra.hail.utils.HLog
-import com.aistra.hail.utils.HPolicy
-import com.aistra.hail.utils.HShell
-import com.aistra.hail.utils.HUI
+import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rikka.shizuku.Shizuku
 
@@ -22,6 +21,14 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         setHasOptionsMenu(true)
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
         findPreference<Preference>(HailData.WORKING_MODE)?.onPreferenceChangeListener = this
+
+        findPreference<Preference>(HailData.SKIP_FOREGROUND_app)?.setOnPreferenceChangeListener { _, _ ->
+            if (!HSystem.checkOpUsageStats(requireContext())) {
+                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                return@setOnPreferenceChangeListener false
+            }
+            true
+        }
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {

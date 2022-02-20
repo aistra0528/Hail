@@ -30,6 +30,14 @@
             app:icon="@drawable/ic_baseline_battery_charging"
             app:key="skip_while_charging"
             app:title="@string/skip_while_charging" />
+        <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:defaultValue="false"
+            app:dependency="auto_freeze_after_lock"
+            app:icon="@drawable/ic_baseline_android"
+            app:key="skip_foreground_app"
+            app:title="@string/skip_foreground_app" />
     </PreferenceCategory>
 
 </PreferenceScreen>

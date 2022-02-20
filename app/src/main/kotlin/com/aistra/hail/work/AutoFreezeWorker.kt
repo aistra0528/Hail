@@ -17,6 +17,7 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
         var denied = false
         HailData.checkedList.forEach {
             when {
+                isSkipOnScreenOff(applicationContext, it.packageName) -> return@forEach
                 AppManager.isAppFrozen(it.packageName) -> return@forEach
                 AppManager.setAppFrozen(it.packageName, true) -> i++
                 it.packageName != HailApp.app.packageName && it.applicationInfo != null ->
@@ -26,8 +27,11 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
         return if (denied && i == 0) Result.failure() else Result.success()
     }
 
-    private fun isSkipWhileCharging(context: Context): Boolean {
-        return HailData.skip_while_charging && HSystem.isCharging(context)
+    private fun isSkipWhileCharging(context: Context): Boolean =
+        HailData.skip_while_charging && HSystem.isCharging(context)
                 && HSystem.isInteractive(context).not()
-    }
+
+    private fun isSkipOnScreenOff(context: Context, packageName: String): Boolean =
+        HailData.skip_foreground_app && HSystem.isForegroundApp(context, packageName)
+                && HSystem.isInteractive(context).not()
 }
