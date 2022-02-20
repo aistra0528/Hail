@@ -99,4 +99,5 @@
     <string name="auto_freeze_channel_name">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
     <string name="auto_freeze_notification_message">Long press to show notification settings</string>
+    <string name="skip_while_charging">Skip while charging</string>
 </resources>

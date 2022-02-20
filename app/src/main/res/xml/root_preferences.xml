@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
         app:defaultValue="default"
@@ -11,14 +12,24 @@
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
-        app:icon="@drawable/ic_round_frozen"
-        app:key="auto_freeze_after_lock"
-        app:title="@string/auto_freeze_after_lock" />
-
-    <SwitchPreferenceCompat
-        app:defaultValue="false"
         app:icon="@drawable/ic_outline_lock"
         app:key="tile_lock"
         app:title="@string/tile_lock" />
+    <PreferenceCategory android:title="@string/auto_freeze_channel_name">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_round_frozen"
+            app:key="auto_freeze_after_lock"
+            app:title="@string/auto_freeze_after_lock" />
+        <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:defaultValue="false"
+            app:dependency="auto_freeze_after_lock"
+            app:icon="@drawable/ic_baseline_battery_charging"
+            app:key="skip_while_charging"
+            app:title="@string/skip_while_charging" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
