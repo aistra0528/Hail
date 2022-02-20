@@ -5,7 +5,7 @@
         app:defaultValue="default"
         app:entries="@array/working_mode_entries"
         app:entryValues="@array/working_mode_values"
-        app:icon="@drawable/ic_outline_adb"
+        app:icon="@drawable/ic_baseline_adb"
         app:key="working_mode"
         app:title="@string/working_mode"
         app:useSimpleSummaryProvider="true" />
@@ -13,26 +13,25 @@
     <SwitchPreferenceCompat
         app:defaultValue="false"
         app:icon="@drawable/ic_outline_lock"
+        android:summaryOff="@string/action_freeze_all"
+        android:summaryOn="@string/action_lock_freeze"
         app:key="tile_lock"
         app:title="@string/tile_lock" />
-    <PreferenceCategory android:title="@string/auto_freeze_channel_name">
+
+    <PreferenceCategory android:title="@string/auto_freeze">
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
-            app:icon="@drawable/ic_round_frozen"
+            app:icon="@drawable/ic_baseline_screen_lock"
             app:key="auto_freeze_after_lock"
             app:title="@string/auto_freeze_after_lock" />
         <SwitchPreferenceCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             app:defaultValue="false"
             app:dependency="auto_freeze_after_lock"
             app:icon="@drawable/ic_baseline_battery_charging"
             app:key="skip_while_charging"
             app:title="@string/skip_while_charging" />
         <SwitchPreferenceCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             app:defaultValue="false"
             app:dependency="auto_freeze_after_lock"
             app:icon="@drawable/ic_baseline_android"

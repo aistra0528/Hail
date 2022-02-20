@@ -40,11 +40,12 @@ class AboutFragment : MainFragment(), View.OnClickListener {
             }
         }
         binding.actionLibre.setOnClickListener(this)
+        binding.actionVersion.setOnClickListener(this)
+        binding.actionTime.setOnClickListener(this)
         binding.actionTelegram.setOnClickListener(this)
         binding.actionQq.setOnClickListener(this)
         binding.actionCoolapk.setOnClickListener(this)
         binding.actionDonate.setOnClickListener(this)
-        binding.actionDonate.setOnLongClickListener { onRedeem() }
         binding.actionGithub.setOnClickListener(this)
         binding.actionTranslate.setOnClickListener(this)
         binding.actionLicenses.setOnClickListener(this)
@@ -54,6 +55,8 @@ class AboutFragment : MainFragment(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view) {
             binding.actionLibre -> HUI.openLink(HailData.URL_WHY_FREE_SOFTWARE)
+            binding.actionVersion -> HUI.openLink(HailData.URL_RELEASES)
+            binding.actionTime -> onRedeem()
             binding.actionTelegram -> HUI.openLink(HailData.URL_TELEGRAM)
             binding.actionQq -> HUI.openLink(HailData.URL_QQ)
             binding.actionCoolapk -> HUI.openLink(HailData.URL_COOLAPK)
@@ -110,10 +113,10 @@ class AboutFragment : MainFragment(), View.OnClickListener {
             .create().show()
     }
 
-    private fun onRedeem(): Boolean {
+    private fun onRedeem() {
         if (HailData.isDeviceAid) {
             aboutViewModel.snack.value = R.string.msg_redeem
-            return true
+            return
         }
         val input = DialogInputBinding.inflate(layoutInflater, FrameLayout(activity), true)
         input.inputLayout.setHint(R.string.action_redeem)
@@ -130,7 +133,6 @@ class AboutFragment : MainFragment(), View.OnClickListener {
             }
             .setNegativeButton(android.R.string.cancel, null)
             .create().show()
-        return true
     }
 
     override fun onDestroyView() {

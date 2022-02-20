@@ -32,7 +32,6 @@ class AutoFreezeService : Service() {
         )
         val notification = NotificationCompat.Builder(this, channelID)
             .setContentTitle(getString(R.string.auto_freeze_notification_title))
-            .setContentText(getString(R.string.auto_freeze_notification_message))
             .setSmallIcon(R.drawable.ic_round_frozen)
             .addAction(R.drawable.ic_round_frozen, getString(R.string.action_freeze_all), freezeAll)
             .build()
@@ -44,7 +43,7 @@ class AutoFreezeService : Service() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.auto_freeze_channel_name)
+            val name = getString(R.string.auto_freeze)
             val importance = NotificationManager.IMPORTANCE_LOW
             val channel = NotificationChannel(channelID, name, importance)
             // Register the channel with the system

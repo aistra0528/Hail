@@ -87,16 +87,19 @@
     <string name="msg_unfreeze">Разморожено: %s</string>
     <plurals name="deferred_task_entry">
         <item quantity="one">%d мин.</item>
-        <item quantity="other">%d мин.</item>
+        <item quantity="few">%d мин.</item>
+        <item quantity="many">%d мин.</item>
     </plurals>
     <plurals name="msg_deferred_task">
         <item quantity="one">%2$s через %1$d мин.: %3$s</item>
-        <item quantity="other">%2$s через %1$d мин.: %3$s</item>
+        <item quantity="few">%2$s через %1$d мин.: %3$s</item>
+        <item quantity="many">%2$s через %1$d мин.: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcut">Очистить все динамические ярлыки</string>
-    <string name="auto_freeze_after_lock">Автозаморозка после блокировки экрана</string>
-    <string name="tile_lock">Блокировка после заморозки нажатием на плитку</string>
-    <string name="auto_freeze_channel_name">Автозаморозка</string>
+    <string name="tile_lock">Действие плитки</string>
+    <string name="auto_freeze">Автозаморозка</string>
     <string name="auto_freeze_notification_title">Служба автозаморозки работает</string>
-    <string name="auto_freeze_notification_message">Долгое нажатие для отображения настроек уведомлений</string>
+    <string name="auto_freeze_after_lock">После блокировки экрана</string>
+    <string name="skip_while_charging">Skip while charging</string>
+    <string name="skip_foreground_app">Skip foreground app</string>
 </resources>

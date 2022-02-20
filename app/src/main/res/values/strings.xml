@@ -94,11 +94,10 @@
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcut">Clear all dynamic shortcut</string>
-    <string name="auto_freeze_after_lock">Auto freeze after Screen locked</string>
-    <string name="tile_lock">Lock after freeze by tile</string>
-    <string name="auto_freeze_channel_name">Auto freeze</string>
+    <string name="tile_lock">Tile action</string>
+    <string name="auto_freeze">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
-    <string name="auto_freeze_notification_message">Long press to show notification settings</string>
+    <string name="auto_freeze_after_lock">After screen locked</string>
     <string name="skip_while_charging">Skip while charging</string>
     <string name="skip_foreground_app">Skip foreground app</string>
 </resources>

@@ -8,10 +8,11 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build
 import android.os.PowerManager
+import androidx.core.content.getSystemService
 
 object HSystem {
     fun isInteractive(context: Context): Boolean {
-        val powerManger = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        val powerManger = context.getSystemService<PowerManager>()!!
         return powerManger.isInteractive
     }
 
@@ -20,21 +21,18 @@ object HSystem {
             context.registerReceiver(null, filter)
         }
         val status = batteryStatus?.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ?: -1
-
-        return (status == BatteryManager.BATTERY_STATUS_CHARGING
-                || status == BatteryManager.BATTERY_STATUS_FULL)
+        return status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
     }
 
     @Suppress("SameParameterValue")
     private fun checkOp(context: Context, op: String): Boolean {
-        val opsManager = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val opsManager = context.getSystemService<AppOpsManager>()!!
         val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             opsManager.unsafeCheckOp(op, android.os.Process.myUid(), context.packageName)
         } else {
             @Suppress("DEPRECATION")
             opsManager.checkOp(op, android.os.Process.myUid(), context.packageName)
         }
-
         return result == AppOpsManager.MODE_ALLOWED
     }
 
@@ -42,14 +40,13 @@ object HSystem {
         checkOp(context, AppOpsManager.OPSTR_GET_USAGE_STATS)
 
     fun isForegroundApp(context: Context, packageName: String): Boolean {
-        val usageStatsManager =
-            context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val usageStatsManager = context.getSystemService<UsageStatsManager>()!!
         val now = System.currentTimeMillis()
         val stats = usageStatsManager.queryUsageStats(
             UsageStatsManager.INTERVAL_BEST,
             now - 1000 * 30, now
         ).sortedBy { it.lastTimeUsed }
-        val foregroundPackageName = stats[stats.size - 1]?.packageName ?: ""
+        val foregroundPackageName = stats.last()?.packageName
         return foregroundPackageName == packageName
     }
 }

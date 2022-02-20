@@ -9,6 +9,7 @@ import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.ui.HailActivity
 import com.aistra.hail.utils.HPackages
+import com.aistra.hail.utils.HShortcuts
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -48,6 +49,7 @@ class ApiActivity : HailActivity() {
             else throw IllegalStateException(getString(R.string.permission_denied))
         }
         packageManager.getLaunchIntentForPackage(target)?.let {
+            HShortcuts.addDynamicShortcut(target)
             startActivity(it)
         } ?: throw ActivityNotFoundException(getString(R.string.activity_not_found))
     }

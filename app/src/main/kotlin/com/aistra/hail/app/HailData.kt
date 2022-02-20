@@ -15,6 +15,7 @@ object HailData {
         "https://www.gnu.org/philosophy/free-software-even-more-important.html"
     const val URL_GITHUB = "https://github.com/aistra0528/Hail"
     const val URL_README = "$URL_GITHUB#readme"
+    const val URL_RELEASES = "$URL_GITHUB/releases"
     const val URL_TELEGRAM = "https://t.me/+yvRXYTounDIxODFl"
     const val URL_QQ = "http://qm.qq.com/cgi-bin/qm/qr?k=I2g_Ymanc6bQMo4cVKTG0knARE0twtSG"
     const val URL_COOLAPK = "https://www.coolapk.com/apk/${BuildConfig.APPLICATION_ID}"
@@ -42,10 +43,10 @@ object HailData {
     const val FILTER_SYSTEM_APPS = "filter_system_apps"
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
     const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
-    private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     private const val TILE_LOCK = "tile_lock"
+    private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
-    const val SKIP_FOREGROUND_app = "skip_foreground_app"
+    const val SKIP_FOREGROUND_APP = "skip_foreground_app"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
@@ -54,10 +55,10 @@ object HailData {
     val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)
     val filterFrozenApps get() = sp.getBoolean(FILTER_FROZEN_APPS, true)
     val filterUnfrozenApps get() = sp.getBoolean(FILTER_UNFROZEN_APPS, true)
-    val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
     val tileLock get() = sp.getBoolean(TILE_LOCK, false)
-    val skip_while_charging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
-    val skip_foreground_app get() = sp.getBoolean(SKIP_FOREGROUND_app, false)
+    val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+    val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
+    val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 

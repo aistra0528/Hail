@@ -68,7 +68,7 @@
     <string name="donate_bilibili">ビリビリ動画</string>
     <string name="donate_bilibili_msg">ビリビリチャンネルをフォロー</string>
     <string name="donate_bilibili_space">マイスペース</string>
-    <string name="donate_bilibili_cancel">キャンセル</string>
+    <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">ありがとうございます！</string>
     <string name="msg_redeem_invalid">無効なコード</string>
@@ -93,9 +93,10 @@
         <item quantity="other">%1$d 分あと%2$s：%3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcut">全ての動的ショートカットを削除</string>
-    <string name="auto_freeze_after_lock">画面ロック後自動無効化</string>
-    <string name="tile_lock">タイル無効化後ロック</string>
-    <string name="auto_freeze_channel_name">自動無効化</string>
+    <string name="tile_lock">タイルアクション</string>
+    <string name="auto_freeze">自動無効化</string>
     <string name="auto_freeze_notification_title">自動無効化を待つ</string>
-    <string name="auto_freeze_notification_message">長押して通知を非表示</string>
+    <string name="auto_freeze_after_lock">画面ロック後</string>
+    <string name="skip_while_charging">Skip while charging</string>
+    <string name="skip_foreground_app">Skip foreground app</string>
 </resources>

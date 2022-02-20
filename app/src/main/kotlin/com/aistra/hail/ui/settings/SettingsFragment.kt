@@ -22,12 +22,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
         findPreference<Preference>(HailData.WORKING_MODE)?.onPreferenceChangeListener = this
 
-        findPreference<Preference>(HailData.SKIP_FOREGROUND_app)?.setOnPreferenceChangeListener { _, _ ->
-            if (!HSystem.checkOpUsageStats(requireContext())) {
+        findPreference<Preference>(HailData.SKIP_FOREGROUND_APP)?.setOnPreferenceChangeListener { _, value ->
+            if (value == true && !HSystem.checkOpUsageStats(requireContext())) {
                 startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-                return@setOnPreferenceChangeListener false
-            }
-            true
+                false
+            } else true
         }
     }
 
