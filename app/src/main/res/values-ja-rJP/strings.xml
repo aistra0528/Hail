@@ -97,6 +97,6 @@
     <string name="auto_freeze">自動無効化</string>
     <string name="auto_freeze_notification_title">自動無効化を待つ</string>
     <string name="auto_freeze_after_lock">画面ロック後</string>
-    <string name="skip_while_charging">充電中はスキップ</string>
+    <string name="skip_while_charging">充電時にスキップ</string>
     <string name="skip_foreground_app">フォアグラウンドアプリをスキップ</string>
 </resources>
