@@ -52,11 +52,6 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
                     super.onAuthenticationSucceeded(result)
                     view.visibility = View.VISIBLE
                 }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    finishAndRemoveTask()
-                }
             })
         biometricPrompt.authenticate(promptInfo)
     }
