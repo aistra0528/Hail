@@ -19,8 +19,8 @@
     <string name="action_licenses">ライセンス</string>
     <string name="action_freeze_all">全部無効化</string>
     <string name="action_unfreeze_all">全部有効化</string>
-    <string name="action_freeze_current">カレント無効化</string>
-    <string name="action_unfreeze_current">カレント有効化</string>
+    <string name="action_freeze_current">表示のみ無効化</string>
+    <string name="action_unfreeze_current">表示のみ有効化</string>
     <string name="action_lock">ロック</string>
     <string name="action_lock_freeze">ロック＆無効化</string>
     <string name="action_launch">開く</string>
@@ -99,9 +99,9 @@
     <string name="auto_freeze_after_lock">画面ロック後</string>
     <string name="skip_while_charging">充電時にスキップ</string>
     <string name="skip_foreground_app">フォアグラウンドアプリをスキップ</string>
-    <string name="title_customize">Customize</string>
-    <string name="grayscale_icon">Grayscale icon</string>
-    <string name="compact_icon">Compact icon</string>
-    <string name="action_biometric">Biometric login</string>
-    <string name="msg_biometric">Log in using your biometric credential</string>
+    <string name="title_customize">カスタマイズ</string>
+    <string name="compact_icon">コンパクトアイコン</string>
+    <string name="grayscale_icon">グレースケールアイコン</string>
+    <string name="action_biometric">生体認証ログイン</string>
+    <string name="msg_biometric">生体認証情報を使用して認証する</string>
 </resources>
