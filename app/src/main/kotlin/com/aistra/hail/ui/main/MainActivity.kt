@@ -1,7 +1,15 @@
 package com.aistra.hail.ui.main
 
 import android.os.Bundle
-import androidx.core.view.*
+import android.view.View
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -10,8 +18,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
+import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
 import com.aistra.hail.ui.HailActivity
+import com.aistra.hail.utils.HUI
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class MainActivity : HailActivity(), NavController.OnDestinationChangedListener {
@@ -22,6 +32,33 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         initView()
+        if (HailData.biometricLogin.not()) return
+        val view = findViewById<View>(R.id.drawer_layout)
+        view.visibility = View.INVISIBLE
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(getString(R.string.action_biometric))
+            .setSubtitle(getString(R.string.msg_biometric))
+            .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+            .build()
+        val biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    HUI.showToast(errString)
+                    finishAndRemoveTask()
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    view.visibility = View.VISIBLE
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    finishAndRemoveTask()
+                }
+            })
+        biometricPrompt.authenticate(promptInfo)
     }
 
     private fun initView() {

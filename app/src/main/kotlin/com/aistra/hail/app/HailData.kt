@@ -43,6 +43,9 @@ object HailData {
     const val FILTER_SYSTEM_APPS = "filter_system_apps"
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
     const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
+    private const val BIOMETRIC_LOGIN = "biometric_login"
+    private const val GRAYSCALE_ICON = "grayscale_icon"
+    private const val COMPACT_ICON = "compact_icon"
     private const val TILE_LOCK = "tile_lock"
     private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
@@ -55,6 +58,9 @@ object HailData {
     val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)
     val filterFrozenApps get() = sp.getBoolean(FILTER_FROZEN_APPS, true)
     val filterUnfrozenApps get() = sp.getBoolean(FILTER_UNFROZEN_APPS, true)
+    val biometricLogin get() = sp.getBoolean(BIOMETRIC_LOGIN, false)
+    val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)
+    val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
     val tileLock get() = sp.getBoolean(TILE_LOCK, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)

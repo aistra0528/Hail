@@ -41,8 +41,11 @@ class HomeFragment : MainFragment(),
         setHasOptionsMenu(true)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.recyclerView.run {
-            layoutManager =
-                GridLayoutManager(activity, resources.getInteger(R.integer.home_span))
+            layoutManager = GridLayoutManager(
+                activity, resources.getInteger(
+                    if (HailData.compactIcon) R.integer.home_span_compact else R.integer.home_span
+                )
+            )
             adapter = HomeAdapter.apply {
                 onItemClickListener = this@HomeFragment
                 onItemLongClickListener = this@HomeFragment

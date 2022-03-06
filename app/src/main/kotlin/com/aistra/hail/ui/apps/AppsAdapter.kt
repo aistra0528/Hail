@@ -91,7 +91,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
             setOnLongClickListener { onItemLongClickListener.onItemLongClick(pkg) }
             findViewById<ImageView>(R.id.app_icon).run {
                 setImageDrawable(app.loadIcon(context.packageManager))
-                colorFilter = if (frozen) cf else null
+                colorFilter = if (HailData.grayscaleIcon && frozen) cf else null
             }
             findViewById<TextView>(R.id.app_name).run {
                 text = app.loadLabel(context.packageManager)

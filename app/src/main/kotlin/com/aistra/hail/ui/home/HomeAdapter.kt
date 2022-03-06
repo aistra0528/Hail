@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
+import com.aistra.hail.app.HailData
 import com.google.android.material.color.MaterialColors
 
 object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
@@ -33,7 +34,8 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
             info.state = info.getCurrentState()
             findViewById<ImageView>(R.id.app_icon).run {
                 setImageDrawable(info.icon)
-                colorFilter = if (info.state == AppInfo.STATE_FROZEN) cf else null
+                colorFilter =
+                    if (HailData.grayscaleIcon && info.state == AppInfo.STATE_FROZEN) cf else null
             }
             findViewById<TextView>(R.id.app_name).run {
                 text = info.name

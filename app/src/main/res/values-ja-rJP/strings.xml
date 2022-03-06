@@ -99,4 +99,9 @@
     <string name="auto_freeze_after_lock">画面ロック後</string>
     <string name="skip_while_charging">充電時にスキップ</string>
     <string name="skip_foreground_app">フォアグラウンドアプリをスキップ</string>
+    <string name="title_customize">Customize</string>
+    <string name="grayscale_icon">Grayscale icon</string>
+    <string name="compact_icon">Compact icon</string>
+    <string name="action_biometric">Biometric login</string>
+    <string name="msg_biometric">Log in using your biometric credential</string>
 </resources>

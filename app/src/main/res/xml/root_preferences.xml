@@ -9,14 +9,32 @@
         app:key="working_mode"
         app:title="@string/working_mode"
         app:useSimpleSummaryProvider="true" />
-
     <SwitchPreferenceCompat
         app:defaultValue="false"
-        app:icon="@drawable/ic_outline_lock"
-        android:summaryOff="@string/action_freeze_all"
-        android:summaryOn="@string/action_lock_freeze"
-        app:key="tile_lock"
-        app:title="@string/tile_lock" />
+        app:icon="@drawable/ic_baseline_fingerprint"
+        app:key="biometric_login"
+        app:title="@string/action_biometric" />
+
+    <PreferenceCategory android:title="@string/title_customize">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/ic_baseline_filter_bw"
+            app:key="grayscale_icon"
+            app:title="@string/grayscale_icon" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_baseline_apps"
+            app:key="compact_icon"
+            app:title="@string/compact_icon" />
+        <SwitchPreferenceCompat
+            android:summaryOff="@string/action_freeze_all"
+            android:summaryOn="@string/action_lock_freeze"
+            app:defaultValue="false"
+            app:icon="@drawable/ic_outline_lock"
+            app:key="tile_lock"
+            app:title="@string/tile_lock" />
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/auto_freeze">
 

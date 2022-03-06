@@ -102,4 +102,9 @@
     <string name="auto_freeze_after_lock">После блокировки экрана</string>
     <string name="skip_while_charging">Не замораживать во время зарядки</string>
     <string name="skip_foreground_app">Не замораживать приложения переднего плана</string>
+    <string name="title_customize">Customize</string>
+    <string name="grayscale_icon">Grayscale icon</string>
+    <string name="compact_icon">Compact icon</string>
+    <string name="action_biometric">Biometric login</string>
+    <string name="msg_biometric">Log in using your biometric credential</string>
 </resources>
