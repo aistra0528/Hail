@@ -349,10 +349,10 @@ class HomeFragment : MainFragment(),
     }
 
     private fun exportToClipboard(list: List<AppInfo>) {
-        HUI.copyText(JSONArray().run {
+        HUI.copyText(if (list.size > 1) JSONArray().run {
             list.forEach { put(it.packageName) }
             toString()
-        })
+        } else list.first().packageName)
         HUI.showToast(
             R.string.msg_exported,
             if (list.size > 1) list.size.toString() else list[0].name
@@ -361,7 +361,9 @@ class HomeFragment : MainFragment(),
 
     private fun importFromClipboard() = try {
         val str = HUI.pasteText() ?: throw IllegalArgumentException()
-        val json = JSONArray(str.substring(str.indexOf('[')..str.indexOf(']', str.indexOf('['))))
+        val json = if (str.contains('['))
+            JSONArray(str.substring(str.indexOf('[')..str.indexOf(']', str.indexOf('['))))
+        else JSONArray().put(str)
         var i = 0
         for (index in 0 until json.length()) {
             val pkg = json.getString(index)
