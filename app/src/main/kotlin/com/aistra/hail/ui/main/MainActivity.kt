@@ -2,8 +2,6 @@ package com.aistra.hail.ui.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -22,6 +20,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
 import com.aistra.hail.ui.HailActivity
 import com.aistra.hail.utils.HUI
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class MainActivity : HailActivity(), NavController.OnDestinationChangedListener {
@@ -36,25 +35,37 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
         val background = findViewById<View>(R.id.toolbar).background.constantState?.newDrawable()?.mutate()
         val view = findViewById<View>(R.id.drawer_layout)
         view.visibility = View.INVISIBLE
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.action_biometric))
-            .setSubtitle(getString(R.string.msg_biometric))
-            .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
-            .build()
         val biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this),
             object : BiometricPrompt.AuthenticationCallback() {
+                private fun unlock() {
+                    view.visibility = View.VISIBLE
+                    findViewById<View>(R.id.toolbar)
+                        .setBackgroundColor(MaterialColors.getColor(view, R.attr.colorPrimaryDark))
+                }
+
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    HUI.showToast(errString)
-                    finishAndRemoveTask()
+                    when (errorCode) {
+                        BiometricPrompt.ERROR_NO_BIOMETRICS, BiometricPrompt.ERROR_HW_NOT_PRESENT ->
+                            unlock()
+                        else -> {
+                            if (errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON)
+                                HUI.showToast(errString)
+                            finishAndRemoveTask()
+                        }
+                    }
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    view.visibility = View.VISIBLE
-                    findViewById<View>(R.id.toolbar).background = background
+                    unlock()
                 }
             })
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(getString(R.string.action_biometric))
+            .setSubtitle(getString(R.string.msg_biometric))
+            .setNegativeButtonText(getString(android.R.string.cancel))
+            .build()
         biometricPrompt.authenticate(promptInfo)
     }
 
