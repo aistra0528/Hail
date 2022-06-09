@@ -303,7 +303,7 @@ class HomeFragment : MainFragment(),
     }
 
     private fun showTagDialog(list: List<AppInfo>? = null) {
-        val isMultiSelect = list?.size ?: 0 > 1
+        val isMultiSelect = (list?.size ?: 0) > 1
         val input = DialogInputBinding.inflate(layoutInflater, FrameLayout(activity), true)
         input.inputLayout.setHint(if (list != null) R.string.action_tag_add else R.string.action_tag_set)
         list ?: input.editText.setText(HailData.tags[binding.tabs.selectedTabPosition].first)
@@ -390,7 +390,7 @@ class HomeFragment : MainFragment(),
         when (item.itemId) {
             R.id.action_multiselect -> {
                 multiselect = !multiselect
-                item.icon.setTint(
+                item.icon?.setTint(
                     MaterialColors.getColor(
                         activity.findViewById(R.id.toolbar),
                         if (multiselect) R.attr.colorPrimary else R.attr.colorOnSurface

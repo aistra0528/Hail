@@ -32,7 +32,6 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         initView()
         if (HailData.biometricLogin.not()) return
-        val background = findViewById<View>(R.id.toolbar).background.constantState?.newDrawable()?.mutate()
         val view = findViewById<View>(R.id.drawer_layout)
         view.visibility = View.INVISIBLE
         val biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this),
