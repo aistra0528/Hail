@@ -19,8 +19,8 @@
     <string name="action_licenses">ライセンス</string>
     <string name="action_freeze_all">全部無効化</string>
     <string name="action_unfreeze_all">全部有効化</string>
-    <string name="action_freeze_current">表示のみ無効化</string>
-    <string name="action_unfreeze_current">表示のみ有効化</string>
+    <string name="action_freeze_current">無効化</string>
+    <string name="action_unfreeze_current">有効化</string>
     <string name="action_lock">ロック</string>
     <string name="action_lock_freeze">ロック＆無効化</string>
     <string name="action_launch">開く</string>

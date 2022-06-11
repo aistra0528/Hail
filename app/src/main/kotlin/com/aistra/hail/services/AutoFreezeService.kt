@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
 import com.aistra.hail.R
 import com.aistra.hail.app.HailApi
@@ -65,6 +66,6 @@ class AutoFreezeService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(lockReceiver)
-        stopForeground(true)
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
     }
 }

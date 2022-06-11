@@ -23,7 +23,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Hail">
+        android:localeConfig="@xml/locales_config"
+        android:theme="@style/Theme.Hail"
+        tools:targetApi="33">
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
