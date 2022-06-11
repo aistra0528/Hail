@@ -104,4 +104,6 @@
     <string name="grayscale_icon">グレースケールアイコン</string>
     <string name="action_biometric">生体認証ログイン</string>
     <string name="msg_biometric">生体認証情報を使用して認証する</string>
+    <string name="action_pin">Pin</string>
+    <string name="action_unpin">Unpin</string>
 </resources>

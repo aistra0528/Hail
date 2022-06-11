@@ -95,7 +95,7 @@ class HomeFragment : MainFragment(),
             (query.isEmpty() && it.tagId == HailData.tags[binding.tabs.selectedTabPosition].second)
                     || (query.isNotEmpty() &&
                     (it.packageName.contains(query, true) || it.name.contains(query, true)))
-        })
+        }.sortedWith(NameComparator))
         activity.setAutoFreezeService()
     }
 
@@ -133,7 +133,12 @@ class HomeFragment : MainFragment(),
         val frozen = AppManager.isAppFrozen(pkg)
         val action = getString(if (frozen) R.string.action_unfreeze else R.string.action_freeze)
         MaterialAlertDialogBuilder(activity).setTitle(info.name).setItems(
-            actions.toMutableList().apply { removeAt(if (frozen) 1 else 2) }.toTypedArray()
+            actions.toMutableList().filter {
+                (it != getString(R.string.action_freeze) || !frozen)
+                        && (it != getString(R.string.action_unfreeze) || frozen)
+                        && (it != getString(R.string.action_pin) || !info.pinned)
+                        && (it != getString(R.string.action_unpin) || info.pinned)
+            }.toTypedArray()
         ) { _, which ->
             when (which) {
                 0 -> launchApp(pkg)
@@ -161,6 +166,11 @@ class HomeFragment : MainFragment(),
                         .create().show()
                 }
                 3 -> {
+                    info.pinned = !info.pinned
+                    HailData.saveApps()
+                    updateCurrentList()
+                }
+                4 -> {
                     var checked = -1
                     for (i in HailData.tags.indices) {
                         if (info.tagId == HailData.tags[i].second) {
@@ -186,12 +196,12 @@ class HomeFragment : MainFragment(),
                         .setNegativeButton(android.R.string.cancel, null)
                         .create().show()
                 }
-                4 -> HShortcuts.addPinShortcut(
+                5 -> HShortcuts.addPinShortcut(
                     info.icon, pkg, info.name,
                     HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
-                5 -> exportToClipboard(listOf(info))
-                6 -> removeCheckedApp(pkg)
+                6 -> exportToClipboard(listOf(info))
+                7 -> removeCheckedApp(pkg)
             }
         }.create().show()
         return true
@@ -210,6 +220,8 @@ class HomeFragment : MainFragment(),
                 .setItems(actions.filter {
                     it != getString(R.string.action_launch)
                             && it != getString(R.string.action_deferred_task)
+                            && it != getString(R.string.action_pin)
+                            && it != getString(R.string.action_unpin)
                             && it != getString(R.string.action_add_pin_shortcut)
                 }.toTypedArray()) { _, which ->
                     when (which) {
@@ -373,7 +385,6 @@ class HomeFragment : MainFragment(),
             }
         }
         if (i > 0) {
-            HailData.checkedList.sortWith(NameComparator)
             HailData.saveApps()
             updateCurrentList()
         }

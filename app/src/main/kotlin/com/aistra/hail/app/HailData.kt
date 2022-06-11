@@ -6,7 +6,6 @@ import com.aistra.hail.BuildConfig
 import com.aistra.hail.HailApp
 import com.aistra.hail.R
 import com.aistra.hail.utils.HFiles
-import com.aistra.hail.utils.NameComparator
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -39,6 +38,7 @@ object HailData {
     private const val KEY_ID = "id"
     private const val KEY_TAG = "tag"
     private const val KEY_AID = "aid"
+    private const val KEY_PINNED = "pinned"
     const val FILTER_USER_APPS = "filter_user_apps"
     const val FILTER_SYSTEM_APPS = "filter_system_apps"
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
@@ -83,10 +83,9 @@ object HailData {
                 val json = JSONArray(HFiles.read(appsPath))
                 for (i in 0 until json.length()) {
                     add(with(json.getJSONObject(i)) {
-                        AppInfo(getString(KEY_PACKAGE), optInt(KEY_TAG))
+                        AppInfo(getString(KEY_PACKAGE), optBoolean(KEY_PINNED), optInt(KEY_TAG))
                     })
                 }
-                sortWith(NameComparator)
             } catch (t: Throwable) {
             }
         }
@@ -103,11 +102,8 @@ object HailData {
     fun isChecked(packageName: String): Boolean = getCheckedPosition(packageName) != -1
 
     fun addCheckedApp(packageName: String, sortAndSave: Boolean = true) {
-        checkedList.add(AppInfo(packageName, 0))
-        if (sortAndSave) {
-            checkedList.sortWith(NameComparator)
-            saveApps()
-        }
+        checkedList.add(AppInfo(packageName, false, 0))
+        if (sortAndSave) saveApps()
     }
 
     fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
@@ -120,7 +116,11 @@ object HailData {
             HFiles.createDirectories(dir)
         HFiles.write(appsPath, JSONArray().run {
             checkedList.forEach {
-                put(JSONObject().put(KEY_PACKAGE, it.packageName).put(KEY_TAG, it.tagId))
+                put(
+                    JSONObject().put(KEY_PACKAGE, it.packageName)
+                        .put(KEY_PINNED, it.pinned)
+                        .put(KEY_TAG, it.tagId)
+                )
             }
             toString()
         })

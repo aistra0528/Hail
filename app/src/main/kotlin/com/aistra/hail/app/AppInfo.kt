@@ -4,7 +4,7 @@ import android.content.pm.ApplicationInfo
 import com.aistra.hail.HailApp
 import com.aistra.hail.utils.HPackages
 
-class AppInfo(val packageName: String, var tagId: Int) {
+class AppInfo(val packageName: String, var pinned: Boolean, var tagId: Int) {
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
     val name get() = applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName
     val icon

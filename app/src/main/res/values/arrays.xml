@@ -13,6 +13,8 @@
         <item>@string/action_freeze</item>
         <item>@string/action_unfreeze</item>
         <item>@string/action_deferred_task</item>
+        <item>@string/action_pin</item>
+        <item>@string/action_unpin</item>
         <item>@string/action_tag_set</item>
         <item>@string/action_add_pin_shortcut</item>
         <item>@string/action_export_clipboard</item>
