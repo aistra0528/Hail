@@ -407,6 +407,7 @@ class HomeFragment : MainFragment(),
                         if (multiselect) R.attr.colorPrimary else R.attr.colorOnSurface
                     )
                 )
+                if (multiselect) HUI.showToast(R.string.tap_to_select)
             }
             R.id.action_freeze_current -> setListFrozen(true, HomeAdapter.currentList)
             R.id.action_unfreeze_current -> setListFrozen(false, HomeAdapter.currentList)
