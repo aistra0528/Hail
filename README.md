@@ -179,6 +179,7 @@ Thank you!
 
 - 日本語 [@AokiFuru](https://github.com/AokiFuru)
 - русский [@tommynok](https://github.com/tommynok)
+- Español [@cyanwolfg](https://github.com/cyanwolfg)
 
 ## License
 
