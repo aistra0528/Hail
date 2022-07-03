@@ -13,8 +13,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 33
-        versionCode = 15
-        versionName = "0.9.4"
+        versionCode = 16
+        versionName = "0.9.5"
         resourceConfigurations += arrayOf("en", "es", "it", "ja-rJP", "ru", "zh-rCN")
     }
     signingConfigs {
@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3")
     implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("androidx.biometric:biometric:1.1.0")
