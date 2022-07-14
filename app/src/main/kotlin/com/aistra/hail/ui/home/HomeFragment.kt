@@ -74,9 +74,7 @@ class HomeFragment : MainFragment(),
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {}
 
-                override fun onTabReselected(tab: TabLayout.Tab) {
-                    if (tab.position > 0) showTagDialog()
-                }
+                override fun onTabReselected(tab: TabLayout.Tab) = showTagDialog()
             })
             HailData.tags.forEach { addTab(newTab().setText(it.first), tabCount == 0) }
             if (tabCount == 1) visibility = View.GONE
@@ -333,11 +331,12 @@ class HomeFragment : MainFragment(),
                         if (query.isEmpty() && tabCount == 2) visibility = View.VISIBLE
                         if (isMultiSelect) deselect() else updateCurrentList()
                     } else {
+                        val defaultTab = selectedTabPosition == 0
                         HailData.tags.run {
                             removeAt(selectedTabPosition)
-                            add(selectedTabPosition, tagName to tagId)
+                            add(selectedTabPosition, tagName to if (defaultTab) 0 else tagId)
                         }
-                        HomeAdapter.currentList.forEach { it.tagId = tagId }
+                        if (!defaultTab) HomeAdapter.currentList.forEach { it.tagId = tagId }
                         getTabAt(selectedTabPosition)!!.text = tagName
                     }
                 }
@@ -345,7 +344,8 @@ class HomeFragment : MainFragment(),
                 HailData.saveTags()
             }
             .apply {
-                list ?: setNeutralButton(R.string.action_tag_remove) { _, _ ->
+                if (list != null || binding.tabs.selectedTabPosition == 0) return@apply
+                setNeutralButton(R.string.action_tag_remove) { _, _ ->
                     HomeAdapter.currentList.forEach { it.tagId = 0 }
                     binding.tabs.run {
                         HailData.tags.removeAt(selectedTabPosition)
