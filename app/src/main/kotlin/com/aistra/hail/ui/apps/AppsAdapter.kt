@@ -39,7 +39,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     private val timer = Timer()
     private var debounce: TimerTask? = null
 
-    private val PackageInfo.isSystemApp: Boolean
+    val PackageInfo.isSystemApp: Boolean
         get() = applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
 
     @SuppressLint("InlinedApi")

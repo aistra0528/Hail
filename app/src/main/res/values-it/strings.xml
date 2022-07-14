@@ -107,4 +107,7 @@
     <string name="msg_biometric">Log in using your biometric credential</string>
     <string name="action_pin">Pin</string>
     <string name="action_unpin">Unpin</string>
+    <string name="google_title">Please download from offical github</string>
+    <string name="import_freezed_app">Import Freezed app</string>
+    <string name="import_complete">Import complete!</string>
 </resources>
