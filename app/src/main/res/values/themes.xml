@@ -2,7 +2,7 @@
 
     <style name="Theme.Base" parent="Theme.Material3.DayNight">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorPrimaryDark">?colorSurface</item>
         <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>

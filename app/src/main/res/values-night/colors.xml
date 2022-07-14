@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFA000</color>
-    <color name="colorPrimaryContainer">#673d00</color>
-    <color name="colorOnPrimaryContainer">#ffddb8</color>
+    <color name="colorPrimary">#FFF59D</color>
+    <color name="colorOnPrimary">@android:color/black</color>
+    <color name="colorPrimaryContainer">#FFF9C4</color>
+    <color name="colorOnPrimaryContainer">@android:color/black</color>
     <color name="colorWarn">@color/error_color_material_dark</color>
 </resources>
