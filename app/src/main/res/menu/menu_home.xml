@@ -58,4 +58,8 @@
         android:id="@+id/action_clear_dynamic_shortcut"
         android:title="@string/action_clear_dynamic_shortcut"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/import_freeze_app"
+        android:title="@string/import_freezed_app"
+        app:showAsAction="never" />
 </menu>

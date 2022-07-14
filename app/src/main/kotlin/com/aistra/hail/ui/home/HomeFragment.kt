@@ -451,6 +451,10 @@ class HomeFragment : MainFragment(),
                 Intent(HailApi.ACTION_LOCK_FREEZE)
             )
             R.id.action_clear_dynamic_shortcut -> HShortcuts.removeAllDynamicShortcuts()
+            R.id.import_freeze_app -> HShortcuts.importFreezedApp(
+                ::updateCurrentList,
+                HomeAdapter.currentList
+            )
         }
         return super.onOptionsItemSelected(item)
     }
