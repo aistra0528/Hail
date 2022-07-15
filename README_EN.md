@@ -6,6 +6,16 @@
 
 Hail is a free software to freeze Android apps. Enjoy all features freely!
 
+[<img src="coolapk-badge.png" alt="Get it on CoolApk" height="80">](https://www.coolapk.com/apk/com.aistra.hail)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.aistra.hail/)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.aistra.hail)
+
+CoolApk releases are signed the same as [GitHub Releases](https://github.com/aistra0528/Hail/releases), and F-Droid releases are signed by F-Droid.
+
+Google Play releases are the [Fork](https://github.com/purofle/Hail) by [@purofle](https://github.com/purofle), signed by Google.
+
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%" />
+
 ## Freeze
 
 Freeze is a word to describe the action of **forbid apps when they are unnecessary** to use device

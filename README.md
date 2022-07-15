@@ -4,6 +4,16 @@
 
 雹是一款用于冻结 Android 应用的自由软件，您可自由享用所有功能。
 
+[<img src="coolapk-badge.png" alt="Get it on CoolApk" height="80">](https://www.coolapk.com/apk/com.aistra.hail)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.aistra.hail/)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.aistra.hail)
+
+酷安版签名与 [GitHub Releases](https://github.com/aistra0528/Hail/releases) 一致，F-Droid 版由 F-Droid 签名。
+
+Google Play 版为 [@purofle](https://github.com/purofle) 的 [Fork](https://github.com/purofle/Hail)，由 Google 签名。
+
+<img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/1.png" width="32%" /> <img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/2.png" width="32%" /> <img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/3.png" width="32%" />
+
 ## 冻结
 
 冻结`freeze`是一个营销用语，用于描述使**应用在用户不需要时不可运行**的行为，以此控制设备使用、减少内存占用和节省电量。用户可在需要时解冻`unfreeze`应用。
