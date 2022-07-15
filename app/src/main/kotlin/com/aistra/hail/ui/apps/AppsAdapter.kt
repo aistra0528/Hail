@@ -1,6 +1,5 @@
 package com.aistra.hail.ui.apps
 
-import android.annotation.SuppressLint
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -21,6 +20,7 @@ import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.HLog
+import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.NameComparator
 import java.util.*
 
@@ -39,12 +39,11 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     private val timer = Timer()
     private var debounce: TimerTask? = null
 
-    val PackageInfo.isSystemApp: Boolean
+    private val PackageInfo.isSystemApp: Boolean
         get() = applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
 
-    @SuppressLint("InlinedApi")
     private fun filterList(query: String? = null, pm: PackageManager): List<PackageInfo> =
-        pm.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES).filter {
+        HPackages.getInstalledPackages().filter {
             ((HailData.filterUserApps && !it.isSystemApp)
                     || (HailData.filterSystemApps && it.isSystemApp))
                     && ((HailData.filterFrozenApps && AppManager.isAppFrozen(it.packageName))

@@ -11,6 +11,14 @@
         android:layout_height="wrap_content"
         app:tabMode="scrollable" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/nothing_here"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"

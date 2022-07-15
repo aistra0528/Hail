@@ -31,9 +31,21 @@
         android:title="@string/action_unfreeze_all"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_import_clipboard"
-        android:title="@string/action_import_clipboard"
-        app:showAsAction="never" />
+        android:title="@string/action_import_app"
+        app:showAsAction="never">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/action_import_clipboard"
+                    android:title="@string/action_import_clipboard"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/action_import_frozen"
+                    android:title="@string/action_import_frozen"
+                    app:showAsAction="never" />
+            </group>
+        </menu>
+    </item>
     <item
         android:title="@string/action_add_pin_shortcut"
         app:showAsAction="never">
@@ -57,9 +69,5 @@
     <item
         android:id="@+id/action_clear_dynamic_shortcut"
         android:title="@string/action_clear_dynamic_shortcut"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/import_freeze_app"
-        android:title="@string/import_freezed_app"
         app:showAsAction="never" />
 </menu>

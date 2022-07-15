@@ -25,6 +25,10 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 
 class HomeFragment : MainFragment(),
@@ -88,12 +92,19 @@ class HomeFragment : MainFragment(),
         activity.fab.setOnClickListener { setListFrozen(true, HomeAdapter.currentList) }
     }
 
-    private fun updateCurrentList() {
-        HomeAdapter.submitList(HailData.checkedList.filter {
-            (query.isEmpty() && it.tagId == HailData.tags[binding.tabs.selectedTabPosition].second)
-                    || (query.isNotEmpty() &&
-                    (it.packageName.contains(query, true) || it.name.contains(query, true)))
-        }.sortedWith(NameComparator))
+    private fun updateCurrentList() = HailData.checkedList.filter {
+        (query.isEmpty() && it.tagId == HailData.tags[binding.tabs.selectedTabPosition].second)
+                || (query.isNotEmpty() &&
+                (it.packageName.contains(query, true) || it.name.contains(query, true)))
+    }.sortedWith(NameComparator).let {
+        if (it.isEmpty()) {
+            binding.empty.visibility = View.VISIBLE
+            binding.refresh.visibility = View.GONE
+        } else {
+            binding.empty.visibility = View.GONE
+            binding.refresh.visibility = View.VISIBLE
+        }
+        HomeAdapter.submitList(it)
         activity.setAutoFreezeService()
     }
 
@@ -392,6 +403,21 @@ class HomeFragment : MainFragment(),
     } catch (t: Throwable) {
     }
 
+    private fun importFrozenApp() =
+        CoroutineScope(Job() + Dispatchers.IO + Dispatchers.Main).launch {
+            val i = HPackages.getInstalledPackages().map { it.packageName }
+                .filter { pkg -> AppManager.isAppFrozen(pkg) && HailData.checkedList.all { it.packageName != pkg } }
+                .run {
+                    forEach { HailData.addCheckedApp(it, false) }
+                    size
+                }
+            if (i > 0) {
+                HailData.saveApps()
+                updateCurrentList()
+            }
+            HUI.showToast(getString(R.string.msg_imported, i.toString()))
+        }
+
     private fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
         HailData.removeCheckedApp(packageName, saveApps)
         if (saveApps) updateCurrentList()
@@ -414,6 +440,7 @@ class HomeFragment : MainFragment(),
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)
             R.id.action_import_clipboard -> importFromClipboard()
+            R.id.action_import_frozen -> importFrozenApp()
             R.id.pin_freeze_all -> HShortcuts.addPinShortcut(
                 AppCompatResources.getDrawable(
                     app,
@@ -451,10 +478,6 @@ class HomeFragment : MainFragment(),
                 Intent(HailApi.ACTION_LOCK_FREEZE)
             )
             R.id.action_clear_dynamic_shortcut -> HShortcuts.removeAllDynamicShortcuts()
-            R.id.import_freeze_app -> HShortcuts.importFreezedApp(
-                ::updateCurrentList,
-                HomeAdapter.currentList
-            )
         }
         return super.onOptionsItemSelected(item)
     }

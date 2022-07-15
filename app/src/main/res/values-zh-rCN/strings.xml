@@ -105,7 +105,7 @@
     <string name="msg_biometric">使用您的生物识别凭证登录</string>
     <string name="action_pin">置顶</string>
     <string name="action_unpin">取消置顶</string>
-    <string name="google_title">请在官方 Github 网页下载此软件</string>
-    <string name="import_freezed_app">导入已冻结的App</string>
-    <string name="import_complete">导入完成</string>
+    <string name="nothing_here">什么都没有哦</string>
+    <string name="action_import_frozen">导入已冻结应用</string>
+    <string name="action_import_app">导入应用</string>
 </resources>

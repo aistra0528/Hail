@@ -106,7 +106,7 @@
     <string name="msg_biometric">生体認証情報を使用して認証する</string>
     <string name="action_pin">Pin</string>
     <string name="action_unpin">Unpin</string>
-    <string name="google_title">Please download from offical github</string>
-    <string name="import_freezed_app">Import Freezed app</string>
-    <string name="import_complete">Import complete!</string>
+    <string name="nothing_here">Nothing here</string>
+    <string name="action_import_frozen">Import frozen app</string>
+    <string name="action_import_app">Import app</string>
 </resources>

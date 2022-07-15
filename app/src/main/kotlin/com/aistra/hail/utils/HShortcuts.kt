@@ -1,27 +1,16 @@
 package com.aistra.hail.utils
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.os.Looper
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.aistra.hail.HailApp
 import com.aistra.hail.R
-import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailApi
-import com.aistra.hail.app.HailData
-import com.aistra.hail.utils.HPackages.isAppDisabled
-import com.aistra.hail.utils.HUI.showToast
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 object HShortcuts {
     fun addPinShortcut(icon: Drawable, id: String, label: CharSequence, intent: Intent) {
@@ -32,7 +21,7 @@ object HShortcuts {
                 .setIntent(intent)
                 .build()
             ShortcutManagerCompat.requestPinShortcut(HailApp.app, shortcut, null)
-        } else showToast(
+        } else HUI.showToast(
             R.string.operation_failed,
             HailApp.app.getString(R.string.action_add_pin_shortcut)
         )
@@ -69,26 +58,6 @@ object HShortcuts {
 
     fun removeAllDynamicShortcuts() {
         ShortcutManagerCompat.removeAllDynamicShortcuts(HailApp.app)
-    }
-
-    @SuppressLint("InlinedApi")
-    @Suppress("DEPRECATION")
-    fun importFreezedApp(update: () -> Unit, currentList: MutableList<AppInfo>) {
-        val scope = CoroutineScope(Job() + Dispatchers.IO)
-        scope.launch {
-            HailApp.app.packageManager.getInstalledPackages(MATCH_UNINSTALLED_PACKAGES)
-                .filter { isAppDisabled(it.packageName) }
-                .filterNot { packageInfo -> packageInfo.packageName in currentList.map { it.packageName } }
-                .forEach { HailData.addCheckedApp(it.packageName, false) }
-
-            HailData.saveApps()
-            update()
-
-            //Caused by: java.lang.RuntimeException: Can't toast on a thread that has not called Looper.prepare()
-            Looper.prepare()
-            showToast(R.string.import_complete)
-            Looper.loop()
-        }
     }
 
     private fun isMaxDynamicShortcutCount(): Boolean =

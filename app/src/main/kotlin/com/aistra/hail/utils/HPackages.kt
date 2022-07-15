@@ -1,6 +1,7 @@
 package com.aistra.hail.utils
 
 import android.annotation.SuppressLint
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import com.aistra.hail.HailApp
 
@@ -9,6 +10,9 @@ object HPackages {
     private const val MATCH_UNINSTALLED = PackageManager.MATCH_UNINSTALLED_PACKAGES
 
     fun packageUri(packageName: String) = "package:$packageName"
+
+    fun getInstalledPackages(flags: Int = MATCH_UNINSTALLED): List<PackageInfo> =
+        HailApp.app.packageManager.getInstalledPackages(flags)
 
     fun getPackageInfoOrNull(packageName: String, flags: Int = MATCH_UNINSTALLED) = try {
         HailApp.app.packageManager.getPackageInfo(packageName, flags)
