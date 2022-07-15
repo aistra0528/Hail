@@ -39,7 +39,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 <h5>Remove device owner</h5>
 <p>Click Hail at Apps, then select Uninstall in options.</p>
 <h4>Superuser - Disable</h4>
-<p>This mode execute <code>pm disable-user</code> to disable apps.</p>
+<p>This mode execute <code>pm disable</code> to disable apps.</p>
 <h4>Shizuku - Disable</h4>
 <p>This mode invoke non-SDK interface <code>IPackageManager.setApplicationEnabledSetting</code> to disable apps.</p>
 <h3>Revert</h3>

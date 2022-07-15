@@ -67,7 +67,7 @@ Click Hail at Apps, then select Uninstall in options.
 
 ### Superuser - Disable
 
-This mode execute `pm disable-user` to disable apps.
+This mode execute `pm disable` to disable apps.
 
 ### Shizuku - Disable
 

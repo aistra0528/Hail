@@ -37,7 +37,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 <h5>移除雹的设备所有者</h5>
 <p>在雹的应用界面点按雹，在弹出的选项中选择卸载。</p>
 <h4>超级用户 - 停用</h4>
-<p>此模式通过授予雹超级用户 (Superuser) 权限，执行<code>pm disable-user</code>命令停用应用。</p>
+<p>此模式通过授予雹超级用户 (Superuser) 权限，执行<code>pm disable</code>命令停用应用。</p>
 <h4>Shizuku - 停用</h4>
 <p>此模式通过 Shizuku 调用非 SDK 接口<code>IPackageManager.setApplicationEnabledSetting</code>方法停用应用。</p>
 <h3>恢复</h3>

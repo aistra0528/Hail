@@ -63,7 +63,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 ### 超级用户 - 停用
 
-此模式通过授予雹超级用户 (Superuser) 权限，执行`pm disable-user`命令停用应用。
+此模式通过授予雹超级用户 (Superuser) 权限，执行`pm disable`命令停用应用。
 
 ### Shizuku - 停用
 
