@@ -7,7 +7,7 @@
     <string name="title_about">Acerda de</string>
     <string name="label_default">Por defecto</string>
     <string name="label_version">Versión</string>
-    <string name="label_time">Tiempo de instalación</string>
+    <string name="label_time">Fecha de instalación</string>
     <string name="action_telegram">Grupo de Telegram</string>
     <string name="action_qq">Grupo en QQ</string>
     <string name="action_coolapk">CoolApk</string>
@@ -101,13 +101,13 @@
     <string name="skip_while_charging">Omitir durante la carga</string>
     <string name="skip_foreground_app">Omitir aplicación corriendo en primer plano</string>
     <string name="title_customize">Personalizar</string>
-    <string name="grayscale_icon">Icono en escala de grises</string>
-    <string name="compact_icon">Icono compacto</string>
+    <string name="grayscale_icon">Iconos en escala de grises</string>
+    <string name="compact_icon">Iconos compacto</string>
     <string name="action_biometric">Inicio de sesión biométrico</string>
     <string name="msg_biometric">Inicie sesión con su identificación biométrica</string>
     <string name="action_pin">Fijar</string>
     <string name="action_unpin">Desfijar</string>
-    <string name="nothing_here">Nothing here</string>
-    <string name="action_import_frozen">Import frozen app</string>
-    <string name="action_import_app">Import app</string>
+    <string name="nothing_here">Nada por aquí</string>
+    <string name="action_import_frozen">Importar aplicaciones congeladas</string>
+    <string name="action_import_app">Importar aplicaciones</string>
 </resources>
