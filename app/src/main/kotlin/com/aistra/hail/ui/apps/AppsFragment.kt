@@ -51,8 +51,11 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     override fun onItemClick(info: PackageInfo) {
         val name = info.applicationInfo.loadLabel(app.packageManager)
         val pkg = info.packageName
+        val canUninstall = HPackages.canUninstall(pkg)
         MaterialAlertDialogBuilder(activity).setTitle(name)
-            .setItems(R.array.apps_action_entries) { _, which ->
+            .setItems(resources.getStringArray(R.array.apps_action_entries).toMutableList().filter {
+                it != getString(R.string.action_uninstall) || canUninstall
+            }.toTypedArray()) { _, which ->
                 when (which) {
                     0 -> HUI.startActivity(
                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
