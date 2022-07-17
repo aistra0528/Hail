@@ -7,6 +7,9 @@ import android.view.*
 import android.widget.CompoundButton
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -21,13 +24,14 @@ import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
-    AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener {
+    AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener, MenuProvider {
     private lateinit var refreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return SwipeRefreshLayout(activity).apply {
             refreshLayout = this
             addView(RecyclerView(activity).apply {
@@ -119,8 +123,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         buttonView.isChecked = HailData.isChecked(packageName)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_apps, menu)
         (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
@@ -135,8 +138,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         })
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
         menu.findItem(
             when (HailData.sortBy) {
                 HailData.SORT_INSTALL -> R.id.sort_by_install
@@ -150,7 +153,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         menu.findItem(R.id.filter_unfrozen_apps).isChecked = HailData.filterUnfrozenApps
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort_by_name -> changeAppsSort(HailData.SORT_NAME, item)
             R.id.sort_by_install -> changeAppsSort(HailData.SORT_INSTALL, item)
@@ -160,7 +163,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             R.id.filter_frozen_apps -> changeAppsFilter(HailData.FILTER_FROZEN_APPS, item)
             R.id.filter_unfrozen_apps -> changeAppsFilter(HailData.FILTER_UNFROZEN_APPS, item)
         }
-        return super.onOptionsItemSelected(item)
+        return false
     }
 
     private fun changeAppsSort(sort: String, item: MenuItem) {

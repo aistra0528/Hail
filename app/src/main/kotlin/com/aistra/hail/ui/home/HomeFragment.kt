@@ -6,6 +6,9 @@ import android.view.*
 import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.R
@@ -32,7 +35,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 
 class HomeFragment : MainFragment(),
-    HomeAdapter.OnItemClickListener, HomeAdapter.OnItemLongClickListener {
+    HomeAdapter.OnItemClickListener, HomeAdapter.OnItemLongClickListener, MenuProvider {
 
     private var query: String = String()
     private var _binding: FragmentHomeBinding? = null
@@ -42,7 +45,8 @@ class HomeFragment : MainFragment(),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.recyclerView.run {
             layoutManager = GridLayoutManager(
@@ -423,7 +427,7 @@ class HomeFragment : MainFragment(),
         if (saveApps) updateCurrentList()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_multiselect -> {
                 multiselect = !multiselect
@@ -479,11 +483,10 @@ class HomeFragment : MainFragment(),
             )
             R.id.action_clear_dynamic_shortcut -> HShortcuts.removeAllDynamicShortcuts()
         }
-        return super.onOptionsItemSelected(item)
+        return false
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_home, menu)
         (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
