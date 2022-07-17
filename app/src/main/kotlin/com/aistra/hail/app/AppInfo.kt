@@ -1,15 +1,19 @@
 package com.aistra.hail.app
 
 import android.content.pm.ApplicationInfo
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import com.aistra.hail.HailApp
 import com.aistra.hail.utils.HPackages
+import com.aistra.hail.utils.HShortcuts
 
 class AppInfo(val packageName: String, var pinned: Boolean, var tagId: Int) {
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
     val name get() = applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName
-    val icon
-        get() = applicationInfo?.loadIcon(HailApp.app.packageManager)
-            ?: HailApp.app.packageManager.defaultActivityIcon
+    val icon: Bitmap
+        get() = applicationInfo?.let { HailApp.iconLoader.loadIcon(it) }
+            ?: HShortcuts.getBitmapFromDrawable(HailApp.app.packageManager.defaultActivityIcon)
 
     var state: Int = getCurrentState()
     fun getCurrentState(): Int = when {

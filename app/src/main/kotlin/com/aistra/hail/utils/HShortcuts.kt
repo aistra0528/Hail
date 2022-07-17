@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.Icon
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -14,9 +15,17 @@ import com.aistra.hail.app.HailApi
 
 object HShortcuts {
     fun addPinShortcut(icon: Drawable, id: String, label: CharSequence, intent: Intent) {
+        addPinShortcut(getDrawableIcon(icon), id, label, intent)
+    }
+
+    fun addPinShortcut(icon: Bitmap, id: String, label: CharSequence, intent: Intent) {
+        addPinShortcut(IconCompat.createWithBitmap(icon), id, label, intent)
+    }
+
+    private fun addPinShortcut(icon: IconCompat, id: String, label: CharSequence, intent: Intent) {
         if (ShortcutManagerCompat.isRequestPinShortcutSupported(HailApp.app)) {
             val shortcut = ShortcutInfoCompat.Builder(HailApp.app, id)
-                .setIcon(getDrawableIcon(icon))
+                .setIcon(icon)
                 .setShortLabel(label)
                 .setIntent(intent)
                 .build()
@@ -32,9 +41,9 @@ object HShortcuts {
         val applicationInfo = HPackages.getApplicationInfoOrNull(packageName)
         val shortcut = ShortcutInfoCompat.Builder(HailApp.app, packageName)
             .setIcon(
-                getDrawableIcon(
-                    applicationInfo?.loadIcon(HailApp.app.packageManager)
-                        ?: HailApp.app.packageManager.defaultActivityIcon
+                IconCompat.createWithBitmap(
+                    applicationInfo?.let { HailApp.iconLoader.loadIcon(it) }
+                        ?: getBitmapFromDrawable(HailApp.app.packageManager.defaultActivityIcon)
                 )
             )
             .setShortLabel(applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName)
@@ -65,13 +74,15 @@ object HShortcuts {
                 ShortcutManagerCompat.getMaxShortcutCountPerActivity(HailApp.app)
 
     private fun getDrawableIcon(drawable: Drawable): IconCompat =
-        IconCompat.createWithBitmap(
-            Bitmap.createBitmap(
-                drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
-            ).also {
-                with(Canvas(it)) {
-                    drawable.setBounds(0, 0, width, height)
-                    drawable.draw(this)
-                }
-            })
+        IconCompat.createWithBitmap(getBitmapFromDrawable(drawable))
+
+    fun getBitmapFromDrawable(drawable: Drawable): Bitmap =
+        Bitmap.createBitmap(
+            drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        ).also {
+            with(Canvas(it)) {
+                drawable.setBounds(0, 0, width, height)
+                drawable.draw(this)
+            }
+        }
 }

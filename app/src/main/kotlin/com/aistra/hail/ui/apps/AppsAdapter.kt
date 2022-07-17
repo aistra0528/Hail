@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.aistra.hail.HailApp
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
@@ -89,7 +90,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
             setOnClickListener { onItemClickListener.onItemClick(info) }
             setOnLongClickListener { onItemLongClickListener.onItemLongClick(pkg) }
             findViewById<ImageView>(R.id.app_icon).run {
-                setImageDrawable(app.loadIcon(context.packageManager))
+                setImageBitmap(HailApp.iconLoader.loadIcon(app))
                 colorFilter = if (HailData.grayscaleIcon && frozen) cf else null
             }
             findViewById<TextView>(R.id.app_name).run {
