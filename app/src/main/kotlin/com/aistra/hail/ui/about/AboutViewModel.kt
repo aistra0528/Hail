@@ -2,7 +2,6 @@ package com.aistra.hail.ui.about
 
 import android.app.Application
 import android.app.Dialog
-import android.content.pm.PackageManager
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -17,18 +16,9 @@ import java.security.MessageDigest
 import java.text.SimpleDateFormat
 
 class AboutViewModel(val app: Application) : AndroidViewModel(app) {
-    @Suppress("DEPRECATION")
     val time = MutableLiveData<String>().apply {
         value = SimpleDateFormat.getDateInstance()
-            .format(
-                if (HPackages.atLeastT()) app.packageManager.getPackageInfo(
-                    app.packageName,
-                    PackageManager.PackageInfoFlags.of(0)
-                ).firstInstallTime else app.packageManager.getPackageInfo(
-                    app.packageName,
-                    0
-                ).firstInstallTime
-            )
+            .format(HPackages.getPackageInfoOrNull(app.packageName)!!.firstInstallTime)
     }
 
     val snack = MutableLiveData<Int>()

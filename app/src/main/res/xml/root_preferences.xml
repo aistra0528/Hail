@@ -28,18 +28,18 @@
             app:key="compact_icon"
             app:title="@string/compact_icon" />
         <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_outline_layers"
+            app:key="synthesize_adaptive_icons"
+            app:summary="@string/need_restart_app"
+            app:title="@string/synthesize_adaptive_icons" />
+        <SwitchPreferenceCompat
             android:summaryOff="@string/action_freeze_all"
             android:summaryOn="@string/action_lock_freeze"
             app:defaultValue="false"
             app:icon="@drawable/ic_outline_lock"
             app:key="tile_lock"
             app:title="@string/tile_lock" />
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:icon="@drawable/ic_round_supervised_user_circle"
-            app:key="synthesize_adaptive_icons"
-            app:title="@string/synthesize_adaptive_icons"
-            app:summary="@string/need_restart_app" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/auto_freeze">

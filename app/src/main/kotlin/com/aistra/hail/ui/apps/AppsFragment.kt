@@ -30,7 +30,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val menuHost: MenuHost = requireActivity()
+        val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return SwipeRefreshLayout(activity).apply {
             refreshLayout = this

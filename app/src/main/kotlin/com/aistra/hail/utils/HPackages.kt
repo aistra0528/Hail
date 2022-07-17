@@ -30,8 +30,8 @@ object HPackages {
     fun isAppDisabled(packageName: String): Boolean =
         getApplicationInfoOrNull(packageName)?.enabled?.not() ?: false
 
-    fun atLeastT(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-
     fun canUninstall(packageName: String): Boolean =
         getApplicationInfoOrNull(packageName)?.sourceDir?.startsWith("/data") ?: false
+
+    private fun atLeastT(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
 }

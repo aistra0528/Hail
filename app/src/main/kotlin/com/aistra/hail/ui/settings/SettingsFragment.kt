@@ -24,7 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val menuHost: MenuHost = requireActivity()
+        val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return super.onCreateView(inflater, container, savedInstanceState)
     }

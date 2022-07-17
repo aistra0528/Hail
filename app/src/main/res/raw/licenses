@@ -1,7 +1,9 @@
 Android Jetpack (Apache 2.0): https://developer.android.com/jetpack
 
-Kotlinx Coroutines Android (Apache 2.0): https://kotlinlang.org
+Kotlin (Apache 2.0): https://kotlinlang.org
 
 Material Components for Android (Apache 2.0): https://github.com/material-components/material-components-android
 
 Shizuku-API (MIT): https://github.com/RikkaApps/Shizuku-API
+
+AppIconLoader (Apache 2.0): https://github.com/zhanghai/AppIconLoader
