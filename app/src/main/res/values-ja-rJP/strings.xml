@@ -109,4 +109,6 @@
     <string name="nothing_here">Nothing here</string>
     <string name="action_import_frozen">Import frozen app</string>
     <string name="action_import_app">Import app</string>
+    <string name="synthesize_adaptive_icons">アダプティブアイコンを合成する</string>
+    <string name="need_restart_app">アプリを再起動する必要があります</string>
 </resources>

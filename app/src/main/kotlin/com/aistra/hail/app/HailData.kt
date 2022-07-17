@@ -47,6 +47,7 @@ object HailData {
     private const val GRAYSCALE_ICON = "grayscale_icon"
     private const val COMPACT_ICON = "compact_icon"
     private const val TILE_LOCK = "tile_lock"
+    private const val SYNTHESIZE_ADAPTIVE_ICONS = "synthesize_adaptive_icons"
     private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
@@ -62,6 +63,7 @@ object HailData {
     val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)
     val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
     val tileLock get() = sp.getBoolean(TILE_LOCK, false)
+    val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)

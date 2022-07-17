@@ -2,6 +2,7 @@ package com.aistra.hail
 
 import android.app.Application
 import android.content.res.Resources
+import com.aistra.hail.app.HailData
 import com.google.android.material.color.DynamicColors
 import me.zhanghai.android.appiconloader.AppIconLoader
 
@@ -11,7 +12,7 @@ class HailApp : Application() {
         DynamicColors.applyToActivitiesIfAvailable(this)
         app = this
         iconLoader =
-            AppIconLoader((64 * Resources.getSystem().displayMetrics.density).toInt(), false, this)
+            AppIconLoader((64 * Resources.getSystem().displayMetrics.density).toInt(), HailData.synthesizeAdaptiveIcons, this)
     }
 
     companion object {
