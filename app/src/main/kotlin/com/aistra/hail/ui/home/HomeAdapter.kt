@@ -33,7 +33,7 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
             info.selected = info.isNowSelected(selectedList)
             info.state = info.getCurrentState()
             findViewById<ImageView>(R.id.app_icon).run {
-                setImageDrawable(info.icon)
+                setImageBitmap(info.icon)
                 colorFilter =
                     if (HailData.grayscaleIcon && info.state == AppInfo.STATE_FROZEN) cf else null
             }
