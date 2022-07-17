@@ -187,6 +187,7 @@ or
 
 Thank you!
 
+- 繁體中文 [@cracky5322](https://github.com/cracky5322)
 - 日本語 [@AokiFuru](https://github.com/AokiFuru)
 - русский [@tommynok](https://github.com/tommynok)
 - Español [@cyanwolfg](https://github.com/cyanwolfg)
