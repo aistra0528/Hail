@@ -47,6 +47,22 @@
         </menu>
     </item>
     <item
+        android:title="@string/action_export_clipboard"
+        app:showAsAction="never">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/action_export_current"
+                    android:title="@string/action_export_current"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/action_export_all"
+                    android:title="@string/action_export_all"
+                    app:showAsAction="never" />
+            </group>
+        </menu>
+    </item>
+    <item
         android:title="@string/action_add_pin_shortcut"
         app:showAsAction="never">
         <menu>

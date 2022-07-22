@@ -445,6 +445,8 @@ class HomeFragment : MainFragment(),
             R.id.action_unfreeze_all -> setListFrozen(false)
             R.id.action_import_clipboard -> importFromClipboard()
             R.id.action_import_frozen -> importFrozenApp()
+            R.id.action_export_current -> exportToClipboard(HomeAdapter.currentList)
+            R.id.action_export_all -> exportToClipboard(HailData.checkedList)
             R.id.pin_freeze_all -> HShortcuts.addPinShortcut(
                 AppCompatResources.getDrawable(
                     app,

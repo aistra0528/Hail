@@ -110,4 +110,6 @@
     <string name="action_import_app">导入应用</string>
     <string name="synthesize_adaptive_icons">合成自适应图标</string>
     <string name="need_restart_app">需要重启应用</string>
+    <string name="action_export_current">导出当前</string>
+    <string name="action_export_all">全部导出</string>
 </resources>
