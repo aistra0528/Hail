@@ -16,7 +16,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
-import com.aistra.hail.app.HailData
+import com.aistra.hail.app.HailData.biometricLogin
 import com.aistra.hail.databinding.ActivityMainBinding
 import com.aistra.hail.ui.HailActivity
 import com.aistra.hail.utils.HUI
@@ -31,7 +31,7 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         initView()
-        if (HailData.biometricLogin.not()) return
+        if (!biometricLogin) return
         val view = findViewById<View>(R.id.drawer_layout)
         view.visibility = View.INVISIBLE
         val biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this),
@@ -98,6 +98,11 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
                     windowInsets
                 }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (biometricLogin) finishAndRemoveTask()
     }
 
     override fun onSupportNavigateUp(): Boolean =
