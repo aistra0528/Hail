@@ -13,8 +13,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 33
-        versionCode = 17
-        versionName = "0.9.6"
+        versionCode = 18
+        versionName = "0.9.7"
         resourceConfigurations += arrayOf("en", "es", "it", "ja-rJP", "ru", "zh-rCN")
     }
     signingConfigs {
