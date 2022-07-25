@@ -116,4 +116,5 @@
     <string name="need_restart_app">Need to restart the application</string>
     <string name="action_export_current">Export current</string>
     <string name="action_export_all">Export all</string>
+    <string name="skip_notifying_app">Skip notifying app</string>
 </resources>

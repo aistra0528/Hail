@@ -113,4 +113,5 @@
     <string name="need_restart_app">アプリを再起動する必要があります</string>
     <string name="action_export_current">Export current</string>
     <string name="action_export_all">Export all</string>
+    <string name="skip_notifying_app">Skip notifying app</string>
 </resources>
