@@ -15,7 +15,7 @@ android {
         targetSdk = 33
         versionCode = 18
         versionName = "0.9.7"
-        resourceConfigurations += arrayOf("en", "es", "it", "ja-rJP", "ru", "zh-rCN")
+        resourceConfigurations += arrayOf("en", "es", "it", "ja-rJP", "ru", "zh-rCN", "zh-rTW")
     }
     signingConfigs {
         create("release") {
