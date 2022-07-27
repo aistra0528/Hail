@@ -1,11 +1,14 @@
 package com.aistra.hail.ui.settings
 
+import android.app.NotificationManager
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
 import android.view.*
+import androidx.core.content.getSystemService
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -13,6 +16,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
+import com.aistra.hail.services.AutoFreezeService
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rikka.shizuku.Shizuku
@@ -24,7 +28,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val menuHost: MenuHost = requireActivity()
+        val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -32,10 +36,19 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
         findPreference<Preference>(HailData.WORKING_MODE)?.onPreferenceChangeListener = this
-
         findPreference<Preference>(HailData.SKIP_FOREGROUND_APP)?.setOnPreferenceChangeListener { _, value ->
             if (value == true && !HSystem.checkOpUsageStats(requireContext())) {
                 startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                false
+            } else true
+        }
+        findPreference<Preference>(HailData.SKIP_NOTIFYING_APP)?.setOnPreferenceChangeListener { _, value ->
+            val notificationManager = requireContext().getSystemService<NotificationManager>()!!
+            if (value == true && !notificationManager.isNotificationListenerAccessGranted(
+                    ComponentName(requireContext(), AutoFreezeService::class.java.name)
+                )
+            ) {
+                startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 false
             } else true
         }

@@ -45,7 +45,7 @@ class HomeFragment : MainFragment(),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val menuHost: MenuHost = requireActivity()
+        val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.recyclerView.run {
@@ -394,7 +394,7 @@ class HomeFragment : MainFragment(),
         var i = 0
         for (index in 0 until json.length()) {
             val pkg = json.getString(index)
-            if (HPackages.getPackageInfoOrNull(pkg) != null && HailData.checkedList.all { it.packageName != pkg }) {
+            if (HPackages.getPackageInfoOrNull(pkg) != null && !HailData.isChecked(pkg)) {
                 HailData.addCheckedApp(pkg, false)
                 i++
             }
@@ -410,7 +410,7 @@ class HomeFragment : MainFragment(),
     private fun importFrozenApp() =
         CoroutineScope(Job() + Dispatchers.IO + Dispatchers.Main).launch {
             val i = HPackages.getInstalledPackages().map { it.packageName }
-                .filter { pkg -> AppManager.isAppFrozen(pkg) && HailData.checkedList.all { it.packageName != pkg } }
+                .filter { AppManager.isAppFrozen(it) && !HailData.isChecked(it) }
                 .run {
                     forEach { HailData.addCheckedApp(it, false) }
                     size
@@ -445,6 +445,8 @@ class HomeFragment : MainFragment(),
             R.id.action_unfreeze_all -> setListFrozen(false)
             R.id.action_import_clipboard -> importFromClipboard()
             R.id.action_import_frozen -> importFrozenApp()
+            R.id.action_export_current -> exportToClipboard(HomeAdapter.currentList)
+            R.id.action_export_all -> exportToClipboard(HailData.checkedList)
             R.id.pin_freeze_all -> HShortcuts.addPinShortcut(
                 AppCompatResources.getDrawable(
                     app,

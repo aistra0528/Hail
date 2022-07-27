@@ -3,11 +3,10 @@ package com.aistra.hail.services
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.Service
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
-import android.os.IBinder
+import android.service.notification.NotificationListenerService
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
@@ -15,13 +14,9 @@ import com.aistra.hail.R
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.receiver.ScreenOffReceiver
 
-class AutoFreezeService : Service() {
+class AutoFreezeService : NotificationListenerService() {
     private val channelID = javaClass.simpleName
     private lateinit var lockReceiver: ScreenOffReceiver
-
-    override fun onBind(intent: Intent?): IBinder? {
-        throw UnsupportedOperationException("Not yet implemented")
-    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
@@ -55,6 +50,7 @@ class AutoFreezeService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         registerScreenReceiver()
     }
 
@@ -67,5 +63,9 @@ class AutoFreezeService : Service() {
         super.onDestroy()
         unregisterReceiver(lockReceiver)
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+    }
+
+    companion object {
+        lateinit var instance: AutoFreezeService private set
     }
 }
