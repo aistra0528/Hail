@@ -210,7 +210,7 @@ class HomeFragment : MainFragment(),
                         .create().show()
                 }
                 5 -> HShortcuts.addPinShortcut(
-                    info.icon, pkg, info.name,
+                    info, pkg, info.name,
                     HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
                 6 -> exportToClipboard(listOf(info))
@@ -508,6 +508,7 @@ class HomeFragment : MainFragment(),
     }
 
     override fun onDestroyView() {
+        HomeAdapter.onDestroy()
         super.onDestroyView()
         _binding = null
     }
