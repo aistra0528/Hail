@@ -3,8 +3,6 @@ package com.aistra.hail.ui.apps
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
@@ -16,13 +14,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.aistra.hail.HailApp
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.utils.AppIconCache
 import com.aistra.hail.utils.HLog
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.NameComparator
+import kotlinx.coroutines.Job
 import java.util.*
 
 object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
@@ -36,7 +35,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
-    private val cf by lazy { ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) }) }
+    private var loadIconJob: Job? = null
     private val timer = Timer()
     private var debounce: TimerTask? = null
 
@@ -90,8 +89,13 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
             setOnClickListener { onItemClickListener.onItemClick(info) }
             setOnLongClickListener { onItemLongClickListener.onItemLongClick(pkg) }
             findViewById<ImageView>(R.id.app_icon).run {
-                setImageBitmap(HailApp.iconLoader.loadIcon(app))
-                colorFilter = if (HailData.grayscaleIcon && frozen) cf else null
+                loadIconJob = AppIconCache.loadIconBitmapAsync(
+                    context,
+                    app,
+                    app.uid / 100000,
+                    this,
+                    HailData.grayscaleIcon && frozen
+                )
             }
             findViewById<TextView>(R.id.app_name).run {
                 text = app.loadLabel(context.packageManager)
@@ -109,6 +113,10 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
                 }
             }
         }
+    }
+
+    fun onDestroy() {
+        if (loadIconJob?.isActive == true) loadIconJob?.cancel()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)

@@ -31,7 +31,6 @@
             app:defaultValue="false"
             app:icon="@drawable/ic_outline_layers"
             app:key="synthesize_adaptive_icons"
-            app:summary="@string/need_restart_app"
             app:title="@string/synthesize_adaptive_icons" />
         <SwitchPreferenceCompat
             android:summaryOff="@string/action_freeze_all"

@@ -177,4 +177,9 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         HailData.changeAppsFilter(filter, item.isChecked)
         AppsAdapter.updateCurrentList(refreshLayout)
     }
+
+    override fun onDestroy() {
+        AppsAdapter.onDestroy()
+        super.onDestroy()
+    }
 }

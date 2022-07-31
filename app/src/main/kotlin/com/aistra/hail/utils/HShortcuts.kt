@@ -4,22 +4,37 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.aistra.hail.HailApp
 import com.aistra.hail.R
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailApi
+import com.aistra.hail.app.HailData
+import me.zhanghai.android.appiconloader.AppIconLoader
 
 object HShortcuts {
+    private val iconLoader by lazy {
+        AppIconLoader(
+            HailApp.app.resources.getDimensionPixelSize(R.dimen.app_icon_size),
+            HailData.synthesizeAdaptiveIcons,
+            HailApp.app
+        )
+    }
+
     fun addPinShortcut(icon: Drawable, id: String, label: CharSequence, intent: Intent) {
         addPinShortcut(getDrawableIcon(icon), id, label, intent)
     }
 
-    fun addPinShortcut(icon: Bitmap, id: String, label: CharSequence, intent: Intent) {
-        addPinShortcut(IconCompat.createWithBitmap(icon), id, label, intent)
+    fun addPinShortcut(appInfo: AppInfo, id: String, label: CharSequence, intent: Intent) {
+        appInfo.applicationInfo?.let {
+            val icon = iconLoader.loadIcon(it)
+            addPinShortcut(IconCompat.createWithBitmap(icon), id, label, intent)
+        } ?: run {
+            addPinShortcut(HailApp.app.packageManager.defaultActivityIcon, id, label, intent)
+        }
     }
 
     private fun addPinShortcut(icon: IconCompat, id: String, label: CharSequence, intent: Intent) {
@@ -38,18 +53,22 @@ object HShortcuts {
 
     fun addDynamicShortcut(packageName: String) {
         if (isMaxDynamicShortcutCount()) removeAllDynamicShortcuts()
-        val applicationInfo = HPackages.getApplicationInfoOrNull(packageName)
-        val shortcut = ShortcutInfoCompat.Builder(HailApp.app, packageName)
-            .setIcon(
-                IconCompat.createWithBitmap(
-                    applicationInfo?.let { HailApp.iconLoader.loadIcon(it) }
-                        ?: getBitmapFromDrawable(HailApp.app.packageManager.defaultActivityIcon)
+        if (HailData.biometricLogin) {
+            removeAllDynamicShortcuts()
+        } else {
+            val applicationInfo = HPackages.getApplicationInfoOrNull(packageName)
+            val shortcut = ShortcutInfoCompat.Builder(HailApp.app, packageName)
+                .setIcon(
+                    IconCompat.createWithBitmap(
+                        applicationInfo?.let { iconLoader.loadIcon(it) }
+                            ?: getBitmapFromDrawable(HailApp.app.packageManager.defaultActivityIcon)
+                    )
                 )
-            )
-            .setShortLabel(applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName)
-            .setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName))
-            .build()
-        ShortcutManagerCompat.pushDynamicShortcut(HailApp.app, shortcut)
+                .setShortLabel(applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName)
+                .setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName))
+                .build()
+            ShortcutManagerCompat.pushDynamicShortcut(HailApp.app, shortcut)
+        }
         val freezeAll = ShortcutInfoCompat.Builder(HailApp.app, HailApi.ACTION_FREEZE_ALL)
             .setIcon(
                 getDrawableIcon(
