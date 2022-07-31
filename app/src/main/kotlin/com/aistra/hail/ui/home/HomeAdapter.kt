@@ -1,7 +1,5 @@
 package com.aistra.hail.ui.home
 
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.aistra.hail.HailApp
 import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailData
@@ -19,7 +16,6 @@ import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.Job
 
 object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
-    private val cf by lazy { ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) }) }
     private var loadIconJob: Job? = null
     val selectedList = mutableListOf<AppInfo>()
     lateinit var onItemClickListener: OnItemClickListener
@@ -46,9 +42,8 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
                         HailData.grayscaleIcon && info.state == AppInfo.STATE_FROZEN
                     )
                 } ?: run {
-                    setImageDrawable(HailApp.app.packageManager.defaultActivityIcon)
-                    colorFilter =
-                        if (HailData.grayscaleIcon && info.state == AppInfo.STATE_FROZEN) cf else null
+                    setImageDrawable(context.packageManager.defaultActivityIcon)
+                    colorFilter = null
                 }
             }
             findViewById<TextView>(R.id.app_name).run {
