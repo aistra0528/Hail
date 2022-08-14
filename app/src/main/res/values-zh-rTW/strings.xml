@@ -33,6 +33,7 @@
     <string name="action_export_clipboard">匯出到剪貼簿</string>
     <string name="action_import_clipboard">從剪貼簿匯入</string>
     <string name="action_remove_home">從首頁中移除</string>
+    <string name="action_copy_packagename">Copy Package Name</string>
     <string name="action_deselect">取消選擇</string>
     <string name="action_undo">取消</string>
     <string name="action_help">幫助</string>

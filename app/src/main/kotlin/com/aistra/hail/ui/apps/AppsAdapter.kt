@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.R
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
-import com.aistra.hail.utils.AppIconCache
-import com.aistra.hail.utils.HLog
-import com.aistra.hail.utils.HPackages
-import com.aistra.hail.utils.NameComparator
+import com.aistra.hail.utils.*
 import kotlinx.coroutines.Job
+import net.sourceforge.pinyin4j.PinyinHelper
 import java.util.*
 
 object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
@@ -50,7 +49,10 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
                     || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName)))
                     && (query.isNullOrEmpty()
                     || it.packageName.contains(query, true)
-                    || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
+                    || it.applicationInfo.loadLabel(pm).toString().contains(query, true)
+                    || PinyinSearch.searchCap(it.applicationInfo.loadLabel(pm).toString(), query)
+                    || PinyinSearch.searchAllSpell(it.applicationInfo.loadLabel(pm).toString(), query)
+                    )
         }.run {
             when (HailData.sortBy) {
                 HailData.SORT_INSTALL -> sortedBy { it.firstInstallTime }
@@ -87,7 +89,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
         val frozen = AppManager.isAppFrozen(pkg)
         holder.itemView.run {
             setOnClickListener { onItemClickListener.onItemClick(info) }
-            setOnLongClickListener { onItemLongClickListener.onItemLongClick(pkg) }
+            setOnLongClickListener { onItemLongClickListener.onItemLongClick(AppInfo(pkg,true,0)) }
             findViewById<ImageView>(R.id.app_icon).run {
                 loadIconJob = AppIconCache.loadIconBitmapAsync(
                     context,
@@ -126,7 +128,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     }
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(packageName: String): Boolean
+        fun onItemLongClick(info: AppInfo): Boolean
     }
 
     interface OnItemCheckedChangeListener {

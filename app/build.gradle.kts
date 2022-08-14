@@ -78,4 +78,5 @@ dependencies {
     implementation("dev.rikka.shizuku:api:12.1.0")
     implementation("dev.rikka.shizuku:provider:12.1.0")
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.4.0")
+    implementation("com.belerweb:pinyin4j:2.5.1")
 }

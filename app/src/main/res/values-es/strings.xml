@@ -33,6 +33,7 @@
     <string name="action_export_clipboard">Exportar al portapapeles</string>
     <string name="action_import_clipboard">Importar desde el portapapeles</string>
     <string name="action_remove_home">Eliminar del inicio</string>
+    <string name="action_copy_packagename">Copy Package Name</string>
     <string name="action_deselect">Deseleccionar</string>
     <string name="action_undo">Deshacer</string>
     <string name="action_help">Ayuda</string>

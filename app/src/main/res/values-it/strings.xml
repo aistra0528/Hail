@@ -33,6 +33,7 @@
     <string name="action_export_clipboard">Export to Clipboard</string>
     <string name="action_import_clipboard">Import from Clipboard</string>
     <string name="action_remove_home">Remove from Home</string>
+    <string name="action_copy_packagename">Copy Package Name</string>
     <string name="action_deselect">Deselect</string>
     <string name="action_undo">Undo</string>
     <string name="action_help">Help</string>

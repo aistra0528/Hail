@@ -19,6 +19,7 @@
         <item>@string/action_add_pin_shortcut</item>
         <item>@string/action_export_clipboard</item>
         <item>@string/action_remove_home</item>
+        <item>@string/action_copy_packagename</item>
     </string-array>
     <string-array name="create_shortcut_entries">
         <item>@string/action_freeze_all</item>

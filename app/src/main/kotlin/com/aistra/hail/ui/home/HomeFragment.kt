@@ -19,10 +19,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentHomeBinding
 import com.aistra.hail.ui.main.MainFragment
-import com.aistra.hail.utils.HPackages
-import com.aistra.hail.utils.HShortcuts
-import com.aistra.hail.utils.HUI
-import com.aistra.hail.utils.NameComparator
+import com.aistra.hail.utils.*
 import com.aistra.hail.work.HWork
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -99,7 +96,11 @@ class HomeFragment : MainFragment(),
     private fun updateCurrentList() = HailData.checkedList.filter {
         (query.isEmpty() && it.tagId == HailData.tags[binding.tabs.selectedTabPosition].second)
                 || (query.isNotEmpty() &&
-                (it.packageName.contains(query, true) || it.name.contains(query, true)))
+                (it.packageName.contains(query, true)
+                        || it.name.contains(query, true)
+                        || PinyinSearch.searchCap(it.name.toString(), query)
+                        || PinyinSearch.searchAllSpell(it.name.toString(), query)
+                        ))
     }.sortedWith(NameComparator).let {
         if (it.isEmpty()) {
             binding.empty.visibility = View.VISIBLE
@@ -215,6 +216,10 @@ class HomeFragment : MainFragment(),
                 )
                 6 -> exportToClipboard(listOf(info))
                 7 -> removeCheckedApp(pkg)
+                8 -> {
+                    HUI.copyText(pkg)
+                    HUI.showToast(R.string.msg_text_copied, pkg)
+                }
             }
         }.create().show()
         return true

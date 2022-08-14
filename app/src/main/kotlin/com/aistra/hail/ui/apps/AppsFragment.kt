@@ -14,14 +14,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.R
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
+import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
+import com.aistra.hail.ui.home.HomeAdapter
 import com.aistra.hail.ui.main.MainFragment
-import com.aistra.hail.utils.HFiles
-import com.aistra.hail.utils.HPackages
-import com.aistra.hail.utils.HPolicy
-import com.aistra.hail.utils.HUI
+import com.aistra.hail.utils.*
+import com.aistra.hail.work.HWork
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener, MenuProvider {
@@ -110,10 +112,57 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             }.create().show()
     }
 
-    override fun onItemLongClick(packageName: String): Boolean = true.also {
-        HUI.copyText(packageName)
-        HUI.showToast(R.string.msg_text_copied, packageName)
+    override fun onItemLongClick(info: AppInfo): Boolean {
+        info.applicationInfo ?: return false
+        val actions = resources.getStringArray(R.array.home_action_entries)
+        val pkg = info.packageName
+        val frozen = AppManager.isAppFrozen(pkg)
+        val action = getString(if (frozen) R.string.action_unfreeze else R.string.action_freeze)
+        MaterialAlertDialogBuilder(activity).setTitle(info.name).setItems(
+            actions.toMutableList().filter {
+                it == action
+                        || (it == getString(R.string.action_copy_packagename))
+            }.toTypedArray()
+        ) { _, which ->
+            when (which) {
+                0 -> setListFrozen(!frozen, listOf(info))
+                1 -> {
+                    HUI.copyText(pkg)
+                    HUI.showToast(R.string.msg_text_copied, pkg)
+                }
+            }
+        }.create().show()
+        return true
     }
+
+    private fun setListFrozen(
+        frozen: Boolean, list: List<AppInfo> = HailData.checkedList, updateList: Boolean = true
+    ) {
+        var i = 0
+        var denied = false
+        var name = String()
+        list.forEach {
+            when {
+                AppManager.isAppFrozen(it.packageName) == frozen -> return@forEach
+                AppManager.setAppFrozen(it.packageName, frozen) -> {
+                    i++
+                    name = it.name.toString()
+                }
+                it.packageName != app.packageName && it.applicationInfo != null -> denied = true
+            }
+        }
+        when {
+            denied && i == 0 -> HUI.showToast(R.string.permission_denied)
+            i > 0 -> {
+                if (updateList) AppsAdapter.updateCurrentList(refreshLayout)
+                HUI.showToast(
+                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
+                    if (i > 1) i.toString() else name
+                )
+            }
+        }
+    }
+
 
     override fun onItemCheckedChange(
         buttonView: CompoundButton, isChecked: Boolean, packageName: String

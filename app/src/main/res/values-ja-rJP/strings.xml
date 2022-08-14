@@ -34,6 +34,7 @@
     <string name="action_export_clipboard">クリップボードにエクスポート</string>
     <string name="action_import_clipboard">クリップボードからインポート</string>
     <string name="action_remove_home">ホームから削除</string>
+    <string name="action_copy_packagename">Copy Package Name</string>
     <string name="action_deselect">選択解除</string>
     <string name="action_undo">元に戻す</string>
     <string name="action_help">ヘルプ</string>

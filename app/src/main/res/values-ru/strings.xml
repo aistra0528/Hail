@@ -33,6 +33,7 @@
     <string name="action_export_clipboard">Экспорт в буфер обмена</string>
     <string name="action_import_clipboard">Импорт из буфера обмена</string>
     <string name="action_remove_home">Удалить из Главной</string>
+    <string name="action_copy_packagename">Copy Package Name</string>
     <string name="action_deselect">Снять выделение</string>
     <string name="action_undo">Отменить</string>
     <string name="action_help">Помощь</string>
