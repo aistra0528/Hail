@@ -5,8 +5,9 @@ plugins {
     kotlin("android")
 }
 val version = Properties().apply { load(file("../version.properties").reader()) }
-val props = Properties().apply { load(file("androidSign/androidSign/signing.properties").reader()) }
-val keyStoreFile = file("androidSign/androidSign/" + props.getProperty("storeFile"))
+val props =
+    Properties().apply { load(file("../androidSign/androidSign/signing.properties").reader()) }
+val keyStoreFile = file("../androidSign/androidSign/" + props.getProperty("storeFile"))
 android {
     compileSdk = 33
     buildToolsVersion = "33.0.0"
