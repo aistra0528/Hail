@@ -2,7 +2,7 @@
 /.idea/
 /build/
 /local.properties
-/signing.properties
+/app/signing.properties
 *.iml
 *.jks
 *.keystore

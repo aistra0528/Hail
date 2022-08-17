@@ -16,14 +16,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
-import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
-import com.aistra.hail.ui.home.HomeAdapter
 import com.aistra.hail.ui.main.MainFragment
-import com.aistra.hail.utils.*
-import com.aistra.hail.work.HWork
+import com.aistra.hail.utils.HFiles
+import com.aistra.hail.utils.HPackages
+import com.aistra.hail.utils.HPolicy
+import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener, MenuProvider {

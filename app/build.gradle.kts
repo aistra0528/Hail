@@ -4,7 +4,9 @@ plugins {
     id("com.android.application")
     kotlin("android")
 }
-
+val version = Properties().apply { load(file("../version.properties").reader()) }
+val props = Properties().apply { load(file("signing.properties").reader()) }
+val keyStoreFile = file("androidSign/androidSign/" + props.getProperty("storeFile"))
 android {
     compileSdk = 33
     buildToolsVersion = "33.0.0"
@@ -13,14 +15,13 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 33
-        versionCode = 18
-        versionName = "0.9.7"
+        versionCode = version.getProperty("versionCode").toInt()
+        versionName = version.getProperty("versionName")
         resourceConfigurations += arrayOf("en", "es", "it", "ja-rJP", "ru", "zh-rCN", "zh-rTW")
     }
     signingConfigs {
         create("release") {
-            val props = Properties().apply { load(file("../signing.properties").reader()) }
-            storeFile = file(props.getProperty("storeFile"))
+            storeFile = keyStoreFile
             storePassword = props.getProperty("storePassword")
             keyAlias = props.getProperty("keyAlias")
             keyPassword = props.getProperty("keyPassword")
@@ -44,7 +45,7 @@ android {
     applicationVariants.all {
         outputs.all {
             (this as? com.android.build.gradle.internal.api.ApkVariantOutputImpl)
-                ?.outputFileName = "Hail-v$versionName.apk"
+                ?.outputFileName = "Hail.apk"
         }
     }
     kotlinOptions {

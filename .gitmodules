@@ -1,0 +1,3 @@
+[submodule "androidSign"]
+	path = androidSign
+	url = https://github.com/whp98/SignKey.git
