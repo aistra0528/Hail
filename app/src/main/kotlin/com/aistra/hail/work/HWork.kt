@@ -35,4 +35,13 @@ object HWork {
                 .build()
         )
     }
+
+    fun setUnFreezeAll() {
+        WorkManager.getInstance(HailApp.app).enqueueUniqueWork(
+            HailApi.ACTION_UNFREEZE_ALL,
+            ExistingWorkPolicy.KEEP,
+            OneTimeWorkRequestBuilder<AutoFreezeWorker>()
+                .build()
+        )
+    }
 }
