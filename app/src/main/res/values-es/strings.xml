@@ -110,8 +110,8 @@
     <string name="nothing_here">Nada por aquí</string>
     <string name="action_import_frozen">Importar aplicaciones congeladas</string>
     <string name="action_import_app">Importar aplicaciones</string>
-    <string name="synthesize_adaptive_icons">Synthesize adaptive icons</string>
-    <string name="action_export_current">Export current</string>
-    <string name="action_export_all">Export all</string>
-    <string name="skip_notifying_app">Skip notifying app</string>
+    <string name="synthesize_adaptive_icons">Sintetizar iconos adaptativos</string>
+    <string name="action_export_current">Exportación actual</string>
+    <string name="action_export_all">Exportar todo</string>
+    <string name="skip_notifying_app">Omitir la notificación de la aplicación</string>
 </resources>
