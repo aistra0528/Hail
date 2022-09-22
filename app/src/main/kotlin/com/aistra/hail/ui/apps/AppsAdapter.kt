@@ -100,12 +100,13 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
                 )
             }
             findViewById<TextView>(R.id.app_name).run {
-                text = app.loadLabel(context.packageManager)
-                isEnabled = !frozen
+                val name = app.loadLabel(context.packageManager)
+                text = if (!HailData.grayscaleIcon && frozen) "❄️$name" else name
+                isEnabled = !HailData.grayscaleIcon || !frozen
             }
             findViewById<TextView>(R.id.app_desc).run {
                 text = pkg
-                isEnabled = !frozen
+                isEnabled = !HailData.grayscaleIcon || !frozen
             }
             findViewById<CompoundButton>(R.id.app_star).run {
                 setOnCheckedChangeListener(null)

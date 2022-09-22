@@ -47,8 +47,9 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
                 }
             }
             findViewById<TextView>(R.id.app_name).run {
-                text = info.name
-                isEnabled = info.state != AppInfo.STATE_FROZEN
+                text =
+                    if (!HailData.grayscaleIcon && info.state == AppInfo.STATE_FROZEN) "❄️${info.name}" else info.name
+                isEnabled = !HailData.grayscaleIcon || info.state != AppInfo.STATE_FROZEN
                 when {
                     info.selected -> setTextColor(
                         MaterialColors.getColor(this, R.attr.colorPrimary)
