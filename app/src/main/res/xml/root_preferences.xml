@@ -70,6 +70,16 @@
             app:key="skip_notifying_app"
             app:singleLineTitle="false"
             app:title="@string/skip_notifying_app" />
+        <SeekBarPreference
+            app:defaultValue="1"
+            app:min="0"
+            android:max="30"
+            app:showSeekBarValue="true"
+            app:dependency="auto_freeze_after_lock"
+            app:icon="@drawable/ic_outline_timer"
+            app:key="auto_freeze_delay"
+            app:singleLineTitle="false"
+            app:title="@string/auto_freeze_delay" />
     </PreferenceCategory>
 
 </PreferenceScreen>

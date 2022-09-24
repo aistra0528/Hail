@@ -11,7 +11,9 @@ import com.aistra.hail.utils.HSystem
 
 class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
-        if (HSystem.isInteractive(applicationContext) || isSkipWhileCharging(applicationContext)) return Result.success()
+        if (!HailData.autoFreezeAfterLock  // some tasks might be scheduled before disabling auto-freeze
+            || HSystem.isInteractive(applicationContext)
+            || isSkipWhileCharging(applicationContext)) return Result.success()
         var i = 0
         var denied = false
         HailData.checkedList.forEach {
