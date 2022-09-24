@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.aistra.hail.HailApp
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.services.AutoFreezeService
@@ -16,7 +17,7 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
         var denied = false
         HailData.checkedList.forEach {
             when {
-                isSkipApp(applicationContext, it.packageName) -> return@forEach
+                isSkipApp(applicationContext, it) -> return@forEach
                 AppManager.setAppFrozen(it.packageName, true) -> i++
                 it.packageName != HailApp.app.packageName && it.applicationInfo != null ->
                     denied = true
@@ -28,8 +29,9 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
     private fun isSkipWhileCharging(context: Context): Boolean =
         HailData.skipWhileCharging && HSystem.isCharging(context)
 
-    private fun isSkipApp(context: Context, packageName: String): Boolean =
-        AppManager.isAppFrozen(packageName)
-                || (HailData.skipForegroundApp && HSystem.isForegroundApp(context, packageName))
-                || (HailData.skipNotifyingApp && packageName in AutoFreezeService.instance.activeNotifications.map { it.packageName })
+    private fun isSkipApp(context: Context, appInfo: AppInfo): Boolean =
+        AppManager.isAppFrozen(appInfo.packageName)
+                || (HailData.skipForegroundApp && HSystem.isForegroundApp(context, appInfo.packageName))
+                || (HailData.skipNotifyingApp && appInfo.packageName in AutoFreezeService.instance.activeNotifications.map { it.packageName })
+                || (HailData.enableWhitelist && appInfo.whitelisted)
 }
