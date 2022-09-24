@@ -70,6 +70,13 @@
             app:key="skip_notifying_app"
             app:singleLineTitle="false"
             app:title="@string/skip_notifying_app" />
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            android:dependency="auto_freeze_after_lock"
+            app:icon="@drawable/ic_twotone_list_alt"
+            app:key="enable_whitelist"
+            app:singleLineTitle="false"
+            app:title="@string/skip_whitelist_app" />
         <SeekBarPreference
             app:defaultValue="1"
             app:min="0"
