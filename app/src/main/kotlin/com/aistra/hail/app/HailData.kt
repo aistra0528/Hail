@@ -57,6 +57,7 @@ object HailData {
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
     private const val AUTO_FREEZE_DELAY = "auto_freeze_delay"
+    const val AUTO_FREEZE_TAGS = "auto_freeze_tags"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
@@ -75,6 +76,7 @@ object HailData {
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
+    val autoFreezeTags get() = sp.getStringSet(AUTO_FREEZE_TAGS, setOf("0"))
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 

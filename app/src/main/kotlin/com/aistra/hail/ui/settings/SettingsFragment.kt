@@ -12,6 +12,7 @@ import androidx.core.content.getSystemService
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.preference.MultiSelectListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aistra.hail.R
@@ -51,6 +52,16 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 false
             } else true
+        }
+        findPreference<MultiSelectListPreference>(HailData.AUTO_FREEZE_TAGS)?.apply {
+            val tagFirsts = mutableListOf<CharSequence>()
+            val tagSeconds = mutableListOf<CharSequence>()
+            HailData.tags.forEach { tag ->
+                tagFirsts.add(tag.first)
+                tagSeconds.add(tag.second.toString())
+            }
+            entries = tagFirsts.toTypedArray()
+            entryValues = tagSeconds.toTypedArray()
         }
     }
 
