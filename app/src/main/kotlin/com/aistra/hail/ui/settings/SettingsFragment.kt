@@ -62,6 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             }
             entries = tagFirsts.toTypedArray()
             entryValues = tagSeconds.toTypedArray()
+            values = HailData.autoFreezeTags // This sets the "checked" boxes and is actually only necessary the first time it runs. If not, the "default" tag wouldn't be selected. I can't think of a nice way of just running this the first time.
         }
     }
 
