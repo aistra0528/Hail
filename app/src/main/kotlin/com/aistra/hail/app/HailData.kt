@@ -76,7 +76,15 @@ object HailData {
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
-    val autoFreezeTags get() = sp.getStringSet(AUTO_FREEZE_TAGS, setOf("0"))
+    val autoFreezeTags: Set<String> get() {
+        val potentiallyInvalidTags = sp.getStringSet(AUTO_FREEZE_TAGS, setOf("0"))
+        // This makes sure it is not a tag that doesn't exist anymore (renamed or deleted) by looking at the actual tagId's
+        // Unfortunately, this approach loses tags that were renamed...
+        // TODO would it be easy to track tag name changes? A rename shouldn't mean a tag can't be auto-frozen...
+        val validTags = potentiallyInvalidTags!!.filter { tags.any { tag -> tag.second.toString() == it } }.toSet()
+        sp.edit().putStringSet(AUTO_FREEZE_TAGS, validTags).apply()
+        return validTags
+    }
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
