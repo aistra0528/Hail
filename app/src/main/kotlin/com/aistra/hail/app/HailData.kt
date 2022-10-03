@@ -54,6 +54,7 @@ object HailData {
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
     private const val ENABLE_WHITELIST = "enable_whitelist"
+    private const val LONG_PRESS_FREEZE_WHITELIST = "long_press_freeze_whitelist"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
@@ -72,6 +73,7 @@ object HailData {
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val enableWhitelist get() = sp.getBoolean(ENABLE_WHITELIST, true)
+    val longPressFreezeWhitelisted get() = sp.getBoolean(LONG_PRESS_FREEZE_WHITELIST, false)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 

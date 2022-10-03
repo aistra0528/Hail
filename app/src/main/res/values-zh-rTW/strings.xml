@@ -115,4 +115,6 @@
     <string name="action_export_all">全部匯出</string>
     <string name="skip_notifying_app">跳过通知中应用</string>
     <string name="skip_whitelist_app">跳過白名單應用</string>
+    <string name="misc">雜項</string>
+    <string name="long_press_freeze_whitelist">長按凍結白名單應用</string>
 </resources>

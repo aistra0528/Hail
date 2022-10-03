@@ -79,4 +79,13 @@
             app:title="@string/skip_whitelist_app" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/misc">
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            android:icon="@drawable/ic_outline_touch_app"
+            app:key="long_press_freeze_whitelist"
+            app:singleLineTitle="false"
+            app:title="@string/long_press_freeze_whitelist" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
