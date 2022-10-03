@@ -93,7 +93,18 @@ class HomeFragment : MainFragment(),
     override fun onStart() {
         super.onStart()
         if (activity.fab.hasOnClickListeners()) updateCurrentList()
-        activity.fab.setOnClickListener { setListFrozen(true, HomeAdapter.currentList) }
+        activity.fab.setOnClickListener {
+            val toFreezeList = if (HailData.longPressFreezeWhitelisted) {
+                HomeAdapter.currentList.filterNot { it.whitelisted }
+            } else {
+                HomeAdapter.currentList
+            }
+            setListFrozen(true, toFreezeList)
+        }
+        activity.fab.setOnLongClickListener {
+            setListFrozen(true, HomeAdapter.currentList)
+            true
+        }
     }
 
     private fun updateCurrentList() = HailData.checkedList.filter {

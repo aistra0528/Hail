@@ -116,4 +116,6 @@
     <string name="skip_notifying_app">跳过通知中应用</string>
     <string name="skip_whitelist_app">跳过白名单应用</string>
     <string name="auto_freeze_delay">自动冻结延迟（分钟）</string>
+    <string name="misc">杂项</string>
+    <string name="long_press_freeze_whitelist">长按冻结白名单应用</string>
 </resources>

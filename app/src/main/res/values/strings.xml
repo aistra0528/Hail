@@ -118,4 +118,6 @@
     <string name="skip_notifying_app">Skip notifying app</string>
     <string name="skip_whitelist_app">Skip apps in whitelist</string>
     <string name="auto_freeze_delay">Auto Freeze Delay (minutes)</string>
+    <string name="misc">Misc</string>
+    <string name="long_press_freeze_whitelist">Long press to freeze whitelisted apps</string>
 </resources>
