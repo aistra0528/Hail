@@ -118,4 +118,5 @@
     <string name="auto_freeze_delay">自動凍結延遲（分鐘）</string>
     <string name="misc">雜項</string>
     <string name="long_press_freeze_whitelist">長按凍結白名單應用</string>
+    <string name="title_whitelist">白名單</string>
 </resources>

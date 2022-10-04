@@ -120,4 +120,5 @@
     <string name="auto_freeze_delay">Auto Freeze Delay (minutes)</string>
     <string name="misc">Misc</string>
     <string name="long_press_freeze_whitelist">Long press to freeze whitelisted apps</string>
+    <string name="title_whitelist">Whitelist</string>
 </resources>
