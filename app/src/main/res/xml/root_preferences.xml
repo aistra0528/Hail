@@ -78,7 +78,7 @@
             app:singleLineTitle="false"
             app:title="@string/skip_whitelist_app" />
         <SeekBarPreference
-            app:defaultValue="1"
+            app:defaultValue="0"
             app:min="0"
             android:max="30"
             app:showSeekBarValue="true"

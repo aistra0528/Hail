@@ -74,7 +74,7 @@ object HailData {
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val enableWhitelist get() = sp.getBoolean(ENABLE_WHITELIST, true)
-    val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 1).toLong()
+    val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
     val longPressFreezeWhitelisted get() = sp.getBoolean(LONG_PRESS_FREEZE_WHITELIST, false)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
