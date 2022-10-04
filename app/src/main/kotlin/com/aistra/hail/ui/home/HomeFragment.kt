@@ -253,6 +253,8 @@ class HomeFragment : MainFragment(),
                             && it != getString(R.string.action_pin)
                             && it != getString(R.string.action_unpin)
                             && it != getString(R.string.action_add_pin_shortcut)
+                            && it != getString(R.string.action_whitelist)
+                            && it != getString(R.string.action_remove_whitelist)
                 }.toTypedArray()) { _, which ->
                     when (which) {
                         0 -> {

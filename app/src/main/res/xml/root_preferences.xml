@@ -98,5 +98,4 @@
             app:title="@string/long_press_freeze_whitelist"
             app:summary="@string/long_press_freeze_whitelist_summary"/>
     </PreferenceCategory>
-
 </PreferenceScreen>
