@@ -70,7 +70,7 @@ object HailData {
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
-    val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 1).toLong()
+    val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
