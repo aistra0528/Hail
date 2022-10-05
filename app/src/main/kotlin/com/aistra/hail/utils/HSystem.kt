@@ -9,7 +9,6 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.getSystemService
-import androidx.core.os.UserManagerCompat.isUserUnlocked
 import com.aistra.hail.app.HailData
 
 object HSystem {
@@ -42,18 +41,16 @@ object HSystem {
         checkOp(context, AppOpsManager.OPSTR_GET_USAGE_STATS)
 
     fun isForegroundApp(context: Context, packageName: String): Boolean {
-        if (!isUserUnlocked(context))
-            return false  // Starting from Android R, usage stats can't be read before unlocked
         val usageStatsManager = context.getSystemService<UsageStatsManager>()!!
         val now = System.currentTimeMillis()
-        var stats = usageStatsManager.queryUsageStats(
+        val stats = usageStatsManager.queryUsageStats(
             UsageStatsManager.INTERVAL_BEST,
             now - 1000 * 60 * (HailData.autoFreezeDelay + 1), now  // to ensure that we can get the last app used
-        )
-        if (stats.isEmpty())
-            return false  // this should not happen...
-        stats = stats.sortedBy { it.lastTimeUsed }  // if stats is empty this would throw an error and crash
-        val foregroundPackageName = stats.last()?.packageName
+        )?.sortedBy { it.lastTimeUsed }
+        val foregroundPackageName = stats?.let {
+            if (it.isEmpty()) return@let null
+            it.last()?.packageName
+        }
         return foregroundPackageName == packageName
     }
 }
