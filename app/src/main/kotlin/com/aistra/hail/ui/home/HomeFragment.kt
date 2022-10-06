@@ -348,6 +348,7 @@ class HomeFragment : MainFragment(),
         val input = DialogInputBinding.inflate(layoutInflater, FrameLayout(activity), true)
         input.inputLayout.setHint(if (list != null) R.string.action_tag_add else R.string.action_tag_set)
         list ?: input.editText.setText(HailData.tags[binding.tabs.selectedTabPosition].first)
+        val selectedTabId = HailData.tags[binding.tabs.selectedTabPosition].second
         MaterialAlertDialogBuilder(activity)
             .setView(input.root.parent as View)
             .setPositiveButton(android.R.string.ok) { _, _ ->
@@ -370,7 +371,15 @@ class HomeFragment : MainFragment(),
                         if (!defaultTab) HomeAdapter.currentList.forEach { it.tagId = tagId }
                         getTabAt(selectedTabPosition)!!.text = tagName
                     }
+
+                    HailData.autoFreezeTags = HailData.autoFreezeTags.toMutableSet().apply {
+                        if (list == null && selectedTabId != 0) { // A non-default tag was renamed
+                            remove(selectedTabId.toString())
+                            add(tagId.toString()) // This also adds new tags per default to autoFreezeTags. // TODO is this okay?
+                        }
+                    }
                 }
+
                 HailData.saveApps()
                 HailData.saveTags()
             }
@@ -383,6 +392,11 @@ class HomeFragment : MainFragment(),
                         removeTabAt(selectedTabPosition)
                         if (tabCount == 1) visibility = View.GONE
                     }
+
+                    HailData.autoFreezeTags = HailData.autoFreezeTags.toMutableSet().apply {
+                        remove(selectedTabId.toString())
+                    }
+
                     HailData.saveApps()
                     HailData.saveTags()
                 }
