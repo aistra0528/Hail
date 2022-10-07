@@ -114,10 +114,5 @@
     <string name="action_export_current">匯出目前</string>
     <string name="action_export_all">全部匯出</string>
     <string name="skip_notifying_app">跳过通知中应用</string>
-    <string name="skip_whitelist_app">跳過白名單應用</string>
-    <string name="auto_freeze_delay">自動凍結延遲（分鐘）</string>
-    <string name="misc">雜項</string>
-    <string name="long_press_freeze_whitelist">主頁按鈕跳過白名單應用</string>
-    <string name="title_whitelist">白名單</string>
-    <string name="long_press_freeze_whitelist_summary">啟用後，點擊首頁右下角的“凍結”按鈕時將不會凍結白名單中的應用。取而代之，你需要長按該按鈕才能凍結它們。</string>
+    <string name="auto_freeze_delay">凍結延時（分鐘）</string>
 </resources>

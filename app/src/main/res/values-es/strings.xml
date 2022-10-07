@@ -114,4 +114,5 @@
     <string name="action_export_current">Exportación actual</string>
     <string name="action_export_all">Exportar todo</string>
     <string name="skip_notifying_app">Omitir la notificación de la aplicación</string>
+    <string name="auto_freeze_delay">Freeze delay (minutes)</string>
 </resources>

@@ -114,10 +114,5 @@
     <string name="action_export_current">导出当前</string>
     <string name="action_export_all">全部导出</string>
     <string name="skip_notifying_app">跳过通知中应用</string>
-    <string name="skip_whitelist_app">跳过白名单应用</string>
-    <string name="auto_freeze_delay">自动冻结延迟（分钟）</string>
-    <string name="misc">杂项</string>
-    <string name="long_press_freeze_whitelist">主页按钮跳过白名单应用</string>
-    <string name="title_whitelist">白名单</string>
-    <string name="long_press_freeze_whitelist_summary">启用后，点击首页右下角的“冻结”按钮时将不会冻结白名单中的应用。取而代之，你需要长按该按钮才能冻结它们。</string>
+    <string name="auto_freeze_delay">冻结延时（分钟）</string>
 </resources>

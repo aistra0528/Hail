@@ -49,6 +49,16 @@
             app:key="auto_freeze_after_lock"
             app:singleLineTitle="false"
             app:title="@string/auto_freeze_after_lock" />
+        <SeekBarPreference
+            android:max="30"
+            app:defaultValue="0"
+            app:dependency="auto_freeze_after_lock"
+            app:icon="@drawable/ic_outline_timer"
+            app:key="auto_freeze_delay"
+            app:min="0"
+            app:showSeekBarValue="true"
+            app:singleLineTitle="false"
+            app:title="@string/auto_freeze_delay" />
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:dependency="auto_freeze_after_lock"
@@ -70,23 +80,6 @@
             app:key="skip_notifying_app"
             app:singleLineTitle="false"
             app:title="@string/skip_notifying_app" />
-        <SwitchPreferenceCompat
-            app:defaultValue="true"
-            android:dependency="auto_freeze_after_lock"
-            app:icon="@drawable/ic_twotone_list_alt"
-            app:key="enable_whitelist"
-            app:singleLineTitle="false"
-            app:title="@string/skip_whitelist_app" />
-        <SeekBarPreference
-            app:defaultValue="0"
-            app:min="0"
-            android:max="30"
-            app:showSeekBarValue="true"
-            app:dependency="auto_freeze_after_lock"
-            app:icon="@drawable/ic_outline_timer"
-            app:key="auto_freeze_delay"
-            app:singleLineTitle="false"
-            app:title="@string/auto_freeze_delay" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/misc">
