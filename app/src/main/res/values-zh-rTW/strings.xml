@@ -112,5 +112,5 @@
     <string name="action_export_current">匯出目前</string>
     <string name="action_export_all">全部匯出</string>
     <string name="skip_notifying_app">跳过通知中应用</string>
-    <string name="auto_freeze_delay">自動凍結延遲（分鐘）</string>
+    <string name="auto_freeze_delay">凍結延時（分鐘）</string>
 </resources>

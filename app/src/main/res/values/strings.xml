@@ -114,5 +114,5 @@
     <string name="action_export_current">Export current</string>
     <string name="action_export_all">Export all</string>
     <string name="skip_notifying_app">Skip notifying app</string>
-    <string name="auto_freeze_delay">Auto Freeze Delay (minutes)</string>
+    <string name="auto_freeze_delay">Freeze delay (minutes)</string>
 </resources>
