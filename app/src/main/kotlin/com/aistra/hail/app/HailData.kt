@@ -39,6 +39,7 @@ object HailData {
     private const val KEY_TAG = "tag"
     private const val KEY_AID = "aid"
     private const val KEY_PINNED = "pinned"
+    private const val KEY_WHITELISTED = "whitelisted"
     const val FILTER_USER_APPS = "filter_user_apps"
     const val FILTER_SYSTEM_APPS = "filter_system_apps"
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
@@ -52,7 +53,9 @@ object HailData {
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
+    private const val ENABLE_WHITELIST = "enable_whitelist"
     private const val AUTO_FREEZE_DELAY = "auto_freeze_delay"
+    private const val LONG_PRESS_FREEZE_WHITELIST = "long_press_freeze_whitelist"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
@@ -70,7 +73,9 @@ object HailData {
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
+    val enableWhitelist get() = sp.getBoolean(ENABLE_WHITELIST, true)
     val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
+    val longPressFreezeWhitelisted get() = sp.getBoolean(LONG_PRESS_FREEZE_WHITELIST, false)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
@@ -89,7 +94,12 @@ object HailData {
                 val json = JSONArray(HFiles.read(appsPath))
                 for (i in 0 until json.length()) {
                     add(with(json.getJSONObject(i)) {
-                        AppInfo(getString(KEY_PACKAGE), optBoolean(KEY_PINNED), optInt(KEY_TAG))
+                        AppInfo(
+                            getString(KEY_PACKAGE),
+                            optBoolean(KEY_PINNED),
+                            optInt(KEY_TAG),
+                            optBoolean(KEY_WHITELISTED)
+                        )
                     })
                 }
             } catch (t: Throwable) {
@@ -108,7 +118,7 @@ object HailData {
     fun isChecked(packageName: String): Boolean = getCheckedPosition(packageName) != -1
 
     fun addCheckedApp(packageName: String, saveApps: Boolean = true) {
-        checkedList.add(AppInfo(packageName, false, 0))
+        checkedList.add(AppInfo(packageName, false, 0, false))
         if (saveApps) saveApps()
     }
 
@@ -126,6 +136,7 @@ object HailData {
                     JSONObject().put(KEY_PACKAGE, it.packageName)
                         .put(KEY_PINNED, it.pinned)
                         .put(KEY_TAG, it.tagId)
+                        .put(KEY_WHITELISTED, it.whitelisted)
                 )
             }
             toString()

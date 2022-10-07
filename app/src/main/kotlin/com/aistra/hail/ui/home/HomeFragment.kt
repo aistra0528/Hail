@@ -93,7 +93,18 @@ class HomeFragment : MainFragment(),
     override fun onStart() {
         super.onStart()
         if (activity.fab.hasOnClickListeners()) updateCurrentList()
-        activity.fab.setOnClickListener { setListFrozen(true, HomeAdapter.currentList) }
+        activity.fab.setOnClickListener {
+            val toFreezeList = if (HailData.longPressFreezeWhitelisted) {
+                HomeAdapter.currentList.filterNot { it.whitelisted }
+            } else {
+                HomeAdapter.currentList
+            }
+            setListFrozen(true, toFreezeList)
+        }
+        activity.fab.setOnLongClickListener {
+            setListFrozen(true, HomeAdapter.currentList)
+            true
+        }
     }
 
     private fun updateCurrentList() = HailData.checkedList.filter {
@@ -151,6 +162,8 @@ class HomeFragment : MainFragment(),
                         && (it != getString(R.string.action_unfreeze) || frozen)
                         && (it != getString(R.string.action_pin) || !info.pinned)
                         && (it != getString(R.string.action_unpin) || info.pinned)
+                        && (it != getString(R.string.action_whitelist) || !info.whitelisted)
+                        && (it != getString(R.string.action_remove_whitelist) || info.whitelisted)
             }.toTypedArray()
         ) { _, which ->
             when (which) {
@@ -184,6 +197,10 @@ class HomeFragment : MainFragment(),
                     updateCurrentList()
                 }
                 4 -> {
+                    info.whitelisted = !info.whitelisted
+                    HailData.saveApps()
+                }
+                5 -> {
                     var checked = -1
                     for (i in HailData.tags.indices) {
                         if (info.tagId == HailData.tags[i].second) {
@@ -209,12 +226,12 @@ class HomeFragment : MainFragment(),
                         .setNegativeButton(android.R.string.cancel, null)
                         .create().show()
                 }
-                5 -> HShortcuts.addPinShortcut(
+                6 -> HShortcuts.addPinShortcut(
                     info, pkg, info.name,
                     HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
-                6 -> exportToClipboard(listOf(info))
-                7 -> removeCheckedApp(pkg)
+                7 -> exportToClipboard(listOf(info))
+                8 -> removeCheckedApp(pkg)
             }
         }.create().show()
         return true
@@ -236,6 +253,8 @@ class HomeFragment : MainFragment(),
                             && it != getString(R.string.action_pin)
                             && it != getString(R.string.action_unpin)
                             && it != getString(R.string.action_add_pin_shortcut)
+                            && it != getString(R.string.action_whitelist)
+                            && it != getString(R.string.action_remove_whitelist)
                 }.toTypedArray()) { _, which ->
                     when (which) {
                         0 -> {

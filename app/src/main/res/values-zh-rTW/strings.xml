@@ -105,6 +105,8 @@
     <string name="msg_biometric">使用您的生物識別憑證登入</string>
     <string name="action_pin">置頂</string>
     <string name="action_unpin">取消置頂</string>
+    <string name="action_whitelist">添加到白名單</string>
+    <string name="action_remove_whitelist">從白名單中移除</string>
     <string name="nothing_here">什麼都沒有哦</string>
     <string name="action_import_frozen">匯入已凍結應用程式</string>
     <string name="action_import_app">匯入應用程式</string>
