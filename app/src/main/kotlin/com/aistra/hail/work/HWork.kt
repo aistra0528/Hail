@@ -29,9 +29,9 @@ object HWork {
     fun setAutoFreeze() {
         WorkManager.getInstance(HailApp.app).enqueueUniqueWork(
             HailApi.ACTION_FREEZE_ALL,
-            ExistingWorkPolicy.KEEP,
+            ExistingWorkPolicy.REPLACE,  // in case the old task has not been executed...
             OneTimeWorkRequestBuilder<AutoFreezeWorker>()
-                .setInitialDelay(3, TimeUnit.SECONDS)
+                .setInitialDelay(HailData.autoFreezeDelay, TimeUnit.MINUTES)
                 .build()
         )
     }
