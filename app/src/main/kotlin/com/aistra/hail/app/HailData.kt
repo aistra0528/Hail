@@ -53,9 +53,7 @@ object HailData {
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
-    private const val ENABLE_WHITELIST = "enable_whitelist"
     private const val AUTO_FREEZE_DELAY = "auto_freeze_delay"
-    private const val LONG_PRESS_FREEZE_WHITELIST = "long_press_freeze_whitelist"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
@@ -73,9 +71,7 @@ object HailData {
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
-    val enableWhitelist get() = sp.getBoolean(ENABLE_WHITELIST, true)
     val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
-    val longPressFreezeWhitelisted get() = sp.getBoolean(LONG_PRESS_FREEZE_WHITELIST, false)
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
@@ -102,7 +98,7 @@ object HailData {
                         )
                     })
                 }
-            } catch (t: Throwable) {
+            } catch (_: Throwable) {
             }
         }
     }

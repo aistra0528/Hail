@@ -76,7 +76,7 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
             val navController = findNavController(R.id.nav_host_fragment_content_main)
             navController.addOnDestinationChangedListener(this@MainActivity)
             appBarConfiguration = AppBarConfiguration(
-                setOf(R.id.nav_home, R.id.nav_apps, R.id.nav_whitelist, R.id.nav_settings, R.id.nav_about)
+                setOf(R.id.nav_home, R.id.nav_apps, R.id.nav_settings, R.id.nav_about)
             )
             setupActionBarWithNavController(navController, appBarConfiguration)
             bottomNav?.setupWithNavController(navController)

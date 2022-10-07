@@ -94,15 +94,10 @@ class HomeFragment : MainFragment(),
         super.onStart()
         if (activity.fab.hasOnClickListeners()) updateCurrentList()
         activity.fab.setOnClickListener {
-            val toFreezeList = if (HailData.longPressFreezeWhitelisted) {
-                HomeAdapter.currentList.filterNot { it.whitelisted }
-            } else {
-                HomeAdapter.currentList
-            }
-            setListFrozen(true, toFreezeList)
+            setListFrozen(true, HomeAdapter.currentList.filterNot { it.whitelisted })
         }
         activity.fab.setOnLongClickListener {
-            setListFrozen(true, HomeAdapter.currentList)
+            setListFrozen(true)
             true
         }
     }
@@ -199,6 +194,8 @@ class HomeFragment : MainFragment(),
                 4 -> {
                     info.whitelisted = !info.whitelisted
                     HailData.saveApps()
+                    info.selected = !info.selected //just make contents not same
+                    updateCurrentList()
                 }
                 5 -> {
                     var checked = -1
@@ -423,7 +420,7 @@ class HomeFragment : MainFragment(),
             updateCurrentList()
         }
         HUI.showToast(getString(R.string.msg_imported, i.toString()))
-    } catch (t: Throwable) {
+    } catch (_: Throwable) {
     }
 
     private fun importFrozenApp() =
@@ -458,7 +455,8 @@ class HomeFragment : MainFragment(),
                 )
                 if (multiselect) HUI.showToast(R.string.tap_to_select)
             }
-            R.id.action_freeze_current -> setListFrozen(true, HomeAdapter.currentList)
+            R.id.action_freeze_current -> setListFrozen(true,
+                HomeAdapter.currentList.filterNot { it.whitelisted })
             R.id.action_unfreeze_current -> setListFrozen(false, HomeAdapter.currentList)
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)

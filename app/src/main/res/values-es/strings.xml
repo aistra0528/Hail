@@ -115,4 +115,6 @@
     <string name="action_export_all">Exportar todo</string>
     <string name="skip_notifying_app">Omitir la notificación de la aplicación</string>
     <string name="auto_freeze_delay">Freeze delay (minutes)</string>
+    <string name="action_remove_whitelist">Remove from Whitelist</string>
+    <string name="action_whitelist">Add to Whitelist</string>
 </resources>
