@@ -114,10 +114,10 @@
     <string name="action_export_current">Exportación actual</string>
     <string name="action_export_all">Exportar todo</string>
     <string name="skip_notifying_app">Omitir la notificación de la aplicación</string>
-    <string name="auto_freeze_delay">Freeze delay (minutes)</string>
-    <string name="action_remove_whitelist">Remove from Whitelist</string>
-    <string name="action_whitelist">Add to Whitelist</string>
-    <string name="mode_do_suspend">Device Owner - Suspend</string>
-    <string name="mode_su_suspend">Superuser - Suspend</string>
-    <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
+    <string name="auto_freeze_delay">Retraso de congelamiento (minutos)</string>
+    <string name="action_remove_whitelist">Eliminar de la lista blanca</string>
+    <string name="action_whitelist">Añadir a la lista blanca</string>
+    <string name="mode_do_suspend">Administrador de dispositivo - Suspender</string>
+    <string name="mode_su_suspend">Superusuario - Suspender</string>
+    <string name="mode_shizuku_suspend">Shizuku - Suspender</string>
 </resources>
