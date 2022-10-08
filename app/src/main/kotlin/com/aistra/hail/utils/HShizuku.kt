@@ -82,6 +82,7 @@ object HShizuku {
                 null,
                 null,
                 null,
+                BuildConfig.APPLICATION_ID,
                 if (Shizuku.getUid() == 0) BuildConfig.APPLICATION_ID else "com.android.shell",
                 Os.getuid() / 100000
             ) as Array<*>).isEmpty()
