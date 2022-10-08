@@ -27,6 +27,9 @@ object HPolicy {
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean =
         isDeviceOwnerActive && dpm.setApplicationHidden(admin, packageName, hidden)
 
+    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean = isDeviceOwnerActive
+            && dpm.setPackagesSuspended(admin, arrayOf(packageName), suspended).isEmpty()
+
     fun uninstallApp(packageName: String): Boolean = when {
         isDeviceOwnerActive -> {
             HailApp.app.packageManager.packageInstaller.uninstall(

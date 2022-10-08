@@ -15,13 +15,17 @@ object AppManager {
 
     fun isAppFrozen(packageName: String): Boolean = when (HailData.workingMode) {
         HailData.MODE_DO_HIDE -> HPolicy.isAppHidden(packageName)
+        HailData.MODE_DO_SUSPEND, HailData.MODE_SU_SUSPEND, HailData.MODE_SHIZUKU_SUSPEND ->
+            HPackages.isAppSuspended(packageName)
         else -> HPackages.isAppDisabled(packageName)
     }
 
     fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =
         packageName != BuildConfig.APPLICATION_ID && when (HailData.workingMode) {
             HailData.MODE_DO_HIDE -> HPolicy.setAppHidden(packageName, frozen)
+            HailData.MODE_DO_SUSPEND -> HPolicy.setAppSuspended(packageName, frozen)
             HailData.MODE_SU_DISABLE -> HShell.setAppDisabled(packageName, frozen)
+            HailData.MODE_SU_SUSPEND -> HShell.setAppSuspended(packageName, frozen)
             HailData.MODE_SHIZUKU_DISABLE -> HShizuku.setAppDisabledAsUser(packageName, frozen)
             else -> false
         }

@@ -44,8 +44,11 @@
     <string name="working_mode">Working mode</string>
     <string name="mode_default">Idle</string>
     <string name="mode_do_hide">Device Owner - Hide</string>
+    <string name="mode_do_suspend">Device Owner - Suspend</string>
     <string name="mode_su_disable">Superuser - Disable</string>
+    <string name="mode_su_suspend">Superuser - Suspend</string>
     <string name="mode_shizuku_disable">Shizuku - Disable</string>
+    <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
     <string name="title_set_do">Set Device Owner</string>
     <string name="msg_set_do">Issue the command from adb:\n%s</string>
     <string name="title_remove_do">Remove Device Owner</string>

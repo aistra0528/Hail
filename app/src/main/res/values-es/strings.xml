@@ -117,4 +117,7 @@
     <string name="auto_freeze_delay">Freeze delay (minutes)</string>
     <string name="action_remove_whitelist">Remove from Whitelist</string>
     <string name="action_whitelist">Add to Whitelist</string>
+    <string name="mode_do_suspend">Device Owner - Suspend</string>
+    <string name="mode_su_suspend">Superuser - Suspend</string>
+    <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
 </resources>

@@ -113,6 +113,9 @@
     <string name="synthesize_adaptive_icons">合成自適應圖示</string>
     <string name="action_export_current">匯出目前</string>
     <string name="action_export_all">全部匯出</string>
-    <string name="skip_notifying_app">跳过通知中应用</string>
+    <string name="skip_notifying_app">跳過通知中應用程式</string>
     <string name="auto_freeze_delay">凍結延時（分鐘）</string>
+    <string name="mode_do_suspend">裝置所有者 - 暫停</string>
+    <string name="mode_su_suspend">超級使用者 - 暫停</string>
+    <string name="mode_shizuku_suspend">Shizuku - 暫停</string>
 </resources>

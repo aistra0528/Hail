@@ -56,7 +56,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
         when (newValue) {
-            HailData.MODE_DO_HIDE -> if (!HPolicy.isDeviceOwnerActive) {
+            HailData.MODE_DO_HIDE, HailData.MODE_DO_SUSPEND -> if (!HPolicy.isDeviceOwnerActive) {
                 MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_do)
                     .setMessage(getString(R.string.msg_set_do, HPolicy.ADB_SET_DO))
                     .setPositiveButton(android.R.string.ok, null)
@@ -64,11 +64,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     .create().show()
                 return false
             }
-            HailData.MODE_SU_DISABLE -> if (!HShell.checkSU) {
+            HailData.MODE_SU_DISABLE, HailData.MODE_SU_SUSPEND -> if (!HShell.checkSU) {
                 HUI.showToast(R.string.permission_denied)
                 return false
             }
-            HailData.MODE_SHIZUKU_DISABLE -> return try {
+            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_SUSPEND -> return try {
                 when {
                     Shizuku.isPreV11() -> throw IllegalStateException("unsupported shizuku version")
                     Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED -> true

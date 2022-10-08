@@ -30,6 +30,12 @@ object HPackages {
     fun isAppDisabled(packageName: String): Boolean =
         getApplicationInfoOrNull(packageName)?.enabled?.not() ?: false
 
+    fun isAppSuspended(packageName: String): Boolean = try {
+        HailApp.app.packageManager.isPackageSuspended(packageName)
+    } catch (t: Throwable) {
+        false
+    }
+
     fun canUninstall(packageName: String): Boolean =
         getApplicationInfoOrNull(packageName)?.sourceDir?.startsWith("/data") ?: false
 
