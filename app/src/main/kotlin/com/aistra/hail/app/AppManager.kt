@@ -27,6 +27,7 @@ object AppManager {
             HailData.MODE_SU_DISABLE -> HShell.setAppDisabled(packageName, frozen)
             HailData.MODE_SU_SUSPEND -> HShell.setAppSuspended(packageName, frozen)
             HailData.MODE_SHIZUKU_DISABLE -> HShizuku.setAppDisabledAsUser(packageName, frozen)
+            HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.setAppSuspendedAsUser(packageName, frozen)
             else -> false
         }
 
