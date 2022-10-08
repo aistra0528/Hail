@@ -8,6 +8,7 @@ import android.view.InputEvent
 import android.view.KeyEvent
 import com.aistra.hail.BuildConfig
 import org.lsposed.hiddenapibypass.HiddenApiBypass
+import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
 
@@ -82,6 +83,7 @@ object HShizuku {
                 null,
                 null,
                 BuildConfig.APPLICATION_ID,
+                if (Shizuku.getUid() == 0) BuildConfig.APPLICATION_ID else "com.android.shell",
                 Os.getuid() / 100000
             ) as Array<*>).isEmpty()
         } catch (t: Throwable) {
