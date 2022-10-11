@@ -101,6 +101,7 @@
     <string name="auto_freeze">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
     <string name="auto_freeze_after_lock">After screen locked</string>
+    <string name="auto_freeze_tags">Auto-freeze tags</string>
     <string name="skip_while_charging">Skip while charging</string>
     <string name="skip_foreground_app">Skip foreground app</string>
     <string name="title_customize">Customize</string>

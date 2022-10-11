@@ -81,12 +81,12 @@
             app:singleLineTitle="false"
             app:title="@string/skip_notifying_app" />
         <MultiSelectListPreference
-            app:dialogTitle="Auto freeze tags"
+            app:dialogTitle="@string/auto_freeze_tags"
             app:dependency="auto_freeze_after_lock"
             app:icon="@drawable/ic_outline_local_offer"
             app:key="auto_freeze_tags"
             app:summary=""
-            app:title="Auto freeze tags"
+            app:title="@string/auto_freeze_tags"
             app:entries="@array/empty_array"
             app:entryValues="@array/empty_array"
             app:defaultValue="@array/empty_array" />
