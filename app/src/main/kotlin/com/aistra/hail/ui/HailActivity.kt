@@ -13,7 +13,7 @@ open class HailActivity : AppCompatActivity() {
         val start = hasUnfrozen
             ?: HailData.checkedList.any {
                 !AppManager.isAppFrozen(it.packageName) &&
-                        HailData.autoFreezeTags!!.contains(it.tagId.toString())
+                        HailData.autoFreezeTags.contains(it.tagId.toString())
             }
         applicationContext.let {
             val intent = Intent(it, AutoFreezeService::class.java)

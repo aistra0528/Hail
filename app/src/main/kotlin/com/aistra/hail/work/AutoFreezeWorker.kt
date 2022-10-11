@@ -39,5 +39,5 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
         ))
                 || (HailData.skipNotifyingApp && appInfo.packageName in AutoFreezeService.instance.activeNotifications.map { it.packageName })
                 || appInfo.whitelisted
-                || !HailData.autoFreezeTags!!.contains(appInfo.tagId.toString())
+                || !HailData.autoFreezeTags.contains(appInfo.tagId.toString())
 }
