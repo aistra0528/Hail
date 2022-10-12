@@ -229,6 +229,11 @@ class HomeFragment : MainFragment(),
                 )
                 7 -> exportToClipboard(listOf(info))
                 8 -> removeCheckedApp(pkg)
+                9 -> {
+                    if (frozen){
+                        setListFrozen(false, listOf(info))}
+                    removeCheckedApp(pkg)
+                }
             }
         }.create().show()
         return true

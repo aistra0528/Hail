@@ -120,4 +120,5 @@
     <string name="mode_do_suspend">Device Owner - Suspend</string>
     <string name="mode_su_suspend">Superuser - Suspend</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
+    <string name="action_freeze_remove_home">Scongela e rimuovi dalla home page</string>
 </resources>
