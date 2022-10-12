@@ -159,6 +159,7 @@ class HomeFragment : MainFragment(),
                         && (it != getString(R.string.action_unpin) || info.pinned)
                         && (it != getString(R.string.action_whitelist) || !info.whitelisted)
                         && (it != getString(R.string.action_remove_whitelist) || info.whitelisted)
+                        && (it != getString(R.string.action_freeze_remove_home) || frozen)
             }.toTypedArray()
         ) { _, which ->
             when (which) {
@@ -230,9 +231,8 @@ class HomeFragment : MainFragment(),
                 7 -> exportToClipboard(listOf(info))
                 8 -> removeCheckedApp(pkg)
                 9 -> {
-                    if (frozen){
-                        setListFrozen(false, listOf(info))}
-                    removeCheckedApp(pkg)
+                    setListFrozen(false, listOf(info), false)
+                    if (!AppManager.isAppFrozen(pkg)) removeCheckedApp(pkg)
                 }
             }
         }.create().show()
@@ -297,6 +297,15 @@ class HomeFragment : MainFragment(),
                         }
                         4 -> {
                             selectedList.forEach { removeCheckedApp(it.packageName, false) }
+                            HailData.saveApps()
+                            deselect()
+                        }
+                        5 -> {
+                            setListFrozen(false, selectedList, false)
+                            selectedList.forEach {
+                                if (!AppManager.isAppFrozen(it.packageName))
+                                    removeCheckedApp(it.packageName, false)
+                            }
                             HailData.saveApps()
                             deselect()
                         }
