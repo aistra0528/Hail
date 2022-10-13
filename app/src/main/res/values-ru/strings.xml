@@ -122,5 +122,5 @@
     <string name="mode_do_suspend">Device Owner - Suspend</string>
     <string name="mode_su_suspend">Superuser - Suspend</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
-    <string name="action_freeze_remove_home">Разморозить и удалить с главной страницы</string>
+    <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>
 </resources>

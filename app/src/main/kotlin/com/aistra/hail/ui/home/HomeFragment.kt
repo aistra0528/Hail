@@ -159,7 +159,7 @@ class HomeFragment : MainFragment(),
                         && (it != getString(R.string.action_unpin) || info.pinned)
                         && (it != getString(R.string.action_whitelist) || !info.whitelisted)
                         && (it != getString(R.string.action_remove_whitelist) || info.whitelisted)
-                        && (it != getString(R.string.action_freeze_remove_home) || frozen)
+                        && (it != getString(R.string.action_unfreeze_remove_home) || frozen)
             }.toTypedArray()
         ) { _, which ->
             when (which) {

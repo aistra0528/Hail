@@ -118,5 +118,5 @@
     <string name="mode_do_suspend">裝置所有者 - 暫停</string>
     <string name="mode_su_suspend">超級使用者 - 暫停</string>
     <string name="mode_shizuku_suspend">Shizuku - 暫停</string>
-    <string name="action_freeze_remove_home">解凍並從首頁中移除</string>
+    <string name="action_unfreeze_remove_home">解凍並從首頁中移除</string>
 </resources>
