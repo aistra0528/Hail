@@ -2,6 +2,10 @@
 
 # 雹 Hail
 
+[![Android CI status](https://github.com/aistra0528/Hail/workflows/Android%20CI/badge.svg)](https://github.com/aistra0528/Hail/actions)
+[![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)
+[![License](https://img.shields.io/github/license/aistra0528/Hail)](LICENSE)
+
 雹是一款用于冻结 Android 应用的自由软件，您可自由享用所有功能。
 
 [<img src="coolapk-badge.png" alt="Get it on CoolApk" height="80">](https://www.coolapk.com/apk/com.aistra.hail)
@@ -10,7 +14,8 @@
 
 酷安版签名与 [GitHub Releases](https://github.com/aistra0528/Hail/releases) 一致，F-Droid 版由 F-Droid 签名。
 
-Google Play 版为 [@purofle](https://github.com/purofle) 的 [Fork](https://github.com/purofle/Hail)，由 Google 签名。
+Google Play 版为 [@purofle](https://github.com/purofle) 的 [Fork](https://github.com/purofle/Hail)，由
+Google 签名。
 
 <img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/1.png" width="32%" /> <img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/2.png" width="32%" /> <img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/3.png" width="32%" />
 

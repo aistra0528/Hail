@@ -18,15 +18,15 @@ android {
         versionName = "0.10.0"
         resourceConfigurations += arrayOf("en", "es", "it", "ja-rJP", "ru", "zh-rCN", "zh-rTW")
     }
-    signingConfigs {
-        create("release") {
+    val signing = if (file("../signing.properties").exists()) {
+        signingConfigs.create("release") {
             val props = Properties().apply { load(file("../signing.properties").reader()) }
             storeFile = file(props.getProperty("storeFile"))
             storePassword = props.getProperty("storePassword")
             keyAlias = props.getProperty("keyAlias")
             keyPassword = props.getProperty("keyPassword")
         }
-    }
+    } else signingConfigs.getByName("debug")
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -34,7 +34,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signing
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
