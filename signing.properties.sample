@@ -1,0 +1,4 @@
+storeFile=filename.keystore
+storePassword=password
+keyAlias=alias
+keyPassword=password
