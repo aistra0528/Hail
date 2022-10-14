@@ -68,6 +68,7 @@
     <string name="donate_bilibili_msg">Sigueme en bilibili.</string>
     <string name="donate_bilibili_space">My space</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
+    <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">¡Gracias!</string>
     <string name="msg_redeem_invalid">Código inválido</string>

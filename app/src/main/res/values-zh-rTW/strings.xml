@@ -68,6 +68,7 @@
     <string name="donate_bilibili_msg">嗶哩嗶哩年度大會員每月可至我的大會員-卡券包內領取 5B 幣券，在承包、充電、看漫畫、兌換金瓜子等消費時抵扣 B 幣，領取後當月有效。\n若您的 B 幣券月末沒有好去處，可為我充電，我願收留它們。\n* 因 B 站會收取 30% 的渠道服務費，並不推薦您充值充電。\n不是年度大會員？點個關注也可以。</string>
     <string name="donate_bilibili_space">我的空間</string>
     <string name="donate_bilibili_cancel">下次一定</string>
+    <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">謝謝你。</string>
     <string name="msg_redeem_invalid">無效的兌換碼</string>
