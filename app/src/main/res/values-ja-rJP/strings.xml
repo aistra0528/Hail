@@ -69,6 +69,7 @@
     <string name="donate_bilibili_msg">ビリビリチャンネルをフォロー</string>
     <string name="donate_bilibili_space">マイスペース</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
+    <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">ありがとうございます！</string>
     <string name="msg_redeem_invalid">無効なコード</string>

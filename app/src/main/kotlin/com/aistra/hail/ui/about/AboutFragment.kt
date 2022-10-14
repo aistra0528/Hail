@@ -106,7 +106,8 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                         }
                         .setNegativeButton(R.string.donate_bilibili_cancel, null)
                         .create().show()
-                    3 -> HUI.openLink(HailData.URL_PAYPAL)
+                    3 -> HUI.openLink(HailData.URL_LIBERAPAY)
+                    4 -> HUI.openLink(HailData.URL_PAYPAL)
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
