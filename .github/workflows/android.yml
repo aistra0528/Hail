@@ -6,11 +6,15 @@ on:
       - master
     paths-ignore:
       - '**.md'
+      - '.github/**'
+      - '!.github/workflows/android.yml'
   pull_request:
     branches:
       - master
     paths-ignore:
       - '**.md'
+      - '.github/**'
+      - '!.github/workflows/android.yml'
 
 jobs:
   build:
