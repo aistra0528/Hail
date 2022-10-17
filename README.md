@@ -193,7 +193,7 @@ or
 Thank you!
 
 - 繁體中文 [@cracky5322](https://github.com/cracky5322)
-- 日本語 [@AokiFuru](https://github.com/AokiFuru)
+- 日本語 [@AokiFuru](https://github.com/AokiFuru) [@404potato](https://github.com/404potato)
 - русский [@tommynok](https://github.com/tommynok)
 - Español [@cyanwolfg](https://github.com/cyanwolfg)
 
