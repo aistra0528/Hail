@@ -1,6 +1,7 @@
 package com.aistra.hail.work
 
 import android.content.Context
+import android.content.Intent
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.aistra.hail.HailApp
@@ -25,7 +26,12 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
                     denied = true
             }
         }
-        return if (denied && i == 0) Result.failure() else Result.success()
+        return if (denied && i == 0) {
+            Result.failure()
+        } else {
+            applicationContext.stopService(Intent(applicationContext, AutoFreezeService::class.java))
+            Result.success()
+        }
     }
 
     private fun isSkipWhileCharging(context: Context): Boolean =
