@@ -53,7 +53,7 @@ object HailData {
     private const val COMPACT_ICON = "compact_icon"
     private const val TILE_LOCK = "tile_lock"
     private const val SYNTHESIZE_ADAPTIVE_ICONS = "synthesize_adaptive_icons"
-    private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
+    const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
