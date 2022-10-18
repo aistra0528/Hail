@@ -11,7 +11,7 @@ open class HailActivity : AppCompatActivity() {
     fun setAutoFreezeService(hasUnfrozen: Boolean? = null) {
         if (HailData.autoFreezeAfterLock.not()) return
         val start = hasUnfrozen
-            ?: HailData.checkedList.any { !AppManager.isAppFrozen(it.packageName) }
+            ?: HailData.checkedList.any { !AppManager.isAppFrozen(it.packageName) && !it.whitelisted }
         applicationContext.let {
             val intent = Intent(it, AutoFreezeService::class.java)
             when {
