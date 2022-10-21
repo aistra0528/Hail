@@ -13,6 +13,8 @@ import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
 
 object HShizuku {
+    private val isRoot get() = Shizuku.getUid() == 0
+
     private fun asInterface(className: String, serviceName: String): Any? =
         Class.forName("$className\$Stub")
             .getMethod("asInterface", IBinder::class.java)
@@ -57,8 +59,9 @@ object HShizuku {
             ).invoke(
                 proxy,
                 packageName,
-                if (disabled) PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER
-                else PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                if (!disabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                else if (isRoot) PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                else PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER,
                 0,
                 Os.getuid() / 100000,
                 BuildConfig.APPLICATION_ID
@@ -82,7 +85,7 @@ object HShizuku {
                 null,
                 null,
                 null,
-                if (Shizuku.getUid() == 0) BuildConfig.APPLICATION_ID else "com.android.shell",
+                if (isRoot) BuildConfig.APPLICATION_ID else "com.android.shell",
                 Os.getuid() / 100000
             ) as Array<*>).isEmpty()
         } catch (t: Throwable) {
