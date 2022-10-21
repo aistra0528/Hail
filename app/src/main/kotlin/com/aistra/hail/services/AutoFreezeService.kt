@@ -11,7 +11,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
 import com.aistra.hail.R
+import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
+import com.aistra.hail.app.HailData
 import com.aistra.hail.receiver.ScreenOffReceiver
 
 class AutoFreezeService : NotificationListenerService() {
@@ -26,12 +28,20 @@ class AutoFreezeService : NotificationListenerService() {
             Intent(HailApi.ACTION_FREEZE_ALL),
             PendingIntent.FLAG_IMMUTABLE
         )
+        val freezeNonWhitelisted = PendingIntent.getActivity(
+            applicationContext,
+            0,
+            Intent(HailApi.ACTION_FREEZE_NON_WHITELISTED),
+            PendingIntent.FLAG_IMMUTABLE
+        )
         val notification = NotificationCompat.Builder(this, channelID)
             .setContentTitle(getString(R.string.auto_freeze_notification_title))
             .setSmallIcon(R.drawable.ic_round_frozen)
             .addAction(R.drawable.ic_round_frozen, getString(R.string.action_freeze_all), freezeAll)
-            .build()
-        startForeground(100, notification)
+        if (HailData.checkedList.any { it.whitelisted }) {
+            notification.addAction(R.drawable.ic_round_frozen, getString(R.string.action_freeze_non_whitelisted), freezeNonWhitelisted)
+        }
+        startForeground(100, notification.build())
         return START_STICKY
     }
 
