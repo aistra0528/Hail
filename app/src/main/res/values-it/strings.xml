@@ -122,4 +122,5 @@
     <string name="mode_su_suspend">Superuser - Suspend</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
     <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>
+    <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
 </resources>

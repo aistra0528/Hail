@@ -120,4 +120,5 @@
     <string name="mode_do_suspend">设备所有者 - 暂停</string>
     <string name="mode_su_suspend">超级用户 - 暂停</string>
     <string name="mode_shizuku_suspend">Shizuku - 暂停</string>
+    <string name="action_freeze_non_whitelisted">冻结非白名单</string>
 </resources>

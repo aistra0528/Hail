@@ -121,4 +121,5 @@
     <string name="mode_su_suspend">スーパーユーザー - サスペンド</string>
     <string name="mode_shizuku_suspend">Shizuku - サスペンド</string>
     <string name="action_unfreeze_remove_home">凍結を解除し、Hailのホームから削除する</string>
+    <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
 </resources>

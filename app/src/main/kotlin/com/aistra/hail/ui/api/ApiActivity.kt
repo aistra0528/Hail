@@ -23,7 +23,7 @@ class ApiActivity : HailActivity() {
                 HailApi.ACTION_UNFREEZE -> setAppFrozen(targetPackage, false)
                 HailApi.ACTION_FREEZE_ALL -> setAllFrozen(true)
                 HailApi.ACTION_UNFREEZE_ALL -> setAllFrozen(false)
-                HailApi.ACTION_FREEZE_NON_WHITELISTED -> setNonWhitelistedFrozen(true)
+                HailApi.ACTION_FREEZE_NON_WHITELISTED -> setAllFrozen(true, skipWhitelisted = true)
                 HailApi.ACTION_LOCK -> lockScreen(false)
                 HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
                 else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
@@ -69,39 +69,13 @@ class ApiActivity : HailActivity() {
         }
     }
 
-    private fun setAllFrozen(frozen: Boolean) {
+    private fun setAllFrozen(frozen: Boolean, skipWhitelisted: Boolean = false) {
         var i = 0
         var denied = false
         var name = String()
         HailData.checkedList.forEach {
             when {
-                AppManager.isAppFrozen(it.packageName) == frozen -> return@forEach
-                AppManager.setAppFrozen(it.packageName, frozen) -> {
-                    i++
-                    name = it.name.toString()
-                }
-                it.packageName != packageName && it.applicationInfo != null -> denied = true
-            }
-        }
-        when {
-            denied && i == 0 -> throw IllegalStateException(getString(R.string.permission_denied))
-            i > 0 -> {
-                HUI.showToast(
-                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                    if (i > 1) i.toString() else name
-                )
-                setAutoFreezeService(!frozen)
-            }
-        }
-    }
-
-    private fun setNonWhitelistedFrozen(frozen: Boolean) {
-        var i = 0
-        var denied = false
-        var name = String()
-        HailData.checkedList.forEach {
-            when {
-                AppManager.isAppFrozen(it.packageName) == frozen || it.whitelisted -> return@forEach
+                AppManager.isAppFrozen(it.packageName) == frozen || (skipWhitelisted && it.whitelisted) -> return@forEach
                 AppManager.setAppFrozen(it.packageName, frozen) -> {
                     i++
                     name = it.name.toString()
