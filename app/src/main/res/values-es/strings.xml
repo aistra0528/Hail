@@ -121,6 +121,6 @@
     <string name="mode_do_suspend">Administrador de dispositivo - Suspender</string>
     <string name="mode_su_suspend">Superusuario - Suspender</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspender</string>
-    <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>
-    <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
+    <string name="action_unfreeze_remove_home">Descongelar y eliminar del inicio</string>
+    <string name="action_freeze_non_whitelisted">Congelar no presentes en la lista blanca</string>
 </resources>
