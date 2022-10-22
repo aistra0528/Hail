@@ -52,6 +52,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 false
             } else true
         }
+        findPreference<Preference>(HailData.AUTO_FREEZE_AFTER_LOCK)?.setOnPreferenceChangeListener { _, autoFreezeAfterLock ->
+            if ((autoFreezeAfterLock as Boolean).not()) {
+                requireContext().stopService(Intent(requireContext(), AutoFreezeService::class.java))
+            }
+            true
+        }
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
