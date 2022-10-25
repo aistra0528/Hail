@@ -7,9 +7,9 @@ import com.aistra.hail.utils.*
 object AppManager {
     val lockScreen: Boolean
         get() = when (HailData.workingMode) {
-            HailData.MODE_DO_HIDE -> HPolicy.lockScreen
-            HailData.MODE_SU_DISABLE -> HShell.lockScreen
-            HailData.MODE_SHIZUKU_DISABLE -> HShizuku.lockScreen
+            HailData.MODE_DO_HIDE, HailData.MODE_DO_SUSPEND -> HPolicy.lockScreen
+            HailData.MODE_SU_DISABLE, HailData.MODE_SU_SUSPEND -> HShell.lockScreen
+            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.lockScreen
             else -> false
         }
 
@@ -33,8 +33,12 @@ object AppManager {
 
     fun uninstallApp(packageName: String) {
         when (HailData.workingMode) {
-            HailData.MODE_DO_HIDE -> if (HPolicy.uninstallApp(packageName)) return
-            HailData.MODE_SU_DISABLE -> if (HShell.uninstallApp(packageName)) return
+            HailData.MODE_DO_HIDE, HailData.MODE_DO_SUSPEND ->
+                if (HPolicy.uninstallApp(packageName)) return
+            HailData.MODE_SU_DISABLE, HailData.MODE_SU_SUSPEND ->
+                if (HShell.uninstallApp(packageName)) return
+            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_SUSPEND ->
+                if (HShizuku.uninstallApp(packageName)) return
         }
         HUI.startActivity(Intent.ACTION_DELETE, HPackages.packageUri(packageName))
     }
