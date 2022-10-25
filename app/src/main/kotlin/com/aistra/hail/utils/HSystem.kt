@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
-import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.getSystemService
 import com.aistra.hail.app.HailData
@@ -28,7 +27,7 @@ object HSystem {
     @Suppress("SameParameterValue")
     private fun checkOp(context: Context, op: String): Boolean {
         val opsManager = context.getSystemService<AppOpsManager>()!!
-        val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val result = if (HTarget.Q) {
             opsManager.unsafeCheckOp(op, android.os.Process.myUid(), context.packageName)
         } else {
             @Suppress("DEPRECATION")

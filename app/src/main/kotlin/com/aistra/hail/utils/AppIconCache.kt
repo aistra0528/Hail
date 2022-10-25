@@ -6,7 +6,6 @@ import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
-import android.os.Build
 import android.widget.ImageView
 import androidx.collection.LruCache
 import com.aistra.hail.HailApp
@@ -63,10 +62,6 @@ object AppIconCache : CoroutineScope {
         shrinkNonAdaptiveIcons = HailData.synthesizeAdaptiveIcons
     }
 
-    fun dispatcher(): CoroutineDispatcher {
-        return dispatcher
-    }
-
     private fun get(packageName: String, userId: Int, size: Int): Bitmap? {
         return lruCache[Triple(packageName, userId, size)]
     }
@@ -75,10 +70,6 @@ object AppIconCache : CoroutineScope {
         if (get(packageName, userId, size) == null) {
             lruCache.put(Triple(packageName, userId, size), bitmap)
         }
-    }
-
-    private fun remove(packageName: String, userId: Int, size: Int) {
-        lruCache.remove(Triple(packageName, userId, size))
     }
 
     @SuppressLint("NewApi")
@@ -133,7 +124,7 @@ object AppIconCache : CoroutineScope {
             if (bitmap != null) {
                 view.setImageBitmap(bitmap)
             } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (HTarget.O) {
                     view.setImageDrawable(HailApp.app.packageManager.defaultActivityIcon)
                 } else {
                     view.setImageDrawable(null)
