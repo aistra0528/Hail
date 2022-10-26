@@ -114,8 +114,11 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
         controller: NavController, destination: NavDestination, arguments: Bundle?
     ) = fab.run {
         if (destination.id != R.id.nav_home) {
-            setOnClickListener(null)
+            isEnabled = false
             hide()
-        } else show()
+        } else {
+            isEnabled = true
+            show()
+        }
     }
 }

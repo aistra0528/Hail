@@ -63,7 +63,7 @@ class HomeFragment : MainFragment(),
                     super.onScrollStateChanged(recyclerView, newState)
                     when (newState) {
                         RecyclerView.SCROLL_STATE_IDLE -> postDelayed(
-                            { activity.fab.show() }, 1000
+                            { activity.fab.run { if (isEnabled) show() } }, 1000
                         )
                         RecyclerView.SCROLL_STATE_DRAGGING -> activity.fab.hide()
                     }
@@ -92,13 +92,16 @@ class HomeFragment : MainFragment(),
 
     override fun onStart() {
         super.onStart()
-        if (activity.fab.hasOnClickListeners()) updateCurrentList()
-        activity.fab.setOnClickListener {
-            setListFrozen(true, HomeAdapter.currentList.filterNot { it.whitelisted })
-        }
-        activity.fab.setOnLongClickListener {
-            setListFrozen(true)
-            true
+        if (activity.fab.hasOnClickListeners()) {
+            updateCurrentList()
+        } else activity.fab.run {
+            setOnClickListener {
+                setListFrozen(true, HomeAdapter.currentList.filterNot { it.whitelisted })
+            }
+            setOnLongClickListener {
+                setListFrozen(true)
+                true
+            }
         }
     }
 
