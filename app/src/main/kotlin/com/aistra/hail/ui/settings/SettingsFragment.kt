@@ -43,11 +43,17 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             } else true
         }
         findPreference<Preference>(HailData.SKIP_NOTIFYING_APP)?.setOnPreferenceChangeListener { _, value ->
-            val notificationManager = requireContext().getSystemService<NotificationManager>()!!
-            if (value == true && !notificationManager.isNotificationListenerAccessGranted(
-                    ComponentName(requireContext(), AutoFreezeService::class.java.name)
-                )
-            ) {
+            val name = ComponentName(requireContext(), AutoFreezeService::class.java.name)
+            val isGranted = if (HTarget.O_MR1) {
+                requireContext().getSystemService<NotificationManager>()!!
+                    .isNotificationListenerAccessGranted(name)
+            } else {
+                Settings.Secure.getString(
+                    requireContext().contentResolver,
+                    "enabled_notification_listeners"
+                ).split(':').map { ComponentName.unflattenFromString(it) }.contains(name)
+            }
+            if (value == true && !isGranted) {
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 false
             } else true
