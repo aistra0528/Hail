@@ -123,7 +123,7 @@ class HomeFragment : MainFragment(),
 
     private fun updateBarTitle() {
         activity.supportActionBar?.title = HomeAdapter.selectedList.size.let {
-            if (it == 0) getString(R.string.app_name)
+            if (!multiselect) getString(R.string.app_name)
             else getString(R.string.msg_selected, it.toString())
         }
     }
@@ -470,7 +470,12 @@ class HomeFragment : MainFragment(),
                         if (multiselect) R.attr.colorPrimary else R.attr.colorOnSurface
                     )
                 )
-                if (multiselect) HUI.showToast(R.string.tap_to_select)
+                if (multiselect) {
+                    updateBarTitle()
+                    HUI.showToast(R.string.tap_to_select)
+                } else {
+                    deselect()
+                }
             }
             R.id.action_freeze_current -> setListFrozen(true,
                 HomeAdapter.currentList.filterNot { it.whitelisted })
