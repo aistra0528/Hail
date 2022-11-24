@@ -76,27 +76,15 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
             val navController = findNavController(R.id.nav_host_fragment_content_main)
             navController.addOnDestinationChangedListener(this@MainActivity)
             appBarConfiguration = AppBarConfiguration(
-                setOf(R.id.nav_home, R.id.nav_apps, R.id.nav_settings, R.id.nav_about)
+                setOf(R.id.nav_home)
             )
             setupActionBarWithNavController(navController, appBarConfiguration)
-            bottomNav?.setupWithNavController(navController)
-            navRail?.setupWithNavController(navController)
             ViewCompat.setOnApplyWindowInsetsListener(appBarMain.root) { view, windowInsets ->
-                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-                val cutoutInsets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
-                view.updatePadding(top = insets.top, right = insets.right + cutoutInsets.right)
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
+                    or WindowInsetsCompat.Type.displayCutout())
+                view.updatePadding(insets.left, insets.top, insets.right, insets.bottom)
                 windowInsets
             }
-            if (bottomNav != null)
-                ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, windowInsets ->
-                    val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    view.updatePadding(
-                        left = insets.left,
-                        right = insets.right,
-                        bottom = insets.bottom
-                    )
-                    windowInsets
-                }
         }
     }
 

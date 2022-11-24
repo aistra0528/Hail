@@ -12,6 +12,7 @@ import androidx.core.content.getSystemService
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aistra.hail.R
@@ -62,6 +63,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             if ((autoFreezeAfterLock as Boolean).not()) {
                 requireContext().stopService(Intent(requireContext(), AutoFreezeService::class.java))
             }
+            true
+        }
+        findPreference<Preference>("about")?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.nav_about)
             true
         }
     }

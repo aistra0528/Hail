@@ -1,4 +1,5 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">雹</string>
     <string name="app_slogan">实现冻结自由！</string>
     <string name="title_home">首页</string>
@@ -121,4 +122,6 @@
     <string name="mode_su_suspend">超级用户 - 暂停</string>
     <string name="mode_shizuku_suspend">Shizuku - 暂停</string>
     <string name="action_freeze_non_whitelisted">冻结非白名单</string>
+    <string name="action_select_apps">选择应用</string>
+    <string name="action_settings">设置</string>
 </resources>

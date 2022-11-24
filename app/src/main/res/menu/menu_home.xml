@@ -86,4 +86,12 @@
         android:id="@+id/action_clear_dynamic_shortcut"
         android:title="@string/action_clear_dynamic_shortcut"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_select_apps"
+        android:title="@string/action_select_apps"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
 </menu>

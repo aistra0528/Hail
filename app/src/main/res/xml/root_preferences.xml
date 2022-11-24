@@ -81,4 +81,13 @@
             app:singleLineTitle="false"
             app:title="@string/skip_notifying_app" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/title_about">
+        <Preference
+            app:icon="@drawable/ic_outline_info"
+            app:key="about"
+            app:title="@string/title_about"
+            />
+    </PreferenceCategory>
+
 </PreferenceScreen>

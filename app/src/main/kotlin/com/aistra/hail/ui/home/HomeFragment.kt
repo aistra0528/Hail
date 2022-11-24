@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.R
@@ -518,6 +519,8 @@ class HomeFragment : MainFragment(),
                 Intent(HailApi.ACTION_LOCK_FREEZE)
             )
             R.id.action_clear_dynamic_shortcut -> HShortcuts.removeAllDynamicShortcuts()
+            R.id.action_select_apps -> findNavController().navigate(R.id.nav_apps)
+            R.id.action_settings -> findNavController().navigate(R.id.nav_settings)
         }
         return false
     }
