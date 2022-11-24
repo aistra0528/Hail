@@ -121,4 +121,7 @@
     <string name="mode_su_suspend">超级用户 - 暂停</string>
     <string name="mode_shizuku_suspend">Shizuku - 暂停</string>
     <string name="action_freeze_non_whitelisted">冻结非白名单</string>
+    <string name="shortcuts">快捷方式</string>
+    <string name="title_add_shortcut_to_home_screen">添加快捷方式到桌面</string>
+    <string name="title_remove_shortcuts_from_home_screen">从桌面移除快捷方式</string>
 </resources>

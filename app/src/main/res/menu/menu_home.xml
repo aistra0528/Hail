@@ -62,28 +62,4 @@
             </group>
         </menu>
     </item>
-    <item
-        android:title="@string/action_add_pin_shortcut"
-        app:showAsAction="never">
-        <menu>
-            <group>
-                <item
-                    android:id="@+id/pin_freeze_all"
-                    android:title="@string/action_freeze_all" />
-                <item
-                    android:id="@+id/pin_unfreeze_all"
-                    android:title="@string/action_unfreeze_all" />
-                <item
-                    android:id="@+id/pin_lock"
-                    android:title="@string/action_lock" />
-                <item
-                    android:id="@+id/pin_lock_freeze"
-                    android:title="@string/action_lock_freeze" />
-            </group>
-        </menu>
-    </item>
-    <item
-        android:id="@+id/action_clear_dynamic_shortcut"
-        android:title="@string/action_clear_dynamic_shortcut"
-        app:showAsAction="never" />
 </menu>

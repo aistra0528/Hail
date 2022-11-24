@@ -1,10 +1,8 @@
 package com.aistra.hail.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -481,43 +479,6 @@ class HomeFragment : MainFragment(),
             R.id.action_import_frozen -> importFrozenApp()
             R.id.action_export_current -> exportToClipboard(HomeAdapter.currentList)
             R.id.action_export_all -> exportToClipboard(HailData.checkedList)
-            R.id.pin_freeze_all -> HShortcuts.addPinShortcut(
-                AppCompatResources.getDrawable(
-                    app,
-                    R.drawable.ic_round_frozen_shortcut
-                )!!,
-                HailApi.ACTION_FREEZE_ALL,
-                getString(R.string.action_freeze_all),
-                Intent(HailApi.ACTION_FREEZE_ALL)
-            )
-            R.id.pin_unfreeze_all -> HShortcuts.addPinShortcut(
-                AppCompatResources.getDrawable(
-                    app,
-                    R.drawable.ic_round_frozen_shortcut
-                )!!,
-                HailApi.ACTION_UNFREEZE_ALL,
-                getString(R.string.action_unfreeze_all),
-                Intent(HailApi.ACTION_UNFREEZE_ALL)
-            )
-            R.id.pin_lock -> HShortcuts.addPinShortcut(
-                AppCompatResources.getDrawable(
-                    app,
-                    R.drawable.ic_outline_lock_shortcut
-                )!!,
-                HailApi.ACTION_LOCK,
-                getString(R.string.action_lock),
-                Intent(HailApi.ACTION_LOCK)
-            )
-            R.id.pin_lock_freeze -> HShortcuts.addPinShortcut(
-                AppCompatResources.getDrawable(
-                    app,
-                    R.drawable.ic_outline_lock_shortcut
-                )!!,
-                HailApi.ACTION_LOCK_FREEZE,
-                getString(R.string.action_lock_freeze),
-                Intent(HailApi.ACTION_LOCK_FREEZE)
-            )
-            R.id.action_clear_dynamic_shortcut -> HShortcuts.removeAllDynamicShortcuts()
         }
         return false
     }
