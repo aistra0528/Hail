@@ -4,7 +4,6 @@ import android.app.PendingIntent
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Intent
-import android.os.Build
 import androidx.core.content.getSystemService
 import com.aistra.hail.HailApp
 import com.aistra.hail.receiver.DeviceAdminReceiver
@@ -27,6 +26,9 @@ object HPolicy {
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean =
         isDeviceOwnerActive && dpm.setApplicationHidden(admin, packageName, hidden)
 
+    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean = isDeviceOwnerActive
+            && dpm.setPackagesSuspended(admin, arrayOf(packageName), suspended).isEmpty()
+
     fun uninstallApp(packageName: String): Boolean = when {
         isDeviceOwnerActive -> {
             HailApp.app.packageManager.packageInstaller.uninstall(
@@ -41,7 +43,7 @@ object HPolicy {
 
     fun enableBackupService() {
         if (isDeviceOwnerActive
-            && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+            && HTarget.O
             && !dpm.isBackupServiceEnabled(admin)
         ) {
             dpm.setBackupServiceEnabled(admin, true)
@@ -51,7 +53,7 @@ object HPolicy {
 
     fun setOrganizationName(name: String? = null) {
         if (isDeviceOwnerActive
-            && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+            && HTarget.O
         ) dpm.setOrganizationName(admin, name)
     }
 

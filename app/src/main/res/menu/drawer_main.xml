@@ -6,7 +6,7 @@
         android:title="@string/title_home" />
     <item
         android:id="@+id/nav_apps"
-        android:icon="@drawable/ic_view_selector"
+        android:icon="@drawable/ic_baseline_android"
         android:title="@string/title_apps" />
     <item
         android:id="@+id/nav_settings"

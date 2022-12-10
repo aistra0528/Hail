@@ -9,6 +9,7 @@ val props =
     Properties().apply { load(file("../androidSign/androidSign/signing.properties").reader()) }
 val keyStoreFile = file("../androidSign/androidSign/" + props.getProperty("storeFile"))
 android {
+    namespace = "com.aistra.hail"
     compileSdk = 33
     buildToolsVersion = "33.0.0"
 
@@ -27,16 +28,15 @@ android {
             keyAlias = props.getProperty("keyAlias")
             keyPassword = props.getProperty("keyPassword")
         }
-    }
+    } else signingConfigs.getByName("debug")
     buildTypes {
         debug {
-            versionNameSuffix = "-alpha"
-            signingConfig = signingConfigs.getByName("release")
+            applicationIdSuffix = ".debug"
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signing
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -77,8 +77,8 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.work:work-runtime-ktx:2.7.1")
     implementation("com.google.android.material:material:1.6.1")
-    implementation("dev.rikka.shizuku:api:12.1.0")
-    implementation("dev.rikka.shizuku:provider:12.1.0")
-    implementation("me.zhanghai.android.appiconloader:appiconloader:1.4.0")
-    implementation("com.belerweb:pinyin4j:2.5.1")
+    implementation("dev.rikka.shizuku:api:12.2.0")
+    implementation("dev.rikka.shizuku:provider:12.2.0")
+    implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
+    implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
 }

@@ -21,7 +21,8 @@ object HailData {
     const val URL_ALIPAY = "https://qr.alipay.com/tsx02922ajwj6xekqyd1rbf"
     const val URL_ALIPAY_API = "alipays://platformapi/startapp?saId=10000007&qrcode=$URL_ALIPAY"
     const val URL_BILIBILI = "https://space.bilibili.com/9261272"
-    const val URL_PAYPAL = "https://paypal.me/aistra0528"
+    const val URL_LIBERAPAY = "https://liberapay.com/aistra0528"
+    const val URL_PAYPAL = "https://www.paypal.me/aistra0528"
     const val URL_REDEEM_CODE = "https://aistra0528.github.io/hail/code"
     const val VERSION = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     const val KEY_PACKAGE = "package"
@@ -29,8 +30,11 @@ object HailData {
     const val WORKING_MODE = "working_mode"
     const val MODE_DEFAULT = "default"
     const val MODE_DO_HIDE = "do_hide"
+    const val MODE_DO_SUSPEND = "do_suspend"
     const val MODE_SU_DISABLE = "su_disable"
+    const val MODE_SU_SUSPEND = "su_suspend"
     const val MODE_SHIZUKU_DISABLE = "shizuku_disable"
+    const val MODE_SHIZUKU_SUSPEND = "shizuku_suspend"
     private const val SORT_BY = "sort_by"
     const val SORT_NAME = "name"
     const val SORT_INSTALL = "install"
@@ -39,6 +43,7 @@ object HailData {
     private const val KEY_TAG = "tag"
     private const val KEY_AID = "aid"
     private const val KEY_PINNED = "pinned"
+    private const val KEY_WHITELISTED = "whitelisted"
     const val FILTER_USER_APPS = "filter_user_apps"
     const val FILTER_SYSTEM_APPS = "filter_system_apps"
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
@@ -48,10 +53,11 @@ object HailData {
     private const val COMPACT_ICON = "compact_icon"
     private const val TILE_LOCK = "tile_lock"
     private const val SYNTHESIZE_ADAPTIVE_ICONS = "synthesize_adaptive_icons"
-    private const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
+    const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
+    private const val AUTO_FREEZE_DELAY = "auto_freeze_delay"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
@@ -69,6 +75,7 @@ object HailData {
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
+    val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
@@ -87,10 +94,15 @@ object HailData {
                 val json = JSONArray(HFiles.read(appsPath))
                 for (i in 0 until json.length()) {
                     add(with(json.getJSONObject(i)) {
-                        AppInfo(getString(KEY_PACKAGE), optBoolean(KEY_PINNED), optInt(KEY_TAG))
+                        AppInfo(
+                            getString(KEY_PACKAGE),
+                            optBoolean(KEY_PINNED),
+                            optInt(KEY_TAG),
+                            optBoolean(KEY_WHITELISTED)
+                        )
                     })
                 }
-            } catch (t: Throwable) {
+            } catch (_: Throwable) {
             }
         }
     }
@@ -106,7 +118,7 @@ object HailData {
     fun isChecked(packageName: String): Boolean = getCheckedPosition(packageName) != -1
 
     fun addCheckedApp(packageName: String, saveApps: Boolean = true) {
-        checkedList.add(AppInfo(packageName, false, 0))
+        checkedList.add(AppInfo(packageName, false, 0, false))
         if (saveApps) saveApps()
     }
 
@@ -124,6 +136,7 @@ object HailData {
                     JSONObject().put(KEY_PACKAGE, it.packageName)
                         .put(KEY_PINNED, it.pinned)
                         .put(KEY_TAG, it.tagId)
+                        .put(KEY_WHITELISTED, it.whitelisted)
                 )
             }
             toString()

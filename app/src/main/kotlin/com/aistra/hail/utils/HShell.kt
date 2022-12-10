@@ -16,5 +16,8 @@ object HShell {
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean =
         execSU("pm ${if (disabled) "disable" else "enable"} $packageName")
 
+    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
+        execSU("pm ${if (suspended) "suspend" else "unsuspend"} $packageName")
+
     fun uninstallApp(packageName: String) = execSU("pm uninstall $packageName")
 }

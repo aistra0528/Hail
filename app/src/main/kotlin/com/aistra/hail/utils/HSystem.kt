@@ -6,9 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
-import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.getSystemService
+import com.aistra.hail.app.HailData
 
 object HSystem {
     fun isInteractive(context: Context): Boolean {
@@ -27,7 +27,7 @@ object HSystem {
     @Suppress("SameParameterValue")
     private fun checkOp(context: Context, op: String): Boolean {
         val opsManager = context.getSystemService<AppOpsManager>()!!
-        val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val result = if (HTarget.Q) {
             opsManager.unsafeCheckOp(op, android.os.Process.myUid(), context.packageName)
         } else {
             @Suppress("DEPRECATION")
@@ -44,9 +44,12 @@ object HSystem {
         val now = System.currentTimeMillis()
         val stats = usageStatsManager.queryUsageStats(
             UsageStatsManager.INTERVAL_BEST,
-            now - 1000 * 30, now
-        ).sortedBy { it.lastTimeUsed }
-        val foregroundPackageName = stats.last()?.packageName
+            now - 1000 * 60 * (HailData.autoFreezeDelay + 1), now  // to ensure that we can get the last app used
+        )?.sortedBy { it.lastTimeUsed }
+        val foregroundPackageName = stats?.let {
+            if (it.isEmpty()) return@let null
+            it.last()?.packageName
+        }
         return foregroundPackageName == packageName
     }
 }

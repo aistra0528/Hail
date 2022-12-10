@@ -69,6 +69,7 @@
     <string name="donate_bilibili_msg">Follow me on bilibili.</string>
     <string name="donate_bilibili_space">My space</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
+    <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">Thank you!</string>
     <string name="msg_redeem_invalid">Invalid code</string>
@@ -115,4 +116,12 @@
     <string name="action_export_current">Export current</string>
     <string name="action_export_all">Export all</string>
     <string name="skip_notifying_app">Skip notifying app</string>
+    <string name="auto_freeze_delay">Freeze delay (minutes)</string>
+    <string name="action_whitelist">Add to Whitelist</string>
+    <string name="action_remove_whitelist">Remove from Whitelist</string>
+    <string name="mode_do_suspend">Device Owner - Suspend</string>
+    <string name="mode_su_suspend">Superuser - Suspend</string>
+    <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
+    <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>
+    <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
 </resources>

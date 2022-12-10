@@ -60,7 +60,7 @@ class HomeFragment : MainFragment(),
                     super.onScrollStateChanged(recyclerView, newState)
                     when (newState) {
                         RecyclerView.SCROLL_STATE_IDLE -> postDelayed(
-                            { activity.fab.show() }, 1000
+                            { activity.fab.run { if (isEnabled) show() } }, 1000
                         )
                         RecyclerView.SCROLL_STATE_DRAGGING -> activity.fab.hide()
                     }
@@ -89,8 +89,17 @@ class HomeFragment : MainFragment(),
 
     override fun onStart() {
         super.onStart()
-        if (activity.fab.hasOnClickListeners()) updateCurrentList()
-        activity.fab.setOnClickListener { setListFrozen(true, HomeAdapter.currentList) }
+        if (activity.fab.hasOnClickListeners()) {
+            updateCurrentList()
+        } else activity.fab.run {
+            setOnClickListener {
+                setListFrozen(true, HomeAdapter.currentList.filterNot { it.whitelisted })
+            }
+            setOnLongClickListener {
+                setListFrozen(true)
+                true
+            }
+        }
     }
 
     private fun updateCurrentList() = HailData.checkedList.filter {
@@ -115,7 +124,7 @@ class HomeFragment : MainFragment(),
 
     private fun updateBarTitle() {
         activity.supportActionBar?.title = HomeAdapter.selectedList.size.let {
-            if (it == 0) getString(R.string.app_name)
+            if (!multiselect) getString(R.string.app_name)
             else getString(R.string.msg_selected, it.toString())
         }
     }
@@ -152,6 +161,9 @@ class HomeFragment : MainFragment(),
                         && (it != getString(R.string.action_unfreeze) || frozen)
                         && (it != getString(R.string.action_pin) || !info.pinned)
                         && (it != getString(R.string.action_unpin) || info.pinned)
+                        && (it != getString(R.string.action_whitelist) || !info.whitelisted)
+                        && (it != getString(R.string.action_remove_whitelist) || info.whitelisted)
+                        && (it != getString(R.string.action_unfreeze_remove_home) || frozen)
             }.toTypedArray()
         ) { _, which ->
             when (which) {
@@ -185,6 +197,12 @@ class HomeFragment : MainFragment(),
                     updateCurrentList()
                 }
                 4 -> {
+                    info.whitelisted = !info.whitelisted
+                    HailData.saveApps()
+                    info.selected = !info.selected //just make contents not same
+                    updateCurrentList()
+                }
+                5 -> {
                     var checked = -1
                     for (i in HailData.tags.indices) {
                         if (info.tagId == HailData.tags[i].second) {
@@ -210,16 +228,20 @@ class HomeFragment : MainFragment(),
                         .setNegativeButton(android.R.string.cancel, null)
                         .create().show()
                 }
-                5 -> HShortcuts.addPinShortcut(
+                6 -> HShortcuts.addPinShortcut(
                     info, pkg, info.name,
                     HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
-                6 -> exportToClipboard(listOf(info))
-                7 -> removeCheckedApp(pkg)
-                8 -> {
+                7 -> exportToClipboard(listOf(info))
+                8 -> removeCheckedApp(pkg)
+                9 -> {
+                    setListFrozen(false, listOf(info), false)
+                    if (!AppManager.isAppFrozen(pkg)) removeCheckedApp(pkg)
+                }
+                10 -> {
                     HUI.copyText(pkg)
                     HUI.showToast(R.string.msg_text_copied, pkg)
-                }
+                 }
             }
         }.create().show()
         return true
@@ -241,6 +263,8 @@ class HomeFragment : MainFragment(),
                             && it != getString(R.string.action_pin)
                             && it != getString(R.string.action_unpin)
                             && it != getString(R.string.action_add_pin_shortcut)
+                            && it != getString(R.string.action_whitelist)
+                            && it != getString(R.string.action_remove_whitelist)
                 }.toTypedArray()) { _, which ->
                     when (which) {
                         0 -> {
@@ -281,6 +305,15 @@ class HomeFragment : MainFragment(),
                         }
                         4 -> {
                             selectedList.forEach { removeCheckedApp(it.packageName, false) }
+                            HailData.saveApps()
+                            deselect()
+                        }
+                        5 -> {
+                            setListFrozen(false, selectedList, false)
+                            selectedList.forEach {
+                                if (!AppManager.isAppFrozen(it.packageName))
+                                    removeCheckedApp(it.packageName, false)
+                            }
                             HailData.saveApps()
                             deselect()
                         }
@@ -409,7 +442,7 @@ class HomeFragment : MainFragment(),
             updateCurrentList()
         }
         HUI.showToast(getString(R.string.msg_imported, i.toString()))
-    } catch (t: Throwable) {
+    } catch (_: Throwable) {
     }
 
     private fun importFrozenApp() =
@@ -442,9 +475,15 @@ class HomeFragment : MainFragment(),
                         if (multiselect) R.attr.colorPrimary else R.attr.colorOnSurface
                     )
                 )
-                if (multiselect) HUI.showToast(R.string.tap_to_select)
+                if (multiselect) {
+                    updateBarTitle()
+                    HUI.showToast(R.string.tap_to_select)
+                } else {
+                    deselect()
+                }
             }
-            R.id.action_freeze_current -> setListFrozen(true, HomeAdapter.currentList)
+            R.id.action_freeze_current -> setListFrozen(true,
+                HomeAdapter.currentList.filterNot { it.whitelisted })
             R.id.action_unfreeze_current -> setListFrozen(false, HomeAdapter.currentList)
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)

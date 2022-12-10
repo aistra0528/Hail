@@ -69,6 +69,7 @@
     <string name="donate_bilibili_msg">嗶哩嗶哩年度大會員每月可至我的大會員-卡券包內領取 5B 幣券，在承包、充電、看漫畫、兌換金瓜子等消費時抵扣 B 幣，領取後當月有效。\n若您的 B 幣券月末沒有好去處，可為我充電，我願收留它們。\n* 因 B 站會收取 30% 的渠道服務費，並不推薦您充值充電。\n不是年度大會員？點個關注也可以。</string>
     <string name="donate_bilibili_space">我的空間</string>
     <string name="donate_bilibili_cancel">下次一定</string>
+    <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">謝謝你。</string>
     <string name="msg_redeem_invalid">無效的兌換碼</string>
@@ -106,11 +107,19 @@
     <string name="msg_biometric">使用您的生物識別憑證登入</string>
     <string name="action_pin">置頂</string>
     <string name="action_unpin">取消置頂</string>
+    <string name="action_whitelist">添加到白名單</string>
+    <string name="action_remove_whitelist">從白名單中移除</string>
     <string name="nothing_here">什麼都沒有哦</string>
     <string name="action_import_frozen">匯入已凍結應用程式</string>
     <string name="action_import_app">匯入應用程式</string>
     <string name="synthesize_adaptive_icons">合成自適應圖示</string>
     <string name="action_export_current">匯出目前</string>
     <string name="action_export_all">全部匯出</string>
-    <string name="skip_notifying_app">跳过通知中应用</string>
+    <string name="skip_notifying_app">跳過通知中應用程式</string>
+    <string name="auto_freeze_delay">凍結延時（分鐘）</string>
+    <string name="mode_do_suspend">裝置所有者 - 暫停</string>
+    <string name="mode_su_suspend">超級使用者 - 暫停</string>
+    <string name="mode_shizuku_suspend">Shizuku - 暫停</string>
+    <string name="action_unfreeze_remove_home">解凍並從首頁中移除</string>
+    <string name="action_freeze_non_whitelisted">凍結非白名單</string>
 </resources>

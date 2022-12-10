@@ -15,11 +15,14 @@
         <item>@string/action_deferred_task</item>
         <item>@string/action_pin</item>
         <item>@string/action_unpin</item>
+        <item>@string/action_whitelist</item>
+        <item>@string/action_remove_whitelist</item>
         <item>@string/action_tag_set</item>
         <item>@string/action_add_pin_shortcut</item>
         <item>@string/action_export_clipboard</item>
         <item>@string/action_remove_home</item>
         <item>@string/action_copy_packagename</item>
+        <item>@string/action_unfreeze_remove_home</item>
     </string-array>
     <string-array name="create_shortcut_entries">
         <item>@string/action_freeze_all</item>
@@ -35,19 +38,26 @@
     <string-array name="working_mode_entries">
         <item>@string/mode_default</item>
         <item>@string/mode_do_hide</item>
+        <item>@string/mode_do_suspend</item>
         <item>@string/mode_su_disable</item>
+        <item>@string/mode_su_suspend</item>
         <item>@string/mode_shizuku_disable</item>
+        <item>@string/mode_shizuku_suspend</item>
     </string-array>
     <string-array name="working_mode_values">
         <item>default</item>
         <item>do_hide</item>
+        <item>do_suspend</item>
         <item>su_disable</item>
+        <item>su_suspend</item>
         <item>shizuku_disable</item>
+        <item>shizuku_suspend</item>
     </string-array>
     <string-array name="donate_payment_entries">
         <item>@string/donate_alipay</item>
         <item>@string/donate_wechat</item>
         <item>@string/donate_bilibili</item>
+        <item>@string/donate_liberapay</item>
         <item>@string/donate_paypal</item>
     </string-array>
 </resources>

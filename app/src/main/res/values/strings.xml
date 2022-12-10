@@ -20,6 +20,7 @@
     <string name="action_unfreeze_all">Unfreeze all</string>
     <string name="action_freeze_current">Freeze current</string>
     <string name="action_unfreeze_current">Unfreeze current</string>
+    <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
     <string name="action_lock">Lock</string>
     <string name="action_lock_freeze">Lock &amp; Freeze</string>
     <string name="action_launch">Launch</string>
@@ -34,6 +35,7 @@
     <string name="action_import_clipboard">Import from Clipboard</string>
     <string name="action_remove_home">Remove from Home</string>
     <string name="action_copy_packagename">Copy Package Name</string>
+    <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>
     <string name="action_deselect">Deselect</string>
     <string name="action_undo">Undo</string>
     <string name="action_help">Help</string>
@@ -45,8 +47,11 @@
     <string name="working_mode">Working mode</string>
     <string name="mode_default">Idle</string>
     <string name="mode_do_hide">Device Owner - Hide</string>
+    <string name="mode_do_suspend">Device Owner - Suspend</string>
     <string name="mode_su_disable">Superuser - Disable</string>
+    <string name="mode_su_suspend">Superuser - Suspend</string>
     <string name="mode_shizuku_disable">Shizuku - Disable</string>
+    <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
     <string name="title_set_do">Set Device Owner</string>
     <string name="msg_set_do">Issue the command from adb:\n%s</string>
     <string name="title_remove_do">Remove Device Owner</string>
@@ -69,6 +74,7 @@
     <string name="donate_bilibili_msg">Follow me on bilibili.</string>
     <string name="donate_bilibili_space">My space</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
+    <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">Thank you!</string>
     <string name="msg_redeem_invalid">Invalid code</string>
@@ -108,6 +114,8 @@
     <string name="msg_biometric">Log in using your biometric credential</string>
     <string name="action_pin">Pin</string>
     <string name="action_unpin">Unpin</string>
+    <string name="action_whitelist">Add to Whitelist</string>
+    <string name="action_remove_whitelist">Remove from Whitelist</string>
     <string name="nothing_here">Nothing here</string>
     <string name="action_import_frozen">Import frozen app</string>
     <string name="action_import_app">Import app</string>
@@ -115,4 +123,5 @@
     <string name="action_export_current">Export current</string>
     <string name="action_export_all">Export all</string>
     <string name="skip_notifying_app">Skip notifying app</string>
+    <string name="auto_freeze_delay">Freeze delay (minutes)</string>
 </resources>

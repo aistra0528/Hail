@@ -43,20 +43,32 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             } else true
         }
         findPreference<Preference>(HailData.SKIP_NOTIFYING_APP)?.setOnPreferenceChangeListener { _, value ->
-            val notificationManager = requireContext().getSystemService<NotificationManager>()!!
-            if (value == true && !notificationManager.isNotificationListenerAccessGranted(
-                    ComponentName(requireContext(), AutoFreezeService::class.java.name)
-                )
-            ) {
+            val name = ComponentName(requireContext(), AutoFreezeService::class.java.name)
+            val isGranted = if (HTarget.O_MR1) {
+                requireContext().getSystemService<NotificationManager>()!!
+                    .isNotificationListenerAccessGranted(name)
+            } else {
+                Settings.Secure.getString(
+                    requireContext().contentResolver,
+                    "enabled_notification_listeners"
+                ).split(':').map { ComponentName.unflattenFromString(it) }.contains(name)
+            }
+            if (value == true && !isGranted) {
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 false
             } else true
+        }
+        findPreference<Preference>(HailData.AUTO_FREEZE_AFTER_LOCK)?.setOnPreferenceChangeListener { _, autoFreezeAfterLock ->
+            if ((autoFreezeAfterLock as Boolean).not()) {
+                requireContext().stopService(Intent(requireContext(), AutoFreezeService::class.java))
+            }
+            true
         }
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
         when (newValue) {
-            HailData.MODE_DO_HIDE -> if (!HPolicy.isDeviceOwnerActive) {
+            HailData.MODE_DO_HIDE, HailData.MODE_DO_SUSPEND -> if (!HPolicy.isDeviceOwnerActive) {
                 MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_do)
                     .setMessage(getString(R.string.msg_set_do, HPolicy.ADB_SET_DO))
                     .setPositiveButton(android.R.string.ok, null)
@@ -64,11 +76,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     .create().show()
                 return false
             }
-            HailData.MODE_SU_DISABLE -> if (!HShell.checkSU) {
+            HailData.MODE_SU_DISABLE, HailData.MODE_SU_SUSPEND -> if (!HShell.checkSU) {
                 HUI.showToast(R.string.permission_denied)
                 return false
             }
-            HailData.MODE_SHIZUKU_DISABLE -> return try {
+            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_SUSPEND -> return try {
                 when {
                     Shizuku.isPreV11() -> throw IllegalStateException("unsupported shizuku version")
                     Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED -> true

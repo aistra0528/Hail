@@ -7,10 +7,14 @@ import android.system.Os
 import android.view.InputEvent
 import android.view.KeyEvent
 import com.aistra.hail.BuildConfig
+import org.lsposed.hiddenapibypass.HiddenApiBypass
+import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
 
 object HShizuku {
+    private val isRoot get() = Shizuku.getUid() == 0
+
     private fun asInterface(className: String, serviceName: String): Any? =
         Class.forName("$className\$Stub")
             .getMethod("asInterface", IBinder::class.java)
@@ -53,14 +57,42 @@ object HShizuku {
                 Int::class.java,
                 String::class.java
             ).invoke(
-                proxy, packageName,
-                if (disabled) PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER
-                else PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                0, Os.getuid() / 100000, BuildConfig.APPLICATION_ID
+                proxy,
+                packageName,
+                if (!disabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                else if (isRoot) PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                else PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER,
+                0,
+                Os.getuid() / 100000,
+                BuildConfig.APPLICATION_ID
             )
         } catch (t: Throwable) {
             HLog.e(t)
         }
         return HPackages.isAppDisabled(packageName) == disabled
     }
+
+    fun setAppSuspendedAsUser(packageName: String, suspended: Boolean): Boolean {
+        HPackages.getPackageInfoOrNull(packageName) ?: return false
+        return try {
+            val proxy = asInterface("android.content.pm.IPackageManager", "package")!!
+            (HiddenApiBypass.invoke(
+                proxy::class.java,
+                proxy,
+                "setPackagesSuspendedAsUser",
+                arrayOf(packageName),
+                suspended,
+                null,
+                null,
+                null,
+                if (isRoot) BuildConfig.APPLICATION_ID else "com.android.shell",
+                Os.getuid() / 100000
+            ) as Array<*>).isEmpty()
+        } catch (t: Throwable) {
+            HLog.e(t)
+            false
+        }
+    }
+
+    fun uninstallApp(packageName: String): Boolean = false // Not yet implemented
 }

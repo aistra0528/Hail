@@ -1,6 +1,5 @@
 package com.aistra.hail.utils
 
-import android.os.Build
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -11,21 +10,20 @@ import kotlin.io.path.exists
 
 object HFiles {
     const val DIR_OUTPUT = "/storage/emulated/0/Download"
-    private val nio = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
     fun exists(path: String): Boolean = when {
-        nio -> Files.exists(Paths.get(path))
+        HTarget.O -> Files.exists(Paths.get(path))
         else -> File(path).exists()
     }
 
     fun createDirectories(dir: String): Boolean = when {
-        nio -> Files.createDirectories(Paths.get(dir)).exists()
+        HTarget.O -> Files.createDirectories(Paths.get(dir)).exists()
         else -> File(dir).mkdirs()
     }
 
     fun copy(source: String, target: String): Boolean = try {
         when {
-            nio -> Files.copy(
+            HTarget.O -> Files.copy(
                 Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING
             )
             else -> FileInputStream(source).channel.use {

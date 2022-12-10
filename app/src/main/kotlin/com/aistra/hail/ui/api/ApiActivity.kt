@@ -23,6 +23,7 @@ class ApiActivity : HailActivity() {
                 HailApi.ACTION_UNFREEZE -> setAppFrozen(targetPackage, false)
                 HailApi.ACTION_FREEZE_ALL -> setAllFrozen(true)
                 HailApi.ACTION_UNFREEZE_ALL -> setAllFrozen(false)
+                HailApi.ACTION_FREEZE_NON_WHITELISTED -> setAllFrozen(true, skipWhitelisted = true)
                 HailApi.ACTION_LOCK -> lockScreen(false)
                 HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
                 else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
@@ -68,13 +69,13 @@ class ApiActivity : HailActivity() {
         }
     }
 
-    private fun setAllFrozen(frozen: Boolean) {
+    private fun setAllFrozen(frozen: Boolean, skipWhitelisted: Boolean = false) {
         var i = 0
         var denied = false
         var name = String()
         HailData.checkedList.forEach {
             when {
-                AppManager.isAppFrozen(it.packageName) == frozen -> return@forEach
+                AppManager.isAppFrozen(it.packageName) == frozen || (skipWhitelisted && it.whitelisted) -> return@forEach
                 AppManager.setAppFrozen(it.packageName, frozen) -> {
                     i++
                     name = it.name.toString()

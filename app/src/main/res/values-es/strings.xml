@@ -69,6 +69,7 @@
     <string name="donate_bilibili_msg">Sigueme en bilibili.</string>
     <string name="donate_bilibili_space">My space</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
+    <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">¡Gracias!</string>
     <string name="msg_redeem_invalid">Código inválido</string>
@@ -115,4 +116,12 @@
     <string name="action_export_current">Exportación actual</string>
     <string name="action_export_all">Exportar todo</string>
     <string name="skip_notifying_app">Omitir la notificación de la aplicación</string>
+    <string name="auto_freeze_delay">Retraso de congelamiento (minutos)</string>
+    <string name="action_remove_whitelist">Eliminar de la lista blanca</string>
+    <string name="action_whitelist">Añadir a la lista blanca</string>
+    <string name="mode_do_suspend">Administrador de dispositivo - Suspender</string>
+    <string name="mode_su_suspend">Superusuario - Suspender</string>
+    <string name="mode_shizuku_suspend">Shizuku - Suspender</string>
+    <string name="action_unfreeze_remove_home">Descongelar y eliminar del inicio</string>
+    <string name="action_freeze_non_whitelisted">Congelar no presentes en la lista blanca</string>
 </resources>
