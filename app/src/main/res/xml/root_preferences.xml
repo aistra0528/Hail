@@ -81,4 +81,15 @@
             app:singleLineTitle="false"
             app:title="@string/skip_notifying_app" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/shortcuts">
+        <Preference
+            app:key="add_shortcut"
+            app:title="@string/title_add_shortcut_to_home_screen"
+            />
+        <Preference
+            app:key="remove_shortcuts"
+            app:title="@string/title_remove_shortcuts_from_home_screen"
+            />
+    </PreferenceCategory>
 </PreferenceScreen>

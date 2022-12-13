@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
 import android.view.*
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.getSystemService
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -15,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aistra.hail.R
+import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.services.AutoFreezeService
 import com.aistra.hail.utils.*
@@ -64,6 +66,66 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             }
             true
         }
+        findPreference<Preference>("add_shortcut")?.setOnPreferenceClickListener {
+            addShortcutsToHomeScreen()
+            true
+        }
+        findPreference<Preference>("remove_shortcuts")?.setOnPreferenceClickListener {
+            removeShortcutsFromHomeScreen()
+            true
+        }
+    }
+
+    private fun addShortcutsToHomeScreen() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.title_add_shortcut_to_home_screen)
+            .setItems(R.array.shortcut_entries) { _, which ->
+                when (which) {
+                    0 -> HShortcuts.addPinShortcut(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_round_frozen_shortcut
+                        )!!,
+                        HailApi.ACTION_FREEZE_ALL,
+                        getString(R.string.action_freeze_all),
+                        Intent(HailApi.ACTION_FREEZE_ALL)
+                    )
+                    1 -> HShortcuts.addPinShortcut(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_round_frozen_shortcut
+                        )!!,
+                        HailApi.ACTION_UNFREEZE_ALL,
+                        getString(R.string.action_unfreeze_all),
+                        Intent(HailApi.ACTION_UNFREEZE_ALL)
+                    )
+                    2 -> HShortcuts.addPinShortcut(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_outline_lock_shortcut
+                        )!!,
+                        HailApi.ACTION_LOCK,
+                        getString(R.string.action_lock),
+                        Intent(HailApi.ACTION_LOCK)
+                    )
+                    3 -> HShortcuts.addPinShortcut(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_outline_lock_shortcut
+                        )!!,
+                        HailApi.ACTION_LOCK_FREEZE,
+                        getString(R.string.action_lock_freeze),
+                        Intent(HailApi.ACTION_LOCK_FREEZE)
+                    )
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .create()
+            .show()
+    }
+
+    private fun removeShortcutsFromHomeScreen() {
+        HShortcuts.removeAllDynamicShortcuts()
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
