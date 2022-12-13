@@ -92,7 +92,7 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分鐘後%2$s：%3$s</item>
     </plurals>
-    <string name="action_clear_dynamic_shortcut">清除主螢幕動態</string>
+    <string name="action_clear_dynamic_shortcuts">清除主螢幕動態</string>
     <string name="tile_lock">圖塊操作</string>
     <string name="auto_freeze">自動凍結</string>
     <string name="auto_freeze_notification_title">自動凍結服務正在執行</string>
@@ -121,4 +121,5 @@
     <string name="mode_shizuku_suspend">Shizuku - 暫停</string>
     <string name="action_unfreeze_remove_home">解凍並從首頁中移除</string>
     <string name="action_freeze_non_whitelisted">凍結非白名單</string>
+    <string name="title_shortcuts">Shortcuts</string>
 </resources>

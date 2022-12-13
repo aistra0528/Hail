@@ -93,7 +93,7 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分あと%2$s：%3$s</item>
     </plurals>
-    <string name="action_clear_dynamic_shortcut">全ての動的ショートカットを削除</string>
+    <string name="action_clear_dynamic_shortcuts">全ての動的ショートカットを削除</string>
     <string name="tile_lock">タイルアクション</string>
     <string name="auto_freeze">自動凍結</string>
     <string name="auto_freeze_notification_title">自動凍結を待機中</string>
@@ -122,4 +122,5 @@
     <string name="mode_shizuku_suspend">Shizuku - サスペンド</string>
     <string name="action_unfreeze_remove_home">凍結を解除し、Hailのホームから削除する</string>
     <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
+    <string name="title_shortcuts">Shortcuts</string>
 </resources>

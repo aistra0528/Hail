@@ -94,7 +94,7 @@
         <item quantity="one">%2$s after %1$d minute: %3$s</item>
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
-    <string name="action_clear_dynamic_shortcut">Clear all dynamic shortcut</string>
+    <string name="action_clear_dynamic_shortcuts">Clear all dynamic shortcuts</string>
     <string name="tile_lock">Tile action</string>
     <string name="auto_freeze">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
@@ -123,4 +123,5 @@
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
     <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>
     <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
+    <string name="title_shortcuts">Shortcuts</string>
 </resources>

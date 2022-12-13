@@ -93,7 +93,7 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分钟后%2$s：%3$s</item>
     </plurals>
-    <string name="action_clear_dynamic_shortcut">清除主屏幕动态</string>
+    <string name="action_clear_dynamic_shortcuts">清除主屏幕动态</string>
     <string name="tile_lock">图块操作</string>
     <string name="auto_freeze">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
@@ -121,7 +121,5 @@
     <string name="mode_su_suspend">超级用户 - 暂停</string>
     <string name="mode_shizuku_suspend">Shizuku - 暂停</string>
     <string name="action_freeze_non_whitelisted">冻结非白名单</string>
-    <string name="shortcuts">快捷方式</string>
-    <string name="title_add_shortcut_to_home_screen">添加快捷方式到桌面</string>
-    <string name="title_remove_shortcuts_from_home_screen">从桌面移除快捷方式</string>
+    <string name="title_shortcuts">快捷方式</string>
 </resources>

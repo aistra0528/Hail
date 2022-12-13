@@ -16,7 +16,6 @@
         app:title="@string/action_biometric" />
 
     <PreferenceCategory android:title="@string/title_customize">
-
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:icon="@drawable/ic_baseline_filter_bw"
@@ -42,7 +41,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/auto_freeze">
-
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:icon="@drawable/ic_baseline_screen_lock"
@@ -82,14 +80,13 @@
             app:title="@string/skip_notifying_app" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/shortcuts">
+
+    <PreferenceCategory android:title="@string/title_shortcuts">
         <Preference
-            app:key="add_shortcut"
-            app:title="@string/title_add_shortcut_to_home_screen"
-            />
+            app:key="add_pin_shortcut"
+            app:title="@string/action_add_pin_shortcut" />
         <Preference
-            app:key="remove_shortcuts"
-            app:title="@string/title_remove_shortcuts_from_home_screen"
-            />
+            app:key="clear_dynamic_shortcuts"
+            app:title="@string/action_clear_dynamic_shortcuts" />
     </PreferenceCategory>
 </PreferenceScreen>

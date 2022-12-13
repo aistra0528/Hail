@@ -96,7 +96,7 @@
         <item quantity="few">%2$s через %1$d мин.: %3$s</item>
         <item quantity="many">%2$s через %1$d мин.: %3$s</item>
     </plurals>
-    <string name="action_clear_dynamic_shortcut">Очистить все динамические ярлыки</string>
+    <string name="action_clear_dynamic_shortcuts">Очистить все динамические ярлыки</string>
     <string name="tile_lock">Действие плитки</string>
     <string name="auto_freeze">Автозаморозка</string>
     <string name="auto_freeze_notification_title">Служба автозаморозки работает</string>
@@ -125,4 +125,5 @@
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
     <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>
     <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
+    <string name="title_shortcuts">Shortcuts</string>
 </resources>
