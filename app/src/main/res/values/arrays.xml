@@ -31,6 +31,7 @@
     </string-array>
     <string-array name="apps_action_entries">
         <item>@string/action_details</item>
+        <item>@string/action_export_clipboard</item>
         <item>@string/action_extract_apk</item>
         <item>@string/action_uninstall</item>
     </string-array>

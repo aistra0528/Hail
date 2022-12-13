@@ -52,7 +52,11 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         AppsAdapter.updateCurrentList(refreshLayout)
     }
 
-    override fun onItemClick(info: PackageInfo) {
+    override fun onItemClick(buttonView: CompoundButton) {
+        buttonView.performClick()
+    }
+
+    override fun onItemLongClick(info: PackageInfo): Boolean = true.also {
         val name = info.applicationInfo.loadLabel(app.packageManager)
         val pkg = info.packageName
         val canUninstall = HPackages.canUninstall(pkg)
@@ -62,33 +66,36 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             }.toTypedArray()) { _, which ->
                 when (which) {
                     0 -> HUI.startActivity(
-                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                        HPackages.packageUri(pkg)
+                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS, HPackages.packageUri(pkg)
                     )
                     1 -> {
+                        HUI.copyText(pkg)
+                        HUI.showToast(R.string.msg_text_copied, pkg)
+                    }
+                    2 -> {
                         val target = "${HFiles.DIR_OUTPUT}/$name-${info.versionName}-${
                             PackageInfoCompat.getLongVersionCode(info)
                         }.apk"
                         HUI.showToast(
-                            if (HFiles.copy(info.applicationInfo.sourceDir, target))
-                                R.string.msg_extract_apk
-                            else R.string.operation_failed,
-                            target, true
+                            if (HFiles.copy(
+                                    info.applicationInfo.sourceDir, target
+                                )
+                            ) R.string.msg_extract_apk
+                            else R.string.operation_failed, target, true
                         )
                     }
-                    2 -> when {
+                    3 -> when {
                         pkg == app.packageName -> {
                             when {
-                                HPolicy.isDeviceOwnerActive ->
-                                    MaterialAlertDialogBuilder(activity).setTitle(R.string.title_remove_do)
-                                        .setMessage(R.string.msg_remove_do)
-                                        .setPositiveButton(android.R.string.ok) { _, _ ->
-                                            HPolicy.setOrganizationName()
-                                            HPolicy.clearDeviceOwnerApp()
-                                            AppManager.uninstallApp(pkg)
-                                        }
-                                        .setNegativeButton(android.R.string.cancel, null)
-                                        .create().show()
+                                HPolicy.isDeviceOwnerActive -> MaterialAlertDialogBuilder(activity).setTitle(
+                                    R.string.title_remove_do
+                                ).setMessage(R.string.msg_remove_do)
+                                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                                        HPolicy.setOrganizationName()
+                                        HPolicy.clearDeviceOwnerApp()
+                                        AppManager.uninstallApp(pkg)
+                                    }.setNegativeButton(android.R.string.cancel, null).create()
+                                    .show()
                                 HPolicy.isAdminActive -> {
                                     HPolicy.removeActiveAdmin()
                                     AppManager.uninstallApp(pkg)
@@ -96,23 +103,15 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                                 else -> AppManager.uninstallApp(pkg)
                             }
                         }
-                        HailData.workingMode == HailData.MODE_DEFAULT ->
-                            AppManager.uninstallApp(pkg)
+                        HailData.workingMode == HailData.MODE_DEFAULT -> AppManager.uninstallApp(pkg)
                         else -> MaterialAlertDialogBuilder(activity).setTitle(name)
                             .setMessage(R.string.msg_uninstall)
                             .setPositiveButton(android.R.string.ok) { _, _ ->
                                 AppManager.uninstallApp(pkg)
-                            }
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .create().show()
+                            }.setNegativeButton(android.R.string.cancel, null).create().show()
                     }
                 }
             }.create().show()
-    }
-
-    override fun onItemLongClick(packageName: String): Boolean = true.also {
-        HUI.copyText(packageName)
-        HUI.showToast(R.string.msg_text_copied, packageName)
     }
 
     override fun onItemCheckedChange(

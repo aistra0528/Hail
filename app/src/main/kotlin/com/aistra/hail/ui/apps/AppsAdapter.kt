@@ -86,8 +86,9 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
         val pkg = info.packageName
         val frozen = AppManager.isAppFrozen(pkg)
         holder.itemView.run {
-            setOnClickListener { onItemClickListener.onItemClick(info) }
-            setOnLongClickListener { onItemLongClickListener.onItemLongClick(pkg) }
+            val btn = findViewById<CompoundButton>(R.id.app_star)
+            setOnClickListener { onItemClickListener.onItemClick(btn) }
+            setOnLongClickListener { onItemLongClickListener.onItemLongClick(info) }
             findViewById<ImageView>(R.id.app_icon).run {
                 loadIconJob = AppIconCache.loadIconBitmapAsync(
                     context,
@@ -106,7 +107,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
                 text = pkg
                 isEnabled = !HailData.grayscaleIcon || !frozen
             }
-            findViewById<CompoundButton>(R.id.app_star).run {
+            btn.run {
                 setOnCheckedChangeListener(null)
                 isChecked = HailData.isChecked(pkg)
                 setOnCheckedChangeListener { button, isChecked ->
@@ -123,11 +124,11 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface OnItemClickListener {
-        fun onItemClick(info: PackageInfo)
+        fun onItemClick(buttonView: CompoundButton)
     }
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(packageName: String): Boolean
+        fun onItemLongClick(info: PackageInfo): Boolean
     }
 
     interface OnItemCheckedChangeListener {
