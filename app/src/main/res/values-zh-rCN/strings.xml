@@ -122,4 +122,5 @@
     <string name="mode_shizuku_suspend">Shizuku - 暂停</string>
     <string name="action_freeze_non_whitelisted">冻结非白名单</string>
     <string name="title_shortcuts">快捷方式</string>
+    <string name="msg_guide">在冻结应用前，请先在设置中选择一个工作模式。</string>
 </resources>

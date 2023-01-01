@@ -77,6 +77,11 @@ object HailData {
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
 
+    private const val KEY_GUIDE_VERSION = "guide_version"
+    const val GUIDE_VERSION = 1
+    val guideVersion get() = sp.getInt(KEY_GUIDE_VERSION, 0)
+    fun setGuideVersion() = sp.edit().putInt(KEY_GUIDE_VERSION, GUIDE_VERSION).apply()
+
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
     fun setAid() = sp.edit().putString(KEY_AID, androidId).apply()

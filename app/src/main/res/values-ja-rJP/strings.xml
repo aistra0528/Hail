@@ -123,4 +123,5 @@
     <string name="action_unfreeze_remove_home">凍結を解除し、Hailのホームから削除する</string>
     <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
     <string name="title_shortcuts">Shortcuts</string>
+    <string name="msg_guide">Before freezing applications, please select a working mode in the settings.</string>
 </resources>
