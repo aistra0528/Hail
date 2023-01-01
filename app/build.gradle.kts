@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.konan.properties.Properties
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -14,13 +12,14 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 33
-        versionCode = 19
-        versionName = "0.10.0"
+        versionCode = 20
+        versionName = "1.0.0"
         resourceConfigurations += arrayOf("en", "es", "it", "ja-rJP", "ru", "zh-rCN", "zh-rTW")
     }
     val signing = if (file("../signing.properties").exists()) {
         signingConfigs.create("release") {
-            val props = Properties().apply { load(file("../signing.properties").reader()) }
+            val props =
+                `java.util`.Properties().apply { load(file("../signing.properties").reader()) }
             storeFile = file(props.getProperty("storeFile"))
             storePassword = props.getProperty("storePassword")
             keyAlias = props.getProperty("keyAlias")
