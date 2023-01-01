@@ -123,5 +123,5 @@
     <string name="mode_shizuku_suspend">Shizuku - Suspender</string>
     <string name="action_unfreeze_remove_home">Descongelar y eliminar del inicio</string>
     <string name="action_freeze_non_whitelisted">Congelar no presentes en la lista blanca</string>
-    <string name="title_shortcuts">Shortcuts</string>
+    <string name="title_shortcuts">Accesos directos</string>
 </resources>
