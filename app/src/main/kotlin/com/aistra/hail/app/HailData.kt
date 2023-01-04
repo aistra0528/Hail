@@ -35,6 +35,10 @@ object HailData {
     const val MODE_SU_SUSPEND = "su_suspend"
     const val MODE_SHIZUKU_DISABLE = "shizuku_disable"
     const val MODE_SHIZUKU_SUSPEND = "shizuku_suspend"
+    private const val TILE_ACTION = "tile_action"
+    private const val ACTION_FREEZE_ALL = "freeze_all"
+    const val ACTION_FREEZE_NON_WHITELISTED = "freeze_non_whitelisted"
+    const val ACTION_LOCK_FREEZE = "lock_freeze"
     private const val SORT_BY = "sort_by"
     const val SORT_NAME = "name"
     const val SORT_INSTALL = "install"
@@ -51,7 +55,6 @@ object HailData {
     private const val BIOMETRIC_LOGIN = "biometric_login"
     private const val GRAYSCALE_ICON = "grayscale_icon"
     private const val COMPACT_ICON = "compact_icon"
-    private const val TILE_LOCK = "tile_lock"
     private const val SYNTHESIZE_ADAPTIVE_ICONS = "synthesize_adaptive_icons"
     const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
@@ -69,7 +72,7 @@ object HailData {
     val biometricLogin get() = sp.getBoolean(BIOMETRIC_LOGIN, false)
     val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)
     val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
-    val tileLock get() = sp.getBoolean(TILE_LOCK, false)
+    val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)

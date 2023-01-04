@@ -103,6 +103,14 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     )
                     2 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
+                            requireContext(), R.drawable.ic_round_frozen_shortcut
+                        )!!,
+                        HailApi.ACTION_FREEZE_NON_WHITELISTED,
+                        getString(R.string.action_freeze_non_whitelisted),
+                        Intent(HailApi.ACTION_FREEZE_NON_WHITELISTED)
+                    )
+                    3 -> HShortcuts.addPinShortcut(
+                        AppCompatResources.getDrawable(
                             requireContext(),
                             R.drawable.ic_outline_lock_shortcut
                         )!!,
@@ -110,7 +118,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         getString(R.string.action_lock),
                         Intent(HailApi.ACTION_LOCK)
                     )
-                    3 -> HShortcuts.addPinShortcut(
+                    4 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_outline_lock_shortcut
                         )!!,

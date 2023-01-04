@@ -174,6 +174,8 @@ class MainActivity : AppCompatActivity() {
 
 - `com.aistra.hail.action.UNFREEZE_ALL`：解冻首页全部应用。无需`extra`。
 
+- `com.aistra.hail.action.FREEZE_NON_WHITELISTED`：冻结首页全部非白名单应用。无需`extra`。
+
 - `com.aistra.hail.action.LOCK`：锁定屏幕。无需`extra`。
 
 - `com.aistra.hail.action.LOCK_FREEZE`：冻结首页全部应用并锁定屏幕。无需`extra`。

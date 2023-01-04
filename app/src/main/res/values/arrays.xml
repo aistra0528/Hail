@@ -23,11 +23,15 @@
         <item>@string/action_remove_home</item>
         <item>@string/action_unfreeze_remove_home</item>
     </string-array>
-    <string-array name="create_shortcut_entries">
+    <string-array name="tile_action_entries">
         <item>@string/action_freeze_all</item>
-        <item>@string/action_unfreeze_all</item>
-        <item>@string/action_lock</item>
+        <item>@string/action_freeze_non_whitelisted</item>
         <item>@string/action_lock_freeze</item>
+    </string-array>
+    <string-array name="tile_action_values">
+        <item>freeze_all</item>
+        <item>freeze_non_whitelisted</item>
+        <item>lock_freeze</item>
     </string-array>
     <string-array name="apps_action_entries">
         <item>@string/action_details</item>
@@ -63,6 +67,7 @@
     <string-array name="pin_shortcut_entries">
         <item>@string/action_freeze_all</item>
         <item>@string/action_unfreeze_all</item>
+        <item>@string/action_freeze_non_whitelisted</item>
         <item>@string/action_lock</item>
         <item>@string/action_lock_freeze</item>
     </string-array>

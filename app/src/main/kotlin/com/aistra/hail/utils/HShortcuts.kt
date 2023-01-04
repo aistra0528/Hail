@@ -95,7 +95,7 @@ object HShortcuts {
     private fun getDrawableIcon(drawable: Drawable): IconCompat =
         IconCompat.createWithBitmap(getBitmapFromDrawable(drawable))
 
-    fun getBitmapFromDrawable(drawable: Drawable): Bitmap =
+    private fun getBitmapFromDrawable(drawable: Drawable): Bitmap =
         Bitmap.createBitmap(
             drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
         ).also {

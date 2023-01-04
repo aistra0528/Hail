@@ -46,7 +46,7 @@ class ApiActivity : HailActivity() {
 
     private fun launchApp(target: String) {
         if (AppManager.isAppFrozen(target)) {
-            if (AppManager.setAppFrozen(target, false)) setAutoFreezeService(true)
+            if (AppManager.setAppFrozen(target, false)) setAutoFreezeService()
             else throw IllegalStateException(getString(R.string.permission_denied))
         }
         packageManager.getLaunchIntentForPackage(target)?.let {

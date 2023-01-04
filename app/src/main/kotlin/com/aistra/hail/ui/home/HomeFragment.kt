@@ -196,7 +196,7 @@ class HomeFragment : MainFragment(),
                 4 -> {
                     info.whitelisted = !info.whitelisted
                     HailData.saveApps()
-                    info.selected = !info.selected //just make contents not same
+                    info.selected = !info.selected // Just make contents not same
                     updateCurrentList()
                 }
                 5 -> {
@@ -480,6 +480,8 @@ class HomeFragment : MainFragment(),
             R.id.action_unfreeze_current -> setListFrozen(false, HomeAdapter.currentList)
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)
+            R.id.action_freeze_non_whitelisted -> setListFrozen(true,
+                HailData.checkedList.filterNot { it.whitelisted })
             R.id.action_import_clipboard -> importFromClipboard()
             R.id.action_import_frozen -> importFrozenApp()
             R.id.action_export_current -> exportToClipboard(HomeAdapter.currentList)

@@ -31,6 +31,10 @@
         android:title="@string/action_unfreeze_all"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_freeze_non_whitelisted"
+        android:title="@string/action_freeze_non_whitelisted"
+        app:showAsAction="never" />
+    <item
         android:title="@string/action_import_app"
         app:showAsAction="never">
         <menu>

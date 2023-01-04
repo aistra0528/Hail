@@ -29,7 +29,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
     ): View {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
         binding.descVersion.text = HailData.VERSION
-        aboutViewModel = ViewModelProvider(this).get(AboutViewModel::class.java)
+        aboutViewModel = ViewModelProvider(this)[AboutViewModel::class.java]
         aboutViewModel.time.observe(viewLifecycleOwner) {
             binding.descTime.text = it
         }

@@ -93,7 +93,7 @@
         <item quantity="other">%1$d 分鐘後%2$s：%3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">清除主螢幕動態</string>
-    <string name="tile_lock">圖塊操作</string>
+    <string name="tile_action">圖塊操作</string>
     <string name="auto_freeze">自動凍結</string>
     <string name="auto_freeze_notification_title">自動凍結服務正在執行</string>
     <string name="auto_freeze_after_lock">螢幕鎖定後</string>

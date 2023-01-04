@@ -97,7 +97,7 @@
         <item quantity="many">%2$s через %1$d мин.: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Очистить все динамические ярлыки</string>
-    <string name="tile_lock">Действие плитки</string>
+    <string name="tile_action">Действие плитки</string>
     <string name="auto_freeze">Автозаморозка</string>
     <string name="auto_freeze_notification_title">Служба автозаморозки работает</string>
     <string name="auto_freeze_after_lock">После блокировки экрана</string>

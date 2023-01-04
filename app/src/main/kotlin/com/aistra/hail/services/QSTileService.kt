@@ -20,8 +20,13 @@ class QSTileService : TileService() {
     override fun onClick() {
         super.onClick()
         startActivity(
-            Intent(if (HailData.tileLock) HailApi.ACTION_LOCK_FREEZE else HailApi.ACTION_FREEZE_ALL)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent(
+                when (HailData.tileAction) {
+                    HailData.ACTION_FREEZE_NON_WHITELISTED -> HailApi.ACTION_FREEZE_NON_WHITELISTED
+                    HailData.ACTION_LOCK_FREEZE -> HailApi.ACTION_LOCK_FREEZE
+                    else -> HailApi.ACTION_FREEZE_ALL
+                }
+            ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
 
@@ -32,10 +37,17 @@ class QSTileService : TileService() {
 
     private fun updateTile() {
         qsTile.icon = Icon.createWithResource(
-            this, if (HailData.tileLock) R.drawable.ic_outline_lock else R.drawable.ic_round_frozen
+            this, when (HailData.tileAction) {
+                HailData.ACTION_LOCK_FREEZE -> R.drawable.ic_outline_lock
+                else -> R.drawable.ic_round_frozen
+            }
         )
         qsTile.label = getString(
-            if (HailData.tileLock) R.string.action_lock_freeze else R.string.action_freeze_all
+            when (HailData.tileAction) {
+                HailData.ACTION_FREEZE_NON_WHITELISTED -> R.string.action_freeze_non_whitelisted
+                HailData.ACTION_LOCK_FREEZE -> R.string.action_lock_freeze
+                else -> R.string.action_freeze_all
+            }
         )
         qsTile.updateTile()
     }

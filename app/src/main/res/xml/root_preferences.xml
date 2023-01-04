@@ -31,13 +31,14 @@
             app:icon="@drawable/ic_outline_layers"
             app:key="synthesize_adaptive_icons"
             app:title="@string/synthesize_adaptive_icons" />
-        <SwitchPreferenceCompat
-            android:summaryOff="@string/action_freeze_all"
-            android:summaryOn="@string/action_lock_freeze"
-            app:defaultValue="false"
-            app:icon="@drawable/ic_outline_lock"
-            app:key="tile_lock"
-            app:title="@string/tile_lock" />
+        <ListPreference
+            app:defaultValue="freeze_all"
+            app:entries="@array/tile_action_entries"
+            app:entryValues="@array/tile_action_values"
+            app:icon="@drawable/ic_baseline_crop_square"
+            app:key="tile_action"
+            app:title="@string/tile_action"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/auto_freeze">
@@ -83,9 +84,11 @@
 
     <PreferenceCategory android:title="@string/title_shortcuts">
         <Preference
+            app:icon="@drawable/ic_outline_shortcut"
             app:key="add_pin_shortcut"
             app:title="@string/action_add_pin_shortcut" />
         <Preference
+            app:icon="@drawable/ic_outline_cleaning"
             app:key="clear_dynamic_shortcuts"
             app:title="@string/action_clear_dynamic_shortcuts" />
     </PreferenceCategory>

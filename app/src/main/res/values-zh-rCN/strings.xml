@@ -94,7 +94,7 @@
         <item quantity="other">%1$d 分钟后%2$s：%3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">清除主屏幕动态</string>
-    <string name="tile_lock">图块操作</string>
+    <string name="tile_action">图块操作</string>
     <string name="auto_freeze">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
     <string name="auto_freeze_after_lock">锁屏后</string>

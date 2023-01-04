@@ -95,7 +95,7 @@
         <item quantity="other">%2$s después de %1$d minutos: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Borrar todos los accesos directos dinámicos</string>
-    <string name="tile_lock">Acción del Tile</string>
+    <string name="tile_action">Acción del Tile</string>
     <string name="auto_freeze">Congelación automática</string>
     <string name="auto_freeze_notification_title">El servicio de congelación automática está funcionando</string>
     <string name="auto_freeze_after_lock">Después de bloquear la pantalla</string>

@@ -100,7 +100,7 @@
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Clear all dynamic shortcuts</string>
-    <string name="tile_lock">Tile action</string>
+    <string name="tile_action">Tile action</string>
     <string name="auto_freeze">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
     <string name="auto_freeze_after_lock">After screen locked</string>

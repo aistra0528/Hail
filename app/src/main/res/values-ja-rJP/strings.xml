@@ -94,7 +94,7 @@
         <item quantity="other">%1$d 分あと%2$s：%3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">全ての動的ショートカットを削除</string>
-    <string name="tile_lock">タイルアクション</string>
+    <string name="tile_action">タイルアクション</string>
     <string name="auto_freeze">自動凍結</string>
     <string name="auto_freeze_notification_title">自動凍結を待機中</string>
     <string name="auto_freeze_after_lock">画面ロック後</string>
