@@ -1,6 +1,7 @@
 package com.aistra.hail.ui.home
 
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
@@ -226,8 +227,7 @@ class HomeFragment : MainFragment(),
                         .create().show()
                 }
                 6 -> HShortcuts.addPinShortcut(
-                    info, pkg, info.name,
-                    HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
+                    info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
                 7 -> exportToClipboard(listOf(info))
                 8 -> removeCheckedApp(pkg)
@@ -236,7 +236,11 @@ class HomeFragment : MainFragment(),
                     if (!AppManager.isAppFrozen(pkg)) removeCheckedApp(pkg)
                 }
             }
-        }.create().show()
+        }.setNeutralButton(R.string.action_details) { _, _ ->
+            HUI.startActivity(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS, HPackages.packageUri(pkg)
+            )
+        }.setNegativeButton(android.R.string.cancel, null).create().show()
         return true
     }
 
