@@ -73,8 +73,8 @@ object HShortcuts {
             else -> HailApi.ACTION_FREEZE_ALL
         }
         val icon = when (HailData.dynamicShortcutAction) {
-            HailData.ACTION_LOCK_FREEZE -> R.drawable.ic_outline_lock
-            else -> R.drawable.ic_round_frozen
+            HailData.ACTION_LOCK_FREEZE -> R.drawable.ic_outline_lock_shortcut
+            else -> R.drawable.ic_round_frozen_shortcut
         }
         val label = when (HailData.dynamicShortcutAction) {
             HailData.ACTION_FREEZE_NON_WHITELISTED -> R.string.action_freeze_non_whitelisted
