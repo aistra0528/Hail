@@ -125,4 +125,6 @@
     <string name="auto_freeze_delay">Einfrierverzögerung in Minuten</string>
     <string name="title_shortcuts">Shortcuts</string>
     <string name="msg_guide">Vor dem Einfrieren, bitte in den Einstellungen einen Arbeitsmodus auswälen.</string>
+    <string name="dynamic_shortcut_action">Dynamic shortcut action</string>
+    <string name="action_none">None</string>
 </resources>

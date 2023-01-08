@@ -121,6 +121,8 @@
     <string name="mode_shizuku_suspend">Shizuku - 暫停</string>
     <string name="action_unfreeze_remove_home">解凍並從首頁中移除</string>
     <string name="action_freeze_non_whitelisted">凍結非白名單</string>
-    <string name="title_shortcuts">Shortcuts</string>
-    <string name="msg_guide">Before freezing applications, please select a working mode in the settings.</string>
+    <string name="title_shortcuts">快捷方式</string>
+    <string name="msg_guide">在凍結應用程式前，請先在設定中選擇一個工作模式。</string>
+    <string name="dynamic_shortcut_action">動態快捷方式操作</string>
+    <string name="action_none">無</string>
 </resources>

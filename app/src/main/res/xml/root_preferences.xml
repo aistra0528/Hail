@@ -87,6 +87,14 @@
             app:icon="@drawable/ic_outline_shortcut"
             app:key="add_pin_shortcut"
             app:title="@string/action_add_pin_shortcut" />
+        <ListPreference
+            app:defaultValue="none"
+            app:entries="@array/dynamic_shortcut_action_entries"
+            app:entryValues="@array/dynamic_shortcut_action_values"
+            app:icon="@drawable/ic_outline_app_shortcut"
+            app:key="dynamic_shortcut_action"
+            app:title="@string/dynamic_shortcut_action"
+            app:useSimpleSummaryProvider="true" />
         <Preference
             app:icon="@drawable/ic_outline_cleaning"
             app:key="clear_dynamic_shortcuts"
