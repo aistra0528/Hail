@@ -15,7 +15,7 @@ android {
         versionCode = 20
         versionName = "1.0.0"
         resourceConfigurations += arrayOf(
-            "de", "en", "es", "it", "ja-rJP", "ru", "zh-rCN", "zh-rTW"
+            "de", "en", "es", "it", "ja-rJP", "ru", "uk", "zh-rCN", "zh-rTW"
         )
     }
     val signing = if (file("../signing.properties").exists()) {

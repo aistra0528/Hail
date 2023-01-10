@@ -118,4 +118,6 @@
 	<string name="title_settings">Налаштування</string>
 	<string name="title_shortcuts">Шорткати</string>
 	<string name="working_mode">Робочий режим</string>
+	<string name="dynamic_shortcut_action">Dynamic shortcut action</string>
+	<string name="action_none">None</string>
 </resources>

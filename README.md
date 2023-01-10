@@ -199,6 +199,7 @@ Thank you!
 - Русский [@tommynok](https://github.com/tommynok)
 - Español [@cyanwolfg](https://github.com/cyanwolfg)
 - Deutsch [@Enkidu70](https://github.com/Enkidu70)
+- Українська [@Operator404](https://github.com/Operator404)
 
 ## License
 
