@@ -50,6 +50,7 @@
     <string name="mode_su_disable">Superuser - Disable</string>
     <string name="mode_su_suspend">Superuser - Suspend</string>
     <string name="mode_shizuku_disable">Shizuku - Disable</string>
+    <string name="mode_shizuku_hide">Shizuku - Hide</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
     <string name="title_set_do">Set Device Owner</string>
     <string name="msg_set_do">Issue the command from adb:\n%s</string>

@@ -34,6 +34,7 @@ object HailData {
     const val MODE_SU_DISABLE = "su_disable"
     const val MODE_SU_SUSPEND = "su_suspend"
     const val MODE_SHIZUKU_DISABLE = "shizuku_disable"
+    const val MODE_SHIZUKU_HIDE = "shizuku_hide"
     const val MODE_SHIZUKU_SUSPEND = "shizuku_suspend"
     private const val TILE_ACTION = "tile_action"
     private const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"

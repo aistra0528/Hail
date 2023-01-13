@@ -21,9 +21,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:localeConfig="@xml/locales_config"
         android:theme="@style/Theme.Hail"
         tools:targetApi="33">
         <activity
@@ -83,6 +83,7 @@
             android:name=".services.QSTileService"
             android:exported="true"
             android:icon="@drawable/ic_round_frozen"
+            android:label="@string/tile_action"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
@@ -91,6 +92,7 @@
         <service
             android:name=".services.AutoFreezeService"
             android:exported="true"
+            android:label="@string/auto_freeze"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />

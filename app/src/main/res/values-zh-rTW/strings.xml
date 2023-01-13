@@ -125,4 +125,5 @@
     <string name="msg_guide">在凍結應用程式前，請先在設定中選擇一個工作模式。</string>
     <string name="dynamic_shortcut_action">動態快捷方式操作</string>
     <string name="action_none">無</string>
+    <string name="mode_shizuku_hide">Shizuku - 隱藏</string>
 </resources>

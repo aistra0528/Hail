@@ -39,7 +39,7 @@ object HShizuku {
             false
         }
 
-    fun setAppDisabledAsUser(packageName: String, disabled: Boolean): Boolean {
+    fun setAppDisabled(packageName: String, disabled: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
         try {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
@@ -62,7 +62,36 @@ object HShizuku {
         return HPackages.isAppDisabled(packageName) == disabled
     }
 
-    fun setAppSuspendedAsUser(packageName: String, suspended: Boolean): Boolean {
+    fun isAppHidden(packageName: String): Boolean {
+        HPackages.getPackageInfoOrNull(packageName) ?: return false
+        return try {
+            val pm = asInterface("android.content.pm.IPackageManager", "package")
+            HiddenApiBypass.invoke(
+                pm::class.java, pm, "getApplicationHiddenSettingAsUser", packageName, userId
+            ) as Boolean
+        } catch (t: Throwable) {
+            HLog.e(t)
+            false
+        }
+    }
+
+    fun setAppHidden(packageName: String, hidden: Boolean): Boolean {
+        HPackages.getPackageInfoOrNull(packageName) ?: return false
+        return try {
+            val pm = asInterface("android.content.pm.IPackageManager", "package")
+            pm::class.java.getMethod(
+                "setApplicationHiddenSettingAsUser",
+                String::class.java,
+                Boolean::class.java,
+                Int::class.java
+            ).invoke(pm, packageName, hidden, userId) as Boolean
+        } catch (t: Throwable) {
+            HLog.e(t)
+            false
+        }
+    }
+
+    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
         return try {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
