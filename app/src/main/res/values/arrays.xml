@@ -31,21 +31,21 @@
     </string-array>
     <string-array name="working_mode_entries">
         <item>@string/mode_default</item>
-        <item>@string/mode_do_hide</item>
-        <item>@string/mode_do_suspend</item>
-        <item>@string/mode_su_disable</item>
-        <item>@string/mode_su_suspend</item>
         <item>@string/mode_shizuku_disable</item>
         <item>@string/mode_shizuku_suspend</item>
+        <item>@string/mode_su_disable</item>
+        <item>@string/mode_su_suspend</item>
+        <item>@string/mode_do_hide</item>
+        <item>@string/mode_do_suspend</item>
     </string-array>
     <string-array name="working_mode_values">
         <item>default</item>
-        <item>do_hide</item>
-        <item>do_suspend</item>
-        <item>su_disable</item>
-        <item>su_suspend</item>
         <item>shizuku_disable</item>
         <item>shizuku_suspend</item>
+        <item>su_disable</item>
+        <item>su_suspend</item>
+        <item>do_hide</item>
+        <item>do_suspend</item>
     </string-array>
     <string-array name="donate_payment_entries">
         <item>@string/donate_alipay</item>
