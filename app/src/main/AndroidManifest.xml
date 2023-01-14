@@ -19,6 +19,7 @@
     <application
         android:name=".HailApp"
         android:allowBackup="true"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:localeConfig="@xml/locales_config"
@@ -43,6 +44,7 @@
             android:launchMode="singleInstance"
             android:theme="@style/Theme.Hail.Dialog">
             <intent-filter>
+                <action android:name="android.intent.action.SHOW_APP_INFO" />
                 <action android:name="${applicationId}.action.LAUNCH" />
                 <action android:name="${applicationId}.action.FREEZE" />
                 <action android:name="${applicationId}.action.UNFREEZE" />

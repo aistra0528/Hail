@@ -39,8 +39,7 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
         }
         val view = findViewById<View>(R.id.drawer_layout)
         view.visibility = View.INVISIBLE
-        val biometricPrompt = BiometricPrompt(
-            this,
+        val biometricPrompt = BiometricPrompt(this,
             ContextCompat.getMainExecutor(this),
             object : BiometricPrompt.AuthenticationCallback() {
                 private fun unlock() {
@@ -56,11 +55,10 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
                     when (errorCode) {
-                        BiometricPrompt.ERROR_NO_BIOMETRICS, BiometricPrompt.ERROR_HW_NOT_PRESENT ->
-                            unlock()
+                        BiometricPrompt.ERROR_NO_BIOMETRICS, BiometricPrompt.ERROR_HW_NOT_PRESENT -> unlock()
+                        BiometricPrompt.ERROR_NEGATIVE_BUTTON, BiometricPrompt.ERROR_USER_CANCELED -> finishAndRemoveTask()
                         else -> {
-                            if (errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON)
-                                HUI.showToast(errString)
+                            HUI.showToast(errString)
                             finishAndRemoveTask()
                         }
                     }
@@ -71,11 +69,10 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
                     unlock()
                 }
             })
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.action_biometric))
-            .setSubtitle(getString(R.string.msg_biometric))
-            .setNegativeButtonText(getString(android.R.string.cancel))
-            .build()
+        val promptInfo =
+            BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.action_biometric))
+                .setSubtitle(getString(R.string.msg_biometric))
+                .setNegativeButtonText(getString(android.R.string.cancel)).build()
         biometricPrompt.authenticate(promptInfo)
     }
 
@@ -113,7 +110,7 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
         if (HailData.workingMode != HailData.MODE_DEFAULT) HailData.setGuideVersion()
         else MaterialAlertDialogBuilder(this).setMessage(R.string.msg_guide)
             .setPositiveButton(android.R.string.ok) { _, _ -> HailData.setGuideVersion() }
-            .setOnCancelListener { HailData.setGuideVersion() }.create().show()
+            .setOnDismissListener { HailData.setGuideVersion() }.create().show()
     }
 
     override fun onStop() {
