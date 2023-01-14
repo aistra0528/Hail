@@ -99,7 +99,7 @@
         <item quantity="one">%2$s nach %1$d Minute: %3$s</item>
         <item quantity="other">%2$s nach %1$d Minuten: %3$s</item>
     </plurals>
-    <string name="action_clear_dynamic_shortcuts">Alle dynamischen Shortcuts löschen</string>
+    <string name="action_clear_dynamic_shortcuts">Alle dynamischen Verknüpfung löschen</string>
     <string name="tile_action">Kachel-Aktion</string>
     <string name="auto_freeze">Automatisches Einfrieren</string>
     <string name="auto_freeze_notification_title">Der automatische Einfrierdienst läuft</string>
@@ -123,9 +123,9 @@
     <string name="action_export_all">Alle exportieren</string>
     <string name="skip_notifying_app">Apps die Benachrichtigungen senden ignorieren</string>
     <string name="auto_freeze_delay">Einfrierverzögerung in Minuten</string>
-    <string name="title_shortcuts">Shortcuts</string>
+    <string name="title_shortcuts">Verknüpfungen</string>
     <string name="msg_guide">Vor dem Einfrieren, bitte in den Einstellungen einen Arbeitsmodus auswälen.</string>
-    <string name="dynamic_shortcut_action">Dynamic shortcut action</string>
-    <string name="action_none">None</string>
+    <string name="dynamic_shortcut_action">Aktion für dynamische Verknüpfung</string>
+    <string name="action_none">Keine</string>
     <string name="mode_shizuku_hide">Shizuku - Ausblenden (Hide)</string>
 </resources>
