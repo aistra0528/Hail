@@ -23,16 +23,6 @@
         <item>@string/action_remove_home</item>
         <item>@string/action_unfreeze_remove_home</item>
     </string-array>
-    <string-array name="tile_action_entries">
-        <item>@string/action_freeze_all</item>
-        <item>@string/action_freeze_non_whitelisted</item>
-        <item>@string/action_lock_freeze</item>
-    </string-array>
-    <string-array name="tile_action_values">
-        <item>freeze_all</item>
-        <item>freeze_non_whitelisted</item>
-        <item>lock_freeze</item>
-    </string-array>
     <string-array name="apps_action_entries">
         <item>@string/action_details</item>
         <item>@string/action_export_clipboard</item>
@@ -41,21 +31,23 @@
     </string-array>
     <string-array name="working_mode_entries">
         <item>@string/mode_default</item>
-        <item>@string/mode_do_hide</item>
-        <item>@string/mode_do_suspend</item>
+        <item>@string/mode_shizuku_disable</item>
+        <item>@string/mode_shizuku_hide</item>
+        <item>@string/mode_shizuku_suspend</item>
         <item>@string/mode_su_disable</item>
         <item>@string/mode_su_suspend</item>
-        <item>@string/mode_shizuku_disable</item>
-        <item>@string/mode_shizuku_suspend</item>
+        <item>@string/mode_do_hide</item>
+        <item>@string/mode_do_suspend</item>
     </string-array>
     <string-array name="working_mode_values">
         <item>default</item>
-        <item>do_hide</item>
-        <item>do_suspend</item>
+        <item>shizuku_disable</item>
+        <item>shizuku_hide</item>
+        <item>shizuku_suspend</item>
         <item>su_disable</item>
         <item>su_suspend</item>
-        <item>shizuku_disable</item>
-        <item>shizuku_suspend</item>
+        <item>do_hide</item>
+        <item>do_suspend</item>
     </string-array>
     <string-array name="donate_payment_entries">
         <item>@string/donate_alipay</item>
@@ -70,5 +62,27 @@
         <item>@string/action_freeze_non_whitelisted</item>
         <item>@string/action_lock</item>
         <item>@string/action_lock_freeze</item>
+    </string-array>
+    <string-array name="tile_action_entries">
+        <item>@string/action_freeze_all</item>
+        <item>@string/action_freeze_non_whitelisted</item>
+        <item>@string/action_lock_freeze</item>
+    </string-array>
+    <string-array name="tile_action_values">
+        <item>freeze_all</item>
+        <item>freeze_non_whitelisted</item>
+        <item>lock_freeze</item>
+    </string-array>
+    <string-array name="dynamic_shortcut_action_entries">
+        <item>@string/action_none</item>
+        <item>@string/action_freeze_all</item>
+        <item>@string/action_freeze_non_whitelisted</item>
+        <item>@string/action_lock_freeze</item>
+    </string-array>
+    <string-array name="dynamic_shortcut_action_values">
+        <item>none</item>
+        <item>freeze_all</item>
+        <item>freeze_non_whitelisted</item>
+        <item>lock_freeze</item>
     </string-array>
 </resources>

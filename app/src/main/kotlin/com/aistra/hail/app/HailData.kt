@@ -34,8 +34,11 @@ object HailData {
     const val MODE_SU_DISABLE = "su_disable"
     const val MODE_SU_SUSPEND = "su_suspend"
     const val MODE_SHIZUKU_DISABLE = "shizuku_disable"
+    const val MODE_SHIZUKU_HIDE = "shizuku_hide"
     const val MODE_SHIZUKU_SUSPEND = "shizuku_suspend"
     private const val TILE_ACTION = "tile_action"
+    private const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
+    const val ACTION_NONE = "none"
     private const val ACTION_FREEZE_ALL = "freeze_all"
     const val ACTION_FREEZE_NON_WHITELISTED = "freeze_non_whitelisted"
     const val ACTION_LOCK_FREEZE = "lock_freeze"
@@ -73,6 +76,7 @@ object HailData {
     val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)
     val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
     val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
+    val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)

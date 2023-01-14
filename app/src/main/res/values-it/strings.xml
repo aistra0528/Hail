@@ -125,4 +125,7 @@
     <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
     <string name="title_shortcuts">Shortcuts</string>
     <string name="msg_guide">Before freezing applications, please select a working mode in the settings.</string>
+    <string name="dynamic_shortcut_action">Dynamic shortcut action</string>
+    <string name="action_none">None</string>
+    <string name="mode_shizuku_hide">Shizuku - Hide</string>
 </resources>

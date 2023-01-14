@@ -123,4 +123,7 @@
     <string name="action_freeze_non_whitelisted">冻结非白名单</string>
     <string name="title_shortcuts">快捷方式</string>
     <string name="msg_guide">在冻结应用前，请先在设置中选择一个工作模式。</string>
+    <string name="dynamic_shortcut_action">动态快捷方式操作</string>
+    <string name="action_none">无</string>
+    <string name="mode_shizuku_hide">Shizuku - 隐藏</string>
 </resources>

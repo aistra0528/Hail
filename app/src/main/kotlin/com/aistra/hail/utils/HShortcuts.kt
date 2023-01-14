@@ -58,30 +58,37 @@ object HShortcuts {
         } else {
             val applicationInfo = HPackages.getApplicationInfoOrNull(packageName)
             val shortcut = ShortcutInfoCompat.Builder(HailApp.app, packageName)
-                .setIcon(
-                    IconCompat.createWithBitmap(
-                        applicationInfo?.let { iconLoader.loadIcon(it) }
-                            ?: getBitmapFromDrawable(HailApp.app.packageManager.defaultActivityIcon)
-                    )
-                )
-                .setShortLabel(applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName)
-                .setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName))
-                .build()
+                .setIcon(IconCompat.createWithBitmap(applicationInfo?.let { iconLoader.loadIcon(it) }
+                    ?: getBitmapFromDrawable(
+                        HailApp.app.packageManager.defaultActivityIcon
+                    ))).setShortLabel(
+                    applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName
+                ).setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName)).build()
             ShortcutManagerCompat.pushDynamicShortcut(HailApp.app, shortcut)
         }
-        val freezeAll = ShortcutInfoCompat.Builder(HailApp.app, HailApi.ACTION_FREEZE_ALL)
-            .setIcon(
-                getDrawableIcon(
-                    AppCompatResources.getDrawable(
-                        HailApp.app,
-                        R.drawable.ic_round_frozen_shortcut
-                    )!!
-                )
+        if (HailData.dynamicShortcutAction == HailData.ACTION_NONE) return
+        val id = when (HailData.dynamicShortcutAction) {
+            HailData.ACTION_FREEZE_NON_WHITELISTED -> HailApi.ACTION_FREEZE_NON_WHITELISTED
+            HailData.ACTION_LOCK_FREEZE -> HailApi.ACTION_LOCK_FREEZE
+            else -> HailApi.ACTION_FREEZE_ALL
+        }
+        val icon = when (HailData.dynamicShortcutAction) {
+            HailData.ACTION_LOCK_FREEZE -> R.drawable.ic_outline_lock_shortcut
+            else -> R.drawable.ic_round_frozen_shortcut
+        }
+        val label = when (HailData.dynamicShortcutAction) {
+            HailData.ACTION_FREEZE_NON_WHITELISTED -> R.string.action_freeze_non_whitelisted
+            HailData.ACTION_LOCK_FREEZE -> R.string.action_lock_freeze
+            else -> R.string.action_freeze_all
+        }
+        val action = ShortcutInfoCompat.Builder(HailApp.app, id).setIcon(
+            getDrawableIcon(
+                AppCompatResources.getDrawable(
+                    HailApp.app, icon
+                )!!
             )
-            .setShortLabel(HailApp.app.getString(R.string.action_freeze_all))
-            .setIntent(Intent(HailApi.ACTION_FREEZE_ALL))
-            .build()
-        ShortcutManagerCompat.pushDynamicShortcut(HailApp.app, freezeAll)
+        ).setShortLabel(HailApp.app.getString(label)).setIntent(Intent(id)).build()
+        ShortcutManagerCompat.pushDynamicShortcut(HailApp.app, action)
     }
 
     fun removeAllDynamicShortcuts() {

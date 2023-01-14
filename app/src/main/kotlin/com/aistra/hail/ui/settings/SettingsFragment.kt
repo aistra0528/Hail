@@ -26,9 +26,7 @@ import rikka.shizuku.Shizuku
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
     MenuProvider {
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -51,8 +49,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     .isNotificationListenerAccessGranted(name)
             } else {
                 Settings.Secure.getString(
-                    requireContext().contentResolver,
-                    "enabled_notification_listeners"
+                    requireContext().contentResolver, "enabled_notification_listeners"
                 ).split(':').map { ComponentName.unflattenFromString(it) }.contains(name)
             }
             if (value == true && !isGranted) {
@@ -94,8 +91,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     )
                     1 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
-                            requireContext(),
-                            R.drawable.ic_round_frozen_shortcut
+                            requireContext(), R.drawable.ic_round_frozen_shortcut
                         )!!,
                         HailApi.ACTION_UNFREEZE_ALL,
                         getString(R.string.action_unfreeze_all),
@@ -111,8 +107,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     )
                     3 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
-                            requireContext(),
-                            R.drawable.ic_outline_lock_shortcut
+                            requireContext(), R.drawable.ic_outline_lock_shortcut
                         )!!,
                         HailApi.ACTION_LOCK,
                         getString(R.string.action_lock),
@@ -144,7 +139,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 HUI.showToast(R.string.permission_denied)
                 return false
             }
-            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_SUSPEND -> return try {
+            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_HIDE, HailData.MODE_SHIZUKU_SUSPEND -> return try {
                 when {
                     Shizuku.isPreV11() -> throw IllegalStateException("unsupported shizuku version")
                     Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED -> true
