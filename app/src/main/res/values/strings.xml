@@ -128,4 +128,6 @@
     <string name="msg_guide">Before freezing applications, please select a working mode in the settings.</string>
     <string name="dynamic_shortcut_action">Dynamic shortcut action</string>
     <string name="action_none">None</string>
+    <string name="action_freeze_tag">Freeze tag</string>
+    <string name="action_unfreeze_tag">Unfreeze tag</string>
 </resources>

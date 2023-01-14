@@ -128,4 +128,6 @@
     <string name="dynamic_shortcut_action">Aktion für dynamische Verknüpfung</string>
     <string name="action_none">Keine</string>
     <string name="mode_shizuku_hide">Shizuku - Ausblenden (Hide)</string>
+    <string name="action_freeze_tag">Freeze tag</string>
+    <string name="action_unfreeze_tag">Unfreeze tag</string>
 </resources>

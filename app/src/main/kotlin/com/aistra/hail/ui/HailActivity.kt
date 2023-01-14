@@ -8,14 +8,14 @@ import com.aistra.hail.services.AutoFreezeService
 import com.aistra.hail.utils.HTarget
 
 open class HailActivity : AppCompatActivity() {
-    fun setAutoFreezeService(hasUnfrozen: Boolean? = null) {
+    fun setAutoFreezeService() {
         if (HailData.autoFreezeAfterLock.not()) return
-        val start = hasUnfrozen
-            ?: HailData.checkedList.any { !AppManager.isAppFrozen(it.packageName) && !it.whitelisted }
+        val hasUnfrozen =
+            HailData.checkedList.any { !AppManager.isAppFrozen(it.packageName) && !it.whitelisted }
         applicationContext.let {
             val intent = Intent(it, AutoFreezeService::class.java)
             when {
-                !start -> it.stopService(intent)
+                !hasUnfrozen -> it.stopService(intent)
                 HTarget.O -> it.startForegroundService(intent)
                 else -> it.startService(intent)
             }

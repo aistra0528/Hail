@@ -81,7 +81,33 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_add_pin_shortcut)
             .setItems(R.array.pin_shortcut_entries) { _, which ->
                 when (which) {
-                    0 -> HShortcuts.addPinShortcut(
+                    0 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_freeze_tag)
+                        .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
+                            HShortcuts.addPinShortcut(
+                                AppCompatResources.getDrawable(
+                                    requireContext(), R.drawable.ic_round_frozen_shortcut
+                                )!!,
+                                HailApi.ACTION_FREEZE_TAG,
+                                HailData.tags[index].first,
+                                HailApi.getIntentForTag(
+                                    HailApi.ACTION_FREEZE_TAG, HailData.tags[index].first
+                                )
+                            )
+                        }.setNegativeButton(android.R.string.cancel, null).create().show()
+                    1 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
+                        .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
+                            HShortcuts.addPinShortcut(
+                                AppCompatResources.getDrawable(
+                                    requireContext(), R.drawable.ic_round_unfrozen_shortcut
+                                )!!,
+                                HailApi.ACTION_UNFREEZE_TAG,
+                                HailData.tags[index].first,
+                                HailApi.getIntentForTag(
+                                    HailApi.ACTION_UNFREEZE_TAG, HailData.tags[index].first
+                                )
+                            )
+                        }.setNegativeButton(android.R.string.cancel, null).create().show()
+                    2 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_round_frozen_shortcut
                         )!!,
@@ -89,15 +115,15 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         getString(R.string.action_freeze_all),
                         Intent(HailApi.ACTION_FREEZE_ALL)
                     )
-                    1 -> HShortcuts.addPinShortcut(
+                    3 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
-                            requireContext(), R.drawable.ic_round_frozen_shortcut
+                            requireContext(), R.drawable.ic_round_unfrozen_shortcut
                         )!!,
                         HailApi.ACTION_UNFREEZE_ALL,
                         getString(R.string.action_unfreeze_all),
                         Intent(HailApi.ACTION_UNFREEZE_ALL)
                     )
-                    2 -> HShortcuts.addPinShortcut(
+                    4 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_round_frozen_shortcut
                         )!!,
@@ -105,7 +131,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         getString(R.string.action_freeze_non_whitelisted),
                         Intent(HailApi.ACTION_FREEZE_NON_WHITELISTED)
                     )
-                    3 -> HShortcuts.addPinShortcut(
+                    5 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_outline_lock_shortcut
                         )!!,
@@ -113,7 +139,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         getString(R.string.action_lock),
                         Intent(HailApi.ACTION_LOCK)
                     )
-                    4 -> HShortcuts.addPinShortcut(
+                    6 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_outline_lock_shortcut
                         )!!,

@@ -41,10 +41,12 @@ object AppManager {
                     packageName
                 )
             ) return
+            /*
             HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_HIDE, HailData.MODE_SHIZUKU_SUSPEND -> if (HShizuku.uninstallApp(
                     packageName
                 )
             ) return
+            */
         }
         HUI.startActivity(Intent.ACTION_DELETE, HPackages.packageUri(packageName))
     }

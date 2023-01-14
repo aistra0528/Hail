@@ -127,7 +127,9 @@
     <string name="action_freeze_non_whitelisted">Заморозка не внесенных в Белый список</string>
     <string name="title_shortcuts">Ярлыки</string>
     <string name="msg_guide">Прежде чем начать заморозку приложений, выберите режим работы в настройках.</string>
-	<string name="dynamic_shortcut_action">Действие динамического ярлыка</string>
+    <string name="dynamic_shortcut_action">Действие динамического ярлыка</string>
     <string name="action_none">Нет</string>
     <string name="mode_shizuku_hide">Shizuku - Скрытие</string>
+    <string name="action_freeze_tag">Freeze tag</string>
+    <string name="action_unfreeze_tag">Unfreeze tag</string>
 </resources>

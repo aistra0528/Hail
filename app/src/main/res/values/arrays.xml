@@ -57,6 +57,8 @@
         <item>@string/donate_paypal</item>
     </string-array>
     <string-array name="pin_shortcut_entries">
+        <item>@string/action_freeze_tag</item>
+        <item>@string/action_unfreeze_tag</item>
         <item>@string/action_freeze_all</item>
         <item>@string/action_unfreeze_all</item>
         <item>@string/action_freeze_non_whitelisted</item>

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Bundle
 import com.aistra.hail.R
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
@@ -27,9 +28,15 @@ class ApiActivity : HailActivity() {
                 HailApi.ACTION_LAUNCH -> launchApp(requirePackage())
                 HailApi.ACTION_FREEZE -> setAppFrozen(requirePackage(), true)
                 HailApi.ACTION_UNFREEZE -> setAppFrozen(requirePackage(), false)
-                HailApi.ACTION_FREEZE_ALL -> setAllFrozen(true)
-                HailApi.ACTION_UNFREEZE_ALL -> setAllFrozen(false)
-                HailApi.ACTION_FREEZE_NON_WHITELISTED -> setAllFrozen(true, skipWhitelisted = true)
+                HailApi.ACTION_FREEZE_TAG -> setListFrozen(
+                    true, HailData.checkedList.filter { it.tagId == requireTagId }, true
+                )
+                HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(
+                    false, HailData.checkedList.filter { it.tagId == requireTagId }, true
+                )
+                HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
+                HailApi.ACTION_UNFREEZE_ALL -> setListFrozen(false)
+                HailApi.ACTION_FREEZE_NON_WHITELISTED -> setListFrozen(true, skipWhitelisted = true)
                 HailApi.ACTION_LOCK -> lockScreen(false)
                 HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
                 else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
@@ -51,6 +58,12 @@ class ApiActivity : HailActivity() {
             HPackages.getPackageInfoOrNull(it)
                 ?: throw NameNotFoundException(getString(R.string.app_not_installed))
         } ?: throw IllegalArgumentException("package must not be null")
+
+    private val requireTagId: Int
+        get() = HailData.tags[HailData.getTagPosition(intent?.getStringExtra(HailData.KEY_TAG)
+            ?.also {
+                if (!HailData.isTagAvailable(it)) throw IllegalStateException("tag unavailable:\n$it")
+            } ?: throw IllegalArgumentException("tag must not be null"))].second
 
     private fun redirect(pkg: String) {
         var shouldFinished = true
@@ -86,9 +99,10 @@ class ApiActivity : HailActivity() {
     }
 
     private fun setAppFrozen(pkg: String, frozen: Boolean) = when {
-        frozen && HailData.isChecked(pkg).not() -> throw SecurityException("package not checked")
-        AppManager.isAppFrozen(pkg) != frozen && AppManager.setAppFrozen(pkg, frozen)
-            .not() -> throw IllegalStateException(getString(R.string.permission_denied))
+        frozen && !HailData.isChecked(pkg) -> throw SecurityException("package not checked")
+        AppManager.isAppFrozen(pkg) != frozen && !AppManager.setAppFrozen(
+            pkg, frozen
+        ) -> throw IllegalStateException(getString(R.string.permission_denied))
         else -> {
             HUI.showToast(
                 if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
@@ -98,11 +112,15 @@ class ApiActivity : HailActivity() {
         }
     }
 
-    private fun setAllFrozen(frozen: Boolean, skipWhitelisted: Boolean = false) {
+    private fun setListFrozen(
+        frozen: Boolean,
+        list: List<AppInfo> = HailData.checkedList,
+        skipWhitelisted: Boolean = false
+    ) {
         var i = 0
         var denied = false
         var name = String()
-        HailData.checkedList.forEach {
+        list.forEach {
             when {
                 AppManager.isAppFrozen(it.packageName) == frozen || (skipWhitelisted && it.whitelisted) -> return@forEach
                 AppManager.setAppFrozen(it.packageName, frozen) -> {
@@ -119,13 +137,13 @@ class ApiActivity : HailActivity() {
                     if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
                     if (i > 1) i.toString() else name
                 )
-                setAutoFreezeService(!frozen)
+                setAutoFreezeService()
             }
         }
     }
 
     private fun lockScreen(freezeAll: Boolean) {
-        if (freezeAll) setAllFrozen(true)
+        if (freezeAll) setListFrozen(true)
         if (AppManager.lockScreen.not()) throw IllegalStateException(getString(R.string.permission_denied))
     }
 }

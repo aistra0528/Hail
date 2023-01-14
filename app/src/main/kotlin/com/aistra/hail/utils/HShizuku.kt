@@ -113,5 +113,5 @@ object HShizuku {
         }
     }
 
-    fun uninstallApp(packageName: String): Boolean = false // Not yet implemented
+//    fun uninstallApp(packageName: String): Boolean = false // Not yet implemented
 }

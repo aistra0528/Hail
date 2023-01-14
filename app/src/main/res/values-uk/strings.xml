@@ -131,4 +131,6 @@
         <item quantity="few">%2$s after %1$d minutes: %3$s</item>
         <item quantity="many">%2$s after %1$d minutes: %3$s</item>
     </plurals>
+    <string name="action_freeze_tag">Freeze tag</string>
+    <string name="action_unfreeze_tag">Unfreeze tag</string>
 </resources>

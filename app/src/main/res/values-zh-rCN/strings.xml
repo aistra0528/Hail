@@ -126,4 +126,6 @@
     <string name="dynamic_shortcut_action">动态快捷方式操作</string>
     <string name="action_none">无</string>
     <string name="mode_shizuku_hide">Shizuku - 隐藏</string>
+    <string name="action_freeze_tag">标签冻结</string>
+    <string name="action_unfreeze_tag">标签解冻</string>
 </resources>

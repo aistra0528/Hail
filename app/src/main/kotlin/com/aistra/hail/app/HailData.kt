@@ -47,7 +47,7 @@ object HailData {
     const val SORT_INSTALL = "install"
     const val SORT_UPDATE = "update"
     private const val KEY_ID = "id"
-    private const val KEY_TAG = "tag"
+    const val KEY_TAG = "tag"
     private const val KEY_AID = "aid"
     private const val KEY_PINNED = "pinned"
     private const val KEY_WHITELISTED = "whitelisted"
@@ -121,8 +121,7 @@ object HailData {
 
     private fun getCheckedPosition(packageName: String): Int {
         checkedList.forEachIndexed { position, info ->
-            if (info.packageName == packageName)
-                return position
+            if (info.packageName == packageName) return position
         }
         return -1
     }
@@ -140,15 +139,12 @@ object HailData {
     }
 
     fun saveApps() {
-        if (!HFiles.exists(dir))
-            HFiles.createDirectories(dir)
+        if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
         HFiles.write(appsPath, JSONArray().run {
             checkedList.forEach {
                 put(
-                    JSONObject().put(KEY_PACKAGE, it.packageName)
-                        .put(KEY_PINNED, it.pinned)
-                        .put(KEY_TAG, it.tagId)
-                        .put(KEY_WHITELISTED, it.whitelisted)
+                    JSONObject().put(KEY_PACKAGE, it.packageName).put(KEY_PINNED, it.pinned)
+                        .put(KEY_TAG, it.tagId).put(KEY_WHITELISTED, it.whitelisted)
                 )
             }
             toString()
@@ -168,9 +164,17 @@ object HailData {
         }
     }
 
+    fun isTagAvailable(tagName: String): Boolean = getTagPosition(tagName) != -1
+
+    fun getTagPosition(tagName: String): Int {
+        tags.forEachIndexed { position, tag ->
+            if (tag.first == tagName) return position
+        }
+        return -1
+    }
+
     fun saveTags() {
-        if (!HFiles.exists(dir))
-            HFiles.createDirectories(dir)
+        if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
         HFiles.write(tagsPath, JSONArray().run {
             tags.forEach {
                 put(JSONObject().put(KEY_TAG, it.first).put(KEY_ID, it.second))
