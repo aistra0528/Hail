@@ -1,5 +1,6 @@
 package com.aistra.hail.utils
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.IBinder
 import android.os.SystemClock
@@ -17,8 +18,12 @@ object HShizuku {
     private val callerPackage get() = if (isRoot) BuildConfig.APPLICATION_ID else "com.android.shell"
 
     private fun asInterface(className: String, serviceName: String): Any =
-        Class.forName("$className\$Stub").getMethod("asInterface", IBinder::class.java)
-            .invoke(null, ShizukuBinderWrapper(SystemServiceHelper.getSystemService(serviceName)))!!
+        ShizukuBinderWrapper(SystemServiceHelper.getSystemService(serviceName)).let {
+            Class.forName("$className\$Stub").run {
+                if (HTarget.P) HiddenApiBypass.invoke(this, null, "asInterface", it)
+                else getMethod("asInterface", IBinder::class.java).invoke(null, it)
+            }
+        }
 
     val lockScreen
         get() = try {
@@ -94,6 +99,7 @@ object HShizuku {
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
         return try {
+            if (suspended) forceStopApp(packageName)
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             (HiddenApiBypass.invoke(
                 pm::class.java,
@@ -103,7 +109,7 @@ object HShizuku {
                 suspended,
                 null,
                 null,
-                null,
+                if (suspended) suspendDialogInfo else null,
                 callerPackage,
                 userId
             ) as Array<*>).isEmpty()
@@ -112,6 +118,22 @@ object HShizuku {
             false
         }
     }
+
+    private val suspendDialogInfo: Any
+        @SuppressLint("PrivateApi") get() = HiddenApiBypass.newInstance(Class.forName("android.content.pm.SuspendDialogInfo\$Builder"))
+            .let {
+                HiddenApiBypass.invoke(
+                    it::class.java, it, "setNeutralButtonAction", 1/*BUTTON_ACTION_UNSUSPEND*/
+                )
+                HiddenApiBypass.invoke(it::class.java, it, "build")
+            }
+
+    private fun forceStopApp(packageName: String) =
+        asInterface("android.app.IActivityManager", "activity").also {
+            HiddenApiBypass.invoke(
+                it::class.java, it, "forceStopPackage", packageName, userId
+            )
+        }
 
 //    fun uninstallApp(packageName: String): Boolean = false // Not yet implemented
 }
