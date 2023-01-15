@@ -124,10 +124,10 @@
     <string name="action_unfreeze_remove_home">Descongelar y eliminar del inicio</string>
     <string name="action_freeze_non_whitelisted">Congelar no presentes en la lista blanca</string>
     <string name="title_shortcuts">Accesos directos</string>
-    <string name="msg_guide">Before freezing applications, please select a working mode in the settings.</string>
-    <string name="dynamic_shortcut_action">Dynamic shortcut action</string>
-    <string name="action_none">None</string>
+    <string name="msg_guide">Antes de congelar las aplicaciones, seleccione un modo de trabajo en los ajustes.</string>
+    <string name="dynamic_shortcut_action">Acción de acceso directo dinámico</string>
+    <string name="action_none">Nada</string>
     <string name="mode_shizuku_hide">Shizuku - Ocultar</string>
-    <string name="action_freeze_tag">Freeze tag</string>
-    <string name="action_unfreeze_tag">Unfreeze tag</string>
+    <string name="action_freeze_tag">Etiqueta de congelación</string>
+    <string name="action_unfreeze_tag">Etiqueta de descongelación</string>
 </resources>
