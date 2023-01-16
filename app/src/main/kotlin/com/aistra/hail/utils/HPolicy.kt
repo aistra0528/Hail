@@ -26,8 +26,10 @@ object HPolicy {
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean =
         isDeviceOwnerActive && dpm.setApplicationHidden(admin, packageName, hidden)
 
-    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean = isDeviceOwnerActive
-            && dpm.setPackagesSuspended(admin, arrayOf(packageName), suspended).isEmpty()
+    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
+        isDeviceOwnerActive && HTarget.N && dpm.setPackagesSuspended(
+            admin, arrayOf(packageName), suspended
+        ).isEmpty()
 
     fun uninstallApp(packageName: String): Boolean = when {
         isDeviceOwnerActive -> {
@@ -42,19 +44,14 @@ object HPolicy {
     }
 
     fun enableBackupService() {
-        if (isDeviceOwnerActive
-            && HTarget.O
-            && !dpm.isBackupServiceEnabled(admin)
-        ) {
+        if (isDeviceOwnerActive && HTarget.O && !dpm.isBackupServiceEnabled(admin)) {
             dpm.setBackupServiceEnabled(admin, true)
             HLog.i("isBackupServiceEnabled: ${dpm.isBackupServiceEnabled(admin)}")
         }
     }
 
     fun setOrganizationName(name: String? = null) {
-        if (isDeviceOwnerActive
-            && HTarget.O
-        ) dpm.setOrganizationName(admin, name)
+        if (isDeviceOwnerActive && HTarget.O) dpm.setOrganizationName(admin, name)
     }
 
     fun removeActiveAdmin() {
