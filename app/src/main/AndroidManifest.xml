@@ -82,6 +82,14 @@
         <receiver
             android:name=".receiver.ScreenOffReceiver"
             android:exported="false" />
+        <receiver
+            android:name=".receiver.UnsuspendedReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_UNSUSPENDED_MANUALLY" />
+            </intent-filter>
+        </receiver>
+
 
         <service
             android:name=".services.QSTileService"
