@@ -17,28 +17,29 @@ import com.aistra.hail.utils.HTarget
 
 class AutoFreezeService : NotificationListenerService() {
     private val channelID = javaClass.simpleName
-    private lateinit var lockReceiver: ScreenOffReceiver
+    private val lockReceiver by lazy { ScreenOffReceiver() }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
         val freezeAll = PendingIntent.getActivity(
-            applicationContext,
-            0,
-            Intent(HailApi.ACTION_FREEZE_ALL),
-            PendingIntent.FLAG_IMMUTABLE
-        )
-        val freezeNonWhitelisted = PendingIntent.getActivity(
-            applicationContext,
-            0,
-            Intent(HailApi.ACTION_FREEZE_NON_WHITELISTED),
-            PendingIntent.FLAG_IMMUTABLE
+            applicationContext, 0, Intent(HailApi.ACTION_FREEZE_ALL), PendingIntent.FLAG_IMMUTABLE
         )
         val notification = NotificationCompat.Builder(this, channelID)
             .setContentTitle(getString(R.string.auto_freeze_notification_title))
             .setSmallIcon(R.drawable.ic_round_frozen)
             .addAction(R.drawable.ic_round_frozen, getString(R.string.action_freeze_all), freezeAll)
         if (HailData.checkedList.any { it.whitelisted }) {
-            notification.addAction(R.drawable.ic_round_frozen, getString(R.string.action_freeze_non_whitelisted), freezeNonWhitelisted)
+            val freezeNonWhitelisted = PendingIntent.getActivity(
+                applicationContext,
+                0,
+                Intent(HailApi.ACTION_FREEZE_NON_WHITELISTED),
+                PendingIntent.FLAG_IMMUTABLE
+            )
+            notification.addAction(
+                R.drawable.ic_round_frozen,
+                getString(R.string.action_freeze_non_whitelisted),
+                freezeNonWhitelisted
+            )
         }
         startForeground(100, notification.build())
         return START_STICKY
@@ -64,7 +65,6 @@ class AutoFreezeService : NotificationListenerService() {
     }
 
     private fun registerScreenReceiver() {
-        lockReceiver = ScreenOffReceiver()
         registerReceiver(lockReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
     }
 

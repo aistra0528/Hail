@@ -50,7 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             } else {
                 Settings.Secure.getString(
                     requireContext().contentResolver, "enabled_notification_listeners"
-                ).split(':').map { ComponentName.unflattenFromString(it) }.contains(name)
+                ).split(':').contains(name.toString())
             }
             if (value == true && !isGranted) {
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
