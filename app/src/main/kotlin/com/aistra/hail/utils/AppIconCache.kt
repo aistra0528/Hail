@@ -72,6 +72,8 @@ object AppIconCache : CoroutineScope {
         }
     }
 
+    fun clear() = lruCache.evictAll()
+
     @SuppressLint("NewApi")
     fun getOrLoadBitmap(context: Context, info: ApplicationInfo, userId: Int, size: Int): Bitmap {
         val cachedBitmap = get(info.packageName, userId, size)
@@ -84,7 +86,7 @@ object AppIconCache : CoroutineScope {
             loader = AppIconLoader(size, shrinkNonAdaptiveIcons, context)
             appIconLoaders[size] = loader
         }
-        val bitmap = loader.loadIcon(info, false)
+        val bitmap = IconPack.loadIcon(info.packageName) ?: loader.loadIcon(info, false)
         put(info.packageName, userId, size, bitmap)
         return bitmap
     }
@@ -92,8 +94,10 @@ object AppIconCache : CoroutineScope {
     @JvmStatic
     fun loadIconBitmapAsync(
         context: Context,
-        info: ApplicationInfo, userId: Int,
-        view: ImageView, setColorFilter: Boolean = false
+        info: ApplicationInfo,
+        userId: Int,
+        view: ImageView,
+        setColorFilter: Boolean = false
     ): Job {
         return launch {
             val size = view.measuredWidth.let {

@@ -15,6 +15,7 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.aistra.hail.HailApp
 import com.aistra.hail.R
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
@@ -67,6 +68,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             }
             true
         }
+        findPreference<Preference>(HailData.ICON_PACK)?.setOnPreferenceClickListener {
+            iconPackDialog()
+            true
+        }
         findPreference<Preference>("add_pin_shortcut")?.setOnPreferenceClickListener {
             addPinShortcut()
             true
@@ -75,6 +80,25 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             HShortcuts.removeAllDynamicShortcuts()
             true
         }
+    }
+
+    private fun iconPackDialog() {
+        val list = Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
+            if (HTarget.T) HailApp.app.packageManager.queryIntentActivities(
+                it, PackageManager.ResolveInfoFlags.of(0)
+            ) else HailApp.app.packageManager.queryIntentActivities(it, 0)
+        }.map { it.activityInfo }
+        MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.icon_pack)
+            .setItems(list.map { it.loadLabel(HailApp.app.packageManager) }
+                .toTypedArray()) { _, which ->
+                if (HailData.iconPack == list[which].packageName) return@setItems
+                HailData.setIconPack(list[which].packageName)
+                AppIconCache.clear()
+            }.setNeutralButton(R.string.label_default) { _, _ ->
+                if (HailData.iconPack == HailData.ACTION_NONE) return@setNeutralButton
+                HailData.setIconPack(HailData.ACTION_NONE)
+                AppIconCache.clear()
+            }.setNegativeButton(android.R.string.cancel, null).create().show()
     }
 
     private fun addPinShortcut() {

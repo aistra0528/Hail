@@ -130,4 +130,5 @@
     <string name="mode_shizuku_hide">Shizuku - Ocultar</string>
     <string name="action_freeze_tag">Etiqueta de congelación</string>
     <string name="action_unfreeze_tag">Etiqueta de descongelación</string>
+    <string name="icon_pack">Icon pack</string>
 </resources>

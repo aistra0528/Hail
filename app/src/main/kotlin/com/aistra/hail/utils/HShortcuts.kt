@@ -30,7 +30,7 @@ object HShortcuts {
 
     fun addPinShortcut(appInfo: AppInfo, id: String, label: CharSequence, intent: Intent) {
         appInfo.applicationInfo?.let {
-            val icon = iconLoader.loadIcon(it)
+            val icon = IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
             addPinShortcut(IconCompat.createWithBitmap(icon), id, label, intent)
         } ?: run {
             addPinShortcut(HailApp.app.packageManager.defaultActivityIcon, id, label, intent)
@@ -39,15 +39,12 @@ object HShortcuts {
 
     private fun addPinShortcut(icon: IconCompat, id: String, label: CharSequence, intent: Intent) {
         if (ShortcutManagerCompat.isRequestPinShortcutSupported(HailApp.app)) {
-            val shortcut = ShortcutInfoCompat.Builder(HailApp.app, id)
-                .setIcon(icon)
-                .setShortLabel(label)
-                .setIntent(intent)
-                .build()
+            val shortcut =
+                ShortcutInfoCompat.Builder(HailApp.app, id).setIcon(icon).setShortLabel(label)
+                    .setIntent(intent).build()
             ShortcutManagerCompat.requestPinShortcut(HailApp.app, shortcut, null)
         } else HUI.showToast(
-            R.string.operation_failed,
-            HailApp.app.getString(R.string.action_add_pin_shortcut)
+            R.string.operation_failed, HailApp.app.getString(R.string.action_add_pin_shortcut)
         )
     }
 
@@ -58,10 +55,11 @@ object HShortcuts {
         } else {
             val applicationInfo = HPackages.getApplicationInfoOrNull(packageName)
             val shortcut = ShortcutInfoCompat.Builder(HailApp.app, packageName)
-                .setIcon(IconCompat.createWithBitmap(applicationInfo?.let { iconLoader.loadIcon(it) }
-                    ?: getBitmapFromDrawable(
-                        HailApp.app.packageManager.defaultActivityIcon
-                    ))).setShortLabel(
+                .setIcon(IconCompat.createWithBitmap(applicationInfo?.let {
+                    IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
+                } ?: getBitmapFromDrawable(
+                    HailApp.app.packageManager.defaultActivityIcon
+                ))).setShortLabel(
                     applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName
                 ).setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName)).build()
             ShortcutManagerCompat.pushDynamicShortcut(HailApp.app, shortcut)
@@ -96,19 +94,19 @@ object HShortcuts {
     }
 
     private fun isMaxDynamicShortcutCount(): Boolean =
-        ShortcutManagerCompat.getDynamicShortcuts(HailApp.app).size >=
-                ShortcutManagerCompat.getMaxShortcutCountPerActivity(HailApp.app)
+        ShortcutManagerCompat.getDynamicShortcuts(HailApp.app).size >= ShortcutManagerCompat.getMaxShortcutCountPerActivity(
+            HailApp.app
+        )
 
     private fun getDrawableIcon(drawable: Drawable): IconCompat =
         IconCompat.createWithBitmap(getBitmapFromDrawable(drawable))
 
-    private fun getBitmapFromDrawable(drawable: Drawable): Bitmap =
-        Bitmap.createBitmap(
-            drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
-        ).also {
-            with(Canvas(it)) {
-                drawable.setBounds(0, 0, width, height)
-                drawable.draw(this)
-            }
+    private fun getBitmapFromDrawable(drawable: Drawable): Bitmap = Bitmap.createBitmap(
+        drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+    ).also {
+        with(Canvas(it)) {
+            drawable.setBounds(0, 0, width, height)
+            drawable.draw(this)
         }
+    }
 }

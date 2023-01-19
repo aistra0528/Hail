@@ -16,6 +16,10 @@
         app:title="@string/action_biometric" />
 
     <PreferenceCategory android:title="@string/title_customize">
+        <Preference
+            app:icon="@drawable/ic_outline_palette"
+            app:key="icon_pack"
+            app:title="@string/icon_pack" />
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:icon="@drawable/ic_baseline_filter_bw"

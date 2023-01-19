@@ -128,4 +128,5 @@
     <string name="mode_shizuku_hide">Shizuku - 隐藏</string>
     <string name="action_freeze_tag">标签冻结</string>
     <string name="action_unfreeze_tag">标签解冻</string>
+    <string name="icon_pack">图标包</string>
 </resources>

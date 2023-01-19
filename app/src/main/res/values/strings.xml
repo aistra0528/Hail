@@ -130,4 +130,5 @@
     <string name="action_none">None</string>
     <string name="action_freeze_tag">Freeze tag</string>
     <string name="action_unfreeze_tag">Unfreeze tag</string>
+    <string name="icon_pack">Icon pack</string>
 </resources>

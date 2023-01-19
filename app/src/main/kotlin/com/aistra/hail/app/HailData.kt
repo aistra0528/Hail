@@ -56,6 +56,7 @@ object HailData {
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
     const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
     private const val BIOMETRIC_LOGIN = "biometric_login"
+    const val ICON_PACK = "icon_pack"
     private const val GRAYSCALE_ICON = "grayscale_icon"
     private const val COMPACT_ICON = "compact_icon"
     private const val SYNTHESIZE_ADAPTIVE_ICONS = "synthesize_adaptive_icons"
@@ -88,6 +89,9 @@ object HailData {
     const val GUIDE_VERSION = 1
     val guideVersion get() = sp.getInt(KEY_GUIDE_VERSION, 0)
     fun setGuideVersion() = sp.edit().putInt(KEY_GUIDE_VERSION, GUIDE_VERSION).apply()
+
+    val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE) ?: ACTION_NONE
+    fun setIconPack(packageName: String) = sp.edit().putString(ICON_PACK, packageName).apply()
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
 
