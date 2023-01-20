@@ -52,7 +52,7 @@ Suspended apps will be shown as grayscale icons in the launcher. Unsuspend them 
 
 ## Working mode
 
-Hail can work with `Device Owner`, `Superuser` (Root) and `Shizuku` (and Sui).
+Hail can work with `Device Owner`, `Superuser` (Root) and `Shizuku` (including Sui).
 
 **Frozen app need to be unfrozen by the same working mode.**
 

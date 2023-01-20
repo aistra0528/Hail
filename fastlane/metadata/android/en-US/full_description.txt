@@ -1,72 +1,30 @@
-<p>Hail is a free software to freeze Android apps. Enjoy all features freely!</p>
+<p>Hail is a free-as-in-freedom software to freeze Android apps. Enjoy all features freely!</p>
 <h3>Freeze</h3>
-<p>Freeze is a word to describe the action of <strong>forbid apps when they are unnecessary</strong> to use device
-in a better way, cut down the usage of ram and save power. User can unfreeze it to revert.</p>
-<p>There are two ways to &quot;freeze&quot; apps, hide and disable.</p>
-<h4>Hide</h4>
-<p>Hidden apps will not shown in launcher and installed app list. Unhide them to revert.</p>
+<p>Freeze is a word to describe the action of <strong>forbid apps when they are unnecessary</strong>
+    to use device
+    in a better way, cut down the usage of ram and save power. User can unfreeze it to revert.</p>
+<p>In general, &quot;freeze&quot; means disable, but also Hail can &quot;freeze&quot; apps by hiding
+    and suspending them.</p>
 <h4>Disable</h4>
 <p>Disable apps will not shown in launcher. Enable them to revert.</p>
+<h4>Hide</h4>
+<p>Hidden apps will not shown in launcher and installed app list. Unhide them to revert.</p>
+<h4>Suspend</h4>
+<p>Suspended apps will be shown as grayscale icons in the launcher. Unsuspend them to revert.</p>
 <h3>Working mode</h3>
-<p>Hail can work with <code>Device Owner - Hide</code>, <code>Superuser - Disable</code> and <code>Shizuku - Disable</code>.</p>
-<p><strong>The way of hide and disable are different, unfreeze app request the same way.</strong></p>
+<p>Hail can work with <code>Device Owner</code>, <code>Superuser</code> (Root) and
+    <code>Shizuku</code> (including Sui).</p>
+<p><strong>Frozen app need to be unfrozen by the same working mode.</strong></p>
 <ol>
-<li>
-<p>For devices support wifi adb or rooted, <code>Shizuku - Disable</code> is
-recommend. <a href="https://github.com/RikkaApps/Shizuku">About Shizuku</a></p>
-</li>
-<li>
-<p>For rooted devices, <code>Superuser - Disable</code> is alternative. <strong>It is slower.</strong></p>
-</li>
-<li>
-<p>Select <code>Device Owner - Hide</code> otherwise. <strong>It is unstable on some devices.</strong></p>
-</li>
+    <li>
+        <p>For devices support wifi adb or rooted, <code>Shizuku</code> is
+            recommend. <a href="https://github.com/RikkaApps/Shizuku">About Shizuku</a></p>
+    </li>
+    <li>
+        <p>For rooted devices, <code>Superuser</code> is alternative. <strong>It is slower.</strong>
+        </p>
+    </li>
+    <li>
+        <p>Select <code>Device Owner</code> otherwise. <strong>It's a pain to set up.</strong></p>
+    </li>
 </ol>
-<h4>Device Owner - Hide</h4>
-<p>This mode invoke <code>DevicePolicyManager.setApplicationHidden</code> to hide apps.</p>
-<p><strong>You must remove device owner before uninstall</strong></p>
-<h5>Set device owner by adb</h5>
-<p><a href="https://developer.android.com/studio/command-line/adb">Android Debug Bridge (adb) Guide</a></p>
-<p><a href="https://developer.android.com/studio/releases/platform-tools">Download Android SDK Platform-Tools</a></p>
-<p>Issue adb command:</p>
-<pre><code><div>adb shell dpm set-device-owner com.aistra.hail/.receiver.DeviceAdminReceiver
-</div></code></pre>
-<p>A message will shown if it has been successfully set:</p>
-<pre><code><code><div>Success: Device owner set to package com.aistra.hail
-Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAdminReceiver}
-</div></code></code></pre>
-<p>Search the message by search engine otherwise.</p>
-<h5>Remove device owner</h5>
-<p>Click Hail at Apps, then select Uninstall in options.</p>
-<h4>Superuser - Disable</h4>
-<p>This mode execute <code>pm disable</code> to disable apps.</p>
-<h4>Shizuku - Disable</h4>
-<p>This mode invoke non-SDK interface <code>IPackageManager.setApplicationEnabledSetting</code> to disable apps.</p>
-<h3>Revert</h3>
-<p>Replace com.package.name to the package name of target app, where you can copy it by long click at
-Apps.</p>
-<h4>Unhide app by adb</h4>
-<pre><code><div>adb shell pm unhide com.package.name
-</div></code></pre>
-<p>For rooted devices:</p>
-<pre><code><div>adb shell su -c pm unhide com.package.name
-</div></code></pre>
-<h4>Enable app by adb</h4>
-<pre><code><div>adb shell pm enable com.package.name
-</div></code></pre>
-<p>For rooted devices:</p>
-<pre><code><div>adb shell su -c pm enable com.package.name
-</div></code></pre>
-<h4>Modify file by recovery</h4>
-<p>Access <code>/data/system/users/0/package-restrictions.xml</code>, this file stores the restrictions about
-apps. You can modify, rename or just delete it.</p>
-<ul>
-<li>
-<p>Unhide app: Modify the value of <code>hidden</code> from true to false</p>
-</li>
-<li>
-<p>Enable app: Modify the value of <code>enabled</code> from 2 (DISABLED) or 3 (DISABLED_USER) to 1 (ENABLED)</p>
-</li>
-</ul>
-<h4>Wipe data by recovery</h4>
-<p><strong>None of my business :(</strong></p>
