@@ -39,12 +39,12 @@ Google 签名。
 
 被暂停`suspend`的应用在启动器中会显示为灰度图标。取消暂停`unsuspend`应用即可恢复。
 
->
-在这种状态下，应用程序的通知将被隐藏，任何启动活动将被停止，不能弹出提示、对话框或播放音频。当用户试图启动一个暂停的应用程序时，系统将向用户显示一个对话框，告知他们在暂停状态下不能使用这个应用程序。
+> 在这种状态下，应用程序的通知将被隐藏，任何启动活动将被停止，不能弹出提示、对话框或播放音频。
+> 当用户试图启动一个暂停的应用程序时，系统将向用户显示一个对话框，告知他们在暂停状态下不能使用这个应用程序。
 
 ## 工作模式
 
-雹支持以`设备所有者`、`超级用户`（Root）和`Shizuku`（和 Sui）模式工作。
+雹支持以`设备所有者`、`超级用户` (Root) 和`Shizuku` (和 Sui) 模式工作。
 
 **冻结的应用需要通过相同工作模式解冻。**
 
@@ -109,7 +109,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 ## 恢复
 
-### 通过 adb（可能需要 root）
+### 通过 adb (可能需要 root)
 
 替换 com.package.name 为目标应用的包名。
 
@@ -122,7 +122,7 @@ adb shell pm unhide com.package.name
 adb shell pm unsuspend com.package.name
 ```
 
-### 通过恢复模式修改文件 (recovery)
+### 通过恢复模式 (recovery) 修改文件
 
 访问`/data/system/users/0/package-restrictions.xml`，此文件存储了应用限制相关信息。您可修改、重命名或直接删除此文件。
 
