@@ -31,9 +31,8 @@ class ApiActivity : HailActivity() {
                 HailApi.ACTION_FREEZE_TAG -> setListFrozen(
                     true, HailData.checkedList.filter { it.tagId == requireTagId }, true
                 )
-                HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(
-                    false, HailData.checkedList.filter { it.tagId == requireTagId }, true
-                )
+                HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(false,
+                    HailData.checkedList.filter { it.tagId == requireTagId })
                 HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
                 HailApi.ACTION_UNFREEZE_ALL -> setListFrozen(false)
                 HailApi.ACTION_FREEZE_NON_WHITELISTED -> setListFrozen(true, skipWhitelisted = true)

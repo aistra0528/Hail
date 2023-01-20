@@ -23,31 +23,44 @@ Google 签名。
 
 冻结`freeze`是一个营销用语，用于描述使**应用在用户不需要时不可运行**的行为，以此控制设备使用、减少内存占用和节省电量。用户可在需要时解冻`unfreeze`应用。
 
-通过隐藏和停用两种方式，都能达到所谓冻结的效果，但其实现存在差异。
-
-### 隐藏
-
-被隐藏`hide`的应用不可使用，也不会出现在启动器和已安装应用列表中。取消隐藏`unhide`应用即可恢复。
+在一般情况下，“冻结”是指停用，此外雹也可以通过隐藏和暂停来“冻结”应用。
 
 ### 停用
 
-被停用`disable`的应用不可使用，也不会出现在启动器中。在已安装应用列表中应用会显示已停用`disabled`状态。启用`enable`应用即可恢复。
+被停用`disable`的应用不会出现在启动器中。在已安装应用列表中会显示已停用`disabled`状态。启用`enable`应用即可恢复。
+
+### 隐藏
+
+被隐藏`hide`的应用不会出现在启动器和已安装应用列表中。取消隐藏`unhide`应用即可恢复。
+
+> 在这种状态下，软件包几乎处于卸载状态，无法使用，但并没有删除数据或实际的软件包文件。
+
+### 暂停
+
+被暂停`suspend`的应用在启动器中会显示为灰度图标。取消暂停`unsuspend`应用即可恢复。
+
+>
+在这种状态下，应用程序的通知将被隐藏，任何启动活动将被停止，不能弹出提示、对话框或播放音频。当用户试图启动一个暂停的应用程序时，系统将向用户显示一个对话框，告知他们在暂停状态下不能使用这个应用程序。
 
 ## 工作模式
 
-雹支持以`设备所有者 - 隐藏`、`超级用户 - 停用`和`Shizuku - 停用`模式工作。
+雹支持以`设备所有者`、`超级用户`（Root）和`Shizuku`（和 Sui）模式工作。
 
-**由于隐藏和停用的实现存在差异，冻结的应用需要通过相同方式解冻。**
+**冻结的应用需要通过相同工作模式解冻。**
 
-1. 如果您的设备支持无线调试或已 root，推荐选择`Shizuku - 停用`。[关于 Shizuku](https://github.com/RikkaApps/Shizuku)
+1. 如果您的设备支持无线调试或已 root，推荐选择`Shizuku`。[关于 Shizuku](https://github.com/RikkaApps/Shizuku)
 
-2. 如果您的设备已 root，可选择`超级用户 - 停用`。**此模式性能相对较差。**
+2. 如果您的设备已 root，可选择`超级用户`。**此模式速度相对较慢。**
 
-3. 如果您的设备不支持无线调试且未 root，可选择`设备所有者 - 隐藏`。**此模式兼容性相对较差。**
+3. 如果您的设备不支持无线调试且未 root，可选择`设备所有者`。**此模式设置较为繁琐。**
 
-### 设备所有者 - 隐藏
+### 设备所有者 - 隐藏 / 暂停
 
-此模式通过将雹设置为设备所有者 (Device Owner)，调用`DevicePolicyManager.setApplicationHidden`方法隐藏应用。
+此模式通过将雹设置为设备所有者 (Device Owner)，调用：
+
+- `DevicePolicyManager.setApplicationHidden`方法隐藏应用。
+
+- `DevicePolicyManager.setPackagesSuspended`方法暂停应用。
 
 **设置为设备所有者的应用需要移除设备所有者后方可卸载。**
 
@@ -76,49 +89,48 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 在雹的应用界面点按雹，在弹出的选项中选择卸载。
 
-### 超级用户 - 停用
+### 超级用户 - 停用 / 暂停
 
-此模式通过授予雹超级用户 (Superuser) 权限，执行`pm disable`命令停用应用。
+此模式通过授予雹超级用户 (Superuser) 权限，执行：
 
-### Shizuku - 停用
+- `pm disable`命令停用应用。
 
-此模式通过 Shizuku 调用非 SDK 接口`IPackageManager.setApplicationEnabledSetting`方法停用应用。
+- `pm suspend`命令暂停应用。
+
+### Shizuku - 停用 / 隐藏 / 暂停
+
+此模式通过 Shizuku 调用非 SDK 接口：
+
+- `IPackageManager.setApplicationEnabledSetting`方法停用应用。
+
+- `IPackageManager.setApplicationHiddenSettingAsUser`方法隐藏应用。
+
+- `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。
 
 ## 恢复
 
-替换 com.package.name 为目标应用的包名，您可在应用界面长按复制。
+### 通过 adb（可能需要 root）
 
-### 通过 adb 取消隐藏应用
-
-```shell
-adb shell pm unhide com.package.name
-```
-
-已 root 设备：
+替换 com.package.name 为目标应用的包名。
 
 ```shell
-adb shell su -c pm unhide com.package.name
-```
-
-### 通过 adb 启用应用
-
-```shell
+# 启用应用
 adb shell pm enable com.package.name
+# 取消隐藏应用
+adb shell pm unhide com.package.name
+# 取消暂停应用
+adb shell pm unsuspend com.package.name
 ```
 
-已 root 设备：
-
-```shell
-adb shell su -c pm enable com.package.name
-```
-
-### 通过提供文件管理功能的恢复模式 (recovery)
+### 通过恢复模式修改文件 (recovery)
 
 访问`/data/system/users/0/package-restrictions.xml`，此文件存储了应用限制相关信息。您可修改、重命名或直接删除此文件。
 
+- 启用应用：修改`enabled`属性为 2 (DISABLED) 或 3 (DISABLED_USER) 的值为 1 (ENABLED)
+
 - 取消隐藏应用：修改`hidden`属性为 true 的值为 false
 
-- 启用应用：修改`enabled`属性为 2 (DISABLED) 或 3 (DISABLED_USER) 的值为 1 (ENABLED)
+- 取消暂停应用：修改`suspended`属性为 true 的值为 false
 
 ### 通过恢复模式清除数据 (wipe data)
 
@@ -126,17 +138,15 @@ adb shell su -c pm enable com.package.name
 
 ## API
 
-替换 com.package.name 为目标应用的包名，您可在应用界面长按复制。
-
 Java
 
 ```java
 public class MainActivity extends AppCompatActivity {
-    private void launchApp() {
+    private void hailAction(String action, String name, String value) {
         try {
             Intent intent = new Intent();
-            intent.setAction("com.aistra.hail.action.LAUNCH");
-            intent.putExtra("package", "com.package.name");
+            intent.setAction(action);
+            intent.putExtra(name, value);
             startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show();
@@ -149,11 +159,11 @@ Kotlin
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
-    private fun launchApp() {
+    private fun hailAction(action: String, name: String, value: String) {
         try {
             val intent = Intent()
-            intent.setAction("com.aistra.hail.action.LAUNCH")
-            intent.putExtra("package", "com.package.name")
+            intent.setAction(action)
+            intent.putExtra(name, value)
             startActivity(intent)
         } catch (e: Exception) {
             Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show()
@@ -164,11 +174,15 @@ class MainActivity : AppCompatActivity() {
 
 `action`可为：
 
-- `com.aistra.hail.action.LAUNCH`：解冻并启动目标应用。应用未冻结时会直接启动。
+- `com.aistra.hail.action.LAUNCH`：解冻并启动目标应用。应用未冻结时会直接启动。`name="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.FREEZE`：冻结目标应用。应用需处于首页。
+- `com.aistra.hail.action.FREEZE`：冻结目标应用。应用需处于首页。`name="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.UNFREEZE`：解冻目标应用。
+- `com.aistra.hail.action.UNFREEZE`：解冻目标应用。`name="package"` `value="com.package.name"`
+
+- `com.aistra.hail.action.FREEZE_TAG`：冻结目标标签中的全部非白名单应用。`name="tag"` `value="标签名"`
+
+- `com.aistra.hail.action.UNFREEZE_TAG`：解冻目标标签中的全部应用。`name="tag"` `value="标签名"`
 
 - `com.aistra.hail.action.FREEZE_ALL`：冻结首页全部应用。无需`extra`。
 
@@ -180,19 +194,19 @@ class MainActivity : AppCompatActivity() {
 
 - `com.aistra.hail.action.LOCK_FREEZE`：冻结首页全部应用并锁定屏幕。无需`extra`。
 
-## Help Translate
+## 协助翻译
 
-Translate `app/src/main/res/values/strings.xml` and put it in the corresponding path.
+翻译 `app/src/main/res/values/strings.xml` 并放在相应语言的路径中。
 
-or
+或
 
-1. Create an issue about which language you want to translate into.
+1. 创建一个你想翻译成哪种语言的问题。
 
-2. We will create a string resource file in the corresponding path.
+2. 我们将在相应语言的路径中创建一个字符串资源文件。
 
-3. Translate it and create a pull request.
+3. 翻译它并创建一个拉取请求。
 
-Thank you!
+谢谢你啦！
 
 - 繁體中文 [@cracky5322](https://github.com/cracky5322)
 - 日本語 [@AokiFuru](https://github.com/AokiFuru) [@404potato](https://github.com/404potato)
@@ -201,7 +215,7 @@ Thank you!
 - Deutsch [@Enkidu70](https://github.com/Enkidu70)
 - Українська [@Operator404](https://github.com/Operator404)
 
-## License
+## 许可证
 
     Hail - Freeze Android apps
     Copyright (C) 2021-2023 Aistra
