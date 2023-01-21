@@ -32,11 +32,12 @@ In general, "freeze" means disable, but also Hail can "freeze" apps by hiding an
 
 ### Disable
 
-Disable apps will not shown in launcher. Enable them to revert.
+Disabled apps will not be shown in the launcher and will be shown as "Disabled" in the installed
+apps list. Enable them to revert.
 
 ### Hide
 
-Hidden apps will not shown in launcher and installed app list. Unhide them to revert.
+Hidden apps will not be shown in the launcher and installed apps list. Unhide them to revert.
 
 > While in this state, which is almost like an uninstalled state, making the package unavailable,
 > but it doesn't remove the data or the actual package file.
