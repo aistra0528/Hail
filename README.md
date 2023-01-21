@@ -122,7 +122,7 @@ adb shell pm unhide com.package.name
 adb shell pm unsuspend com.package.name
 ```
 
-### 通过恢复模式 (recovery) 修改文件
+### 修改文件
 
 访问`/data/system/users/0/package-restrictions.xml`，此文件存储了应用限制相关信息。您可修改、重命名或直接删除此文件。
 

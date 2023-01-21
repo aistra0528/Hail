@@ -131,7 +131,7 @@ adb shell pm unhide com.package.name
 adb shell pm unsuspend com.package.name
 ```
 
-### Modify file by recovery
+### Modify file
 
 Access `/data/system/users/0/package-restrictions.xml`, this file stores the restrictions about
 apps. You can modify, rename or just delete it.
