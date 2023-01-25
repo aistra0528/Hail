@@ -61,7 +61,7 @@
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="donate_wechat">WeChat Pay</string>
-    <string name="donate_wechat_scan">Scan</string>
+    <string name="donate_wechat_scan">Сканувати</string>
     <string name="filter_by">Фільтр</string>
     <string name="filter_frozen_apps">Заморожені</string>
     <string name="filter_system_apps">Система</string>
@@ -118,7 +118,7 @@
     <string name="title_settings">Налаштування</string>
     <string name="title_shortcuts">Шорткати</string>
     <string name="working_mode">Робочий режим</string>
-    <string name="dynamic_shortcut_action">Dynamic shortcut action</string>
+    <string name="dynamic_shortcut_action">Динамічна дія ярлика</string>
     <string name="action_none">None</string>
     <string name="mode_shizuku_hide">Shizuku - приховати</string>
     <plurals name="deferred_task_entry">
@@ -127,11 +127,12 @@
         <item quantity="many">%d minutes</item>
     </plurals>
     <plurals name="msg_deferred_task">
-        <item quantity="one">%2$s after %1$d minute: %3$s</item>
-        <item quantity="few">%2$s after %1$d minutes: %3$s</item>
-        <item quantity="many">%2$s after %1$d minutes: %3$s</item>
+        <item quantity="one">%2$s через %1$d хвилину: %3$s</item>
+        <item quantity="few">%2$s через %1$d хвилини: %3$s</item>
+        <item quantity="many">%2$s через %1$d хвилин: %3$s</item>
+        <item quantity="other">%2$s через %1$d хвилин: %3$s</item>
     </plurals>
-    <string name="action_freeze_tag">Freeze tag</string>
-    <string name="action_unfreeze_tag">Unfreeze tag</string>
-    <string name="icon_pack">Icon pack</string>
+    <string name="action_freeze_tag">Заморозити мітку</string>
+    <string name="action_unfreeze_tag">Розморозити мітку</string>
+    <string name="icon_pack">Пакет значків</string>
 </resources>
