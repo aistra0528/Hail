@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hail</string>
     <string name="app_slogan">¡Freezedom!</string>
@@ -88,10 +89,12 @@
     <string name="msg_unfreeze">Descongelado: %s</string>
     <plurals name="deferred_task_entry">
         <item quantity="one">%d minuto</item>
+        <item quantity="many">%d minutos</item>
         <item quantity="other">%d minutos</item>
     </plurals>
     <plurals name="msg_deferred_task">
         <item quantity="one">%2$s después de %1$d minuto: %3$s</item>
+        <item quantity="many">%2$s después de %1$d minutos: %3$s</item>
         <item quantity="other">%2$s después de %1$d minutos: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Borrar todos los accesos directos dinámicos</string>
