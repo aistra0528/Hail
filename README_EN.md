@@ -70,7 +70,7 @@ This mode invoke:
 
 - `DevicePolicyManager.setApplicationHidden` to hide apps.
 
-- `DevicePolicyManager.setPackagesSuspended` to suspend apps.
+- `DevicePolicyManager.setPackagesSuspended` to suspend apps. (Android 7.0+)
 
 **You must remove device owner before uninstall**
 
@@ -105,7 +105,7 @@ This mode execute:
 
 - `pm disable` to disable apps.
 
-- `pm suspend` to suspend apps.
+- `pm suspend` to suspend apps. (Android 10+)
 
 ### Shizuku - Disable / Hide / Suspend
 
@@ -115,7 +115,7 @@ This mode invoke non-SDK interface:
 
 - `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps.
 
-- `IPackageManager.setPackagesSuspendedAsUser` to suspend apps.
+- `IPackageManager.setPackagesSuspendedAsUser` to suspend apps. (Android 10+)
 
 ## Revert
 

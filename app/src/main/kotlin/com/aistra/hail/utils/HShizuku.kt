@@ -48,8 +48,25 @@ object HShizuku {
             false
         }
 
+    private fun forceStopApp(packageName: String) = try {
+        asInterface("android.app.IActivityManager", "activity").let {
+            if (HTarget.P) HiddenApiBypass.invoke(
+                it::class.java, it, "forceStopPackage", packageName, userId
+            ) else it::class.java.getMethod(
+                "forceStopPackage", String::class.java, Int::class.java
+            ).invoke(
+                it, packageName, userId
+            )
+        }
+        true
+    } catch (t: Throwable) {
+        HLog.e(t)
+        false
+    }
+
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
+        if (disabled) forceStopApp(packageName)
         try {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             val newState = when {
@@ -75,9 +92,11 @@ object HShizuku {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
         return try {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
-            HiddenApiBypass.invoke(
+            (if (HTarget.P) HiddenApiBypass.invoke(
                 pm::class.java, pm, "getApplicationHiddenSettingAsUser", packageName, userId
-            ) as Boolean
+            ) else pm::class.java.getMethod(
+                "getApplicationHiddenSettingAsUser", String::class.java, Int::class.java
+            ).invoke(pm, packageName, userId)) as Boolean
         } catch (t: Throwable) {
             HLog.e(t)
             false
@@ -86,6 +105,7 @@ object HShizuku {
 
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
+        if (hidden) forceStopApp(packageName)
         return try {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             pm::class.java.getMethod(
@@ -102,8 +122,8 @@ object HShizuku {
 
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
+        if (suspended) forceStopApp(packageName)
         return try {
-            if (suspended) forceStopApp(packageName)
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             (HiddenApiBypass.invoke(
                 pm::class.java,
@@ -131,13 +151,6 @@ object HShizuku {
                 )
                 HiddenApiBypass.invoke(it::class.java, it, "build")
             }
-
-    private fun forceStopApp(packageName: String) =
-        asInterface("android.app.IActivityManager", "activity").also {
-            HiddenApiBypass.invoke(
-                it::class.java, it, "forceStopPackage", packageName, userId
-            )
-        }
 
     fun uninstallApp(packageName: String): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return true

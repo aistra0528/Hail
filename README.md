@@ -60,7 +60,7 @@ Google 签名。
 
 - `DevicePolicyManager.setApplicationHidden`方法隐藏应用。
 
-- `DevicePolicyManager.setPackagesSuspended`方法暂停应用。
+- `DevicePolicyManager.setPackagesSuspended`方法暂停应用。(Android 7.0+)
 
 **设置为设备所有者的应用需要移除设备所有者后方可卸载。**
 
@@ -95,7 +95,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 - `pm disable`命令停用应用。
 
-- `pm suspend`命令暂停应用。
+- `pm suspend`命令暂停应用。(Android 10+)
 
 ### Shizuku - 停用 / 隐藏 / 暂停
 
@@ -105,7 +105,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 - `IPackageManager.setApplicationHiddenSettingAsUser`方法隐藏应用。
 
-- `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。
+- `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。(Android 10+)
 
 ## 恢复
 
