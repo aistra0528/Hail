@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity() {
 
 3. 翻译它并创建一个拉取请求。
 
-谢谢你啦！
+谢谢你。
 
 - 繁體中文 [@cracky5322](https://github.com/cracky5322)
 - 日本語 [@AokiFuru](https://github.com/AokiFuru) [@404potato](https://github.com/404potato)
