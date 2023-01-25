@@ -176,20 +176,21 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
-        when (newValue) {
-            HailData.MODE_DO_HIDE, HailData.MODE_DO_SUSPEND -> if (!HPolicy.isDeviceOwnerActive) {
-                MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_do)
-                    .setMessage(getString(R.string.msg_set_do, HPolicy.ADB_SET_DO))
+        val mode = newValue as String
+        when {
+            mode.startsWith(HailData.OWNER) -> if (!HPolicy.isDeviceOwnerActive) {
+                MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_owner)
+                    .setMessage(getString(R.string.msg_set_owner, HPolicy.ADB_SET_DO))
                     .setPositiveButton(android.R.string.ok, null)
                     .setNeutralButton(R.string.action_help) { _, _ -> HUI.openLink(HailData.URL_README) }
                     .create().show()
                 return false
             }
-            HailData.MODE_SU_DISABLE, HailData.MODE_SU_SUSPEND -> if (!HShell.checkSU) {
+            mode.startsWith(HailData.SU) -> if (!HShell.checkSU) {
                 HUI.showToast(R.string.permission_denied)
                 return false
             }
-            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_HIDE, HailData.MODE_SHIZUKU_SUSPEND -> return try {
+            mode.startsWith(HailData.SHIZUKU) -> return try {
                 when {
                     Shizuku.isPreV11() -> throw IllegalStateException("unsupported shizuku version")
                     Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED -> true

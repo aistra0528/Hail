@@ -29,13 +29,19 @@ object HailData {
     const val KEY_FROZEN = "frozen"
     const val WORKING_MODE = "working_mode"
     const val MODE_DEFAULT = "default"
-    const val MODE_DO_HIDE = "do_hide"
-    const val MODE_DO_SUSPEND = "do_suspend"
-    const val MODE_SU_DISABLE = "su_disable"
-    const val MODE_SU_SUSPEND = "su_suspend"
-    const val MODE_SHIZUKU_DISABLE = "shizuku_disable"
-    const val MODE_SHIZUKU_HIDE = "shizuku_hide"
-    const val MODE_SHIZUKU_SUSPEND = "shizuku_suspend"
+    const val OWNER = "owner_"
+    const val SU = "su_"
+    const val SHIZUKU = "shizuku_"
+    private const val DISABLE = "disable"
+    private const val HIDE = "hide"
+    private const val SUSPEND = "suspend"
+    const val MODE_OWNER_HIDE = "$OWNER$HIDE"
+    const val MODE_OWNER_SUSPEND = "$OWNER$SUSPEND"
+    const val MODE_SU_DISABLE = "$SU$DISABLE"
+    const val MODE_SU_SUSPEND = "$SU$SUSPEND"
+    const val MODE_SHIZUKU_DISABLE = "$SHIZUKU$DISABLE"
+    const val MODE_SHIZUKU_HIDE = "$SHIZUKU$HIDE"
+    const val MODE_SHIZUKU_SUSPEND = "$SHIZUKU$SUSPEND"
     private const val TILE_ACTION = "tile_action"
     private const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
     const val ACTION_NONE = "none"
@@ -67,7 +73,7 @@ object HailData {
     private const val AUTO_FREEZE_DELAY = "auto_freeze_delay"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
-    val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)
+    val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT) ?: MODE_DEFAULT
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
     val filterUserApps get() = sp.getBoolean(FILTER_USER_APPS, true)
     val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)

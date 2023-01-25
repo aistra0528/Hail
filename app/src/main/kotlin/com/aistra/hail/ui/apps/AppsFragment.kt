@@ -88,8 +88,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                         pkg == app.packageName -> {
                             when {
                                 HPolicy.isDeviceOwnerActive -> MaterialAlertDialogBuilder(activity).setTitle(
-                                    R.string.title_remove_do
-                                ).setMessage(R.string.msg_remove_do)
+                                    R.string.title_remove_owner
+                                ).setMessage(R.string.msg_remove_owner)
                                     .setPositiveButton(android.R.string.ok) { _, _ ->
                                         HPolicy.setOrganizationName()
                                         HPolicy.clearDeviceOwnerApp()

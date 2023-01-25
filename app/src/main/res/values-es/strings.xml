@@ -43,13 +43,13 @@
     <string name="msg_uninstall">¿Quieres desinstalar esta aplicación?</string>
     <string name="working_mode">Modo de trabajo</string>
     <string name="mode_default">Inactivo</string>
-    <string name="mode_do_hide">Administador de dispositivo - Ocultar</string>
+    <string name="mode_owner_hide">Administador de dispositivo - Ocultar</string>
     <string name="mode_su_disable">Superusuario - Deshabilitar</string>
     <string name="mode_shizuku_disable">Shizuku - Deshabilitar</string>
-    <string name="title_set_do">Establecer el administrador de dispositivo</string>
-    <string name="msg_set_do">Emitir el comando desde adb:\n%s</string>
-    <string name="title_remove_do">Elminar el administrador de dispositivo</string>
-    <string name="msg_remove_do">El Administrador de Dispositivo será eliminado, podría ser difícil establecerlo de nuevo después de la eliminación.\nLas aplicaciones ocultas siguen ocultas después de la eliminación, asegúrese de que ha desocultado las aplicaciones importantes.</string>
+    <string name="title_set_owner">Establecer el administrador de dispositivo</string>
+    <string name="msg_set_owner">Emitir el comando desde adb:\n%s</string>
+    <string name="title_remove_owner">Elminar el administrador de dispositivo</string>
+    <string name="msg_remove_owner">El Administrador de Dispositivo será eliminado, podría ser difícil establecerlo de nuevo después de la eliminación.\nLas aplicaciones ocultas siguen ocultas después de la eliminación, asegúrese de que ha desocultado las aplicaciones importantes.</string>
     <string name="tap_to_select">Pulse para multiseleccionar</string>
     <string name="filter_by">Filtro</string>
     <string name="filter_user_apps">Usuario</string>
@@ -118,7 +118,7 @@
     <string name="auto_freeze_delay">Retraso de congelamiento (minutos)</string>
     <string name="action_remove_whitelist">Eliminar de la lista blanca</string>
     <string name="action_whitelist">Añadir a la lista blanca</string>
-    <string name="mode_do_suspend">Administrador de dispositivo - Suspender</string>
+    <string name="mode_owner_suspend">Administrador de dispositivo - Suspender</string>
     <string name="mode_su_suspend">Superusuario - Suspender</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspender</string>
     <string name="action_unfreeze_remove_home">Descongelar y eliminar del inicio</string>

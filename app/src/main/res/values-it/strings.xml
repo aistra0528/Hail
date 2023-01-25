@@ -43,13 +43,13 @@
     <string name="msg_uninstall">Do you want to uninstall this app?</string>
     <string name="working_mode">Working mode</string>
     <string name="mode_default">Idle</string>
-    <string name="mode_do_hide">Device Owner - Hide</string>
+    <string name="mode_owner_hide">Device Owner - Hide</string>
     <string name="mode_su_disable">Superuser - Disable</string>
     <string name="mode_shizuku_disable">Shizuku - Disable</string>
-    <string name="title_set_do">Set Device Owner</string>
-    <string name="msg_set_do">Issue the command from adb:\n%s</string>
-    <string name="title_remove_do">Remove Device Owner</string>
-    <string name="msg_remove_do">Device Owner will be removed, it might be difficult to set it again after removal.\nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
+    <string name="title_set_owner">Set Device Owner</string>
+    <string name="msg_set_owner">Issue the command from adb:\n%s</string>
+    <string name="title_remove_owner">Remove Device Owner</string>
+    <string name="msg_remove_owner">Device Owner will be removed, it might be difficult to set it again after removal.\nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
     <string name="tap_to_select">Tap to multiselect</string>
     <string name="filter_by">Filter</string>
     <string name="filter_user_apps">User</string>
@@ -118,7 +118,7 @@
     <string name="auto_freeze_delay">Freeze delay (minutes)</string>
     <string name="action_whitelist">Add to Whitelist</string>
     <string name="action_remove_whitelist">Remove from Whitelist</string>
-    <string name="mode_do_suspend">Device Owner - Suspend</string>
+    <string name="mode_owner_suspend">Device Owner - Suspend</string>
     <string name="mode_su_suspend">Superuser - Suspend</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
     <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>

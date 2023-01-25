@@ -72,8 +72,8 @@
     <string name="label_time">Час встановлення</string>
     <string name="label_version">Версія</string>
     <string name="mode_default">Відключено</string>
-    <string name="mode_do_hide">Власник пристрою - приховати</string>
-    <string name="mode_do_suspend">Власник пристрою - Призупинити</string>
+    <string name="mode_owner_hide">Власник пристрою - приховати</string>
+    <string name="mode_owner_suspend">Власник пристрою - Призупинити</string>
     <string name="mode_shizuku_disable">Shizuku - Вимкнути</string>
     <string name="mode_shizuku_suspend">Shizuku - Призупинити</string>
     <string name="mode_su_disable">Root - Вимкнути</string>
@@ -88,9 +88,9 @@
     <string name="msg_redeem">Дякуємо!</string>
     <string name="msg_redeem_expired">Термін дії коду закінчився</string>
     <string name="msg_redeem_invalid">Невірний код</string>
-    <string name="msg_remove_do">Власник пристрою буде видалено, може бути важко встановити його знову після видалення.\nПриховані програми залишаються прихованими після видалення, переконайтеся, що у вас є можливість приховати важливі програми.</string>
+    <string name="msg_remove_owner">Власник пристрою буде видалено, може бути важко встановити його знову після видалення.\nПриховані програми залишаються прихованими після видалення, переконайтеся, що у вас є можливість приховати важливі програми.</string>
     <string name="msg_selected">Вибрано: %s</string>
-    <string name="msg_set_do">Видати команду з adb:\n%s</string>
+    <string name="msg_set_owner">Видати команду з adb:\n%s</string>
     <string name="msg_text_copied">Скопійовано: %s</string>
     <string name="msg_unfreeze">Розморожено: %s</string>
     <string name="msg_uninstall">Ви хочете видалити цей додаток?</string>
@@ -113,8 +113,8 @@
     <string name="title_customize">Налаштувати</string>
     <string name="title_donate">Дякуємо!</string>
     <string name="title_home">Додому</string>
-    <string name="title_remove_do">Видалити власника пристрою</string>
-    <string name="title_set_do">Встановити власника пристрою</string>
+    <string name="title_remove_owner">Видалити власника пристрою</string>
+    <string name="title_set_owner">Встановити власника пристрою</string>
     <string name="title_settings">Налаштування</string>
     <string name="title_shortcuts">Шорткати</string>
     <string name="working_mode">Робочий режим</string>

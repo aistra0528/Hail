@@ -43,13 +43,13 @@
     <string name="msg_uninstall">Вы хотите удалить это приложение?</string>
     <string name="working_mode">Режим работы</string>
     <string name="mode_default">Отключено</string>
-    <string name="mode_do_hide">Владелец устройства - Скрытие</string>
+    <string name="mode_owner_hide">Владелец устройства - Скрытие</string>
     <string name="mode_su_disable">Root - Отключение</string>
     <string name="mode_shizuku_disable">Shizuku - Отключение</string>
-    <string name="title_set_do">Настройка режима Владелец устройства</string>
-    <string name="msg_set_do">Выполните команду из adb:\n%s</string>
-    <string name="title_remove_do">Удаление Владельца устройства</string>
-    <string name="msg_remove_do">Владелец устройства будет удален, после удаления может быть сложно настроить его снова.\nСкрытые приложения останутся такими же после удаления. Убедитесь, что вы отключили скрытие для важных приложений.</string>
+    <string name="title_set_owner">Настройка режима Владелец устройства</string>
+    <string name="msg_set_owner">Выполните команду из adb:\n%s</string>
+    <string name="title_remove_owner">Удаление Владельца устройства</string>
+    <string name="msg_remove_owner">Владелец устройства будет удален, после удаления может быть сложно настроить его снова.\nСкрытые приложения останутся такими же после удаления. Убедитесь, что вы отключили скрытие для важных приложений.</string>
     <string name="tap_to_select">Нажмите, чтобы выбрать несколько</string>
     <string name="filter_by">Фильтр</string>
     <string name="filter_user_apps">Пользовательские</string>
@@ -120,7 +120,7 @@
     <string name="auto_freeze_delay">Задержка заморозки (минуты)</string>
     <string name="action_whitelist">Добавить в Белый список</string>
     <string name="action_remove_whitelist">Удалить из Белого списка</string>
-    <string name="mode_do_suspend">Владелец устройства - Приостановка</string>
+    <string name="mode_owner_suspend">Владелец устройства - Приостановка</string>
     <string name="mode_su_suspend">Root - Приостановка</string>
     <string name="mode_shizuku_suspend">Shizuku - Приостановка</string>
     <string name="action_unfreeze_remove_home">Разморозить и удалить из Главной</string>

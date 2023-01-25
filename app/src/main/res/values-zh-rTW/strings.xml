@@ -43,13 +43,13 @@
     <string name="msg_uninstall">要解除安裝此應用程式嗎？</string>
     <string name="working_mode">工作模式</string>
     <string name="mode_default">空閒</string>
-    <string name="mode_do_hide">裝置所有者 - 隱藏</string>
+    <string name="mode_owner_hide">裝置所有者 - 隱藏</string>
     <string name="mode_su_disable">超級使用者 - 停用</string>
     <string name="mode_shizuku_disable">Shizuku - 停用</string>
-    <string name="title_set_do">設定裝置所有者</string>
-    <string name="msg_set_do">透過 adb 發出命令：\n%s</string>
-    <string name="title_remove_do">移除裝置所有者</string>
-    <string name="msg_remove_do">將移除雹的裝置所有者，移除後可能難以再次設定。\n已隱藏的應用程式在移除後仍會隱藏，請確保您已將重要的應用程式取消隱藏。</string>
+    <string name="title_set_owner">設定裝置所有者</string>
+    <string name="msg_set_owner">透過 adb 發出命令：\n%s</string>
+    <string name="title_remove_owner">移除裝置所有者</string>
+    <string name="msg_remove_owner">將移除雹的裝置所有者，移除後可能難以再次設定。\n已隱藏的應用程式在移除後仍會隱藏，請確保您已將重要的應用程式取消隱藏。</string>
     <string name="tap_to_select">點按多選</string>
     <string name="filter_by">篩選</string>
     <string name="filter_user_apps">使用者</string>
@@ -116,7 +116,7 @@
     <string name="action_export_all">全部匯出</string>
     <string name="skip_notifying_app">跳過通知中應用程式</string>
     <string name="auto_freeze_delay">凍結延時（分鐘）</string>
-    <string name="mode_do_suspend">裝置所有者 - 暫停</string>
+    <string name="mode_owner_suspend">裝置所有者 - 暫停</string>
     <string name="mode_su_suspend">超級使用者 - 暫停</string>
     <string name="mode_shizuku_suspend">Shizuku - 暫停</string>
     <string name="action_unfreeze_remove_home">解凍並從首頁中移除</string>

@@ -44,13 +44,13 @@
     <string name="msg_uninstall">要卸载此应用吗？</string>
     <string name="working_mode">工作模式</string>
     <string name="mode_default">空闲</string>
-    <string name="mode_do_hide">设备所有者 - 隐藏</string>
+    <string name="mode_owner_hide">设备所有者 - 隐藏</string>
     <string name="mode_su_disable">超级用户 - 停用</string>
     <string name="mode_shizuku_disable">Shizuku - 停用</string>
-    <string name="title_set_do">设置设备所有者</string>
-    <string name="msg_set_do">通过 adb 发出命令：\n%s</string>
-    <string name="title_remove_do">移除设备所有者</string>
-    <string name="msg_remove_do">将移除雹的设备所有者，移除后可能难以再次设置。\n已隐藏的应用在移除后仍会隐藏，请确保您已将重要的应用取消隐藏。</string>
+    <string name="title_set_owner">设置设备所有者</string>
+    <string name="msg_set_owner">通过 adb 发出命令：\n%s</string>
+    <string name="title_remove_owner">移除设备所有者</string>
+    <string name="msg_remove_owner">将移除雹的设备所有者，移除后可能难以再次设置。\n已隐藏的应用在移除后仍会隐藏，请确保您已将重要的应用取消隐藏。</string>
     <string name="tap_to_select">点按多选</string>
     <string name="filter_by">筛选</string>
     <string name="filter_user_apps">用户</string>
@@ -117,7 +117,7 @@
     <string name="action_export_all">全部导出</string>
     <string name="skip_notifying_app">跳过通知中应用</string>
     <string name="auto_freeze_delay">冻结延时（分钟）</string>
-    <string name="mode_do_suspend">设备所有者 - 暂停</string>
+    <string name="mode_owner_suspend">设备所有者 - 暂停</string>
     <string name="mode_su_suspend">超级用户 - 暂停</string>
     <string name="mode_shizuku_suspend">Shizuku - 暂停</string>
     <string name="action_freeze_non_whitelisted">冻结非白名单</string>

@@ -6,17 +6,18 @@ import com.aistra.hail.utils.*
 
 object AppManager {
     val lockScreen: Boolean
-        get() = when (HailData.workingMode) {
-            HailData.MODE_DO_HIDE, HailData.MODE_DO_SUSPEND -> HPolicy.lockScreen
-            HailData.MODE_SU_DISABLE, HailData.MODE_SU_SUSPEND -> HShell.lockScreen
-            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_HIDE, HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.lockScreen
+        get() = when {
+            HailData.workingMode.startsWith(HailData.OWNER) -> HPolicy.lockScreen
+            HailData.workingMode.startsWith(HailData.SU) -> HShell.lockScreen
+            HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.lockScreen
             else -> false
         }
 
     fun isAppFrozen(packageName: String): Boolean = when (HailData.workingMode) {
-        HailData.MODE_DO_HIDE -> HPolicy.isAppHidden(packageName)
+        HailData.MODE_OWNER_HIDE -> HPolicy.isAppHidden(packageName)
+        HailData.MODE_OWNER_SUSPEND -> HPolicy.isAppSuspended(packageName)
         HailData.MODE_SHIZUKU_HIDE -> HShizuku.isAppHidden(packageName)
-        HailData.MODE_DO_SUSPEND, HailData.MODE_SU_SUSPEND, HailData.MODE_SHIZUKU_SUSPEND -> HPackages.isAppSuspended(
+        HailData.MODE_SU_SUSPEND, HailData.MODE_SHIZUKU_SUSPEND -> HPackages.isAppSuspended(
             packageName
         )
         else -> HPackages.isAppDisabled(packageName)
@@ -24,8 +25,8 @@ object AppManager {
 
     fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =
         packageName != BuildConfig.APPLICATION_ID && when (HailData.workingMode) {
-            HailData.MODE_DO_HIDE -> HPolicy.setAppHidden(packageName, frozen)
-            HailData.MODE_DO_SUSPEND -> HPolicy.setAppSuspended(packageName, frozen)
+            HailData.MODE_OWNER_HIDE -> HPolicy.setAppHidden(packageName, frozen)
+            HailData.MODE_OWNER_SUSPEND -> HPolicy.setAppSuspended(packageName, frozen)
             HailData.MODE_SU_DISABLE -> HShell.setAppDisabled(packageName, frozen)
             HailData.MODE_SU_SUSPEND -> HShell.setAppSuspended(packageName, frozen)
             HailData.MODE_SHIZUKU_DISABLE -> HShizuku.setAppDisabled(packageName, frozen)
@@ -35,13 +36,16 @@ object AppManager {
         }
 
     fun uninstallApp(packageName: String) {
-        when (HailData.workingMode) {
-            HailData.MODE_DO_HIDE, HailData.MODE_DO_SUSPEND -> if (HPolicy.uninstallApp(packageName)) return
-            HailData.MODE_SU_DISABLE, HailData.MODE_SU_SUSPEND -> if (HShell.uninstallApp(
+        when {
+            HailData.workingMode.startsWith(HailData.OWNER) -> if (HPolicy.uninstallApp(
                     packageName
                 )
             ) return
-            HailData.MODE_SHIZUKU_DISABLE, HailData.MODE_SHIZUKU_HIDE, HailData.MODE_SHIZUKU_SUSPEND -> if (HShizuku.uninstallApp(
+            HailData.workingMode.startsWith(HailData.SU) -> if (HShell.uninstallApp(
+                    packageName
+                )
+            ) return
+            HailData.workingMode.startsWith(HailData.SHIZUKU) -> if (HShizuku.uninstallApp(
                     packageName
                 )
             ) return
