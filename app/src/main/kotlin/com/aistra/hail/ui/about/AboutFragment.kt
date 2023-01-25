@@ -62,16 +62,14 @@ class AboutFragment : MainFragment(), View.OnClickListener {
             binding.actionCoolapk -> HUI.openLink(HailData.URL_COOLAPK)
             binding.actionDonate -> onDonate()
             binding.actionGithub -> HUI.openLink(HailData.URL_GITHUB)
-            binding.actionTranslate -> HUI.openLink(HailData.URL_README)
+            binding.actionTranslate -> HUI.openLink(HailData.URL_TRANSLATE)
             binding.actionLicenses -> MaterialAlertDialogBuilder(activity).setTitle(R.string.action_licenses)
                 .setView(MaterialTextView(activity).apply {
                     val padding = resources.getDimensionPixelOffset(R.dimen.dialog_padding)
                     setPadding(padding, 0, padding, 0)
                     text = resources.openRawResource(R.raw.licenses).bufferedReader().readText()
                     Linkify.addLinks(this, Linkify.EMAIL_ADDRESSES or Linkify.WEB_URLS)
-                })
-                .setPositiveButton(android.R.string.ok, null)
-                .create().show()
+                }).setPositiveButton(android.R.string.ok, null).create().show()
         }
     }
 
@@ -85,33 +83,24 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                     }
                     1 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setView(ShapeableImageView(activity).apply {
-                            val padding =
-                                resources.getDimensionPixelOffset(R.dimen.dialog_padding)
+                            val padding = resources.getDimensionPixelOffset(R.dimen.dialog_padding)
                             setPadding(0, padding, 0, padding)
                             setImageResource(R.mipmap.qr_wechat)
-                        })
-                        .setPositiveButton(R.string.donate_wechat_scan) { _, _ ->
-                            app.packageManager.getLaunchIntentForPackage("com.tencent.mm")
-                                ?.let {
-                                    it.putExtra("LauncherUI.From.Scaner.Shortcut", true)
-                                    startActivity(it)
-                                } ?: HUI.showToast(R.string.app_not_installed)
-                        }
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .create().show()
+                        }).setPositiveButton(R.string.donate_wechat_scan) { _, _ ->
+                            app.packageManager.getLaunchIntentForPackage("com.tencent.mm")?.let {
+                                it.putExtra("LauncherUI.From.Scaner.Shortcut", true)
+                                startActivity(it)
+                            } ?: HUI.showToast(R.string.app_not_installed)
+                        }.setNegativeButton(android.R.string.cancel, null).create().show()
                     2 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setMessage(R.string.donate_bilibili_msg)
                         .setPositiveButton(R.string.donate_bilibili_space) { _, _ ->
                             HUI.openLink(HailData.URL_BILIBILI)
-                        }
-                        .setNegativeButton(R.string.donate_bilibili_cancel, null)
-                        .create().show()
+                        }.setNegativeButton(R.string.donate_bilibili_cancel, null).create().show()
                     3 -> HUI.openLink(HailData.URL_LIBERAPAY)
                     4 -> HUI.openLink(HailData.URL_PAYPAL)
                 }
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .create().show()
+            }.setNegativeButton(android.R.string.cancel, null).create().show()
     }
 
     private fun onRedeem() {
@@ -122,18 +111,15 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         val input = DialogInputBinding.inflate(layoutInflater, FrameLayout(activity), true)
         input.inputLayout.setHint(R.string.action_redeem)
         input.editText.filters = arrayOf(InputFilter.LengthFilter(64))
-        MaterialAlertDialogBuilder(activity)
-            .setView(input.root.parent as View)
+        MaterialAlertDialogBuilder(activity).setView(input.root.parent as View)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 val progress =
                     layoutInflater.inflate(R.layout.dialog_progress, FrameLayout(activity), true)
-                val dialog = MaterialAlertDialogBuilder(activity)
-                    .setView(progress)
-                    .setCancelable(false).create()
+                val dialog =
+                    MaterialAlertDialogBuilder(activity).setView(progress).setCancelable(false)
+                        .create()
                 aboutViewModel.codeCheck(input.editText.text.toString(), dialog)
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .create().show()
+            }.setNegativeButton(android.R.string.cancel, null).create().show()
     }
 
     override fun onDestroyView() {

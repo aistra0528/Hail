@@ -24,6 +24,7 @@ object HailData {
     const val URL_LIBERAPAY = "https://liberapay.com/aistra0528"
     const val URL_PAYPAL = "https://www.paypal.me/aistra0528"
     const val URL_REDEEM_CODE = "https://aistra0528.github.io/hail/code"
+    const val URL_TRANSLATE = "https://hosted.weblate.org/engage/hail/"
     const val VERSION = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     const val KEY_PACKAGE = "package"
     const val KEY_FROZEN = "frozen"

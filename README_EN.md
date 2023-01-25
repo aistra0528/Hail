@@ -5,6 +5,7 @@
 # Hail 雹
 
 [![Android CI status](https://github.com/aistra0528/Hail/workflows/Android%20CI/badge.svg)](https://github.com/aistra0528/Hail/actions)
+[![Translation status](https://hosted.weblate.org/widgets/hail/-/svg-badge.svg)](https://hosted.weblate.org/engage/hail/)
 [![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)
 [![License](https://img.shields.io/github/license/aistra0528/Hail)](LICENSE)
 
@@ -214,24 +215,10 @@ class MainActivity : AppCompatActivity() {
 
 ## Help Translate
 
-Translate `app/src/main/res/values/strings.xml` and put it in the corresponding path.
+To translate Hail into your language, or to improve an existing translation,
+use [Weblate](https://hosted.weblate.org/engage/hail/).
 
-or
-
-1. Create an issue about which language you want to translate into.
-
-2. We will create a string resource file in the corresponding path.
-
-3. Translate it and create a pull request.
-
-Thank you!
-
-- 繁體中文 [@cracky5322](https://github.com/cracky5322)
-- 日本語 [@AokiFuru](https://github.com/AokiFuru) [@404potato](https://github.com/404potato)
-- Русский [@tommynok](https://github.com/tommynok)
-- Español [@cyanwolfg](https://github.com/cyanwolfg)
-- Deutsch [@Enkidu70](https://github.com/Enkidu70)
-- Українська [@Operator404](https://github.com/Operator404)
+[![Translation status](https://hosted.weblate.org/widgets/hail/-/multi-auto.svg)](https://hosted.weblate.org/engage/hail/)
 
 ## License
 

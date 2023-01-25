@@ -3,6 +3,7 @@
 # 雹 Hail
 
 [![Android CI status](https://github.com/aistra0528/Hail/workflows/Android%20CI/badge.svg)](https://github.com/aistra0528/Hail/actions)
+[![翻译状态](https://hosted.weblate.org/widgets/hail/-/svg-badge.svg)](https://hosted.weblate.org/engage/hail/)
 [![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)
 [![License](https://img.shields.io/github/license/aistra0528/Hail)](LICENSE)
 
@@ -196,24 +197,9 @@ class MainActivity : AppCompatActivity() {
 
 ## 协助翻译
 
-翻译 `app/src/main/res/values/strings.xml` 并放在相应语言的路径中。
+要将雹翻译成您的语言，或完善现有的翻译，请使用 [Weblate](https://hosted.weblate.org/engage/hail/)。
 
-或
-
-1. 创建一个你想翻译成哪种语言的问题。
-
-2. 我们将在相应语言的路径中创建一个字符串资源文件。
-
-3. 翻译它并创建一个拉取请求。
-
-谢谢你。
-
-- 繁體中文 [@cracky5322](https://github.com/cracky5322)
-- 日本語 [@AokiFuru](https://github.com/AokiFuru) [@404potato](https://github.com/404potato)
-- Русский [@tommynok](https://github.com/tommynok)
-- Español [@cyanwolfg](https://github.com/cyanwolfg)
-- Deutsch [@Enkidu70](https://github.com/Enkidu70)
-- Українська [@Operator404](https://github.com/Operator404)
+[![翻译状态](https://hosted.weblate.org/widgets/hail/-/multi-auto.svg)](https://hosted.weblate.org/engage/hail/)
 
 ## 许可证
 
