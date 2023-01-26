@@ -131,7 +131,7 @@
     <string name="dynamic_shortcut_action">Действие динамического ярлыка</string>
     <string name="action_none">Нет</string>
     <string name="mode_shizuku_hide">Shizuku - Скрытие</string>
-    <string name="action_freeze_tag">Freeze tag</string>
-    <string name="action_unfreeze_tag">Unfreeze tag</string>
-    <string name="icon_pack">Icon pack</string>
+    <string name="action_freeze_tag">Заморозка метки</string>
+    <string name="action_unfreeze_tag">Разморозить метку</string>
+    <string name="icon_pack">Пакет иконок</string>
 </resources>
