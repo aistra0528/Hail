@@ -57,7 +57,7 @@
     <string name="donate_bilibili">bilibili</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_bilibili_msg">Підписатись на bilibili.</string>
-    <string name="donate_bilibili_space">My space</string>
+    <string name="donate_bilibili_space">Мій простір</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="donate_wechat">WeChat Pay</string>
@@ -124,10 +124,10 @@
     <string name="action_none">Немає</string>
     <string name="mode_shizuku_hide">Shizuku - приховати</string>
     <plurals name="deferred_task_entry">
-        <item quantity="one">%d хв.</item>
-        <item quantity="few">%d хв.</item>
-        <item quantity="many">%d хв.</item>
-        <item quantity="other">%d хв.</item>
+        <item quantity="one">%d хвилина</item>
+        <item quantity="few">%d хвилини</item>
+        <item quantity="many">%d хвилин</item>
+        <item quantity="other">%d хвилин</item>
     </plurals>
     <plurals name="msg_deferred_task">
         <item quantity="one">%2$s через %1$d хвилину: %3$s</item>
