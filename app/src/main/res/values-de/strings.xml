@@ -23,14 +23,14 @@
     <string name="action_unfreeze_current">Aktuelle auftauen</string>
     <string name="action_freeze_non_whitelisted">Nicht auf der Whitelist stehende einfrieren</string>
     <string name="action_lock">Sperren</string>
-    <string name="action_lock_freeze">Sperren &amp; einfrieren</string>
+    <string name="action_lock_freeze">Sperren und einfrieren</string>
     <string name="action_launch">Starten</string>
     <string name="action_freeze">Einfrieren</string>
     <string name="action_unfreeze">Auftauen</string>
     <string name="action_deferred_task">Zurückgestellte Aufgaben</string>
-    <string name="action_tag_add">Etikett (tag) hinzufügen</string>
-    <string name="action_tag_remove">Etikett (tag) entfernen</string>
-    <string name="action_tag_set">Etikett (tag) setzen</string>
+    <string name="action_tag_add">Etikett hinzufügen</string>
+    <string name="action_tag_remove">Etikett entfernen</string>
+    <string name="action_tag_set">Etikett setzen</string>
     <string name="action_add_pin_shortcut">Zu Startbildschirm hinzufügen</string>
     <string name="action_export_clipboard">In die Zwischenablage exportieren</string>
     <string name="action_import_clipboard">Aus der Zwischenablage importieren</string>
@@ -40,7 +40,7 @@
     <string name="action_undo">Rückgängig machen</string>
     <string name="action_help">Hilfe</string>
     <string name="action_search">Suchen</string>
-    <string name="action_details">App Information</string>
+    <string name="action_details">App-Informationen</string>
     <string name="action_extract_apk">APK extrahieren</string>
     <string name="action_uninstall">Deinstallieren</string>
     <string name="msg_uninstall">Diese Anwendung deistallieren?</string>
