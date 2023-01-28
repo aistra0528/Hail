@@ -35,21 +35,22 @@ object AppManager {
             else -> false
         }
 
-    fun uninstallApp(packageName: String) {
+    fun uninstallApp(packageName: String): Boolean {
         when {
             HailData.workingMode.startsWith(HailData.OWNER) -> if (HPolicy.uninstallApp(
                     packageName
                 )
-            ) return
+            ) return true
             HailData.workingMode.startsWith(HailData.SU) -> if (HShell.uninstallApp(
                     packageName
                 )
-            ) return
+            ) return true
             HailData.workingMode.startsWith(HailData.SHIZUKU) -> if (HShizuku.uninstallApp(
                     packageName
                 )
-            ) return
+            ) return true
         }
         HUI.startActivity(Intent.ACTION_DELETE, HPackages.packageUri(packageName))
+        return false
     }
 }

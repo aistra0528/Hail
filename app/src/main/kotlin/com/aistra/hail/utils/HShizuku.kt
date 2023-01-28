@@ -1,16 +1,12 @@
 package com.aistra.hail.utils
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.VersionedPackage
 import android.os.IBinder
 import android.os.SystemClock
 import android.view.InputEvent
 import android.view.KeyEvent
 import com.aistra.hail.BuildConfig
-import com.aistra.hail.HailApp
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
@@ -155,6 +151,19 @@ object HShizuku {
     fun uninstallApp(packageName: String): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return true
         return try {
+            // This method is planned to be removed from Shizuku API 14.
+            Shizuku.newProcess(arrayOf(if (isRoot) "su" else "sh"), null, null).run {
+                outputStream.use {
+                    val uninstall =
+                        if (isRoot || HPackages.canUninstallNormally(packageName)) "uninstall"
+                        else "uninstall --user current"
+                    it.write("pm $uninstall $packageName".toByteArray())
+                }
+                (waitFor() == 0).also {
+                    destroy()
+                }
+            }
+            /* It doesn't work
             val pi = asInterface(
                 "android.content.pm.IPackageManager", "package"
             ).let { HiddenApiBypass.invoke(it::class.java, it, "getPackageInstaller") }
@@ -172,13 +181,13 @@ object HShizuku {
                 "uninstall",
                 VersionedPackage(packageName, PackageManager.VERSION_CODE_HIGHEST),
                 callerPackage,
-                0/*flags*/,
+                0 /*flags*/,
                 PendingIntent.getActivity(
                     HailApp.app, 0, Intent(), PendingIntent.FLAG_IMMUTABLE
                 ).intentSender,
                 userId
             )
-            false // It doesn't work
+            true */
         } catch (t: Throwable) {
             HLog.e(t)
             false

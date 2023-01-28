@@ -59,11 +59,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     override fun onItemLongClick(info: PackageInfo): Boolean = true.also {
         val name = info.applicationInfo.loadLabel(app.packageManager)
         val pkg = info.packageName
-        val canUninstall = HPackages.canUninstall(pkg)
         MaterialAlertDialogBuilder(activity).setTitle(name)
-            .setItems(resources.getStringArray(R.array.apps_action_entries).toMutableList().filter {
-                it != getString(R.string.action_uninstall) || canUninstall
-            }.toTypedArray()) { _, which ->
+            .setItems(resources.getStringArray(R.array.apps_action_entries)) { _, which ->
                 when (which) {
                     0 -> HUI.startActivity(
                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS, HPackages.packageUri(pkg)
@@ -107,7 +104,9 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                         else -> MaterialAlertDialogBuilder(activity).setTitle(name)
                             .setMessage(R.string.msg_uninstall)
                             .setPositiveButton(android.R.string.ok) { _, _ ->
-                                AppManager.uninstallApp(pkg)
+                                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(
+                                    refreshLayout
+                                )
                             }.setNegativeButton(android.R.string.cancel, null).create().show()
                     }
                 }

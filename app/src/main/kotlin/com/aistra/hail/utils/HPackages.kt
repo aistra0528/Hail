@@ -39,6 +39,6 @@ object HPackages {
         HTarget.Q && HailApp.app.packageManager.isPackageSuspended(packageName)
     } ?: false
 
-    fun canUninstall(packageName: String): Boolean =
+    fun canUninstallNormally(packageName: String): Boolean =
         getApplicationInfoOrNull(packageName)?.sourceDir?.startsWith("/data") ?: false
 }

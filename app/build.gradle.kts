@@ -14,9 +14,6 @@ android {
         targetSdk = 33
         versionCode = 21
         versionName = "1.1.0"
-        resourceConfigurations += arrayOf(
-            "de", "en", "es", "it", "ja-rJP", "ru", "uk", "zh-rCN", "zh-rTW"
-        )
     }
     val signing = if (file("../signing.properties").exists()) {
         signingConfigs.create("release") {
@@ -37,15 +34,14 @@ android {
             isShrinkResources = true
             signingConfig = signing
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
     applicationVariants.all {
         outputs.all {
-            (this as? com.android.build.gradle.internal.api.ApkVariantOutputImpl)
-                ?.outputFileName = "Hail-v$versionName.apk"
+            (this as? com.android.build.gradle.internal.api.ApkVariantOutputImpl)?.outputFileName =
+                "Hail-v$versionName.apk"
         }
     }
     kotlinOptions {
