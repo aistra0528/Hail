@@ -3,6 +3,7 @@ package com.aistra.hail
 import android.app.Application
 import android.content.Intent
 import com.aistra.hail.app.AppManager
+import com.aistra.hail.app.DirtyDataUpdater
 import com.aistra.hail.app.HailData
 import com.aistra.hail.services.AutoFreezeService
 import com.aistra.hail.utils.HTarget
@@ -11,8 +12,9 @@ import com.google.android.material.color.DynamicColors
 class HailApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        DynamicColors.applyToActivitiesIfAvailable(this)
         app = this
+        DynamicColors.applyToActivitiesIfAvailable(this)
+        DirtyDataUpdater.update(this)
     }
 
     fun setAutoFreezeService() {

@@ -12,8 +12,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 33
-        versionCode = 21
-        versionName = "1.1.0"
+        versionCode = 22
+        versionName = "1.1.1"
     }
     val signing = if (file("../signing.properties").exists()) {
         signingConfigs.create("release") {
