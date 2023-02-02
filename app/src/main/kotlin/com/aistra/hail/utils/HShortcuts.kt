@@ -66,18 +66,23 @@ object HShortcuts {
         }
         if (HailData.dynamicShortcutAction == HailData.ACTION_NONE) return
         val id = when (HailData.dynamicShortcutAction) {
+            HailData.ACTION_FREEZE_ALL -> HailApi.ACTION_FREEZE_ALL
             HailData.ACTION_FREEZE_NON_WHITELISTED -> HailApi.ACTION_FREEZE_NON_WHITELISTED
+            HailData.ACTION_LOCK -> HailApi.ACTION_LOCK
             HailData.ACTION_LOCK_FREEZE -> HailApi.ACTION_LOCK_FREEZE
-            else -> HailApi.ACTION_FREEZE_ALL
+            else -> HailApi.ACTION_UNFREEZE_ALL
         }
         val icon = when (HailData.dynamicShortcutAction) {
-            HailData.ACTION_LOCK_FREEZE -> R.drawable.ic_outline_lock_shortcut
-            else -> R.drawable.ic_round_frozen_shortcut
+            HailData.ACTION_FREEZE_ALL, HailData.ACTION_FREEZE_NON_WHITELISTED -> R.drawable.ic_round_frozen_shortcut
+            HailData.ACTION_LOCK, HailData.ACTION_LOCK_FREEZE -> R.drawable.ic_outline_lock_shortcut
+            else -> R.drawable.ic_round_unfrozen_shortcut
         }
         val label = when (HailData.dynamicShortcutAction) {
+            HailData.ACTION_FREEZE_ALL -> R.string.action_freeze_all
             HailData.ACTION_FREEZE_NON_WHITELISTED -> R.string.action_freeze_non_whitelisted
+            HailData.ACTION_LOCK -> R.string.action_lock
             HailData.ACTION_LOCK_FREEZE -> R.string.action_lock_freeze
-            else -> R.string.action_freeze_all
+            else -> R.string.action_unfreeze_all
         }
         val action = ShortcutInfoCompat.Builder(HailApp.app, id).setIcon(
             getDrawableIcon(

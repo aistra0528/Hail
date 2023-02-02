@@ -67,24 +67,32 @@
     </string-array>
     <string-array name="tile_action_entries">
         <item>@string/action_freeze_all</item>
+        <item>@string/action_unfreeze_all</item>
         <item>@string/action_freeze_non_whitelisted</item>
+        <item>@string/action_lock</item>
         <item>@string/action_lock_freeze</item>
     </string-array>
     <string-array name="tile_action_values">
         <item>freeze_all</item>
+        <item>unfreeze_all</item>
         <item>freeze_non_whitelisted</item>
+        <item>lock</item>
         <item>lock_freeze</item>
     </string-array>
     <string-array name="dynamic_shortcut_action_entries">
         <item>@string/action_none</item>
         <item>@string/action_freeze_all</item>
+        <item>@string/action_unfreeze_all</item>
         <item>@string/action_freeze_non_whitelisted</item>
+        <item>@string/action_lock</item>
         <item>@string/action_lock_freeze</item>
     </string-array>
     <string-array name="dynamic_shortcut_action_values">
         <item>none</item>
         <item>freeze_all</item>
+        <item>unfreeze_all</item>
         <item>freeze_non_whitelisted</item>
+        <item>lock</item>
         <item>lock_freeze</item>
     </string-array>
     <string-array name="api_redirect_action_entries">
