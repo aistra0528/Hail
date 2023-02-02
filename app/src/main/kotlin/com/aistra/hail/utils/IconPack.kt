@@ -18,7 +18,7 @@ object IconPack {
                     resources, resources.getIdentifier(it, "drawable", HailData.iconPack)
                 )
             }
-        } catch (_: Exception) {
+        } catch (_: Throwable) {
         }
         return null
     }
