@@ -7,7 +7,6 @@ object HTarget {
 
     val N = target(Build.VERSION_CODES.N)
     val O = target(Build.VERSION_CODES.O)
-    val O_MR1 = target(Build.VERSION_CODES.O_MR1)
     val P = target(Build.VERSION_CODES.P)
     val Q = target(Build.VERSION_CODES.Q)
     val T = target(Build.VERSION_CODES.TIRAMISU)

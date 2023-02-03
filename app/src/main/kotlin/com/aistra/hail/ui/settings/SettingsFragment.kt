@@ -1,7 +1,5 @@
 package com.aistra.hail.ui.settings
 
-import android.app.NotificationManager
-import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,7 +7,7 @@ import android.os.SystemClock
 import android.provider.Settings
 import android.view.*
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.getSystemService
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -44,15 +42,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             } else true
         }
         findPreference<Preference>(HailData.SKIP_NOTIFYING_APP)?.setOnPreferenceChangeListener { _, value ->
-            val name = ComponentName(requireContext(), AutoFreezeService::class.java.name)
-            val isGranted = if (HTarget.O_MR1) {
-                requireContext().getSystemService<NotificationManager>()!!
-                    .isNotificationListenerAccessGranted(name)
-            } else {
-                Settings.Secure.getString(
-                    requireContext().contentResolver, "enabled_notification_listeners"
-                ).split(':').contains(name.toString())
-            }
+            val isGranted = NotificationManagerCompat.getEnabledListenerPackages(requireContext())
+                .contains(requireContext().packageName)
             if (value == true && !isGranted) {
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 false

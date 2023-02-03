@@ -8,7 +8,6 @@ import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.widget.ImageView
 import androidx.collection.LruCache
-import com.aistra.hail.HailApp
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import kotlinx.coroutines.*
@@ -128,11 +127,7 @@ object AppIconCache : CoroutineScope {
             if (bitmap != null) {
                 view.setImageBitmap(bitmap)
             } else {
-                if (HTarget.O) {
-                    view.setImageDrawable(HailApp.app.packageManager.defaultActivityIcon)
-                } else {
-                    view.setImageDrawable(null)
-                }
+                view.setImageDrawable(if (HTarget.O) context.packageManager.defaultActivityIcon else null)
             }
             view.colorFilter = if (setColorFilter) cf else null
         }

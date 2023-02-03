@@ -2,19 +2,19 @@ package com.aistra.hail
 
 import android.app.Application
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.DirtyDataUpdater
 import com.aistra.hail.app.HailData
 import com.aistra.hail.services.AutoFreezeService
-import com.aistra.hail.utils.HTarget
 import com.google.android.material.color.DynamicColors
 
 class HailApp : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
-        DynamicColors.applyToActivitiesIfAvailable(this)
-        DirtyDataUpdater.update(this)
+        DynamicColors.applyToActivitiesIfAvailable(app)
+        DirtyDataUpdater.update(app)
     }
 
     fun setAutoFreezeService() {
@@ -22,11 +22,8 @@ class HailApp : Application() {
         val hasUnfrozen =
             HailData.checkedList.any { !AppManager.isAppFrozen(it.packageName) && !it.whitelisted }
         val intent = Intent(app, AutoFreezeService::class.java)
-        when {
-            !hasUnfrozen -> app.stopService(intent)
-            HTarget.O -> app.startForegroundService(intent)
-            else -> app.startService(intent)
-        }
+        if (hasUnfrozen) ContextCompat.startForegroundService(app, intent)
+        else stopService(intent)
     }
 
     companion object {

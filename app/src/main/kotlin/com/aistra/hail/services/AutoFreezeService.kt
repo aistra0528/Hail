@@ -1,19 +1,17 @@
 package com.aistra.hail.services
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
 import android.service.notification.NotificationListenerService
+import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
-import androidx.core.content.getSystemService
 import com.aistra.hail.R
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.receiver.ScreenOffReceiver
-import com.aistra.hail.utils.HTarget
 
 class AutoFreezeService : NotificationListenerService() {
     private val channelID = javaClass.simpleName
@@ -46,16 +44,11 @@ class AutoFreezeService : NotificationListenerService() {
     }
 
     private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (HTarget.O) {
-            val name = getString(R.string.auto_freeze)
-            val importance = NotificationManager.IMPORTANCE_LOW
-            val channel = NotificationChannel(channelID, name, importance)
-            // Register the channel with the system
-            val notificationManager = getSystemService<NotificationManager>()
-            notificationManager?.createNotificationChannel(channel)
-        }
+        val name = getString(R.string.auto_freeze)
+        val importance = NotificationManagerCompat.IMPORTANCE_LOW
+        val channel = NotificationChannelCompat.Builder(channelID, importance).setName(name).build()
+        // Register the channel with the system
+        NotificationManagerCompat.from(this).createNotificationChannel(channel)
     }
 
     override fun onCreate() {
