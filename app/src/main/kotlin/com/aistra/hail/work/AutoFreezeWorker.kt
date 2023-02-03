@@ -1,7 +1,6 @@
 package com.aistra.hail.work
 
 import android.content.Context
-import android.content.Intent
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.aistra.hail.HailApp
@@ -27,11 +26,7 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
         return if (denied && i == 0) {
             Result.failure()
         } else {
-            applicationContext.stopService(
-                Intent(
-                    applicationContext, AutoFreezeService::class.java
-                )
-            )
+            HailApp.app.setAutoFreezeService(false)
             Result.success()
         }
     }

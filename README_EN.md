@@ -98,7 +98,7 @@ Search the message by search engine otherwise.
 
 #### Remove device owner
 
-Click Hail at Apps, then select Uninstall in options.
+Long press Hail at Apps, then select Uninstall in options.
 
 ### Superuser - Disable / Suspend
 

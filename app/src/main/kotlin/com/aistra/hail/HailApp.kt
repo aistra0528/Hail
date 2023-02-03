@@ -1,7 +1,9 @@
 package com.aistra.hail
 
 import android.app.Application
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.DirtyDataUpdater
@@ -17,13 +19,23 @@ class HailApp : Application() {
         DirtyDataUpdater.update(app)
     }
 
-    fun setAutoFreezeService() {
+    fun setAutoFreezeService(enabled: Boolean? = null) {
         if (HailData.autoFreezeAfterLock.not()) return
-        val hasUnfrozen =
-            HailData.checkedList.any { !AppManager.isAppFrozen(it.packageName) && !it.whitelisted }
+        val start = enabled
+            ?: HailData.checkedList.any { !AppManager.isAppFrozen(it.packageName) && !it.whitelisted }
         val intent = Intent(app, AutoFreezeService::class.java)
-        if (hasUnfrozen) ContextCompat.startForegroundService(app, intent)
-        else stopService(intent)
+        val name = ComponentName(app, AutoFreezeService::class.java)
+        if (start) {
+            packageManager.setComponentEnabledSetting(
+                name, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP
+            )
+            ContextCompat.startForegroundService(app, intent)
+        } else {
+            stopService(intent)
+            packageManager.setComponentEnabledSetting(
+                name, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP
+            )
+        }
     }
 
     companion object {

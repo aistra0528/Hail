@@ -17,7 +17,6 @@ import com.aistra.hail.HailApp
 import com.aistra.hail.R
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
-import com.aistra.hail.services.AutoFreezeService
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rikka.shizuku.Shizuku
@@ -50,12 +49,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             } else true
         }
         findPreference<Preference>(HailData.AUTO_FREEZE_AFTER_LOCK)?.setOnPreferenceChangeListener { _, autoFreezeAfterLock ->
-            if ((autoFreezeAfterLock as Boolean).not()) {
-                requireContext().stopService(
-                    Intent(
-                        requireContext(), AutoFreezeService::class.java
-                    )
-                )
+            if (autoFreezeAfterLock == false) {
+                HailApp.app.setAutoFreezeService(false)
             }
             true
         }

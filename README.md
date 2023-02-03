@@ -88,7 +88,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 #### 移除雹的设备所有者
 
-在雹的应用界面点按雹，在弹出的选项中选择卸载。
+在雹的应用界面长按雹，在弹出的选项中选择卸载。
 
 ### 超级用户 - 停用 / 暂停
 
