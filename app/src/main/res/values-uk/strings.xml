@@ -57,7 +57,7 @@
     <string name="donate_bilibili">bilibili</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_bilibili_msg">Підписатись на bilibili.</string>
-    <string name="donate_bilibili_space">Мій простір</string>
+    <string name="donate_bilibili_space">My space</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="donate_wechat">WeChat Pay</string>
