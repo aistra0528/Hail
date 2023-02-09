@@ -110,7 +110,7 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
         if (HailData.workingMode != HailData.MODE_DEFAULT) HailData.setGuideVersion()
         else MaterialAlertDialogBuilder(this).setMessage(R.string.msg_guide)
             .setPositiveButton(android.R.string.ok) { _, _ -> HailData.setGuideVersion() }
-            .setOnDismissListener { HailData.setGuideVersion() }.create().show()
+            .setOnDismissListener { HailData.setGuideVersion() }.show()
     }
 
     override fun onStop() {

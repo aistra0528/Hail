@@ -53,7 +53,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     override fun onItemClick(buttonView: CompoundButton) {
-        buttonView.performClick()
+        buttonView.callOnClick()
     }
 
     override fun onItemLongClick(info: PackageInfo): Boolean = true.also {
@@ -90,27 +90,29 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                                     .setPositiveButton(android.R.string.ok) { _, _ ->
                                         HPolicy.setOrganizationName()
                                         HPolicy.clearDeviceOwnerApp()
-                                        AppManager.uninstallApp(pkg)
-                                    }.setNegativeButton(android.R.string.cancel, null).create()
-                                    .show()
+                                        uninstallDialog(name, pkg)
+                                    }.setNegativeButton(android.R.string.cancel, null).show()
                                 HPolicy.isAdminActive -> {
                                     HPolicy.removeActiveAdmin()
-                                    AppManager.uninstallApp(pkg)
+                                    uninstallDialog(name, pkg)
                                 }
-                                else -> AppManager.uninstallApp(pkg)
+                                else -> uninstallDialog(name, pkg)
                             }
                         }
                         HailData.workingMode == HailData.MODE_DEFAULT -> AppManager.uninstallApp(pkg)
-                        else -> MaterialAlertDialogBuilder(activity).setTitle(name)
-                            .setMessage(R.string.msg_uninstall)
-                            .setPositiveButton(android.R.string.ok) { _, _ ->
-                                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(
-                                    refreshLayout
-                                )
-                            }.setNegativeButton(android.R.string.cancel, null).create().show()
+                        else -> uninstallDialog(name, pkg)
                     }
                 }
-            }.create().show()
+            }.show()
+    }
+
+    private fun uninstallDialog(name: CharSequence, pkg: String) {
+        MaterialAlertDialogBuilder(activity).setTitle(name).setMessage(R.string.msg_uninstall)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(
+                    refreshLayout
+                )
+            }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
     override fun onItemCheckedChange(

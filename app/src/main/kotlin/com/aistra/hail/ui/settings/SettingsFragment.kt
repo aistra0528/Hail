@@ -84,7 +84,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 if (HailData.iconPack == HailData.ACTION_NONE) return@setNeutralButton
                 HailData.setIconPack(HailData.ACTION_NONE)
                 AppIconCache.clear()
-            }.setNegativeButton(android.R.string.cancel, null).create().show()
+            }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
     private fun addPinShortcut() {
@@ -103,7 +103,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                                     HailApi.ACTION_FREEZE_TAG, HailData.tags[index].first
                                 )
                             )
-                        }.setNegativeButton(android.R.string.cancel, null).create().show()
+                        }.setNegativeButton(android.R.string.cancel, null).show()
                     1 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
                         .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
                             HShortcuts.addPinShortcut(
@@ -116,7 +116,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                                     HailApi.ACTION_UNFREEZE_TAG, HailData.tags[index].first
                                 )
                             )
-                        }.setNegativeButton(android.R.string.cancel, null).create().show()
+                        }.setNegativeButton(android.R.string.cancel, null).show()
                     2 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_round_frozen_shortcut
@@ -158,7 +158,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         Intent(HailApi.ACTION_LOCK_FREEZE)
                     )
                 }
-            }.setNegativeButton(android.R.string.cancel, null).create().show()
+            }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
@@ -169,7 +169,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     .setMessage(getString(R.string.msg_set_owner, HPolicy.ADB_SET_DO))
                     .setPositiveButton(android.R.string.ok, null)
                     .setNeutralButton(R.string.action_help) { _, _ -> HUI.openLink(HailData.URL_README) }
-                    .create().show()
+                    .show()
                 return false
             }
             mode.startsWith(HailData.SU) -> if (!HShell.checkSU) {

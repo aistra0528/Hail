@@ -48,8 +48,7 @@ class ApiActivity : HailActivity() {
 
     private fun showErrorDialog(t: Throwable) {
         MaterialAlertDialogBuilder(this).setMessage(t.message ?: t.stackTraceToString())
-            .setPositiveButton(android.R.string.ok, null).setOnDismissListener { finish() }.create()
-            .show()
+            .setPositiveButton(android.R.string.ok, null).setOnDismissListener { finish() }.show()
     }
 
     private fun requirePackage(extraName: String = HailData.KEY_PACKAGE): String =
@@ -83,7 +82,7 @@ class ApiActivity : HailActivity() {
                 showErrorDialog(t)
             }
         }.setNegativeButton(android.R.string.cancel, null)
-            .setOnDismissListener { if (shouldFinished) finish() }.create().show()
+            .setOnDismissListener { if (shouldFinished) finish() }.show()
     }
 
     private fun launchApp(pkg: String) {

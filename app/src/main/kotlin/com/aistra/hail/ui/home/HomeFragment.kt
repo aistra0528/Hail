@@ -187,7 +187,7 @@ class HomeFragment : MainFragment(),
                             ).setAction(R.string.action_undo) { HWork.cancelWork(pkg) }.show()
                         }
                         .setNegativeButton(android.R.string.cancel, null)
-                        .create().show()
+                        .show()
                 }
                 3 -> {
                     info.pinned = !info.pinned
@@ -224,7 +224,7 @@ class HomeFragment : MainFragment(),
                             showTagDialog(listOf(info))
                         }
                         .setNegativeButton(android.R.string.cancel, null)
-                        .create().show()
+                        .show()
                 }
                 6 -> HShortcuts.addPinShortcut(
                     info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
@@ -240,7 +240,7 @@ class HomeFragment : MainFragment(),
             HUI.startActivity(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS, HPackages.packageUri(pkg)
             )
-        }.setNegativeButton(android.R.string.cancel, null).create().show()
+        }.setNegativeButton(android.R.string.cancel, null).show()
         return true
     }
 
@@ -294,7 +294,7 @@ class HomeFragment : MainFragment(),
                                     showTagDialog(selectedList)
                                 }
                                 .setNegativeButton(android.R.string.cancel, null)
-                                .create().show()
+                                .show()
                         }
                         3 -> {
                             exportToClipboard(selectedList)
@@ -317,7 +317,7 @@ class HomeFragment : MainFragment(),
                     }
                 }
                 .setNegativeButton(R.string.action_deselect) { _, _ -> deselect() }
-                .create().show()
+                .show()
             true
         } else false
     }
@@ -407,7 +407,7 @@ class HomeFragment : MainFragment(),
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
-            .create().show()
+            .show()
     }
 
     private fun exportToClipboard(list: List<AppInfo>) {

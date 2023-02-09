@@ -69,7 +69,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                     setPadding(padding, 0, padding, 0)
                     text = resources.openRawResource(R.raw.licenses).bufferedReader().readText()
                     Linkify.addLinks(this, Linkify.EMAIL_ADDRESSES or Linkify.WEB_URLS)
-                }).setPositiveButton(android.R.string.ok, null).create().show()
+                }).setPositiveButton(android.R.string.ok, null).show()
         }
     }
 
@@ -91,16 +91,16 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                                 it.putExtra("LauncherUI.From.Scaner.Shortcut", true)
                                 startActivity(it)
                             } ?: HUI.showToast(R.string.app_not_installed)
-                        }.setNegativeButton(android.R.string.cancel, null).create().show()
+                        }.setNegativeButton(android.R.string.cancel, null).show()
                     2 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setMessage(R.string.donate_bilibili_msg)
                         .setPositiveButton(R.string.donate_bilibili_space) { _, _ ->
                             HUI.openLink(HailData.URL_BILIBILI)
-                        }.setNegativeButton(R.string.donate_bilibili_cancel, null).create().show()
+                        }.setNegativeButton(R.string.donate_bilibili_cancel, null).show()
                     3 -> HUI.openLink(HailData.URL_LIBERAPAY)
                     4 -> HUI.openLink(HailData.URL_PAYPAL)
                 }
-            }.setNegativeButton(android.R.string.cancel, null).create().show()
+            }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
     private fun onRedeem() {
@@ -119,7 +119,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                     MaterialAlertDialogBuilder(activity).setView(progress).setCancelable(false)
                         .create()
                 aboutViewModel.codeCheck(input.editText.text.toString(), dialog)
-            }.setNegativeButton(android.R.string.cancel, null).create().show()
+            }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
     override fun onDestroyView() {
