@@ -6,7 +6,6 @@ plugins {
 android {
     namespace = "com.aistra.hail"
     compileSdk = 33
-    buildToolsVersion = "33.0.0"
 
     defaultConfig {
         applicationId = "com.aistra.hail"
@@ -15,6 +14,7 @@ android {
         versionCode = 22
         versionName = "1.1.1"
     }
+
     val signing = if (file("../signing.properties").exists()) {
         signingConfigs.create("release") {
             val props =
@@ -38,18 +38,18 @@ android {
             )
         }
     }
-    applicationVariants.all {
-        outputs.all {
+    applicationVariants.configureEach {
+        outputs.configureEach {
             (this as? com.android.build.gradle.internal.api.ApkVariantOutputImpl)?.outputFileName =
                 "Hail-v$versionName.apk"
         }
     }
+    compileOptions {
+        sourceCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility(JavaVersion.VERSION_1_8)
+    }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
     buildFeatures {
         viewBinding = true
