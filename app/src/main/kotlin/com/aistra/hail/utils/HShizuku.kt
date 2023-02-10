@@ -3,11 +3,13 @@ package com.aistra.hail.utils
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.IBinder
+import android.os.ParcelFileDescriptor
 import android.os.SystemClock
 import android.view.InputEvent
 import android.view.KeyEvent
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.utils.HPackages.myUserId
+import moe.shizuku.server.IShizukuService
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
@@ -152,18 +154,18 @@ object HShizuku {
     fun uninstallApp(packageName: String): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return true
         return try {
-            // This method is planned to be removed from Shizuku API 14.
-            Shizuku.newProcess(arrayOf(if (isRoot) "su" else "sh"), null, null).run {
-                outputStream.use {
-                    val uninstall =
-                        if (isRoot || HPackages.canUninstallNormally(packageName)) "uninstall"
-                        else "uninstall --user current"
-                    it.write("pm $uninstall $packageName".toByteArray())
+            IShizukuService.Stub.asInterface(Shizuku.getBinder())
+                .newProcess(arrayOf(if (isRoot) "su" else "sh"), null, null).run {
+                    ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use {
+                        val uninstall =
+                            if (isRoot || HPackages.canUninstallNormally(packageName)) "uninstall"
+                            else "uninstall --user current"
+                        it.write("pm $uninstall $packageName".toByteArray())
+                    }
+                    (waitFor() == 0).also {
+                        destroy()
+                    }
                 }
-                (waitFor() == 0).also {
-                    destroy()
-                }
-            }
             /* It doesn't work
             val pi = asInterface(
                 "android.content.pm.IPackageManager", "package"
