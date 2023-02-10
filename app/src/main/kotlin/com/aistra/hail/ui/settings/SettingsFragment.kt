@@ -62,8 +62,14 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             addPinShortcut()
             true
         }
+        findPreference<Preference>(HailData.DYNAMIC_SHORTCUT_ACTION)?.setOnPreferenceChangeListener { _, action ->
+            HShortcuts.removeAllDynamicShortcuts()
+            HShortcuts.addDynamicShortcutAction(action as String)
+            true
+        }
         findPreference<Preference>("clear_dynamic_shortcuts")?.setOnPreferenceClickListener {
             HShortcuts.removeAllDynamicShortcuts()
+            HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
             true
         }
     }

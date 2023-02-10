@@ -44,7 +44,7 @@ object HailData {
     const val MODE_SHIZUKU_HIDE = SHIZUKU + HIDE
     const val MODE_SHIZUKU_SUSPEND = SHIZUKU + SUSPEND
     private const val TILE_ACTION = "tile_action"
-    private const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
+    const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
     const val ACTION_NONE = "none"
     const val ACTION_FREEZE_ALL = "freeze_all"
     const val ACTION_FREEZE_NON_WHITELISTED = "freeze_non_whitelisted"
@@ -75,7 +75,7 @@ object HailData {
     private const val AUTO_FREEZE_DELAY = "auto_freeze_delay"
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(HailApp.app)
-    val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT) ?: MODE_DEFAULT
+    val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)!!
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
     val filterUserApps get() = sp.getBoolean(FILTER_USER_APPS, true)
     val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)
@@ -85,7 +85,7 @@ object HailData {
     val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)
     val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
     val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
-    val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)
+    val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
@@ -98,7 +98,7 @@ object HailData {
     val guideVersion get() = sp.getInt(KEY_GUIDE_VERSION, 0)
     fun setGuideVersion() = sp.edit().putInt(KEY_GUIDE_VERSION, GUIDE_VERSION).apply()
 
-    val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE) ?: ACTION_NONE
+    val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE)!!
     fun setIconPack(packageName: String) = sp.edit().putString(ICON_PACK, packageName).apply()
 
     val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
