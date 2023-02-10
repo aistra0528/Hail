@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.view.InputEvent
 import android.view.KeyEvent
 import com.aistra.hail.BuildConfig
+import com.aistra.hail.utils.HPackages.myUserId
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
@@ -14,7 +15,7 @@ import rikka.shizuku.SystemServiceHelper
 
 object HShizuku {
     private val isRoot get() = Shizuku.getUid() == 0
-    private val userId get() = if (isRoot) android.os.Process.myUserHandle().hashCode() else 0
+    private val userId get() = if (isRoot) myUserId else 0
     private val callerPackage get() = if (isRoot) BuildConfig.APPLICATION_ID else "com.android.shell"
 
     private fun asInterface(className: String, serviceName: String): Any =
@@ -77,7 +78,7 @@ object HShizuku {
                 Int::class.java,
                 Int::class.java,
                 String::class.java
-            ).invoke(pm, packageName, newState, 0, userId, callerPackage)
+            ).invoke(pm, packageName, newState, 0, myUserId, BuildConfig.APPLICATION_ID)
         } catch (t: Throwable) {
             HLog.e(t)
         }

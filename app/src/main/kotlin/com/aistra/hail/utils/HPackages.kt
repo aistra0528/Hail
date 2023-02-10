@@ -10,6 +10,8 @@ object HPackages {
     @SuppressLint("InlinedApi")
     private const val MATCH_UNINSTALLED = PackageManager.MATCH_UNINSTALLED_PACKAGES
 
+    val myUserId get() = android.os.Process.myUserHandle().hashCode()
+
     fun packageUri(packageName: String) = "package:$packageName"
 
     fun getInstalledPackages(flags: Int = MATCH_UNINSTALLED): List<PackageInfo> =

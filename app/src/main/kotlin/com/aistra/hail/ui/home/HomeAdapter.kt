@@ -12,6 +12,7 @@ import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.AppIconCache
+import com.aistra.hail.utils.HPackages.myUserId
 import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.Job
 
@@ -37,7 +38,7 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
                     loadIconJob = AppIconCache.loadIconBitmapAsync(
                         context,
                         it,
-                        it.uid / 100000,
+                        myUserId,
                         this,
                         HailData.grayscaleIcon && info.state == AppInfo.STATE_FROZEN
                     )
@@ -73,8 +74,9 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
             oldItem == newItem
 
         override fun areContentsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
-            oldItem.state == newItem.getCurrentState()
-                    && oldItem.selected == newItem.isNowSelected(selectedList)
+            oldItem.state == newItem.getCurrentState() && oldItem.selected == newItem.isNowSelected(
+                selectedList
+            )
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)

@@ -20,6 +20,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.AppIconCache
 import com.aistra.hail.utils.HLog
 import com.aistra.hail.utils.HPackages
+import com.aistra.hail.utils.HPackages.myUserId
 import com.aistra.hail.utils.NameComparator
 import kotlinx.coroutines.Job
 import java.util.*
@@ -93,7 +94,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
                 loadIconJob = AppIconCache.loadIconBitmapAsync(
                     context,
                     app,
-                    app.uid / 100000,
+                    myUserId,
                     this,
                     HailData.grayscaleIcon && frozen
                 )
