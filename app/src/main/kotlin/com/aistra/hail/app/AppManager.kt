@@ -13,13 +13,10 @@ object AppManager {
             else -> false
         }
 
-    fun isAppFrozen(packageName: String): Boolean = when (HailData.workingMode) {
-        HailData.MODE_OWNER_HIDE -> HPolicy.isAppHidden(packageName)
-        HailData.MODE_OWNER_SUSPEND -> HPolicy.isAppSuspended(packageName)
-        HailData.MODE_SHIZUKU_HIDE -> HShizuku.isAppHidden(packageName)
-        HailData.MODE_SU_SUSPEND, HailData.MODE_SHIZUKU_SUSPEND -> HPackages.isAppSuspended(
-            packageName
-        )
+    fun isAppFrozen(packageName: String): Boolean = when {
+        HailData.workingMode == HailData.MODE_OWNER_HIDE -> HPolicy.isAppHidden(packageName)
+        HailData.workingMode == HailData.MODE_SHIZUKU_HIDE -> HShizuku.isAppHidden(packageName)
+        HailData.workingMode.endsWith(HailData.SUSPEND) -> HPackages.isAppSuspended(packageName)
         else -> HPackages.isAppDisabled(packageName)
     }
 

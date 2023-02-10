@@ -106,7 +106,7 @@ This mode execute:
 
 - `pm disable` to disable apps.
 
-- `pm suspend` to suspend apps. (Android 10+)
+- `pm suspend` to suspend apps. (Android 7.0+)
 
 ### Shizuku - Disable / Hide / Suspend
 

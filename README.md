@@ -96,7 +96,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 - `pm disable`命令停用应用。
 
-- `pm suspend`命令暂停应用。(Android 10+)
+- `pm suspend`命令暂停应用。(Android 7.0+)
 
 ### Shizuku - 停用 / 隐藏 / 暂停
 

@@ -38,7 +38,14 @@ object HPackages {
         getApplicationInfoOrNull(packageName)?.enabled?.not() ?: false
 
     fun isAppSuspended(packageName: String): Boolean = getPackageInfoOrNull(packageName)?.let {
-        HTarget.Q && HailApp.app.packageManager.isPackageSuspended(packageName)
+        val pm = HailApp.app.packageManager
+        when {
+            HTarget.Q -> pm.isPackageSuspended(packageName)
+            HTarget.N -> pm::class.java.getMethod(
+                "isPackageSuspendedForUser", String::class.java, Int::class.java
+            ).invoke(pm, packageName, myUserId) as Boolean
+            else -> false
+        }
     } ?: false
 
     fun canUninstallNormally(packageName: String): Boolean =
