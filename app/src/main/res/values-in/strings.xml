@@ -119,7 +119,7 @@
     <string name="app_slogan">Freezedom!</string>
     <string name="donate_bilibili_msg">Ikuti di Bilibili room.</string>
     <string name="msg_extract_apk">Pindahkan ke: %s</string>
-    <string name="donate_bilibili_cancel">\@android:string/cancel</string>
+    <string name="donate_bilibili_cancel">Batal</string>
     <string name="msg_selected">Terpilih : %s</string>
     <string name="msg_freeze">Dibekukan: %s</string>
     <string name="msg_unfreeze">Diaktifkan: %s</string>
@@ -127,7 +127,7 @@
     <string name="skip_while_charging">Lewatkan ketika mengisi batrai</string>
     <string name="icon_pack">Kemasan icon</string>
     <string name="donate_bilibili_space">My space</string>
-    <string name="mode_default">Idle</string>
+    <string name="mode_default">Siaga</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
