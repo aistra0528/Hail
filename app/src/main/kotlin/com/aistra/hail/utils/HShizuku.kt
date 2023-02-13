@@ -124,18 +124,39 @@ object HShizuku {
         if (suspended) forceStopApp(packageName)
         return try {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
-            (HiddenApiBypass.invoke(
-                pm::class.java,
-                pm,
-                "setPackagesSuspendedAsUser",
-                arrayOf(packageName),
-                suspended,
-                null,
-                null,
-                if (suspended) suspendDialogInfo else null,
-                callerPackage,
-                userId
-            ) as Array<*>).isEmpty()
+            (when {
+                HTarget.Q -> HiddenApiBypass.invoke(
+                    pm::class.java,
+                    pm,
+                    "setPackagesSuspendedAsUser",
+                    arrayOf(packageName),
+                    suspended,
+                    null,
+                    null,
+                    if (suspended) suspendDialogInfo else null,
+                    callerPackage,
+                    userId
+                )
+                HTarget.P -> HiddenApiBypass.invoke(
+                    pm::class.java,
+                    pm,
+                    "setPackagesSuspendedAsUser",
+                    arrayOf(packageName),
+                    suspended,
+                    null,
+                    null,
+                    null /*dialogMessage*/,
+                    callerPackage,
+                    userId
+                )
+                HTarget.N -> pm::class.java.getMethod(
+                    "setPackagesSuspendedAsUser",
+                    Array<String>::class.java,
+                    Boolean::class.java,
+                    Int::class.java
+                ).invoke(pm, arrayOf(packageName), suspended, userId)
+                else -> return false
+            } as Array<*>).isEmpty()
         } catch (t: Throwable) {
             HLog.e(t)
             false
@@ -146,7 +167,7 @@ object HShizuku {
         @SuppressLint("PrivateApi") get() = HiddenApiBypass.newInstance(Class.forName("android.content.pm.SuspendDialogInfo\$Builder"))
             .let {
                 HiddenApiBypass.invoke(
-                    it::class.java, it, "setNeutralButtonAction", 1/*BUTTON_ACTION_UNSUSPEND*/
+                    it::class.java, it, "setNeutralButtonAction", 1 /*BUTTON_ACTION_UNSUSPEND*/
                 )
                 HiddenApiBypass.invoke(it::class.java, it, "build")
             }
