@@ -116,7 +116,7 @@ This mode invoke non-SDK interface:
 
 - `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps.
 
-- `IPackageManager.setPackagesSuspendedAsUser` to suspend apps. (Android 10+)
+- `IPackageManager.setPackagesSuspendedAsUser` to suspend apps. (Android 7.0+)
 
 ## Revert
 

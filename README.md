@@ -106,7 +106,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 - `IPackageManager.setApplicationHiddenSettingAsUser`方法隐藏应用。
 
-- `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。(Android 10+)
+- `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。(Android 7.0+)
 
 ## 恢复
 
