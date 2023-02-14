@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_settings">Pengaturan</string>
-    <string name="title_about">Tetang</string>
+    <string name="title_about">Tentang</string>
     <string name="title_apps">Daftar aplikasi</string>
     <string name="title_home">Beranda</string>
     <string name="label_default">Bawaan</string>
