@@ -36,7 +36,7 @@ Google 签名。
 
 > 在这种状态下，软件包几乎处于卸载状态，无法使用，但并没有删除数据或实际的软件包文件。
 
-### 暂停
+### 暂停 (Android 7.0+)
 
 被暂停`suspend`的应用在启动器中会显示为灰度图标。取消暂停`unsuspend`应用即可恢复。
 
@@ -61,7 +61,7 @@ Google 签名。
 
 - `DevicePolicyManager.setApplicationHidden`方法隐藏应用。
 
-- `DevicePolicyManager.setPackagesSuspended`方法暂停应用。(Android 7.0+)
+- `DevicePolicyManager.setPackagesSuspended`方法暂停应用。
 
 **设置为设备所有者的应用需要移除设备所有者后方可卸载。**
 
@@ -96,7 +96,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 - `pm disable`命令停用应用。
 
-- `pm suspend`命令暂停应用。(Android 7.0+)
+- `pm suspend`命令暂停应用。
 
 ### Shizuku - 停用 / 隐藏 / 暂停
 
@@ -104,9 +104,9 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 - `IPackageManager.setApplicationEnabledSetting`方法停用应用。
 
-- `IPackageManager.setApplicationHiddenSettingAsUser`方法隐藏应用。
+- `IPackageManager.setApplicationHiddenSettingAsUser`方法隐藏应用。 (可能需要 root)
 
-- `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。(Android 7.0+)
+- `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。
 
 ## 恢复
 
@@ -139,38 +139,8 @@ adb shell pm unsuspend com.package.name
 
 ## API
 
-Java
-
-```java
-public class MainActivity extends AppCompatActivity {
-    private void hailAction(String action, String name, String value) {
-        try {
-            Intent intent = new Intent();
-            intent.setAction(action);
-            intent.putExtra(name, value);
-            startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show();
-        }
-    }
-}
-```
-
-Kotlin
-
-```kotlin
-class MainActivity : AppCompatActivity() {
-    private fun hailAction(action: String, name: String, value: String) {
-        try {
-            val intent = Intent()
-            intent.setAction(action)
-            intent.putExtra(name, value)
-            startActivity(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show()
-        }
-    }
-}
+```shell
+adb shell am start -a action -e name value
 ```
 
 `action`可为：

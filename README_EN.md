@@ -43,7 +43,7 @@ Hidden apps will not be shown in the launcher and installed apps list. Unhide th
 > While in this state, which is almost like an uninstalled state, making the package unavailable,
 > but it doesn't remove the data or the actual package file.
 
-### Suspend
+### Suspend (Android 7.0+)
 
 Suspended apps will be shown as grayscale icons in the launcher. Unsuspend them to revert.
 
@@ -71,7 +71,7 @@ This mode invoke:
 
 - `DevicePolicyManager.setApplicationHidden` to hide apps.
 
-- `DevicePolicyManager.setPackagesSuspended` to suspend apps. (Android 7.0+)
+- `DevicePolicyManager.setPackagesSuspended` to suspend apps.
 
 **You must remove device owner before uninstall**
 
@@ -106,7 +106,7 @@ This mode execute:
 
 - `pm disable` to disable apps.
 
-- `pm suspend` to suspend apps. (Android 7.0+)
+- `pm suspend` to suspend apps.
 
 ### Shizuku - Disable / Hide / Suspend
 
@@ -114,9 +114,9 @@ This mode invoke non-SDK interface:
 
 - `IPackageManager.setApplicationEnabledSetting` to disable apps.
 
-- `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps.
+- `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps. (root may be required)
 
-- `IPackageManager.setPackagesSuspendedAsUser` to suspend apps. (Android 7.0+)
+- `IPackageManager.setPackagesSuspendedAsUser` to suspend apps.
 
 ## Revert
 
@@ -150,38 +150,8 @@ apps. You can modify, rename or just delete it.
 
 ## API
 
-Java
-
-```java
-public class MainActivity extends AppCompatActivity {
-    private void hailAction(String action, String name, String value) {
-        try {
-            Intent intent = new Intent();
-            intent.setAction(action);
-            intent.putExtra(name, value);
-            startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show();
-        }
-    }
-}
-```
-
-Kotlin
-
-```kotlin
-class MainActivity : AppCompatActivity() {
-    private fun hailAction(action: String, name: String, value: String) {
-        try {
-            val intent = Intent()
-            intent.setAction(action)
-            intent.putExtra(name, value)
-            startActivity(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Hail not installed", Toast.LENGTH_SHORT).show()
-        }
-    }
-}
+```shell
+adb shell am start -a action -e name value
 ```
 
 `action` can be one of the following constants:
