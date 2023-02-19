@@ -13,13 +13,15 @@
         android:title="@string/filter_by"
         app:showAsAction="ifRoom">
         <menu>
-            <group android:checkableBehavior="all">
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/filter_user_apps"
                     android:title="@string/filter_user_apps" />
                 <item
                     android:id="@+id/filter_system_apps"
                     android:title="@string/filter_system_apps" />
+            </group>
+            <group android:checkableBehavior="all">
                 <item
                     android:id="@+id/filter_frozen_apps"
                     android:title="@string/filter_frozen_apps" />

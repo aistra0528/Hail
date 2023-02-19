@@ -173,8 +173,22 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     private fun changeAppsFilter(filter: String, item: MenuItem) {
-        item.isChecked = !item.isChecked
-        HailData.changeAppsFilter(filter, item.isChecked)
+        when (item.itemId) {
+            R.id.filter_user_apps -> {
+                item.isChecked = true
+                HailData.changeAppsFilter(filter, item.isChecked)
+                HailData.changeAppsFilter(HailData.FILTER_SYSTEM_APPS, false)
+            }
+            R.id.filter_system_apps -> {
+                item.isChecked = true
+                HailData.changeAppsFilter(filter, item.isChecked)
+                HailData.changeAppsFilter(HailData.FILTER_USER_APPS, false)
+            }
+            else -> {
+                item.isChecked = !item.isChecked
+                HailData.changeAppsFilter(filter, item.isChecked)
+            }
+        }
         AppsAdapter.updateCurrentList(refreshLayout)
     }
 
