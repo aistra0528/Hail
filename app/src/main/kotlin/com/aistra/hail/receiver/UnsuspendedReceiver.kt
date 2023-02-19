@@ -7,7 +7,10 @@ import com.aistra.hail.HailApp
 
 class UnsuspendedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ACTION_PACKAGE_UNSUSPENDED_MANUALLY) HailApp.app.setAutoFreezeService()
+        if (intent.action == ACTION_PACKAGE_UNSUSPENDED_MANUALLY) try {
+            HailApp.app.setAutoFreezeService()
+        } catch (_: Throwable) {
+        }
     }
 
     companion object {
