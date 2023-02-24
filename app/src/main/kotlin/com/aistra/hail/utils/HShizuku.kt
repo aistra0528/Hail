@@ -187,31 +187,6 @@ object HShizuku {
                         destroy()
                     }
                 }
-            /* It doesn't work
-            val pi = asInterface(
-                "android.content.pm.IPackageManager", "package"
-            ).let { HiddenApiBypass.invoke(it::class.java, it, "getPackageInstaller") }
-                .let { HiddenApiBypass.invoke(it::class.java, it, "asBinder") }.let {
-                    HiddenApiBypass.invoke(
-                        Class.forName("android.content.pm.IPackageInstaller\$Stub"),
-                        null,
-                        "asInterface",
-                        it
-                    )
-                }
-            HiddenApiBypass.invoke(
-                pi::class.java,
-                pi,
-                "uninstall",
-                VersionedPackage(packageName, PackageManager.VERSION_CODE_HIGHEST),
-                callerPackage,
-                0 /*flags*/,
-                PendingIntent.getActivity(
-                    HailApp.app, 0, Intent(), PendingIntent.FLAG_IMMUTABLE
-                ).intentSender,
-                userId
-            )
-            true */
         } catch (t: Throwable) {
             HLog.e(t)
             false

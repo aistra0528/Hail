@@ -1,15 +1,22 @@
 package com.aistra.hail.utils
 
 object HShell {
-    private fun execute(command: String): Boolean = try {
-        Runtime.getRuntime().exec(command).waitFor() == 0
+    private fun execute(command: String, root: Boolean = false): Boolean = try {
+        Runtime.getRuntime().exec(if (root) "su" else "sh").run {
+            outputStream.use {
+                it.write(command.toByteArray())
+            }
+            (waitFor() == 0).also {
+                destroy()
+            }
+        }
     } catch (t: Throwable) {
         false
     }
 
-    private fun execSU(command: String) = execute("su -c $command")
+    private fun execSU(command: String) = execute(command, true)
 
-    val checkSU get() = execSU("clear")
+    val checkSU get() = execSU("whoami")
 
     val lockScreen get() = execSU("input keyevent KEYCODE_POWER")
 
