@@ -147,8 +147,9 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 else -> R.id.sort_by_name
             }
         ).isChecked = true
-        menu.findItem(R.id.filter_user_apps).isChecked = HailData.filterUserApps
-        menu.findItem(R.id.filter_system_apps).isChecked = HailData.filterSystemApps
+        menu.findItem(
+            if (HailData.filterSystemApps) R.id.filter_system_apps else R.id.filter_user_apps
+        ).isChecked = true
         menu.findItem(R.id.filter_frozen_apps).isChecked = HailData.filterFrozenApps
         menu.findItem(R.id.filter_unfrozen_apps).isChecked = HailData.filterUnfrozenApps
     }
