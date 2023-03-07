@@ -99,28 +99,26 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 when (which) {
                     0 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_freeze_tag)
                         .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
+                            val tag = HailData.tags[index].first
                             HShortcuts.addPinShortcut(
                                 AppCompatResources.getDrawable(
                                     requireContext(), R.drawable.ic_round_frozen_shortcut
                                 )!!,
-                                HailApi.ACTION_FREEZE_TAG,
-                                HailData.tags[index].first,
-                                HailApi.getIntentForTag(
-                                    HailApi.ACTION_FREEZE_TAG, HailData.tags[index].first
-                                )
+                                HailApi.ACTION_FREEZE_TAG + tag,
+                                tag,
+                                HailApi.getIntentForTag(HailApi.ACTION_FREEZE_TAG, tag)
                             )
                         }.setNegativeButton(android.R.string.cancel, null).show()
                     1 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
                         .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
+                            val tag = HailData.tags[index].first
                             HShortcuts.addPinShortcut(
                                 AppCompatResources.getDrawable(
                                     requireContext(), R.drawable.ic_round_unfrozen_shortcut
                                 )!!,
-                                HailApi.ACTION_UNFREEZE_TAG,
-                                HailData.tags[index].first,
-                                HailApi.getIntentForTag(
-                                    HailApi.ACTION_UNFREEZE_TAG, HailData.tags[index].first
-                                )
+                                HailApi.ACTION_UNFREEZE_TAG + tag,
+                                tag,
+                                HailApi.getIntentForTag(HailApi.ACTION_UNFREEZE_TAG, tag)
                             )
                         }.setNegativeButton(android.R.string.cancel, null).show()
                     2 -> HShortcuts.addPinShortcut(
