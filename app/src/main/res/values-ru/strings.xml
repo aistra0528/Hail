@@ -134,4 +134,5 @@
     <string name="action_freeze_tag">Заморозка метки</string>
     <string name="action_unfreeze_tag">Разморозить метку</string>
     <string name="icon_pack">Пакет иконок</string>
+    <string name="action_select_all">Выбрать все</string>
 </resources>
