@@ -11,12 +11,12 @@
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
             android:layout_marginStart="@dimen/container_margin"
             android:layout_marginTop="@dimen/container_margin"
-            android:layout_marginEnd="@dimen/container_margin"
-            style="@style/Widget.Material3.CardView.Elevated">
+            android:layout_marginEnd="@dimen/container_margin">
 
             <LinearLayout
                 android:id="@+id/actionLibre"
@@ -24,7 +24,8 @@
                 android:layout_height="match_parent"
                 android:background="?selectableItemBackground"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/control_padding">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
@@ -52,8 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/container_margin"
             android:layout_marginTop="@dimen/container_margin"
-            android:layout_marginEnd="@dimen/container_margin"
-            style="@style/Widget.Material3.CardView.Elevated">
+            android:layout_marginEnd="@dimen/container_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,7 +66,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -101,7 +102,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -137,8 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/container_margin"
             android:layout_marginTop="@dimen/container_margin"
-            android:layout_marginEnd="@dimen/container_margin"
-            style="@style/Widget.Material3.CardView.Elevated">
+            android:layout_marginEnd="@dimen/container_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -151,7 +152,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -176,7 +178,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -201,7 +204,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -226,7 +230,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -250,8 +255,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/container_margin"
-            style="@style/Widget.Material3.CardView.Elevated">
+            android:layout_margin="@dimen/container_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -264,7 +268,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -289,7 +294,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -314,7 +320,8 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/control_padding">
 
                     <ImageView
                         android:layout_width="wrap_content"

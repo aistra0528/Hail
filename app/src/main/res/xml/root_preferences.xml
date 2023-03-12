@@ -36,7 +36,7 @@
             app:key="synthesize_adaptive_icons"
             app:title="@string/synthesize_adaptive_icons" />
         <ListPreference
-            app:defaultValue="freeze_all"
+            app:defaultValue="lock_freeze"
             app:entries="@array/tile_action_entries"
             app:entryValues="@array/tile_action_values"
             app:icon="@drawable/ic_baseline_crop_square"

@@ -84,7 +84,7 @@ object HailData {
     val biometricLogin get() = sp.getBoolean(BIOMETRIC_LOGIN, false)
     val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)
     val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
-    val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
+    val tileAction get() = sp.getString(TILE_ACTION, ACTION_LOCK_FREEZE)
     val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)

@@ -29,7 +29,8 @@
 
     <style name="Theme.Hail.Dialog">
         <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+        <item name="android:windowAnimationStyle">@style/MaterialAlertDialog.Material3.Animation
+        </item>
         <item name="android:windowIsFloating">true</item>
     </style>
 
