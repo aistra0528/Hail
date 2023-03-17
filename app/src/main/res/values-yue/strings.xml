@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">雹</string>
+    <string name="app_slogan">实现冻结自由！</string>
+</resources>
