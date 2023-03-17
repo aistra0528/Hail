@@ -53,7 +53,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     override fun onItemClick(buttonView: CompoundButton) {
-        buttonView.callOnClick()
+        buttonView.toggle()
     }
 
     override fun onItemLongClick(info: PackageInfo): Boolean = true.also {
