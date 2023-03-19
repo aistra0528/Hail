@@ -6,7 +6,7 @@
     <string name="title_apps">Apps</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_about">Über</string>
-    <string name="label_default">Standard+</string>
+    <string name="label_default">Standard</string>
     <string name="label_version">Version</string>
     <string name="label_time">Installationszeitpunkt</string>
     <string name="action_telegram">Telegram Gruppe</string>
@@ -129,7 +129,8 @@
     <string name="dynamic_shortcut_action">Aktion für dynamische Verknüpfung</string>
     <string name="action_none">Keine</string>
     <string name="mode_shizuku_hide">Shizuku - Ausblenden (Hide)</string>
-    <string name="action_freeze_tag">Freeze tag</string>
-    <string name="action_unfreeze_tag">Unfreeze tag</string>
-    <string name="icon_pack">Icon pack</string>
+    <string name="action_freeze_tag">Etikett einfrieren</string>
+    <string name="action_unfreeze_tag">Etikett auftauen</string>
+    <string name="icon_pack">Symbolpaket</string>
+    <string name="action_select_all">Alles auswählen</string>
 </resources>
