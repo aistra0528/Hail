@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.lifecycle.ViewModelProvider
+import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
@@ -76,7 +77,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
     private fun onDonate() {
         MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
             .setSingleChoiceItems(R.array.donate_payment_entries, 0) { dialog, which ->
-                dialog.cancel()
+                dialog.dismiss()
                 when (which) {
                     0 -> if (HUI.openLink(HailData.URL_ALIPAY_API).not()) {
                         HUI.openLink(HailData.URL_ALIPAY)
@@ -113,11 +114,8 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         input.editText.filters = arrayOf(InputFilter.LengthFilter(64))
         MaterialAlertDialogBuilder(activity).setView(input.root.parent as View)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                val progress =
-                    layoutInflater.inflate(R.layout.dialog_progress, FrameLayout(activity), true)
-                val dialog =
-                    MaterialAlertDialogBuilder(activity).setView(progress).setCancelable(false)
-                        .create()
+                val dialog = MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress)
+                    .setCancelable(false).create()
                 aboutViewModel.codeCheck(input.editText.text.toString(), dialog)
             }.setNegativeButton(android.R.string.cancel, null).show()
     }

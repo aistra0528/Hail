@@ -34,22 +34,20 @@ class AboutViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun codeCheck(code: String, dialog: Dialog) = viewModelScope.launch {
         dialog.show()
-        val hash = hash(code + app.packageName)
-        val result = HRepository.request("${HailData.URL_REDEEM_CODE}/$hash")
-        dialog.cancel()
-        snack.value = when {
-            result is String && result.isDigitsOnly() -> {
-                when (result.toInt()) {
+        HRepository.request("${HailData.URL_REDEEM_CODE}/${hash(code + app.packageName)}")
+            .onSuccess {
+                if (it.isDigitsOnly()) snack.value = when (it.toInt()) {
                     0 -> R.string.msg_redeem_expired
                     1 -> {
                         HailData.setAid()
                         R.string.msg_redeem
                     }
                     else -> R.string.msg_redeem_invalid
-                }
+                } else snack.value = R.string.msg_network_error
+            }.onFailure {
+                snack.value = if (it is FileNotFoundException) R.string.msg_redeem_invalid
+                else R.string.msg_network_error
             }
-            result is FileNotFoundException -> R.string.msg_redeem_invalid
-            else -> R.string.msg_network_error
-        }
+        dialog.dismiss()
     }
 }

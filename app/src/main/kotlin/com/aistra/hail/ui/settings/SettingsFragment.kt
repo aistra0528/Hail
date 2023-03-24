@@ -13,7 +13,7 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.aistra.hail.HailApp
+import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
@@ -50,7 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         }
         findPreference<Preference>(HailData.AUTO_FREEZE_AFTER_LOCK)?.setOnPreferenceChangeListener { _, autoFreezeAfterLock ->
             if (autoFreezeAfterLock == false) {
-                HailApp.app.setAutoFreezeService(false)
+                app.setAutoFreezeService(false)
             }
             true
         }
@@ -74,14 +74,15 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun iconPackDialog() {
         val list = Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
-            if (HTarget.T) HailApp.app.packageManager.queryIntentActivities(
+            if (HTarget.T) app.packageManager.queryIntentActivities(
                 it, PackageManager.ResolveInfoFlags.of(0)
-            ) else HailApp.app.packageManager.queryIntentActivities(it, 0)
+            ) else app.packageManager.queryIntentActivities(it, 0)
         }.map { it.activityInfo }
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.icon_pack)
-            .setItems(list.map { it.loadLabel(HailApp.app.packageManager) }
+            .setItems(list.map { it.loadLabel(app.packageManager) }
                 .toTypedArray()) { _, which ->
                 if (HailData.iconPack == list[which].packageName) return@setItems
                 HailData.setIconPack(list[which].packageName)
@@ -180,7 +181,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 HUI.showToast(R.string.permission_denied)
                 return false
             }
-            mode.startsWith(HailData.SHIZUKU) -> return try {
+            mode.startsWith(HailData.SHIZUKU) -> return runCatching {
                 when {
                     Shizuku.isPreV11() -> throw IllegalStateException("unsupported shizuku version")
                     Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED -> true
@@ -196,8 +197,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         true
                     }
                 }
-            } catch (t: Throwable) {
-                HLog.e(t)
+            }.getOrElse {
+                HLog.e(it)
                 HUI.showToast(R.string.shizuku_missing)
                 false
             }

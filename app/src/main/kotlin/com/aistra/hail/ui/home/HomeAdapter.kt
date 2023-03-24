@@ -17,8 +17,9 @@ import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.Job
 
 object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
-    private var loadIconJob: Job? = null
+    var multiselect: Boolean = false
     val selectedList = mutableListOf<AppInfo>()
+    private var loadIconJob: Job? = null
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onItemLongClickListener: OnItemLongClickListener
 
@@ -58,7 +59,7 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
                     info.selected -> setTextColor(
                         MaterialColors.getColor(this, R.attr.colorPrimary)
                     )
-                    info.state == AppInfo.STATE_UNKNOWN -> setTextColor(context.getColorStateList(R.color.colorWarn))
+                    info.state == AppInfo.STATE_UNKNOWN -> setTextColor(context.getColorStateList(R.color.color_warn))
                     else -> setTextAppearance(R.style.TextAppearance_Material3_BodyMedium)
                 }
             }
@@ -66,6 +67,8 @@ object HomeAdapter : ListAdapter<AppInfo, HomeAdapter.ViewHolder>(HomeDiff()) {
     }
 
     fun onDestroy() {
+        multiselect = false
+        selectedList.clear()
         if (loadIconJob?.isActive == true) loadIconJob?.cancel()
     }
 

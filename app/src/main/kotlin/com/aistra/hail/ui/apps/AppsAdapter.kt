@@ -3,7 +3,6 @@ package com.aistra.hail.ui.apps
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,15 +17,12 @@ import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.AppIconCache
-import com.aistra.hail.utils.HLog
 import com.aistra.hail.utils.HPackages
-import com.aistra.hail.utils.HPackages.myUserId
 import com.aistra.hail.utils.NameComparator
-import kotlinx.coroutines.Job
-import java.util.*
+import kotlinx.coroutines.*
 
-object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
-    object : DiffUtil.ItemCallback<PackageInfo>() {
+object AppsAdapter :
+    ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<PackageInfo>() {
         override fun areItemsTheSame(oldItem: PackageInfo, newItem: PackageInfo): Boolean =
             oldItem.packageName == newItem.packageName
 
@@ -37,44 +33,36 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
     lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
     private var loadIconJob: Job? = null
-    private val timer = Timer()
-    private var debounce: TimerTask? = null
+    private var refreshJob: Job? = null
 
     private val PackageInfo.isSystemApp: Boolean
         get() = applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
 
-    private fun filterList(query: String? = null, pm: PackageManager): List<PackageInfo> =
-        HPackages.getInstalledPackages().filter {
-            ((HailData.filterUserApps && !it.isSystemApp)
-                    || (HailData.filterSystemApps && it.isSystemApp))
-                    && ((HailData.filterFrozenApps && AppManager.isAppFrozen(it.packageName))
-                    || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName)))
-                    && (query.isNullOrEmpty()
-                    || it.packageName.contains(query, true)
-                    || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
-        }.run {
-            when (HailData.sortBy) {
-                HailData.SORT_INSTALL -> sortedBy { it.firstInstallTime }
-                HailData.SORT_UPDATE -> sortedByDescending { it.lastUpdateTime }
-                else -> sortedWith(NameComparator)
+    private suspend fun filterList(query: String? = null, pm: PackageManager): List<PackageInfo> =
+        withContext(Dispatchers.Default) {
+            HPackages.getInstalledPackages().filter {
+                ((HailData.filterUserApps && !it.isSystemApp) || (HailData.filterSystemApps && it.isSystemApp)) && ((HailData.filterFrozenApps && AppManager.isAppFrozen(
+                    it.packageName
+                )) || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName))) && (query.isNullOrEmpty() || it.packageName.contains(
+                    query, true
+                ) || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
+            }.run {
+                when (HailData.sortBy) {
+                    HailData.SORT_INSTALL -> sortedBy { it.firstInstallTime }
+                    HailData.SORT_UPDATE -> sortedByDescending { it.lastUpdateTime }
+                    else -> sortedWith(NameComparator)
+                }
             }
         }
 
     fun updateCurrentList(layout: SwipeRefreshLayout, query: String? = null) {
-        layout.isRefreshing = true
-        debounce?.cancel()
-        debounce = object : TimerTask() {
-            override fun run() {
-                val ms = SystemClock.elapsedRealtime()
-                val list = filterList(query, layout.context.packageManager)
-                HLog.i("Filter ${list.size} apps in ${SystemClock.elapsedRealtime() - ms}ms")
-                layout.post {
-                    submitList(list)
-                    layout.isRefreshing = false
-                }
-            }
+        refreshJob?.cancel()
+        refreshJob = CoroutineScope(Dispatchers.Main).launch {
+            if (query.isNullOrEmpty()) layout.isRefreshing = true else delay(500)
+            val list = filterList(query, layout.context.packageManager)
+            submitList(list)
+            layout.isRefreshing = false
         }
-        timer.schedule(debounce, 100)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
@@ -92,11 +80,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
             setOnLongClickListener { onItemLongClickListener.onItemLongClick(info) }
             findViewById<ImageView>(R.id.app_icon).run {
                 loadIconJob = AppIconCache.loadIconBitmapAsync(
-                    context,
-                    app,
-                    myUserId,
-                    this,
-                    HailData.grayscaleIcon && frozen
+                    context, app, HPackages.myUserId, this, HailData.grayscaleIcon && frozen
                 )
             }
             findViewById<TextView>(R.id.app_name).run {
@@ -120,6 +104,7 @@ object AppsAdapter : ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(
 
     fun onDestroy() {
         if (loadIconJob?.isActive == true) loadIconJob?.cancel()
+        if (refreshJob?.isActive == true) refreshJob?.cancel()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)

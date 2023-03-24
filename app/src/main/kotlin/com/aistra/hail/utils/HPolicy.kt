@@ -5,16 +5,15 @@ import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Intent
 import androidx.core.content.getSystemService
-import com.aistra.hail.HailApp
+import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.receiver.DeviceAdminReceiver
 
 object HPolicy {
-    const val ADB_SET_DO =
-        "adb shell dpm set-device-owner com.aistra.hail/.receiver.DeviceAdminReceiver"
-    private val dpm = HailApp.app.getSystemService<DevicePolicyManager>()!!
-    private val admin = ComponentName(HailApp.app, DeviceAdminReceiver::class.java)
+    private val dpm = app.getSystemService<DevicePolicyManager>()!!
+    private val admin = ComponentName(app, DeviceAdminReceiver::class.java)
+    val ADB_SET_DO = "adb shell dpm set-device-owner ${admin.flattenToShortString()}"
 
-    private val isDeviceOwner get() = dpm.isDeviceOwnerApp(HailApp.app.packageName)
+    private val isDeviceOwner get() = dpm.isDeviceOwnerApp(app.packageName)
     val isAdminActive get() = dpm.isAdminActive(admin)
     val isDeviceOwnerActive get() = isDeviceOwner && isAdminActive
 
@@ -33,9 +32,9 @@ object HPolicy {
 
     fun uninstallApp(packageName: String): Boolean = when {
         isDeviceOwnerActive -> {
-            HailApp.app.packageManager.packageInstaller.uninstall(
+            app.packageManager.packageInstaller.uninstall(
                 packageName, PendingIntent.getActivity(
-                    HailApp.app, 0, Intent(), PendingIntent.FLAG_IMMUTABLE
+                    app, 0, Intent(), PendingIntent.FLAG_IMMUTABLE
                 ).intentSender
             )
             true
@@ -59,6 +58,6 @@ object HPolicy {
 
     @Suppress("DEPRECATION")
     fun clearDeviceOwnerApp() {
-        if (isDeviceOwnerActive) dpm.clearDeviceOwnerApp(HailApp.app.packageName)
+        if (isDeviceOwnerActive) dpm.clearDeviceOwnerApp(app.packageName)
     }
 }

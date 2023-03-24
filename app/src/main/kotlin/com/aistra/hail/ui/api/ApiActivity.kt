@@ -4,22 +4,23 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
-import com.aistra.hail.ui.HailActivity
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HShortcuts
 import com.aistra.hail.utils.HTarget
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class ApiActivity : HailActivity() {
+class ApiActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
+        runCatching {
             when (intent.action) {
                 Intent.ACTION_SHOW_APP_INFO -> {
                     redirect(requirePackage(if (HTarget.N) Intent.EXTRA_PACKAGE_NAME else "android.intent.extra.PACKAGE_NAME"))
@@ -41,8 +42,8 @@ class ApiActivity : HailActivity() {
                 else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
             }
             finish()
-        } catch (t: Throwable) {
-            showErrorDialog(t)
+        }.onFailure {
+            showErrorDialog(it)
         }
     }
 
@@ -68,7 +69,7 @@ class ApiActivity : HailActivity() {
         MaterialAlertDialogBuilder(this).setTitle(
             HPackages.getApplicationInfoOrNull(pkg)?.loadLabel(packageManager) ?: pkg
         ).setItems(R.array.api_redirect_action_entries) { _, which ->
-            try {
+            runCatching {
                 when (which) {
                     0 -> launchApp(pkg)
                     1 -> {
@@ -77,9 +78,9 @@ class ApiActivity : HailActivity() {
                     }
                     2 -> setAppFrozen(pkg, false)
                 }
-            } catch (t: Throwable) {
+            }.onFailure {
                 shouldFinished = false
-                showErrorDialog(t)
+                showErrorDialog(it)
             }
         }.setNegativeButton(android.R.string.cancel, null)
             .setOnDismissListener { if (shouldFinished) finish() }.show()
@@ -87,7 +88,7 @@ class ApiActivity : HailActivity() {
 
     private fun launchApp(pkg: String) {
         if (AppManager.isAppFrozen(pkg)) {
-            if (AppManager.setAppFrozen(pkg, false)) setAutoFreezeService()
+            if (AppManager.setAppFrozen(pkg, false)) app.setAutoFreezeService()
             else throw IllegalStateException(getString(R.string.permission_denied))
         }
         packageManager.getLaunchIntentForPackage(pkg)?.let {
@@ -106,7 +107,7 @@ class ApiActivity : HailActivity() {
                 if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
                 HPackages.getApplicationInfoOrNull(pkg)?.loadLabel(packageManager) ?: pkg
             )
-            setAutoFreezeService()
+            app.setAutoFreezeService()
         }
     }
 
@@ -135,7 +136,7 @@ class ApiActivity : HailActivity() {
                     if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
                     if (i > 1) i.toString() else name
                 )
-                setAutoFreezeService()
+                app.setAutoFreezeService()
             }
         }
     }

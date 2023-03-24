@@ -29,7 +29,7 @@ object HShizuku {
         }
 
     val lockScreen
-        get() = try {
+        get() = runCatching {
             val input = asInterface("android.hardware.input.IInputManager", "input")
             val inject = input::class.java.getMethod(
                 "injectInputEvent", InputEvent::class.java, Int::class.java
@@ -42,12 +42,12 @@ object HShizuku {
                 input, KeyEvent(now, now, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_POWER, 0), 0
             )
             true
-        } catch (t: Throwable) {
-            HLog.e(t)
+        }.getOrElse {
+            HLog.e(it)
             false
         }
 
-    private fun forceStopApp(packageName: String) = try {
+    private fun forceStopApp(packageName: String) = runCatching {
         asInterface("android.app.IActivityManager", "activity").let {
             if (HTarget.P) HiddenApiBypass.invoke(
                 it::class.java, it, "forceStopPackage", packageName, userId
@@ -58,15 +58,15 @@ object HShizuku {
             )
         }
         true
-    } catch (t: Throwable) {
-        HLog.e(t)
+    }.getOrElse {
+        HLog.e(it)
         false
     }
 
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
         if (disabled) forceStopApp(packageName)
-        try {
+        runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             val newState = when {
                 !disabled -> PackageManager.COMPONENT_ENABLED_STATE_ENABLED
@@ -81,23 +81,23 @@ object HShizuku {
                 Int::class.java,
                 String::class.java
             ).invoke(pm, packageName, newState, 0, myUserId, BuildConfig.APPLICATION_ID)
-        } catch (t: Throwable) {
-            HLog.e(t)
+        }.onFailure {
+            HLog.e(it)
         }
         return HPackages.isAppDisabled(packageName) == disabled
     }
 
     fun isAppHidden(packageName: String): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
-        return try {
+        return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             (if (HTarget.P) HiddenApiBypass.invoke(
                 pm::class.java, pm, "getApplicationHiddenSettingAsUser", packageName, userId
             ) else pm::class.java.getMethod(
                 "getApplicationHiddenSettingAsUser", String::class.java, Int::class.java
             ).invoke(pm, packageName, userId)) as Boolean
-        } catch (t: Throwable) {
-            HLog.e(t)
+        }.getOrElse {
+            HLog.e(it)
             false
         }
     }
@@ -105,7 +105,7 @@ object HShizuku {
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
         if (hidden) forceStopApp(packageName)
-        return try {
+        return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             pm::class.java.getMethod(
                 "setApplicationHiddenSettingAsUser",
@@ -113,8 +113,8 @@ object HShizuku {
                 Boolean::class.java,
                 Int::class.java
             ).invoke(pm, packageName, hidden, userId) as Boolean
-        } catch (t: Throwable) {
-            HLog.e(t)
+        }.getOrElse {
+            HLog.e(it)
             false
         }
     }
@@ -122,7 +122,7 @@ object HShizuku {
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return false
         if (suspended) forceStopApp(packageName)
-        return try {
+        return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             (when {
                 HTarget.Q -> HiddenApiBypass.invoke(
@@ -157,8 +157,8 @@ object HShizuku {
                 ).invoke(pm, arrayOf(packageName), suspended, userId)
                 else -> return false
             } as Array<*>).isEmpty()
-        } catch (t: Throwable) {
-            HLog.e(t)
+        }.getOrElse {
+            HLog.e(it)
             false
         }
     }
@@ -174,7 +174,7 @@ object HShizuku {
 
     fun uninstallApp(packageName: String): Boolean {
         HPackages.getPackageInfoOrNull(packageName) ?: return true
-        return try {
+        return runCatching {
             IShizukuService.Stub.asInterface(Shizuku.getBinder())
                 .newProcess(arrayOf(if (isRoot) "su" else "sh"), null, null).run {
                     ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use {
@@ -187,8 +187,8 @@ object HShizuku {
                         destroy()
                     }
                 }
-        } catch (t: Throwable) {
-            HLog.e(t)
+        }.getOrElse {
+            HLog.e(it)
             false
         }
     }

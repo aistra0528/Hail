@@ -10,6 +10,7 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
@@ -39,7 +40,6 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
     private var query: String = String()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private var multiselect: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -71,7 +71,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         }
         binding.refresh.run {
             setOnRefreshListener {
-                if (multiselect) updateCurrentList() else deselect()
+                if (HomeAdapter.multiselect) updateCurrentList() else deselect()
                 isRefreshing = false
             }
         }
@@ -117,12 +117,12 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
             binding.refresh.visibility = View.VISIBLE
         }
         HomeAdapter.submitList(it)
-        activity.setAutoFreezeService()
+        app.setAutoFreezeService()
     }
 
     private fun updateBarTitle() {
         activity.supportActionBar?.title = HomeAdapter.selectedList.size.let {
-            if (!multiselect) getString(R.string.app_name)
+            if (!HomeAdapter.multiselect) getString(R.string.app_name)
             else getString(R.string.msg_selected, it.toString())
         }
     }
@@ -134,7 +134,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                 .show()
             return
         }
-        if (multiselect) {
+        if (HomeAdapter.multiselect) {
             HomeAdapter.run {
                 if (info in selectedList) selectedList.remove(info)
                 else selectedList.add(info)
@@ -154,7 +154,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         val frozen = AppManager.isAppFrozen(pkg)
         val action = getString(if (frozen) R.string.action_unfreeze else R.string.action_freeze)
         MaterialAlertDialogBuilder(activity).setTitle(info.name).setItems(
-            actions.toMutableList().filter {
+            actions.filter {
                 (it != getString(R.string.action_freeze) || !frozen) && (it != getString(R.string.action_unfreeze) || frozen) && (it != getString(
                     R.string.action_pin
                 ) || !info.pinned) && (it != getString(R.string.action_unpin) || info.pinned) && (it != getString(
@@ -216,7 +216,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                                 HailData.saveApps()
                                 updateCurrentList()
                             }
-                            dialog.cancel()
+                            dialog.dismiss()
                         }.setNeutralButton(R.string.action_tag_add) { _, _ ->
                             showTagDialog(listOf(info))
                         }.setNegativeButton(android.R.string.cancel, null).show()
@@ -282,7 +282,7 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                                 selectedList.forEach { it.tagId = HailData.tags[index].second }
                                 HailData.saveApps()
                                 deselect()
-                                dialog.cancel()
+                                dialog.dismiss()
                             }.setNeutralButton(R.string.action_tag_add) { _, _ ->
                                 showTagDialog(selectedList)
                             }.setNegativeButton(android.R.string.cancel, null).show()
@@ -401,16 +401,17 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
     }
 
     private fun exportToClipboard(list: List<AppInfo>) {
+        if (list.isEmpty()) return
         HUI.copyText(if (list.size > 1) JSONArray().run {
             list.forEach { put(it.packageName) }
             toString()
-        } else list.first().packageName)
+        } else list[0].packageName)
         HUI.showToast(
             R.string.msg_exported, if (list.size > 1) list.size.toString() else list[0].name
         )
     }
 
-    private fun importFromClipboard() = try {
+    private fun importFromClipboard() = runCatching {
         val str = HUI.pasteText() ?: throw IllegalArgumentException()
         val json = if (str.contains('[')) JSONArray(
             str.substring(
@@ -433,7 +434,6 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
             updateCurrentList()
         }
         HUI.showToast(getString(R.string.msg_imported, i.toString()))
-    } catch (_: Throwable) {
     }
 
     private fun importFrozenApp() =
@@ -458,26 +458,28 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_multiselect -> {
-                multiselect = !multiselect
+                HomeAdapter.multiselect = !HomeAdapter.multiselect
                 item.icon?.setTint(
                     MaterialColors.getColor(
                         activity.findViewById(R.id.toolbar),
-                        if (multiselect) R.attr.colorPrimary else R.attr.colorOnSurface
+                        if (HomeAdapter.multiselect) R.attr.colorPrimary else R.attr.colorOnSurface
                     )
                 )
-                if (multiselect) {
+                if (HomeAdapter.multiselect) {
                     updateBarTitle()
                     HUI.showToast(R.string.tap_to_select)
                 } else {
                     deselect()
                 }
             }
-            R.id.action_freeze_current -> setListFrozen(true,
+            R.id.action_freeze_current -> setListFrozen(
+                true,
                 HomeAdapter.currentList.filterNot { it.whitelisted })
             R.id.action_unfreeze_current -> setListFrozen(false, HomeAdapter.currentList)
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)
-            R.id.action_freeze_non_whitelisted -> setListFrozen(true,
+            R.id.action_freeze_non_whitelisted -> setListFrozen(
+                true,
                 HailData.checkedList.filterNot { it.whitelisted })
             R.id.action_import_clipboard -> importFromClipboard()
             R.id.action_import_frozen -> importFrozenApp()

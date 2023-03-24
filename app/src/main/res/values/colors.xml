@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorHail">#81D4FA</color>
-    <color name="colorPrimary">@color/colorHail</color>
-    <color name="colorOnPrimary">@android:color/white</color>
-    <color name="colorPrimaryContainer">#B3E5FC</color>
-    <color name="colorOnPrimaryContainer">@android:color/black</color>
-    <color name="colorWarn">@color/error_color_material_light</color>
+    <color name="color_hail">#81D4FA</color>
+    <color name="color_primary">@color/color_hail</color>
+    <color name="color_on_primary">@android:color/white</color>
+    <color name="color_primary_container">#B3E5FC</color>
+    <color name="color_on_primary_container">@android:color/black</color>
+    <color name="color_warn">@color/error_color_material_light</color>
 </resources>

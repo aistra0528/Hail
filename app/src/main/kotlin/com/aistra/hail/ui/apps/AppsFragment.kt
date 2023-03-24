@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
@@ -130,7 +131,6 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             private var once = false
             override fun onQueryTextChange(newText: String): Boolean {
                 if (once) AppsAdapter.updateCurrentList(refreshLayout, newText) else once = true
-                refreshLayout.isEnabled = newText.isNullOrEmpty()
                 return true
             }
 

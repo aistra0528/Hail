@@ -2,6 +2,7 @@ package com.aistra.hail.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -17,27 +18,26 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
-import com.aistra.hail.app.HailData.biometricLogin
 import com.aistra.hail.databinding.ActivityMainBinding
-import com.aistra.hail.ui.HailActivity
 import com.aistra.hail.utils.HUI
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
-class MainActivity : HailActivity(), NavController.OnDestinationChangedListener {
+class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
     lateinit var fab: ExtendedFloatingActionButton
+    private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         initView()
-        if (!biometricLogin) {
+        if (!HailData.biometricLogin) {
             showGuide()
             return
         }
-        val view = findViewById<View>(R.id.drawer_layout)
+        val view = findViewById<View>(R.id.main_root)
         view.visibility = View.INVISIBLE
         val biometricPrompt = BiometricPrompt(this,
             ContextCompat.getMainExecutor(this),
@@ -81,11 +81,11 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
             setContentView(root)
             setSupportActionBar(appBarMain.toolbar)
             fab = appBarMain.fab
-            val navController = findNavController(R.id.nav_host_fragment_content_main)
+            navController = findNavController(R.id.nav_host_fragment)
             navController.addOnDestinationChangedListener(this@MainActivity)
-            appBarConfiguration = AppBarConfiguration(
-                setOf(R.id.nav_home, R.id.nav_apps, R.id.nav_settings, R.id.nav_about)
-            )
+            appBarConfiguration = AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_apps, R.id.nav_settings, R.id.nav_about
+            ).build()
             setupActionBarWithNavController(navController, appBarConfiguration)
             bottomNav?.setupWithNavController(navController)
             navRail?.setupWithNavController(navController)
@@ -115,11 +115,11 @@ class MainActivity : HailActivity(), NavController.OnDestinationChangedListener 
 
     override fun onStop() {
         super.onStop()
-        if (biometricLogin) finishAndRemoveTask()
+        if (HailData.biometricLogin) finishAndRemoveTask()
     }
 
     override fun onSupportNavigateUp(): Boolean =
-        findNavController(R.id.nav_host_fragment_content_main).navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 
 
     override fun onDestinationChanged(

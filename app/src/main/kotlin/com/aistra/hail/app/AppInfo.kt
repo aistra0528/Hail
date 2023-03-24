@@ -1,12 +1,17 @@
 package com.aistra.hail.app
 
 import android.content.pm.ApplicationInfo
-import com.aistra.hail.HailApp
+import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.utils.HPackages
 
-class AppInfo(val packageName: String, var pinned: Boolean, var tagId: Int, var whitelisted: Boolean) {
+class AppInfo(
+    val packageName: String,
+    var pinned: Boolean,
+    var tagId: Int,
+    var whitelisted: Boolean
+) {
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
-    val name get() = applicationInfo?.loadLabel(HailApp.app.packageManager) ?: packageName
+    val name get() = applicationInfo?.loadLabel(app.packageManager) ?: packageName
 
     var state: Int = getCurrentState()
     fun getCurrentState(): Int = when {
