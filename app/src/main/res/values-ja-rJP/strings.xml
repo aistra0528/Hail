@@ -66,7 +66,7 @@
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">スキャン</string>
     <string name="donate_bilibili">ビリビリ動画</string>
-    <string name="donate_bilibili_msg">ビリビリチャンネルをフォロー</string>
+    <string name="donate_bilibili_msg">bilibiliチャンネルをフォローする</string>
     <string name="donate_bilibili_space">マイスペース</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_liberapay">Liberapay</string>
@@ -121,13 +121,14 @@
     <string name="mode_su_suspend">スーパーユーザー - サスペンド</string>
     <string name="mode_shizuku_suspend">Shizuku - サスペンド</string>
     <string name="action_unfreeze_remove_home">凍結を解除し、Hailのホームから削除する</string>
-    <string name="action_freeze_non_whitelisted">Freeze non-whitelisted</string>
+    <string name="action_freeze_non_whitelisted">ホワイトリスト以外を凍結</string>
     <string name="title_shortcuts">ショートカット</string>
-    <string name="msg_guide">Before freezing applications, please select a working mode in the settings.</string>
-    <string name="dynamic_shortcut_action">Dynamic shortcut action</string>
-    <string name="action_none">None</string>
+    <string name="msg_guide">アプリを凍結する前に、設定から動作モードを選択してください。</string>
+    <string name="dynamic_shortcut_action">動的ショートカット動作</string>
+    <string name="action_none">なし</string>
     <string name="mode_shizuku_hide">Shizuku - 非表示にする</string>
-    <string name="action_freeze_tag">Freeze tag</string>
-    <string name="action_unfreeze_tag">Unfreeze tag</string>
-    <string name="icon_pack">Icon pack</string>
+    <string name="action_freeze_tag">タグを凍結</string>
+    <string name="action_unfreeze_tag">タグの凍結を解除</string>
+    <string name="icon_pack">アイコンパック</string>
+    <string name="action_select_all">すべて選択</string>
 </resources>
