@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hail</string>
     <string name="app_slogan">Freezedom!</string>
@@ -55,7 +56,8 @@
     <string name="title_set_owner">Set Device Owner</string>
     <string name="msg_set_owner">Issue the command from adb:\n%s</string>
     <string name="title_remove_owner">Remove Device Owner</string>
-    <string name="msg_remove_owner">Device Owner will be removed, it might be difficult to set it again after removal.\nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
+    <string name="msg_remove_owner">Device Owner will be removed, it might be difficult to set it again after removal.
+\nFrozen apps will remain frozen after removal, please make sure you have unfrozen the important apps.</string>
     <string name="tap_to_select">Tap to multiselect</string>
     <string name="filter_by">Filter</string>
     <string name="filter_user_apps">User</string>
