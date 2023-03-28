@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hail</string>
+    <string name="app_name">Ícono compacto</string>
     <string name="app_slogan">¡Freezedom!</string>
     <string name="title_home">Inicio</string>
     <string name="title_apps">Aplicaciones</string>
@@ -50,7 +50,8 @@
     <string name="title_set_owner">Establecer el administrador de dispositivo</string>
     <string name="msg_set_owner">Emitir el comando desde adb:\n%s</string>
     <string name="title_remove_owner">Elminar el administrador de dispositivo</string>
-    <string name="msg_remove_owner">El Administrador de Dispositivo será eliminado, podría ser difícil establecerlo de nuevo después de la eliminación.\nLas aplicaciones ocultas siguen ocultas después de la eliminación, asegúrese de que ha desocultado las aplicaciones importantes.</string>
+    <string name="msg_remove_owner">El Administrador de Dispositivo será eliminado, podría ser difícil establecerlo de nuevo después de la eliminación.
+\nLas aplicaciones congeladas seguirán ocultas después de la eliminación, por favor asegúrese de que ha descongelado las aplicaciones importantes.</string>
     <string name="tap_to_select">Pulse para multiseleccionar</string>
     <string name="filter_by">Filtro</string>
     <string name="filter_user_apps">Usuario</string>
