@@ -1,5 +1,7 @@
 package com.aistra.hail.utils
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -21,19 +23,21 @@ object HFiles {
         else -> File(dir).mkdirs()
     }
 
-    fun copy(source: String, target: String): Boolean = runCatching {
-        when {
-            HTarget.O -> Files.copy(
-                Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING
-            )
-            else -> FileInputStream(source).channel.use {
-                FileOutputStream(target).channel.use { out ->
-                    out.transferFrom(it, 0, it.size())
+    suspend fun copy(source: String, target: String): Boolean = withContext(Dispatchers.IO) {
+        runCatching {
+            when {
+                HTarget.O -> Files.copy(
+                    Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING
+                )
+                else -> FileInputStream(source).channel.use {
+                    FileOutputStream(target).channel.use { out ->
+                        out.transferFrom(it, 0, it.size())
+                    }
                 }
             }
-        }
-        true
-    }.getOrDefault(false)
+            true
+        }.getOrDefault(false)
+    }
 
     /**
      * This method is not recommended on huge files. It has an internal limitation of 2 GB file size.

@@ -23,6 +23,9 @@ import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener, MenuProvider {
@@ -70,7 +73,11 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                         HUI.copyText(pkg)
                         HUI.showToast(R.string.msg_text_copied, pkg)
                     }
-                    2 -> {
+                    2 -> CoroutineScope(Dispatchers.Main).launch {
+                        val dialog =
+                            MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress)
+                                .setCancelable(false).create()
+                        dialog.show()
                         val target = "${HFiles.DIR_OUTPUT}/$name-${info.versionName}-${
                             PackageInfoCompat.getLongVersionCode(info)
                         }.apk"
@@ -81,6 +88,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                             ) R.string.msg_extract_apk
                             else R.string.operation_failed, target, true
                         )
+                        dialog.dismiss()
                     }
                     3 -> when {
                         pkg == app.packageName -> {
