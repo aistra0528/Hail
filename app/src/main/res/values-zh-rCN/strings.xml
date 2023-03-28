@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">雹</string>
     <string name="app_slogan">实现冻结自由！</string>
@@ -25,7 +26,7 @@
     <string name="action_launch">启动</string>
     <string name="action_freeze">冻结</string>
     <string name="action_unfreeze">解冻</string>
-    <string name="action_deferred_task">延期任务</string>
+    <string name="action_deferred_task">定期任务</string>
     <string name="action_tag_add">添加标签</string>
     <string name="action_tag_remove">移除标签</string>
     <string name="action_tag_set">设置标签</string>
@@ -50,7 +51,8 @@
     <string name="title_set_owner">设置设备所有者</string>
     <string name="msg_set_owner">通过 adb 发出命令：\n%s</string>
     <string name="title_remove_owner">移除设备所有者</string>
-    <string name="msg_remove_owner">将移除雹的设备所有者，移除后可能难以再次设置。\n已隐藏的应用在移除后仍会隐藏，请确保您已将重要的应用取消隐藏。</string>
+    <string name="msg_remove_owner">将移除雹的设备所有者，移除后可能难以再次设置。
+\n已冻结的应用在移除后仍会保持冻结状态，请确保您已将重要的应用解冻。</string>
     <string name="tap_to_select">点按多选</string>
     <string name="filter_by">筛选</string>
     <string name="filter_user_apps">用户</string>
@@ -66,7 +68,10 @@
     <string name="donate_wechat">微信支付</string>
     <string name="donate_wechat_scan">扫一扫</string>
     <string name="donate_bilibili">哔哩哔哩</string>
-    <string name="donate_bilibili_msg">哔哩哔哩年度大会员每月可至我的大会员-卡券包内领取5B币券，在承包、充电、看漫画、兑换金瓜子等消费时抵扣B币，领取后当月有效。\n若您的B币券月末没有好去处，可为我充电，我愿收留它们。\n* 因B站会收取30%的渠道服务费，并不推荐您充值充电。\n不是年度大会员？点个关注也可以。</string>
+    <string name="donate_bilibili_msg">哔哩哔哩年度大会员每31天可至我的大会员-卡券包内领取1张5B币券，可用于承包番剧、给up主充电、兑换电池，兑换漫画赛季积分等。
+\n若您的B币券没有好去处，可为我充电，我愿收留它们。
+\n* 因B站会收取30%的渠道服务费，并不推荐您充值充电。
+\n不是年度大会员？点个关注也可以。</string>
     <string name="donate_bilibili_space">我的空间</string>
     <string name="donate_bilibili_cancel">下次一定</string>
     <string name="donate_liberapay">Liberapay</string>
@@ -93,8 +98,8 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分钟后%2$s：%3$s</item>
     </plurals>
-    <string name="action_clear_dynamic_shortcuts">清除主屏幕动态</string>
-    <string name="tile_action">图块操作</string>
+    <string name="action_clear_dynamic_shortcuts">清除动态快捷方式</string>
+    <string name="tile_action">快捷设置图块操作</string>
     <string name="auto_freeze">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
     <string name="auto_freeze_after_lock">锁屏后</string>
