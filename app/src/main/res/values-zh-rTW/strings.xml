@@ -67,9 +67,9 @@
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">掃描</string>
     <string name="donate_bilibili">嗶哩嗶哩</string>
-    <string name="donate_bilibili_msg">嗶哩嗶哩年度大會員每31天可至我的大會員-卡券包內領取1張 5B 幣券，可用於承包番劇、給up主充電、兌換電池，兌換漫畫賽季積分等。
+    <string name="donate_bilibili_msg">嗶哩嗶哩年度大會員每月可至我的大會員 - 卡券包內領取 1 張 5B 幣券，可用於承包番劇、給 up 主充電、兌換電池，兌換漫畫賽季積分等。
 \n若您的 B 幣券沒有好去處，可為我充電，我願收留它們。
-\n* 因 B 站會收取 30% 的渠道服務費，並不推薦您充值充電。
+\n* 因 B 站會收取 30% 的渠道服務費，並不建議您儲值充電。
 \n不是年度大會員？點個關注也可以。</string>
     <string name="donate_bilibili_space">我的空間</string>
     <string name="donate_bilibili_cancel">下次一定</string>
