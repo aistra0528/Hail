@@ -51,7 +51,7 @@
     <string name="msg_set_owner">透過 adb 發出命令：\n%s</string>
     <string name="title_remove_owner">移除裝置擁有者</string>
     <string name="msg_remove_owner">將移除雹的裝置擁有者，移除後可能難以再次設定。
-\n已隱藏的應用程式在移除後仍會隱藏，請確保您已將重要的應用程式取消隱藏。</string>
+\n已凍結的應用程式在移除後仍會保持凍結，請確保您已將重要的應用程式解凍。</string>
     <string name="tap_to_select">輕觸多選</string>
     <string name="filter_by">篩選</string>
     <string name="filter_user_apps">使用者</string>
