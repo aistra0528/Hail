@@ -1,7 +1,7 @@
 package com.aistra.hail.utils
 
 object HShell {
-    private fun execute(command: String, root: Boolean = false): Boolean = runCatching {
+    private fun execute(command: String, root: Boolean): Boolean = runCatching {
         Runtime.getRuntime().exec(if (root) "su" else "sh").run {
             outputStream.use {
                 it.write(command.toByteArray())
@@ -24,5 +24,7 @@ object HShell {
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
         execSU("pm ${if (suspended) "suspend" else "unsuspend"} $packageName")
 
-    fun uninstallApp(packageName: String) = execSU("pm uninstall $packageName")
+    fun uninstallApp(packageName: String) = execSU(
+        "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
+    )
 }

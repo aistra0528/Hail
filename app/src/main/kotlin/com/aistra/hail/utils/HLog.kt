@@ -4,6 +4,6 @@ import android.util.Log
 
 object HLog {
     private const val TAG = "Hail"
-    fun i(string: String) = Log.i(TAG, string)
-    fun e(t: Throwable) = Log.e(TAG, Log.getStackTraceString(t))
+    fun i(tag: String, string: String) = Log.i(tag, string)
+    fun e(t: Throwable) = Log.e(TAG, t.stackTraceToString())
 }

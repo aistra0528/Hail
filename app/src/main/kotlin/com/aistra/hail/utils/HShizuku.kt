@@ -172,24 +172,19 @@ object HShizuku {
                 HiddenApiBypass.invoke(it::class.java, it, "build")
             }
 
-    fun uninstallApp(packageName: String): Boolean {
-        HPackages.getPackageInfoOrNull(packageName) ?: return true
-        return runCatching {
-            IShizukuService.Stub.asInterface(Shizuku.getBinder())
-                .newProcess(arrayOf(if (isRoot) "su" else "sh"), null, null).run {
-                    ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use {
-                        val uninstall =
-                            if (isRoot || HPackages.canUninstallNormally(packageName)) "uninstall"
-                            else "uninstall --user current"
-                        it.write("pm $uninstall $packageName".toByteArray())
-                    }
-                    (waitFor() == 0).also {
-                        destroy()
-                    }
+    fun uninstallApp(packageName: String): Boolean = execute(
+        "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
+    )
+
+    private fun execute(command: String, root: Boolean = isRoot): Boolean = runCatching {
+        IShizukuService.Stub.asInterface(Shizuku.getBinder())
+            .newProcess(arrayOf(if (root) "su" else "sh"), null, null).run {
+                ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use {
+                    it.write(command.toByteArray())
                 }
-        }.getOrElse {
-            HLog.e(it)
-            false
-        }
-    }
+                (waitFor() == 0).also {
+                    destroy()
+                }
+            }
+    }.getOrDefault(false)
 }
