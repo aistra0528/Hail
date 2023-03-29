@@ -1,7 +1,7 @@
 package com.aistra.hail.utils
 
 object HShell {
-    private fun execute(command: String, root: Boolean): Boolean = runCatching {
+    fun execute(command: String, root: Boolean): Boolean = runCatching {
         Runtime.getRuntime().exec(if (root) "su" else "sh").run {
             outputStream.use {
                 it.write(command.toByteArray())

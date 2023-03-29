@@ -176,7 +176,7 @@ object HShizuku {
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
     )
 
-    private fun execute(command: String, root: Boolean = isRoot): Boolean = runCatching {
+    fun execute(command: String, root: Boolean = isRoot): Boolean = runCatching {
         IShizukuService.Stub.asInterface(Shizuku.getBinder())
             .newProcess(arrayOf(if (root) "su" else "sh"), null, null).run {
                 ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use {

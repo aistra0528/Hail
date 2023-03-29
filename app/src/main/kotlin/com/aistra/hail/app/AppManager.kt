@@ -50,4 +50,10 @@ object AppManager {
         HUI.startActivity(Intent.ACTION_DELETE, HPackages.packageUri(packageName))
         return false
     }
+
+    fun execute(command: String): Boolean = when {
+        HailData.workingMode.startsWith(HailData.SU) -> HShell.execute(command, true)
+        HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.execute(command)
+        else -> false
+    }
 }

@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_terminal"
+        android:icon="@drawable/ic_baseline_terminal"
+        android:title="@string/action_terminal"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_help"
         android:icon="@drawable/ic_outline_help"
         android:title="@string/action_help"

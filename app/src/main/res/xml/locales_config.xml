@@ -13,6 +13,7 @@
     <locale android:name="ru" />
     <locale android:name="tr" />
     <locale android:name="uk" />
+    <locale android:name="yue" />
     <locale android:name="zh-CN" />
     <locale android:name="zh-TW" />
 </locale-config>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
 import android.view.*
+import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.MenuHost
@@ -15,8 +16,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
+import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
+import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import rikka.shizuku.Shizuku
@@ -82,8 +85,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             ) else app.packageManager.queryIntentActivities(it, 0)
         }.map { it.activityInfo }
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.icon_pack)
-            .setItems(list.map { it.loadLabel(app.packageManager) }
-                .toTypedArray()) { _, which ->
+            .setItems(list.map { it.loadLabel(app.packageManager) }.toTypedArray()) { _, which ->
                 if (HailData.iconPack == list[which].packageName) return@setItems
                 HailData.setIconPack(list[which].packageName)
                 AppIconCache.clear()
@@ -208,6 +210,22 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_terminal -> {
+                val input =
+                    DialogInputBinding.inflate(layoutInflater, FrameLayout(requireActivity()), true)
+                input.inputLayout.setHint(R.string.action_terminal)
+                input.editText.run {
+                    setSingleLine()
+                    filters = arrayOf()
+                }
+                MaterialAlertDialogBuilder(requireActivity()).setView(input.root.parent as View)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        val command = input.editText.text.toString()
+                        if (!AppManager.execute(command)) HUI.showToast(
+                            R.string.operation_failed, command
+                        )
+                    }.setNegativeButton(android.R.string.cancel, null).show()
+            }
             R.id.action_help -> HUI.openLink(HailData.URL_README)
         }
         return false
@@ -215,5 +233,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_settings, menu)
+        if (HailData.workingMode.startsWith(HailData.SU) || HailData.workingMode.startsWith(HailData.SHIZUKU)) menu.findItem(
+            R.id.action_terminal
+        ).isVisible = true
     }
 }
