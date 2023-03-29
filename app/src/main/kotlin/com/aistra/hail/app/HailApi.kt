@@ -38,6 +38,7 @@ object HailApi {
     fun getIntentForPackage(action: String, packageName: String) =
         Intent(action).putExtra(HailData.KEY_PACKAGE, packageName)
 
-    fun getIntentForTag(action: String, tag: String) =
-        Intent(action).putExtra(HailData.KEY_TAG, tag)
+    fun Intent.addTag(tag: String) = putExtra(HailData.KEY_TAG, tag)
+
+    fun getIntentForTag(action: String, tag: String) = Intent(action).addTag(tag)
 }

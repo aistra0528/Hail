@@ -15,6 +15,7 @@ import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
+import com.aistra.hail.app.HailApi.addTag
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentHomeBinding
@@ -221,9 +222,23 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                             showTagDialog(listOf(info))
                         }.setNegativeButton(android.R.string.cancel, null).show()
                 }
-                6 -> HShortcuts.addPinShortcut(
-                    info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
-                )
+                6 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
+                    .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
+                        HShortcuts.addPinShortcut(
+                            info,
+                            pkg,
+                            info.name,
+                            HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
+                                .addTag(HailData.tags[index].first)
+                        )
+                    }.setNegativeButton(R.string.action_none) { _, _ ->
+                        HShortcuts.addPinShortcut(
+                            info,
+                            pkg,
+                            info.name,
+                            HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
+                        )
+                    }.show()
                 7 -> exportToClipboard(listOf(info))
                 8 -> removeCheckedApp(pkg)
                 9 -> {

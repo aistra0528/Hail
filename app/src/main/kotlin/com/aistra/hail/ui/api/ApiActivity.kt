@@ -26,7 +26,9 @@ class ApiActivity : AppCompatActivity() {
                     redirect(requirePackage(if (HTarget.N) Intent.EXTRA_PACKAGE_NAME else "android.intent.extra.PACKAGE_NAME"))
                     return
                 }
-                HailApi.ACTION_LAUNCH -> launchApp(requirePackage())
+                HailApi.ACTION_LAUNCH -> launchApp(
+                    requirePackage(), runCatching { requireTagId }.getOrNull()
+                )
                 HailApi.ACTION_FREEZE -> setAppFrozen(requirePackage(), true)
                 HailApi.ACTION_UNFREEZE -> setAppFrozen(requirePackage(), false)
                 HailApi.ACTION_FREEZE_TAG -> setListFrozen(
@@ -86,7 +88,8 @@ class ApiActivity : AppCompatActivity() {
             .setOnDismissListener { if (shouldFinished) finish() }.show()
     }
 
-    private fun launchApp(pkg: String) {
+    private fun launchApp(pkg: String, tagId: Int? = null) {
+        if (tagId != null) setListFrozen(false, HailData.checkedList.filter { it.tagId == tagId })
         if (AppManager.isAppFrozen(pkg)) {
             if (AppManager.setAppFrozen(pkg, false)) app.setAutoFreezeService()
             else throw IllegalStateException(getString(R.string.permission_denied))
