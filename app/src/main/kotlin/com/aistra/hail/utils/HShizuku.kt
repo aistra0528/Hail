@@ -174,17 +174,17 @@ object HShizuku {
 
     fun uninstallApp(packageName: String): Boolean = execute(
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
-    )
+    ).first == 0
 
-    fun execute(command: String, root: Boolean = isRoot): Boolean = runCatching {
+    fun execute(command: String, root: Boolean = isRoot): Pair<Int, String?> = runCatching {
         IShizukuService.Stub.asInterface(Shizuku.getBinder())
             .newProcess(arrayOf(if (root) "su" else "sh"), null, null).run {
                 ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use {
                     it.write(command.toByteArray())
                 }
-                (waitFor() == 0).also {
-                    destroy()
-                }
+                waitFor() to ParcelFileDescriptor.AutoCloseInputStream(inputStream).use {
+                    it.bufferedReader().readText()
+                }.also { destroy() }
             }
-    }.getOrDefault(false)
+    }.getOrElse { 0 to it.stackTraceToString() }
 }

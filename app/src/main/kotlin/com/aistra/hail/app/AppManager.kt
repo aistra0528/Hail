@@ -51,9 +51,9 @@ object AppManager {
         return false
     }
 
-    fun execute(command: String): Boolean = when {
+    fun execute(command: String): Pair<Int, String?> = when {
         HailData.workingMode.startsWith(HailData.SU) -> HShell.execute(command, true)
         HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.execute(command)
-        else -> false
+        else -> 0 to null
     }
 }

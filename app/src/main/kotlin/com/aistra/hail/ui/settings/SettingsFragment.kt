@@ -208,6 +208,21 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         return true
     }
 
+    private fun onTerminalResult(exitValue: Int, msg: String?) {
+        if (exitValue == 0 && msg.isNullOrBlank()) return
+        MaterialAlertDialogBuilder(requireActivity()).apply {
+            if (!msg.isNullOrBlank()) {
+                if (exitValue != 0) {
+                    setTitle(getString(R.string.operation_failed, exitValue.toString()))
+                }
+                setMessage(msg)
+                setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(msg) }
+            } else if (exitValue != 0) {
+                setMessage(getString(R.string.operation_failed, exitValue.toString()))
+            }
+        }.setPositiveButton(android.R.string.ok, null).show()
+    }
+
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_terminal -> {
@@ -220,10 +235,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 }
                 MaterialAlertDialogBuilder(requireActivity()).setView(input.root.parent as View)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
-                        val command = input.editText.text.toString()
-                        if (!AppManager.execute(command)) HUI.showToast(
-                            R.string.operation_failed, command
-                        )
+                        val result = AppManager.execute(input.editText.text.toString())
+                        onTerminalResult(result.first, result.second)
                     }.setNegativeButton(android.R.string.cancel, null).show()
             }
             R.id.action_help -> HUI.openLink(HailData.URL_README)
