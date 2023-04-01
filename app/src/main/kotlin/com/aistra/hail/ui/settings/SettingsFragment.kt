@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aistra.hail.HailApp.Companion.app
@@ -22,6 +23,9 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import rikka.shizuku.Shizuku
 
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
@@ -208,20 +212,21 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         return true
     }
 
-    private fun onTerminalResult(exitValue: Int, msg: String?) {
-        if (exitValue == 0 && msg.isNullOrBlank()) return
-        MaterialAlertDialogBuilder(requireActivity()).apply {
-            if (!msg.isNullOrBlank()) {
-                if (exitValue != 0) {
-                    setTitle(getString(R.string.operation_failed, exitValue.toString()))
+    private suspend fun onTerminalResult(exitValue: Int, msg: String?) =
+        withContext(Dispatchers.Main) {
+            if (exitValue == 0 && msg.isNullOrBlank()) return@withContext
+            MaterialAlertDialogBuilder(requireActivity()).apply {
+                if (!msg.isNullOrBlank()) {
+                    if (exitValue != 0) {
+                        setTitle(getString(R.string.operation_failed, exitValue.toString()))
+                    }
+                    setMessage(msg)
+                    setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(msg) }
+                } else if (exitValue != 0) {
+                    setMessage(getString(R.string.operation_failed, exitValue.toString()))
                 }
-                setMessage(msg)
-                setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(msg) }
-            } else if (exitValue != 0) {
-                setMessage(getString(R.string.operation_failed, exitValue.toString()))
-            }
-        }.setPositiveButton(android.R.string.ok, null).show()
-    }
+            }.setPositiveButton(android.R.string.ok, null).show()
+        }
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -235,8 +240,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 }
                 MaterialAlertDialogBuilder(requireActivity()).setView(input.root.parent as View)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
-                        val result = AppManager.execute(input.editText.text.toString())
-                        onTerminalResult(result.first, result.second)
+                        lifecycleScope.launch {
+                            val result = AppManager.execute(input.editText.text.toString())
+                            onTerminalResult(result.first, result.second)
+                        }
                     }.setNegativeButton(android.R.string.cancel, null).show()
             }
             R.id.action_help -> HUI.openLink(HailData.URL_README)

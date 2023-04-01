@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.HailApp.Companion.app
@@ -29,10 +30,9 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 
 class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
@@ -451,19 +451,11 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
         HUI.showToast(getString(R.string.msg_imported, i.toString()))
     }
 
-    private fun importFrozenApp() =
-        CoroutineScope(Job() + Dispatchers.IO + Dispatchers.Main).launch {
-            val i = HPackages.getInstalledPackages().map { it.packageName }
-                .filter { AppManager.isAppFrozen(it) && !HailData.isChecked(it) }.run {
-                    forEach { HailData.addCheckedApp(it, false) }
-                    size
-                }
-            if (i > 0) {
-                HailData.saveApps()
-                updateCurrentList()
-            }
-            HUI.showToast(getString(R.string.msg_imported, i.toString()))
-        }
+    private suspend fun importFrozenApp() = withContext(Dispatchers.IO) {
+        HPackages.getInstalledPackages().map { it.packageName }
+            .filter { AppManager.isAppFrozen(it) && !HailData.isChecked(it) }
+            .onEach { HailData.addCheckedApp(it, false) }.size
+    }
 
     private fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
         HailData.removeCheckedApp(packageName, saveApps)
@@ -487,17 +479,22 @@ class HomeFragment : MainFragment(), HomeAdapter.OnItemClickListener,
                     deselect()
                 }
             }
-            R.id.action_freeze_current -> setListFrozen(
-                true,
+            R.id.action_freeze_current -> setListFrozen(true,
                 HomeAdapter.currentList.filterNot { it.whitelisted })
             R.id.action_unfreeze_current -> setListFrozen(false, HomeAdapter.currentList)
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)
-            R.id.action_freeze_non_whitelisted -> setListFrozen(
-                true,
+            R.id.action_freeze_non_whitelisted -> setListFrozen(true,
                 HailData.checkedList.filterNot { it.whitelisted })
             R.id.action_import_clipboard -> importFromClipboard()
-            R.id.action_import_frozen -> importFrozenApp()
+            R.id.action_import_frozen -> lifecycleScope.launch {
+                val size = importFrozenApp()
+                if (size > 0) {
+                    HailData.saveApps()
+                    updateCurrentList()
+                }
+                HUI.showToast(getString(R.string.msg_imported, size.toString()))
+            }
             R.id.action_export_current -> exportToClipboard(HomeAdapter.currentList)
             R.id.action_export_all -> exportToClipboard(HailData.checkedList)
         }

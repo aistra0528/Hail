@@ -3,6 +3,8 @@ package com.aistra.hail.app
 import android.content.Intent
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.utils.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 object AppManager {
     val lockScreen: Boolean
@@ -51,9 +53,11 @@ object AppManager {
         return false
     }
 
-    fun execute(command: String): Pair<Int, String?> = when {
-        HailData.workingMode.startsWith(HailData.SU) -> HShell.execute(command, true)
-        HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.execute(command)
-        else -> 0 to null
+    suspend fun execute(command: String): Pair<Int, String?> = withContext(Dispatchers.IO) {
+        when {
+            HailData.workingMode.startsWith(HailData.SU) -> HShell.execute(command, true)
+            HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.execute(command)
+            else -> 0 to null
+        }
     }
 }

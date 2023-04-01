@@ -10,6 +10,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -23,8 +24,6 @@ import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
@@ -73,7 +72,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                         HUI.copyText(pkg)
                         HUI.showToast(R.string.msg_text_copied, pkg)
                     }
-                    2 -> CoroutineScope(Dispatchers.Main).launch {
+                    2 -> lifecycleScope.launch {
                         val dialog =
                             MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress)
                                 .setCancelable(false).create()
