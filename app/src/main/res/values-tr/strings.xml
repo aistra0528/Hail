@@ -129,10 +129,11 @@
     <string name="action_details">Uygulama bilgisi</string>
     <string name="mode_owner_hide">Cihaz Yöneticisi - Gizle</string>
     <string name="msg_remove_owner">Cihaz Yöneticisi kaldırılacak, kaldırdıktan sonra yeniden ayarlamak zor olabilir.
-\n Gizli uygulamalar, kaldırıldıktan sonra da gizli kalır, önemli uygulamaların gizlenmediğinden emin olun.</string>
+\n Dondurulmuş uygulamalar, kaldırıldıktan sonra da donuk olarak kalır, önemli uygulamaların çözülmüş olduğundan emin olun.</string>
     <string name="msg_network_error">Sunucuyla iletişim kurulamıyor. Lütfen daha sonra tekrar deneyiniz.</string>
     <string name="activity_not_found">Başlatma etkinliği bulunamadı</string>
     <string name="shizuku_missing">Shizuku kayıp :(</string>
     <string name="mode_owner_suspend">Cihaz Yöneticisi - Askıya Al</string>
     <string name="donate_bilibili_cancel">\@android:string/cancel</string>
+    <string name="action_terminal">Terminal</string>
 </resources>
