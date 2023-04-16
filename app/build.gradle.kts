@@ -72,8 +72,8 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.work:work-runtime-ktx:2.8.0")
     implementation("com.google.android.material:material:1.8.0")
-    implementation("dev.rikka.shizuku:api:13.1.0")
-    implementation("dev.rikka.shizuku:provider:13.1.0")
+    implementation("dev.rikka.shizuku:api:13.1.1")
+    implementation("dev.rikka.shizuku:provider:13.1.1")
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
 }
