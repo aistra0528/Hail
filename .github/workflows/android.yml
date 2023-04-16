@@ -23,20 +23,19 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'aistra0528' }}
     steps:
-      - uses: actions/checkout@v3
-      - name: set up JDK 11
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Java JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'temurin'
-          cache: gradle
+          java-version: 17
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew assembleDebug
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3
         with:
-          name: app-debug.apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: Debug
+          path: app/build/outputs/apk/debug
           retention-days: 7
