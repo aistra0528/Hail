@@ -6,7 +6,7 @@ object HShell {
             outputStream.use {
                 it.write(command.toByteArray())
             }
-            waitFor() to inputStream.use {
+            waitFor() to (if (inputStream.available() > 0) inputStream else errorStream).use {
                 it.bufferedReader().readText()
             }.also { destroy() }
         }

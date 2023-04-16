@@ -182,9 +182,11 @@ object HShizuku {
                 ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use {
                     it.write(command.toByteArray())
                 }
-                waitFor() to ParcelFileDescriptor.AutoCloseInputStream(inputStream).use {
-                    it.bufferedReader().readText()
-                }.also { destroy() }
+                waitFor() to inputStream.text.ifBlank { errorStream.text }.also { destroy() }
             }
     }.getOrElse { 0 to it.stackTraceToString() }
+
+    private val ParcelFileDescriptor.text
+        get() = ParcelFileDescriptor.AutoCloseInputStream(this)
+            .use { it.bufferedReader().readText() }
 }

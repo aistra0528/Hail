@@ -177,9 +177,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         when {
             mode.startsWith(HailData.OWNER) -> if (!HPolicy.isDeviceOwnerActive) {
                 MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_owner)
-                    .setMessage(getString(R.string.msg_set_owner, HPolicy.ADB_SET_DO))
+                    .setMessage(getString(R.string.msg_set_owner, HPolicy.ADB_COMMAND))
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(R.string.action_help) { _, _ -> HUI.openLink(HailData.URL_README) }
+                    .setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(HPolicy.DPM_COMMAND) }
                     .show()
                 return false
             }
