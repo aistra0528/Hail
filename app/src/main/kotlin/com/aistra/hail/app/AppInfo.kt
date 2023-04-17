@@ -21,7 +21,6 @@ class AppInfo(
     }
 
     var selected: Boolean = false
-    fun isNowSelected(selectedList: List<AppInfo>): Boolean = this in selectedList
 
     override fun equals(other: Any?): Boolean = other is AppInfo && other.packageName == packageName
     override fun hashCode(): Int = packageName.hashCode()

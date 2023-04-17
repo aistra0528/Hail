@@ -11,23 +11,9 @@
         android:layout_height="wrap_content"
         app:tabMode="scrollable" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/empty"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/nothing_here"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
