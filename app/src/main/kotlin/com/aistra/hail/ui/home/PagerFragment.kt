@@ -389,7 +389,6 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                 if (list != null) { // Add tag
                     HailData.tags.add(tagName to tagId)
                     list.forEach { it.tagId = tagId }
-                    adapter.fragments.add(PagerFragment())
                     adapter.notifyItemInserted(adapter.itemCount - 1)
                     if (query.isEmpty() && tabs.tabCount == 2) tabs.isVisible = true
                     if (list == selectedList) deselect(false)
@@ -413,7 +412,6 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                     pagerAdapter.currentList.forEach { it.tagId = 0 }
                     tabs.selectTab(tabs.getTabAt(0))
                     HailData.tags.removeAt(position)
-                    adapter.fragments.removeAt(position)
                     adapter.notifyItemRemoved(position)
                     if (tabs.tabCount == 1) tabs.isVisible = false
                     HailData.saveApps()
