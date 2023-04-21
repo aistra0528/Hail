@@ -26,16 +26,20 @@ class ApiActivity : AppCompatActivity() {
                     redirect(requirePackage(if (HTarget.N) Intent.EXTRA_PACKAGE_NAME else "android.intent.extra.PACKAGE_NAME"))
                     return
                 }
+
                 HailApi.ACTION_LAUNCH -> launchApp(
                     requirePackage(), runCatching { requireTagId }.getOrNull()
                 )
+
                 HailApi.ACTION_FREEZE -> setAppFrozen(requirePackage(), true)
                 HailApi.ACTION_UNFREEZE -> setAppFrozen(requirePackage(), false)
                 HailApi.ACTION_FREEZE_TAG -> setListFrozen(
                     true, HailData.checkedList.filter { it.tagId == requireTagId }, true
                 )
+
                 HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(false,
                     HailData.checkedList.filter { it.tagId == requireTagId })
+
                 HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
                 HailApi.ACTION_UNFREEZE_ALL -> setListFrozen(false)
                 HailApi.ACTION_FREEZE_NON_WHITELISTED -> setListFrozen(true, skipWhitelisted = true)
@@ -78,6 +82,7 @@ class ApiActivity : AppCompatActivity() {
                         if (!HailData.isChecked(pkg)) HailData.addCheckedApp(pkg)
                         setAppFrozen(pkg, true)
                     }
+
                     2 -> setAppFrozen(pkg, false)
                 }
             }.onFailure {
@@ -105,6 +110,7 @@ class ApiActivity : AppCompatActivity() {
         AppManager.isAppFrozen(pkg) != frozen && !AppManager.setAppFrozen(
             pkg, frozen
         ) -> throw IllegalStateException(getString(R.string.permission_denied))
+
         else -> {
             HUI.showToast(
                 if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
@@ -122,15 +128,14 @@ class ApiActivity : AppCompatActivity() {
         var i = 0
         var denied = false
         var name = String()
-        list.forEach {
-            when {
-                AppManager.isAppFrozen(it.packageName) == frozen || (skipWhitelisted && it.whitelisted) -> return@forEach
-                AppManager.setAppFrozen(it.packageName, frozen) -> {
-                    i++
-                    name = it.name.toString()
-                }
-                it.packageName != packageName && it.applicationInfo != null -> denied = true
+        for (it in list) when {
+            AppManager.isAppFrozen(it.packageName) == frozen || (skipWhitelisted && it.whitelisted) -> continue
+            AppManager.setAppFrozen(it.packageName, frozen) -> {
+                i++
+                name = it.name.toString()
             }
+
+            it.packageName != packageName && it.applicationInfo != null -> denied = true
         }
         when {
             denied && i == 0 -> throw IllegalStateException(getString(R.string.permission_denied))

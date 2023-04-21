@@ -139,8 +139,8 @@ object HailData {
 
     fun isChecked(packageName: String): Boolean = getCheckedPosition(packageName) != -1
 
-    fun addCheckedApp(packageName: String, saveApps: Boolean = true) {
-        checkedList.add(AppInfo(packageName, false, 0, false))
+    fun addCheckedApp(packageName: String, saveApps: Boolean = true, tagId: Int = 0) {
+        checkedList.add(AppInfo(packageName, false, tagId, false))
         if (saveApps) saveApps()
     }
 
