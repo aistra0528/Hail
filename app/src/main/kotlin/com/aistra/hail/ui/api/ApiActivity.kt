@@ -15,6 +15,7 @@ import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HShortcuts
 import com.aistra.hail.utils.HTarget
 import com.aistra.hail.utils.HUI
+import com.aistra.hail.work.HWork.setAutoFreeze
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ApiActivity : AppCompatActivity() {
@@ -43,6 +44,7 @@ class ApiActivity : AppCompatActivity() {
                 HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
                 HailApi.ACTION_UNFREEZE_ALL -> setListFrozen(false)
                 HailApi.ACTION_FREEZE_NON_WHITELISTED -> setListFrozen(true, skipWhitelisted = true)
+                HailApi.ACTION_FREEZE_AUTO -> setAutoFreeze(false)
                 HailApi.ACTION_LOCK -> lockScreen(false)
                 HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
                 else -> throw IllegalArgumentException("unknown action:\n${intent.action}")

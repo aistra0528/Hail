@@ -54,6 +54,7 @@
                 <action android:name="${applicationId}.action.FREEZE_ALL" />
                 <action android:name="${applicationId}.action.UNFREEZE_ALL" />
                 <action android:name="${applicationId}.action.FREEZE_NON_WHITELISTED" />
+                <action android:name="${applicationId}.action.FREEZE_AUTO" />
                 <action android:name="${applicationId}.action.LOCK" />
                 <action android:name="${applicationId}.action.LOCK_FREEZE" />
 

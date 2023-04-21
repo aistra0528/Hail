@@ -12,16 +12,16 @@ import com.aistra.hail.utils.HSystem
 
 class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
-        if (HSystem.isInteractive(applicationContext) || isSkipWhileCharging(applicationContext)) return Result.success() // Not stopping the AutoFreezeService here. The worker will run at some point. Then we'll stop the Service
+        if ((inputData.getBoolean(HailData.ACTION_LOCK, true)
+                    && HSystem.isInteractive(applicationContext))
+            || isSkipWhileCharging(applicationContext)
+        ) return Result.success() // Not stopping the AutoFreezeService here. The worker will run at some point. Then we'll stop the Service
         var i = 0
         var denied = false
-        HailData.checkedList.forEach {
-            when {
-                isSkipApp(applicationContext, it) -> return@forEach
-                AppManager.setAppFrozen(it.packageName, true) -> i++
-                it.packageName != app.packageName && it.applicationInfo != null -> denied =
-                    true
-            }
+        for (it in HailData.checkedList) when {
+            isSkipApp(applicationContext, it) -> continue
+            AppManager.setAppFrozen(it.packageName, true) -> i++
+            it.packageName != app.packageName && it.applicationInfo != null -> denied = true
         }
         return if (denied && i == 0) {
             Result.failure()

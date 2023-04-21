@@ -26,13 +26,15 @@ object HWork {
         )
     }
 
-    fun setAutoFreeze() {
+    fun setAutoFreeze(screenOff: Boolean) {
         WorkManager.getInstance(app).enqueueUniqueWork(
             HailApi.ACTION_FREEZE_ALL,
             ExistingWorkPolicy.REPLACE,  // in case the old task has not been executed...
-            OneTimeWorkRequestBuilder<AutoFreezeWorker>()
-                .setInitialDelay(HailData.autoFreezeDelay, TimeUnit.MINUTES)
-                .build()
+            OneTimeWorkRequestBuilder<AutoFreezeWorker>().run {
+                if (screenOff) setInitialDelay(HailData.autoFreezeDelay, TimeUnit.MINUTES)
+                setInputData(workDataOf(HailData.ACTION_LOCK to screenOff))
+                build()
+            }
         )
     }
 }
