@@ -202,16 +202,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                 }
 
                 5 -> {
-                    var checked = -1
-                    for ((i, tag) in HailData.tags.withIndex()) {
-                        if (info.tagId == tag.second) {
-                            checked = i
-                            break
-                        }
-                    }
                     MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
                         .setSingleChoiceItems(
-                            HailData.tags.map { it.first }.toTypedArray(), checked
+                            HailData.tags.map { it.first }.toTypedArray(), tabs.selectedTabPosition
                         ) { dialog, index ->
                             if (info.tagId != HailData.tags[index].second) {
                                 info.tagId = HailData.tags[index].second
@@ -289,13 +282,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                 }
 
                 2 -> {
-                    var checked = -1
-                    for ((i, tag) in HailData.tags.withIndex()) {
-                        if (selectedList.all { it.tagId == tag.second }) {
-                            checked = i
-                            break
-                        }
-                    }
+                    val checked = if (selectedList.all { it.tagId == selectedList[0].tagId })
+                        HailData.tags.indexOfFirst { it.second == selectedList[0].tagId } else -1
                     MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
                         .setSingleChoiceItems(
                             HailData.tags.map { it.first }.toTypedArray(), checked

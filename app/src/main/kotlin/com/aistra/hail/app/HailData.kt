@@ -130,14 +130,7 @@ object HailData {
         }
     }
 
-    private fun getCheckedPosition(packageName: String): Int {
-        checkedList.forEachIndexed { position, info ->
-            if (info.packageName == packageName) return position
-        }
-        return -1
-    }
-
-    fun isChecked(packageName: String): Boolean = getCheckedPosition(packageName) != -1
+    fun isChecked(packageName: String): Boolean = checkedList.any { it.packageName == packageName }
 
     fun addCheckedApp(packageName: String, saveApps: Boolean = true, tagId: Int = 0) {
         checkedList.add(AppInfo(packageName, false, tagId, false))
@@ -145,7 +138,7 @@ object HailData {
     }
 
     fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
-        checkedList.removeAt(getCheckedPosition(packageName))
+        checkedList.removeAll { it.packageName == packageName }
         if (saveApps) saveApps()
     }
 
@@ -173,15 +166,6 @@ object HailData {
                 add(app.getString(R.string.label_default) to 0)
             }
         }
-    }
-
-    fun isTagAvailable(tagName: String): Boolean = getTagPosition(tagName) != -1
-
-    fun getTagPosition(tagName: String): Int {
-        tags.forEachIndexed { position, tag ->
-            if (tag.first == tagName) return position
-        }
-        return -1
     }
 
     fun saveTags() {

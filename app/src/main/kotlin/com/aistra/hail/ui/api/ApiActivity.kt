@@ -67,10 +67,10 @@ class ApiActivity : AppCompatActivity() {
         } ?: throw IllegalArgumentException("package must not be null")
 
     private val requireTagId: Int
-        get() = HailData.tags[HailData.getTagPosition(intent?.getStringExtra(HailData.KEY_TAG)
-            ?.also {
-                if (!HailData.isTagAvailable(it)) throw IllegalStateException("tag unavailable:\n$it")
-            } ?: throw IllegalArgumentException("tag must not be null"))].second
+        get() = intent?.getStringExtra(HailData.KEY_TAG)?.let {
+            HailData.tags.find { tag -> tag.first == it }?.second
+                ?: throw IllegalStateException("tag unavailable:\n$it")
+        } ?: throw IllegalArgumentException("tag must not be null")
 
     private fun redirect(pkg: String) {
         var shouldFinished = true

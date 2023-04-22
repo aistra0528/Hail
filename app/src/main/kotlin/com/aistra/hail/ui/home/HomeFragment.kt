@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : MainFragment() {
     var multiselect: Boolean = false
-    val selectedList = mutableListOf<AppInfo>()
+    val selectedList: MutableList<AppInfo> = mutableListOf()
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
 

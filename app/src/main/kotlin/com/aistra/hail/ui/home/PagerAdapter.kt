@@ -16,7 +16,7 @@ import com.aistra.hail.utils.HPackages.myUserId
 import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.Job
 
-class PagerAdapter(private val selectedList: MutableList<AppInfo>) :
+class PagerAdapter(private val selectedList: List<AppInfo>) :
     ListAdapter<AppInfo, PagerAdapter.ViewHolder>(HomeDiff(selectedList)) {
     private var loadIconJob: Job? = null
     lateinit var onItemClickListener: OnItemClickListener
@@ -70,7 +70,7 @@ class PagerAdapter(private val selectedList: MutableList<AppInfo>) :
         if (loadIconJob?.isActive == true) loadIconJob?.cancel()
     }
 
-    class HomeDiff(private val selectedList: MutableList<AppInfo>) :
+    class HomeDiff(private val selectedList: List<AppInfo>) :
         DiffUtil.ItemCallback<AppInfo>() {
         override fun areItemsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
             oldItem == newItem
