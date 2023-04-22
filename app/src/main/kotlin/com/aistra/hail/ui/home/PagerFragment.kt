@@ -202,9 +202,10 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                 }
 
                 5 -> {
+                    val checked = HailData.tags.indexOfFirst { it.second == info.tagId }
                     MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
                         .setSingleChoiceItems(
-                            HailData.tags.map { it.first }.toTypedArray(), tabs.selectedTabPosition
+                            HailData.tags.map { it.first }.toTypedArray(), checked
                         ) { dialog, index ->
                             if (info.tagId != HailData.tags[index].second) {
                                 info.tagId = HailData.tags[index].second
