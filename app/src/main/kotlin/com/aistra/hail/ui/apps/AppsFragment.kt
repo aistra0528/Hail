@@ -3,7 +3,12 @@ package com.aistra.hail.ui.apps
 import android.content.pm.PackageInfo
 import android.os.Bundle
 import android.provider.Settings
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.PackageInfoCompat
@@ -68,10 +73,12 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                     0 -> HUI.startActivity(
                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS, HPackages.packageUri(pkg)
                     )
+
                     1 -> {
                         HUI.copyText(pkg)
                         HUI.showToast(R.string.msg_text_copied, pkg)
                     }
+
                     2 -> lifecycleScope.launch {
                         val dialog =
                             MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress)
@@ -89,6 +96,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                         )
                         dialog.dismiss()
                     }
+
                     3 -> when {
                         pkg == app.packageName -> {
                             when {
@@ -100,13 +108,16 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                                         HPolicy.clearDeviceOwnerApp()
                                         uninstallDialog(name, pkg)
                                     }.setNegativeButton(android.R.string.cancel, null).show()
+
                                 HPolicy.isAdminActive -> {
                                     HPolicy.removeActiveAdmin()
                                     uninstallDialog(name, pkg)
                                 }
+
                                 else -> uninstallDialog(name, pkg)
                             }
                         }
+
                         HailData.workingMode == HailData.MODE_DEFAULT -> AppManager.uninstallApp(pkg)
                         else -> uninstallDialog(name, pkg)
                     }
@@ -117,9 +128,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     private fun uninstallDialog(name: CharSequence, pkg: String) {
         MaterialAlertDialogBuilder(activity).setTitle(name).setMessage(R.string.msg_uninstall)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(
-                    refreshLayout
-                )
+                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(refreshLayout)
             }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
@@ -135,9 +144,9 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         inflater.inflate(R.menu.menu_apps, menu)
         (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
-            private var once = false
+            private var inited = false
             override fun onQueryTextChange(newText: String): Boolean {
-                if (once) AppsAdapter.updateCurrentList(refreshLayout, newText) else once = true
+                if (inited) AppsAdapter.updateCurrentList(refreshLayout, newText) else inited = true
                 return true
             }
 
@@ -187,11 +196,13 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 HailData.changeAppsFilter(filter, item.isChecked)
                 HailData.changeAppsFilter(HailData.FILTER_SYSTEM_APPS, false)
             }
+
             R.id.filter_system_apps -> {
                 item.isChecked = true
                 HailData.changeAppsFilter(filter, item.isChecked)
                 HailData.changeAppsFilter(HailData.FILTER_USER_APPS, false)
             }
+
             else -> {
                 item.isChecked = !item.isChecked
                 HailData.changeAppsFilter(filter, item.isChecked)

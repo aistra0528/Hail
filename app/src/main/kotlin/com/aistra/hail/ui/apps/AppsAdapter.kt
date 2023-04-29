@@ -19,7 +19,12 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.AppIconCache
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.NameComparator
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 object AppsAdapter :
     ListAdapter<PackageInfo, AppsAdapter.ViewHolder>(object : DiffUtil.ItemCallback<PackageInfo>() {
@@ -41,11 +46,14 @@ object AppsAdapter :
     private suspend fun filterList(query: String? = null, pm: PackageManager): List<PackageInfo> =
         withContext(Dispatchers.Default) {
             HPackages.getInstalledPackages().filter {
-                ((HailData.filterUserApps && !it.isSystemApp) || (HailData.filterSystemApps && it.isSystemApp)) && ((HailData.filterFrozenApps && AppManager.isAppFrozen(
-                    it.packageName
-                )) || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName))) && (query.isNullOrEmpty() || it.packageName.contains(
-                    query, true
-                ) || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
+                ((HailData.filterUserApps && !it.isSystemApp)
+                        || (HailData.filterSystemApps && it.isSystemApp))
+
+                        && ((HailData.filterFrozenApps && AppManager.isAppFrozen(it.packageName))
+                        || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName)))
+
+                        && (query.isNullOrEmpty() || it.packageName.contains(query, true)
+                        || it.applicationInfo.loadLabel(pm).toString().contains(query, true))
             }.run {
                 when (HailData.sortBy) {
                     HailData.SORT_INSTALL -> sortedBy { it.firstInstallTime }

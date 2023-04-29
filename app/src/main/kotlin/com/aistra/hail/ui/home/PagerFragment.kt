@@ -113,9 +113,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
     }
 
     private fun updateCurrentList() = HailData.checkedList.filter {
-        (query.isEmpty() && it.tagId == tag.second) || (query.isNotEmpty() && (it.packageName.contains(
-            query, true
-        ) || it.name.contains(query, true)))
+        if (query.isEmpty()) it.tagId == tag.second
+        else it.packageName.contains(query, true) || it.name.contains(query, true)
     }.sortedWith(NameComparator).let {
         binding.empty.isVisible = it.isEmpty()
         pagerAdapter.submitList(it)
@@ -501,13 +500,13 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
         inflater.inflate(R.menu.menu_home, menu)
         (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
-            private var once = false
+            private var inited = false
             override fun onQueryTextChange(newText: String): Boolean {
-                if (once) {
+                if (inited) {
                     query = newText
                     tabs.isVisible = query.isEmpty() && tabs.tabCount > 1
                     updateCurrentList()
-                } else once = true
+                } else inited = true
                 return true
             }
 
