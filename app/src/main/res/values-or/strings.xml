@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="title_home">ଗୃହ</string>
+    <string name="title_settings">ସେଟିଂ</string>
+    <string name="label_default">ଡିଫଲ୍ଟ</string>
+    <string name="action_telegram">Telegram ଗୋଷ୍ଠୀ</string>
+    <string name="action_qq">QQ ଗୋଷ୍ଠୀ</string>
+    <string name="action_donate">ଦାନ କରନ୍ତୁ</string>
+    <string name="action_translate">ଅନୁଵାଦ କରନ୍ତୁ</string>
+    <string name="action_help">ସହାୟତା</string>
+    <string name="action_search">ସନ୍ଧାନ</string>
+    <string name="action_details">ଆପ୍ ସୂଚନା</string>
+    <string name="sort_install">ପ୍ରଥମ ଅଧିସ୍ଥାପନ</string>
+    <string name="sort_update">ଗତ ଅଦ୍ୟତନ</string>
+    <string name="sort_name">ନାମ</string>
+    <plurals name="deferred_task_entry">
+        <item quantity="one">%d ମିନିଟ୍</item>
+        <item quantity="other">%d ମିନିଟ୍</item>
+    </plurals>
+    <string name="title_about">ଵିଷୟରେ</string>
+    <string name="label_version">ସଂସ୍କରଣ</string>
+    <string name="action_undo">ପୂର୍ଵଵତ୍</string>
+    <string name="nothing_here">ଏଠାରେ କିଛି ନାହିଁ</string>
+    <string name="sort_by">ଏହା ଅନୁଯାୟୀ ସଜାନ୍ତୁ</string>
+    <string name="filter_user_apps">ଉପଭୋକ୍ତା</string>
+    <string name="filter_system_apps">ସିଷ୍ଟମ୍</string>
+    <string name="filter_by">ଶୋଧନ</string>
+</resources>
