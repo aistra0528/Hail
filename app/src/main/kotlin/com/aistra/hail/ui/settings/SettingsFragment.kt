@@ -23,6 +23,8 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.rosan.dhizuku.api.Dhizuku
+import com.rosan.dhizuku.api.DhizukuRequestPermissionListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
@@ -31,6 +33,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rikka.shizuku.Shizuku
+
 
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
     MenuProvider {
@@ -120,6 +123,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                                 HailApi.getIntentForTag(HailApi.ACTION_FREEZE_TAG, tag)
                             )
                         }.setNegativeButton(android.R.string.cancel, null).show()
+
                     1 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
                         .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
                             val tag = HailData.tags[index].first
@@ -132,6 +136,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                                 HailApi.getIntentForTag(HailApi.ACTION_UNFREEZE_TAG, tag)
                             )
                         }.setNegativeButton(android.R.string.cancel, null).show()
+
                     2 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_round_frozen_shortcut
@@ -140,6 +145,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         getString(R.string.action_freeze_all),
                         Intent(HailApi.ACTION_FREEZE_ALL)
                     )
+
                     3 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_round_unfrozen_shortcut
@@ -148,6 +154,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         getString(R.string.action_unfreeze_all),
                         Intent(HailApi.ACTION_UNFREEZE_ALL)
                     )
+
                     4 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_round_frozen_shortcut
@@ -156,6 +163,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         getString(R.string.action_freeze_non_whitelisted),
                         Intent(HailApi.ACTION_FREEZE_NON_WHITELISTED)
                     )
+
                     5 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_outline_lock_shortcut
@@ -164,6 +172,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         getString(R.string.action_lock),
                         Intent(HailApi.ACTION_LOCK)
                     )
+
                     6 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_outline_lock_shortcut
@@ -187,10 +196,40 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     .show()
                 return false
             }
+
+            mode.startsWith(HailData.DHIZUKU) -> return runCatching {
+                when {
+                    Dhizuku.isPermissionGranted() -> true
+                    else -> {
+                        lifecycleScope.launch {
+                            val result = callbackFlow {
+                                Dhizuku.requestPermission(object :
+                                    DhizukuRequestPermissionListener() {
+                                    override fun onRequestPermission(grantResult: Int) {
+                                        trySendBlocking(Dhizuku.isPermissionGranted())
+                                    }
+                                })
+                                awaitClose()
+                            }.first()
+                            if (result && preference is ListPreference) {
+                                preference.value = mode
+                                HDhizuku.bindService()
+                            }
+                        }
+                        false
+                    }
+                }
+            }.getOrElse {
+                HLog.e(it)
+                HUI.showToast(R.string.permission_denied)
+                false
+            }
+
             mode.startsWith(HailData.SU) -> if (!HShell.checkSU) {
                 HUI.showToast(R.string.permission_denied)
                 return false
             }
+
             mode.startsWith(HailData.SHIZUKU) -> return runCatching {
                 when {
                     Shizuku.isPreV11() -> throw IllegalStateException("unsupported shizuku version")
@@ -199,6 +238,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         HUI.showToast(R.string.permission_denied)
                         false
                     }
+
                     else -> {
                         lifecycleScope.launch {
                             val result = callbackFlow {
@@ -262,6 +302,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         }
                     }.setNegativeButton(android.R.string.cancel, null).show()
             }
+
             R.id.action_help -> HUI.openLink(HailData.URL_README)
         }
         return false

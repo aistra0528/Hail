@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.services.AutoFreezeService
+import com.aistra.hail.utils.HDhizuku
 import com.google.android.material.color.DynamicColors
 
 class HailApp : Application() {
@@ -16,6 +17,7 @@ class HailApp : Application() {
         app = this
         DynamicColors.applyToActivitiesIfAvailable(app)
         // DirtyDataUpdater.update(app)
+        HDhizuku.init()
     }
 
     fun setAutoFreezeService(enabled: Boolean? = null) {

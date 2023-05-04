@@ -36,6 +36,8 @@
         <item>@string/mode_shizuku_suspend</item>
         <item>@string/mode_su_disable</item>
         <item>@string/mode_su_suspend</item>
+        <item>@string/mode_dhizuku_hide</item>
+        <item>@string/mode_dhizuku_suspend</item>
         <item>@string/mode_owner_hide</item>
         <item>@string/mode_owner_suspend</item>
     </string-array>
@@ -46,6 +48,8 @@
         <item>shizuku_suspend</item>
         <item>su_disable</item>
         <item>su_suspend</item>
+        <item>dhizuku_hide</item>
+        <item>dhizuku_suspend</item>
         <item>owner_hide</item>
         <item>owner_suspend</item>
     </string-array>
