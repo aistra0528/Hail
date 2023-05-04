@@ -23,7 +23,6 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
@@ -201,7 +200,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         false
                     }
                     else -> {
-                        CoroutineScope(Dispatchers.IO).launch {
+                        lifecycleScope.launch {
                             val result = callbackFlow {
                                 val shizukuRequestCode = 0
                                 val listener =
@@ -212,12 +211,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                                 Shizuku.addRequestPermissionResultListener(listener)
                                 Shizuku.requestPermission(shizukuRequestCode)
                                 awaitClose {
-                                    Shizuku.addRequestPermissionResultListener(listener)
+                                    Shizuku.removeRequestPermissionResultListener(listener)
                                 }
                             }.first()
-                            if (result && preference is ListPreference) activity?.runOnUiThread {
-                                preference.value = newValue
-                            }
+                            if (result && preference is ListPreference) preference.value = mode
                         }
                         false
                     }
