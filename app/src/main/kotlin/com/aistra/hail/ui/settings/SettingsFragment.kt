@@ -3,7 +3,6 @@ package com.aistra.hail.ui.settings
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.SystemClock
 import android.provider.Settings
 import android.view.*
 import android.widget.FrameLayout
@@ -13,6 +12,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aistra.hail.HailApp.Companion.app
@@ -23,7 +23,12 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rikka.shizuku.Shizuku
@@ -196,11 +201,25 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         false
                     }
                     else -> {
-                        Shizuku.requestPermission(0)
-                        while (Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
-                            SystemClock.sleep(1000)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val result = callbackFlow {
+                                val shizukuRequestCode = 0
+                                val listener =
+                                    Shizuku.OnRequestPermissionResultListener { requestCode, grantResult ->
+                                        if (requestCode != shizukuRequestCode) return@OnRequestPermissionResultListener
+                                        trySendBlocking(grantResult == PackageManager.PERMISSION_GRANTED)
+                                    }
+                                Shizuku.addRequestPermissionResultListener(listener)
+                                Shizuku.requestPermission(shizukuRequestCode)
+                                awaitClose {
+                                    Shizuku.addRequestPermissionResultListener(listener)
+                                }
+                            }.first()
+                            if (result && preference is ListPreference) activity?.runOnUiThread {
+                                preference.value = newValue
+                            }
                         }
-                        true
+                        false
                     }
                 }
             }.getOrElse {
