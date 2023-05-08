@@ -52,6 +52,7 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     buildFeatures {
+        aidl = true
         viewBinding = true
     }
     dependenciesInfo {
@@ -74,6 +75,7 @@ dependencies {
     implementation("com.google.android.material:material:1.8.0")
     implementation("dev.rikka.shizuku:api:13.1.1")
     implementation("dev.rikka.shizuku:provider:13.1.1")
+    implementation("io.github.iamr0s:Dhizuku-API:2.2")
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
 }

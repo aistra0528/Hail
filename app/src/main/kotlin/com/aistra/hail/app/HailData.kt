@@ -31,6 +31,7 @@ object HailData {
     const val WORKING_MODE = "working_mode"
     const val MODE_DEFAULT = "default"
     const val OWNER = "owner_"
+    const val DHIZUKU = "dhizuku_"
     const val SU = "su_"
     const val SHIZUKU = "shizuku_"
     private const val DISABLE = "disable"
@@ -38,6 +39,8 @@ object HailData {
     const val SUSPEND = "suspend"
     const val MODE_OWNER_HIDE = OWNER + HIDE
     const val MODE_OWNER_SUSPEND = OWNER + SUSPEND
+    const val MODE_DHIZUKU_HIDE = DHIZUKU + HIDE
+    const val MODE_DHIZUKU_SUSPEND = DHIZUKU + SUSPEND
     const val MODE_SU_DISABLE = SU + DISABLE
     const val MODE_SU_SUSPEND = SU + SUSPEND
     const val MODE_SHIZUKU_DISABLE = SHIZUKU + DISABLE
