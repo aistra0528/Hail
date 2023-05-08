@@ -50,7 +50,8 @@
     <string name="title_set_owner">Настройка режима Владелец устройства</string>
     <string name="msg_set_owner">Выполните команду из adb:\n%s</string>
     <string name="title_remove_owner">Удаление Владельца устройства</string>
-    <string name="msg_remove_owner">Владелец устройства будет удален, после удаления может быть сложно настроить его снова.\nСкрытые приложения останутся такими же после удаления. Убедитесь, что вы отключили скрытие для важных приложений.</string>
+    <string name="msg_remove_owner">Владелец устройства будет удален, после удаления может быть сложно настроить его снова.
+\nЗамороженые приложения останутся такими же после удаления. Убедитесь, что вы разморозили важные приложения .</string>
     <string name="tap_to_select">Нажмите, чтобы выбрать несколько</string>
     <string name="filter_by">Фильтр</string>
     <string name="filter_user_apps">Пользовательские</string>
@@ -136,4 +137,6 @@
     <string name="icon_pack">Пакет иконок</string>
     <string name="action_select_all">Выбрать все</string>
     <string name="action_terminal">Terminal</string>
+    <string name="mode_dhizuku_hide">Dhizuku - Скрытие</string>
+    <string name="mode_dhizuku_suspend">Dhizuku - Приостановка</string>
 </resources>
