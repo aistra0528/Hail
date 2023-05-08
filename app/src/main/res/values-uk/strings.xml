@@ -140,4 +140,6 @@
     <string name="icon_pack">Пакет значків</string>
     <string name="action_select_all">Вибрати все</string>
     <string name="action_terminal">Термінал</string>
+    <string name="mode_dhizuku_hide">Dhizuku - Приховати</string>
+    <string name="mode_dhizuku_suspend">Dhizuku - Призупинити</string>
 </resources>
