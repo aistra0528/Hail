@@ -136,4 +136,6 @@
     <string name="icon_pack">图标包</string>
     <string name="action_select_all">全选</string>
     <string name="action_terminal">终端</string>
+    <string name="mode_dhizuku_hide">Dhizuku - 隐藏</string>
+    <string name="mode_dhizuku_suspend">Dhizuku - 暂停</string>
 </resources>
