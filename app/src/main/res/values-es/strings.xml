@@ -137,4 +137,6 @@
     <string name="icon_pack">Paquete de iconos</string>
     <string name="action_select_all">Seleccionar todo</string>
     <string name="action_terminal">Terminal</string>
+    <string name="mode_dhizuku_hide">Dhizuku - Ocultar</string>
+    <string name="mode_dhizuku_suspend">Dhizuku - Suspender</string>
 </resources>
