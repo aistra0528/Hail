@@ -13,7 +13,7 @@ class AppInfo(
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
     val name get() = applicationInfo?.loadLabel(app.packageManager) ?: packageName
 
-    var state: Int = getCurrentState()
+    var state: Int = STATE_UNKNOWN
     fun getCurrentState(): Int = when {
         applicationInfo == null -> STATE_UNKNOWN
         AppManager.isAppFrozen(packageName) -> STATE_FROZEN
