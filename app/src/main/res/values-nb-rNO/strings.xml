@@ -134,4 +134,8 @@
     <string name="msg_remove_owner">Enhetseier vil fremdeles bli fjernet, det kan være vanskelig å sette det igjen etter fjerning.
 \nSkjulte programmer er skjult etter fjerning. Forsikre deg om at du har opphevet skjuling av viktige programmer.</string>
     <string name="donate_bilibili_space">Mitt donasjonsforetak</string>
+    <string name="action_select_all">Velg alt</string>
+    <string name="mode_dhizuku_hide">Dhizuku — skjul</string>
+    <string name="mode_dhizuku_suspend">Dhizuku — hvilemodus</string>
+    <string name="action_terminal">Terminal</string>
 </resources>
