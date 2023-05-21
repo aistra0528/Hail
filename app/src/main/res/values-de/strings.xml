@@ -55,7 +55,8 @@
     <string name="title_set_owner">Geräteeigentümer festlegen</string>
     <string name="msg_set_owner">Dieses Kommando per adb ausfüren:\n%s</string>
     <string name="title_remove_owner">Geräteeigentümer entffernen</string>
-    <string name="msg_remove_owner">Der Geräteeigentümer wird entfernt. Es könnte ggf. nicht mehr funktionieren, ihn nach dem Entfernen wieder zu setzen.\nAusgeblendete (hidden) Anwendungen sind nach dem Entfernen weiterhin versteckt. Ausgeblendete Anwendungen unbedingt vorher wieder einblenden.</string>
+    <string name="msg_remove_owner">Der Geräteeigentümer wird entfernt. Es könnte ggf. nicht mehr funktionieren, ihn nach dem Entfernen wieder zu setzen.
+\nAusgeblendete (hidden) Anwendungen sind nach dem Entfernen weiterhin versteckt. Ausgeblendete Anwendungen unbedingt vorher wieder einblenden.</string>
     <string name="tap_to_select">Antippen für Mehrfachauswahl</string>
     <string name="filter_by">Filter</string>
     <string name="filter_user_apps">Benutzer</string>
@@ -133,4 +134,7 @@
     <string name="action_unfreeze_tag">Etikett auftauen</string>
     <string name="icon_pack">Symbolpaket</string>
     <string name="action_select_all">Alles auswählen</string>
+    <string name="action_terminal">Terminal</string>
+    <string name="mode_dhizuku_suspend">Shizuku – Aussetzen</string>
+    <string name="mode_dhizuku_hide">Shizuku – Verstecken</string>
 </resources>
