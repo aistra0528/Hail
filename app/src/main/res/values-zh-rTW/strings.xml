@@ -135,7 +135,7 @@
     <string name="action_unfreeze_tag">標籤解凍</string>
     <string name="icon_pack">圖示包</string>
     <string name="action_select_all">全選</string>
-    <string name="mode_dhizuku_hide">Dhizuku - 隱藏</string>
+    <string name="mode_dhizuku_hide">Shizuku - 隱藏</string>
     <string name="mode_dhizuku_suspend">Dhizuku - 暫停</string>
     <string name="action_terminal">終端</string>
 </resources>
