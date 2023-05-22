@@ -135,6 +135,6 @@
     <string name="icon_pack">Icon pack</string>
     <string name="action_select_all">Select all</string>
     <string name="action_terminal">Terminal</string>
-    <string name="mode_dhizuku_hide">Shizuku - Hide</string>
+    <string name="mode_dhizuku_hide">Dhizuku - Hide</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Suspend</string>
 </resources>
