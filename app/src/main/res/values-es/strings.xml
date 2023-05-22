@@ -50,8 +50,8 @@
     <string name="title_set_owner">Establecer el administrador de dispositivo</string>
     <string name="msg_set_owner">Emitir el comando desde adb:\n%s</string>
     <string name="title_remove_owner">Elminar el administrador de dispositivo</string>
-    <string name="msg_remove_owner">Se eliminará el propietario del dispositivo, puede ser difícil configurarlo nuevamente después de la eliminación.
-\nLas aplicaciones congeladas permanecerán congeladas después de la eliminación, asegúrete de haber descongelado las aplicaciones importantes.</string>
+    <string name="msg_remove_owner">Si se elimina Hail como propietario del dispositivo, puede haber dificultades para reorganizar las aplicaciones después de la eliminación de Hail.
+\nLas aplicaciones congeladas permanecerán congeladas después de la eliminación, por favor asegúrese de que ha descongelado las aplicaciones importantes.</string>
     <string name="tap_to_select">Pulse para multiseleccionar</string>
     <string name="filter_by">Filtro</string>
     <string name="filter_user_apps">Usuario</string>
@@ -137,6 +137,6 @@
     <string name="icon_pack">Paquete de iconos</string>
     <string name="action_select_all">Seleccionar todo</string>
     <string name="action_terminal">Terminal</string>
-    <string name="mode_dhizuku_hide">Dhizuku - Ocultar</string>
+    <string name="mode_dhizuku_hide">Shizuku - Ocultar</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Suspender</string>
 </resources>
