@@ -134,6 +134,6 @@
     <string name="donate_bilibili">bilibili</string>
     <string name="action_terminal">Terminal</string>
     <string name="action_select_all">Tandai semua</string>
-    <string name="mode_dhizuku_hide">Shizuku - Sembunyikan</string>
+    <string name="mode_dhizuku_hide">Dhizuku - Sembunyikan</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Tangguhkan</string>
 </resources>
