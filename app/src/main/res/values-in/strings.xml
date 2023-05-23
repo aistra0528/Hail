@@ -32,7 +32,7 @@
     <string name="action_unfreeze_remove_home">Aktifkan dan Hapus dari Beranda</string>
     <string name="action_undo">Batalkan</string>
     <string name="action_details">Info aplikasi</string>
-    <string name="action_extract_apk">Salin file .apk</string>
+    <string name="action_extract_apk">Ekstrak file .apk</string>
     <string name="action_unfreeze_current">Aktifkan</string>
     <string name="action_lock_freeze">Kunci &amp; Bekukan</string>
     <string name="action_deferred_task">Tangguhkan tugas</string>
@@ -88,8 +88,8 @@
     <string name="title_customize">Penyesuaian</string>
     <string name="action_biometric">Masuk dengan sidik jari</string>
     <string name="compact_icon">Ikon ringkas</string>
-    <string name="action_import_app">Salin aplikasi</string>
-    <string name="action_export_all">Tempelkan semua</string>
+    <string name="action_import_app">Impor aplikasi</string>
+    <string name="action_export_all">Ekspor semua</string>
     <string name="skip_notifying_app">Lewati pemberitahuan aplikasi</string>
     <string name="title_shortcuts">Pintasan</string>
     <string name="action_none">Kosong</string>
@@ -97,7 +97,7 @@
     <string name="msg_biometric">Masuk dengan sidik jari</string>
     <string name="action_pin">Sematkan</string>
     <string name="action_remove_whitelist">Hapus dari pengecualian</string>
-    <string name="action_import_frozen">Salin aplikasi dibekukan</string>
+    <string name="action_import_frozen">Impor aplikasi dibekukan</string>
     <string name="auto_freeze_delay">Tunda bekukan (menit)</string>
     <string name="app_name">Hail</string>
     <string name="action_deselect">Batalkan pilihan</string>
@@ -110,7 +110,7 @@
     <string name="action_unfreeze_tag">Aktifkan berdasar label</string>
     <string name="action_add_pin_shortcut">Tambahkan ke Peluncur</string>
     <string name="action_tag_set">Atur Label</string>
-    <string name="action_export_clipboard">Salin ke papan klip</string>
+    <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
     <string name="sort_by">Urutkan</string>
     <string name="sort_update">Terakhir diperbarui</string>
