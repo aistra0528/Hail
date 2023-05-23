@@ -50,7 +50,7 @@
     <string name="title_set_owner">設定裝置擁有者</string>
     <string name="msg_set_owner">透過 adb 發出命令：\n%s</string>
     <string name="title_remove_owner">移除裝置擁有者</string>
-    <string name="msg_remove_owner">將移除雹的裝置擁有者，移除後可能難以再次設定。
+    <string name="msg_remove_owner">如果「雹」作為装置擁有者被移除，則在「雹」移除後重新組織應用程式可能會遇到困難。
 \n已凍結的應用程式在移除後仍會保持凍結，請確保您已將重要的應用程式解凍。</string>
     <string name="tap_to_select">輕觸多選</string>
     <string name="filter_by">篩選</string>
@@ -135,7 +135,7 @@
     <string name="action_unfreeze_tag">標籤解凍</string>
     <string name="icon_pack">圖示包</string>
     <string name="action_select_all">全選</string>
-    <string name="mode_dhizuku_hide">Shizuku - 隱藏</string>
+    <string name="mode_dhizuku_hide">Dhizuku - 隱藏</string>
     <string name="mode_dhizuku_suspend">Dhizuku - 暫停</string>
-    <string name="action_terminal">終端</string>
+    <string name="action_terminal">終端機</string>
 </resources>
