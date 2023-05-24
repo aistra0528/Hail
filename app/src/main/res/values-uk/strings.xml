@@ -6,7 +6,7 @@
     <string name="action_coolapk">CoolApk</string>
     <string name="action_deferred_task">Відкласти завдання</string>
     <string name="action_deselect">Зняти виділення</string>
-    <string name="action_details">Інформація про додаток</string>
+    <string name="action_details">Інформація про застосунок</string>
     <string name="action_donate">Пожертвувати</string>
     <string name="action_export_all">Експортувати все</string>
     <string name="action_export_clipboard">Експортувати в буфер обміну</string>
@@ -18,9 +18,9 @@
     <string name="action_freeze_non_whitelisted">Заморозити не з білого списку</string>
     <string name="action_github">GitHub</string>
     <string name="action_help">Допомога</string>
-    <string name="action_import_app">Імпортувати додаток</string>
+    <string name="action_import_app">Імпортувати застосунок</string>
     <string name="action_import_clipboard">Імпортувати з буфера обміну</string>
-    <string name="action_import_frozen">Імпортувати заморожений додаток</string>
+    <string name="action_import_frozen">Імпортувати заморожений застосунок</string>
     <string name="action_launch">Запустити</string>
     <string name="action_licenses">Ліцензії</string>
     <string name="action_lock">Заблокувати</string>
@@ -46,8 +46,8 @@
     <string name="action_whitelist">Додати до білого списку</string>
     <string name="activity_not_found">Активіті для запуску не знайдено</string>
     <string name="app_name">Hail</string>
-    <string name="app_not_installed">Додаток не встановлено</string>
-    <string name="app_slogan">Freezedom!</string>
+    <string name="app_not_installed">Застосунок не встановлено</string>
+    <string name="app_slogan">Заморозка!</string>
     <string name="auto_freeze">Автозаморожування</string>
     <string name="auto_freeze_after_lock">Після блокування екрану</string>
     <string name="auto_freeze_delay">Затримка заморозки (хвилини)</string>
@@ -82,36 +82,36 @@
     <string name="msg_exported">Експортовано: %s</string>
     <string name="msg_extract_apk">Розпаковано до: %s</string>
     <string name="msg_freeze">Заморожено: %s</string>
-    <string name="msg_guide">Перед заморожуванням додатків, будь ласка, виберіть режим роботи в налаштуваннях.</string>
+    <string name="msg_guide">Перед заморожуванням застосунків, будь ласка, виберіть режим роботи в налаштуваннях.</string>
     <string name="msg_imported">Імпортовано: %s</string>
     <string name="msg_network_error">Не вдалося встановити зв\'язок з сервером. Будь ласка, повторіть спробу пізніше.</string>
     <string name="msg_redeem">Дякуємо!</string>
     <string name="msg_redeem_expired">Термін дії коду закінчився</string>
     <string name="msg_redeem_invalid">Невірний код</string>
-    <string name="msg_remove_owner">Власник пристрою буде видалено, може бути важко встановити його знову після видалення.
-\nПриховані додатки залишаються прихованими після видалення. Переконайтеся, що у вас є можливість видалити з прихованих важливі додатки.</string>
+    <string name="msg_remove_owner">Якщо Hail буде видалено як власника пристрою, можуть виникнути труднощі з реорганізацією застосунків після видалення Hail.
+\nЗаморожені застосунки залишаться замороженими після видалення, будь ласка, переконайтеся, що ви розморозили важливі застосунки.</string>
     <string name="msg_selected">Вибрано: %s</string>
     <string name="msg_set_owner">Введіть команду з adb:
 \n%s</string>
     <string name="msg_text_copied">Скопійовано: %s</string>
     <string name="msg_unfreeze">Розморожено: %s</string>
-    <string name="msg_uninstall">Ви хочете видалити цей додаток?</string>
+    <string name="msg_uninstall">Ви хочете видалити цей застосунок\?</string>
     <string name="nothing_here">Нічого тут немає</string>
     <string name="operation_failed">Операція завершилася невдало: %s</string>
     <string name="permission_denied">В дозволі відмовлено</string>
     <string name="shizuku_missing">Shizuku відсутній :(</string>
-    <string name="skip_foreground_app">Пропустити додаток на передньому плані</string>
-    <string name="skip_notifying_app">Пропустити додаток з сповіщенням</string>
+    <string name="skip_foreground_app">Пропустити застосунок на передньому плані</string>
+    <string name="skip_notifying_app">Пропустити застосунок зі сповіщенням</string>
     <string name="skip_while_charging">Пропустити під час заряджання</string>
     <string name="sort_by">Сортувати за</string>
-    <string name="sort_install">Перша установка</string>
+    <string name="sort_install">Дата встановлення</string>
     <string name="sort_name">Назва</string>
     <string name="sort_update">Останнє оновлення</string>
     <string name="synthesize_adaptive_icons">Створити адаптивні іконки</string>
     <string name="tap_to_select">Торкніться, щоб вибрати декілька варіантів</string>
     <string name="tile_action">Дія плитки</string>
     <string name="title_about">Про додаток</string>
-    <string name="title_apps">Додатки</string>
+    <string name="title_apps">Застосунки</string>
     <string name="title_customize">Налаштувати</string>
     <string name="title_donate">Дякуємо!</string>
     <string name="title_home">Домашня</string>
