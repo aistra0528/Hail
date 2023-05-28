@@ -135,6 +135,6 @@
     <string name="icon_pack">Symbolpaket</string>
     <string name="action_select_all">Alles auswählen</string>
     <string name="action_terminal">Terminal</string>
-    <string name="mode_dhizuku_suspend">Shizuku – Aussetzen</string>
-    <string name="mode_dhizuku_hide">Shizuku – Verstecken</string>
+    <string name="mode_dhizuku_suspend">Dhizuku – Aussetzen</string>
+    <string name="mode_dhizuku_hide">Dhizuku – Verstecken</string>
 </resources>
