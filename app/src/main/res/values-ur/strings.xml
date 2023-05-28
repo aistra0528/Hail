@@ -93,7 +93,7 @@
     <string name="icon_pack">آئیکن پیک</string>
     <string name="action_select_all">تمام منتخب کریں</string>
     <string name="action_terminal">ٹرمینل</string>
-    <string name="mode_dhizuku_hide">شیزوکو - چھپائیں</string>
+    <string name="mode_dhizuku_hide">دھیزوکو - چھپائیں</string>
     <string name="mode_dhizuku_suspend">دھیزوکو - معطل کرنا</string>
     <string name="action_whitelist">وائٹ لسٹ میں شامل کریں</string>
     <string name="action_freeze_current">کرنٹ کو منجمد کریں</string>
