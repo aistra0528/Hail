@@ -72,10 +72,10 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Scan</string>
-    <string name="donate_bilibili">bilibili</string>
-    <string name="donate_bilibili_msg">Follow me on bilibili.</string>
-    <string name="donate_bilibili_space">My space</string>
-    <string name="donate_bilibili_cancel">@android:string/cancel</string>
+    <string name="donate_bilibili">Bilibili</string>
+    <string name="donate_bilibili_msg">Follow me on Bilibili.</string>
+    <string name="donate_bilibili_space">Bilibili space</string>
+    <string name="donate_bilibili_cancel">Cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="msg_redeem">Thank you!</string>
@@ -113,7 +113,7 @@
     <string name="grayscale_icon">Grayscale icon</string>
     <string name="compact_icon">Compact icon</string>
     <string name="action_biometric">Biometric login</string>
-    <string name="msg_biometric">Log in using your biometric credential</string>
+    <string name="msg_biometric">Login using your biometric credential</string>
     <string name="action_pin">Pin</string>
     <string name="action_unpin">Unpin</string>
     <string name="action_whitelist">Add to Whitelist</string>
