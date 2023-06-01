@@ -13,9 +13,10 @@ object HDhizuku {
     private var mService: IDhizukuService? = null
 
     fun init() {
-        Dhizuku.init()
-        if (Dhizuku.isPermissionGranted()) bindService()
+        if (isPermissionGranted()) bindService()
     }
+
+    fun isPermissionGranted() = Dhizuku.init(app) && Dhizuku.isPermissionGranted()
 
     fun bindService() = Dhizuku.bindUserService(
         DhizukuUserServiceArgs(ComponentName(app, DhizukuService::class.java)),
@@ -25,6 +26,7 @@ object HDhizuku {
             }
 
             override fun onServiceDisconnected(name: ComponentName) {
+                mService = null
             }
         })
 

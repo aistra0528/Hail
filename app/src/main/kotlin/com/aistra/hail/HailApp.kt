@@ -17,7 +17,7 @@ class HailApp : Application() {
         app = this
         DynamicColors.applyToActivitiesIfAvailable(app)
         // DirtyDataUpdater.update(app)
-        HDhizuku.init()
+        if (HailData.workingMode.startsWith(HailData.DHIZUKU)) HDhizuku.init()
     }
 
     fun setAutoFreezeService(enabled: Boolean? = null) {

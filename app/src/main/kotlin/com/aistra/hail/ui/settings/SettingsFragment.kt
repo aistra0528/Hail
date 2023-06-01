@@ -199,14 +199,14 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
             mode.startsWith(HailData.DHIZUKU) -> return runCatching {
                 when {
-                    Dhizuku.isPermissionGranted() -> true
+                    HDhizuku.isPermissionGranted() -> true
                     else -> {
                         lifecycleScope.launch {
                             val result = callbackFlow {
                                 Dhizuku.requestPermission(object :
                                     DhizukuRequestPermissionListener() {
                                     override fun onRequestPermission(grantResult: Int) {
-                                        trySendBlocking(Dhizuku.isPermissionGranted())
+                                        trySendBlocking(grantResult == PackageManager.PERMISSION_GRANTED)
                                     }
                                 })
                                 awaitClose()
