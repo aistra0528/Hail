@@ -51,8 +51,8 @@
     <string name="title_set_owner">设置设备所有者</string>
     <string name="msg_set_owner">通过 adb 发出命令：\n%s</string>
     <string name="title_remove_owner">移除设备所有者</string>
-    <string name="msg_remove_owner">将移除雹的设备所有者，移除后可能难以再次设置。
-\n已冻结的应用在移除后仍会保持冻结状态，请确保您已将重要的应用解冻。</string>
+    <string name="msg_remove_owner">将移除雹的设备所有者，移除后便无法冻结与解冻应用。
+\n已冻结的应用在移除设备所有者后仍会保持冻结状态，请确保您已将重要的应用解冻。</string>
     <string name="tap_to_select">点按多选</string>
     <string name="filter_by">筛选</string>
     <string name="filter_user_apps">用户</string>
