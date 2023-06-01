@@ -47,7 +47,7 @@
     <string name="activity_not_found">Активіті для запуску не знайдено</string>
     <string name="app_name">Hail</string>
     <string name="app_not_installed">Додаток не встановлено</string>
-    <string name="app_slogan">Заморозка!</string>
+    <string name="app_slogan">Freezedom!</string>
     <string name="auto_freeze">Автозаморожування</string>
     <string name="auto_freeze_after_lock">Після блокування екрану</string>
     <string name="auto_freeze_delay">Затримка заморозки (хвилини)</string>
@@ -89,7 +89,7 @@
     <string name="msg_redeem_expired">Термін дії коду закінчився</string>
     <string name="msg_redeem_invalid">Невірний код</string>
     <string name="msg_remove_owner">Якщо Hail видалено як власника пристрою, після його видалення можуть виникнути труднощі з реорганізацією додатків.
-\nЗаморожені застосунки залишаться замороженими після видалення, будь ласка, переконайтеся, що ви розморозили важливі додатки.</string>
+\nЗаморожені додатки залишаться замороженими після видалення, будь ласка, переконайтеся, що ви розморозили важливі додатки.</string>
     <string name="msg_selected">Вибрано: %s</string>
     <string name="msg_set_owner">Введіть команду з adb:
 \n%s</string>
