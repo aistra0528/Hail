@@ -28,8 +28,8 @@
     <string name="action_freeze">Bekukan</string>
     <string name="action_unfreeze">Aktifkan</string>
     <string name="action_tag_remove">Hapus label</string>
-    <string name="action_remove_home">Hapus dari Beranda</string>
-    <string name="action_unfreeze_remove_home">Aktifkan dan Hapus dari Beranda</string>
+    <string name="action_remove_home">Hapus dari daftar</string>
+    <string name="action_unfreeze_remove_home">Aktifkan dan hapus dari daftar</string>
     <string name="action_undo">Batalkan</string>
     <string name="action_details">Info aplikasi</string>
     <string name="action_extract_apk">Ekstrak APK</string>
@@ -39,7 +39,7 @@
     <string name="action_help">Bantuan</string>
     <string name="msg_uninstall">Copot pemasangan aplikasi ini\?</string>
     <string name="working_mode">Mode kerja</string>
-    <string name="mode_owner_hide">Pemilik perangkat - Sembunyikan</string>
+    <string name="mode_owner_hide">Pemilik Perangkat - Sembunyikan</string>
     <string name="mode_su_suspend">SuperUser - Tangguhkan</string>
     <string name="mode_su_disable">SuperUser - Matikan</string>
     <string name="mode_shizuku_disable">Shizuku - Matikan</string>
@@ -68,7 +68,7 @@
     <string name="app_not_installed">Aplikasi tidak terpasang</string>
     <string name="msg_text_copied">Disalin: %s</string>
     <string name="auto_freeze">Bekukan otomatis</string>
-    <string name="auto_freeze_notification_title">Layanan pembekuan otomatis sedang berjalan</string>
+    <string name="auto_freeze_notification_title">Layanan bekukan otomatis sedang berjalan</string>
     <string name="shizuku_missing">Shizuku tidak ditemukan :(</string>
     <string name="msg_exported">Terekspor : %s</string>
     <plurals name="deferred_task_entry">
@@ -80,7 +80,7 @@
     <string name="action_clear_dynamic_shortcuts">Bersihkan semua pintasan dinamis</string>
     <string name="action_unpin">Batal sematkan</string>
     <string name="operation_failed">Operasi gagal : %s</string>
-    <string name="msg_guide">Sebelum membekukan, silakan pilih mode kerja dulu.</string>
+    <string name="msg_guide">Sebelum membekukan aplikasi, silakan pilih mode kerja dulu.</string>
     <string name="msg_imported">Terimpor: %s</string>
     <string name="auto_freeze_after_lock">Setelah layar terkunci</string>
     <string name="skip_foreground_app">Lewati aplikasi latar depan</string>
@@ -98,7 +98,7 @@
     <string name="action_pin">Sematkan</string>
     <string name="action_remove_whitelist">Hapus dari daftar putih</string>
     <string name="action_import_frozen">Impor aplikasi dibekukan</string>
-    <string name="auto_freeze_delay">Tunda pembekuan (menit)</string>
+    <string name="auto_freeze_delay">Tunda bekukan (menit)</string>
     <string name="app_name">Hail</string>
     <string name="action_deselect">Batalkan pilihan</string>
     <string name="nothing_here">Tidak ada apa-apa di sini</string>
@@ -108,7 +108,7 @@
     <string name="dynamic_shortcut_action">Pintasan aksi dinamis</string>
     <string name="action_freeze_tag">Bekukan berdasar label</string>
     <string name="action_unfreeze_tag">Aktifkan berdasar label</string>
-    <string name="action_add_pin_shortcut">Tambahkan ke Peluncur</string>
+    <string name="action_add_pin_shortcut">Tambahkan ke layar beranda</string>
     <string name="action_tag_set">Atur label</string>
     <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
