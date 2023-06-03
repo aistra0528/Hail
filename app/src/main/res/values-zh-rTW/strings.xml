@@ -62,7 +62,7 @@
     <string name="sort_name">名稱</string>
     <string name="sort_install">首次安裝</string>
     <string name="sort_update">最近更新</string>
-    <string name="title_donate">謝謝你。</string>
+    <string name="title_donate">謝謝你！</string>
     <string name="donate_alipay">支付寶</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">掃描</string>
@@ -75,7 +75,7 @@
     <string name="donate_bilibili_cancel">下次一定</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">謝謝你。</string>
+    <string name="msg_redeem">謝謝你！</string>
     <string name="msg_redeem_invalid">無效的兌換代碼</string>
     <string name="msg_redeem_expired">兌換代碼已過期</string>
     <string name="msg_network_error">無法連線至伺服器，請稍後再試。</string>
