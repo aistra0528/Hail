@@ -198,8 +198,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             }
 
             mode.startsWith(HailData.DHIZUKU) -> return runCatching {
+                Dhizuku.init(app)
                 when {
-                    HDhizuku.isPermissionGranted() -> true
+                    Dhizuku.isPermissionGranted() -> true
                     else -> {
                         lifecycleScope.launch {
                             val result = callbackFlow {

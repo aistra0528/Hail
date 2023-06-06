@@ -13,10 +13,8 @@ object HDhizuku {
     private var mService: IDhizukuService? = null
 
     fun init() {
-        if (isPermissionGranted()) bindService()
+        if (Dhizuku.init(app) && Dhizuku.isPermissionGranted()) bindService()
     }
-
-    fun isPermissionGranted() = Dhizuku.init(app) && Dhizuku.isPermissionGranted()
 
     fun bindService() = Dhizuku.bindUserService(
         DhizukuUserServiceArgs(ComponentName(app, DhizukuService::class.java)),
