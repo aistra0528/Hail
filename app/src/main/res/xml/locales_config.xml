@@ -9,10 +9,13 @@
     <locale android:name="it" />
     <locale android:name="ja" />
     <locale android:name="nb" />
+    <locale android:name="or" />
     <locale android:name="pl" />
+    <locale android:name="pt" />
     <locale android:name="ru" />
     <locale android:name="tr" />
     <locale android:name="uk" />
+    <locale android:name="ur" />
     <locale android:name="yue" />
     <locale android:name="zh-CN" />
     <locale android:name="zh-TW" />
