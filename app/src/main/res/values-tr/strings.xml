@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_slogan">Freezedom!</string>
+    <string name="app_slogan">Özgürlük!</string>
     <string name="title_home">Ev</string>
     <string name="title_settings">Ayarlar</string>
     <string name="title_about">Hakkında</string>
@@ -136,4 +136,6 @@
     <string name="mode_owner_suspend">Cihaz Yöneticisi - Askıya Al</string>
     <string name="donate_bilibili_cancel">\@android:string/cancel</string>
     <string name="action_terminal">Terminal</string>
+    <string name="mode_dhizuku_suspend">Dhizuku - Askıya al</string>
+    <string name="mode_dhizuku_hide">Dhizuku - Gizle</string>
 </resources>
