@@ -214,7 +214,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                             }.first()
                             if (result && preference is ListPreference) {
                                 preference.value = mode
-                                HDhizuku.bindService()
+                                if (HTarget.O) HDhizuku.setDelegatedScopes()
                             }
                         }
                         false
