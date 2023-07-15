@@ -25,4 +25,17 @@
     <string name="filter_user_apps">ଉପଭୋକ୍ତା</string>
     <string name="filter_system_apps">ସିଷ୍ଟମ୍</string>
     <string name="filter_by">ଶୋଧନ</string>
+    <string name="label_time">ଅଧିସ୍ଥାପନ ସମୟ</string>
+    <string name="action_add_pin_shortcut">ଗୃହ ପରଦାରେ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="mode_su_disable">Superuser - ଅକ୍ଷମ କର</string>
+    <string name="mode_owner_suspend">ଡିଵାଇସ୍ ଅଧିପତି - ନିଲମ୍ବନ କର</string>
+    <string name="mode_su_suspend">Superuser - ନିଲମ୍ବନ କର</string>
+    <string name="mode_shizuku_suspend">Shizuku - ନିଲମ୍ବନ କର</string>
+    <string name="mode_shizuku_hide">Shizuku - ଲୁଚାଅ</string>
+    <string name="mode_dhizuku_suspend">Dhizuku - ନିଲମ୍ବନ କର</string>
+    <string name="mode_shizuku_disable">Shizuku - ଅକ୍ଷମ କର</string>
+    <string name="working_mode">କାର୍ଯ୍ୟ ଧାରା</string>
+    <string name="mode_owner_hide">ଡିଵାଇସ୍ ଅଧିପତି - ଲୁଚାଅ</string>
+    <string name="mode_default">ଅକାମ</string>
+    <string name="mode_dhizuku_hide">Dhizuku - ଲୁଚାଅ</string>
 </resources>
