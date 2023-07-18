@@ -41,19 +41,24 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         val biometricPrompt = BiometricPrompt(this,
             ContextCompat.getMainExecutor(this),
             object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    HUI.showToast(errString)
-                    finishAndRemoveTask()
-                }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
+                private fun unlock() {
                     binding.root.isVisible = true
                     binding.appBarMain.toolbar.setBackgroundColor(
                         MaterialColors.getColor(binding.root, R.attr.colorPrimaryDark)
                     )
                     showGuide()
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    HUI.showToast(errString)
+                    if (errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS) unlock()
+                    else finishAndRemoveTask()
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    unlock()
                 }
             })
         val promptInfo =
