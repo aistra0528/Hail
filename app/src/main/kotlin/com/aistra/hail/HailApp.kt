@@ -15,7 +15,7 @@ class HailApp : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
-        DynamicColors.applyToActivitiesIfAvailable(app)
+        // DynamicColors.applyToActivitiesIfAvailable(app)
         // DirtyDataUpdater.update(app)
         if (HailData.workingMode.startsWith(HailData.DHIZUKU)) HDhizuku.init()
     }

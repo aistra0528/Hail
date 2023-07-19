@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.Base" parent="Theme.Material3.DayNight">
-        <item name="colorPrimary">@color/color_primary</item>
+    <style name="Theme.Base" parent="Theme.Material3.DynamicColors.DayNight">
+        <!-- <item name="colorPrimary">@color/color_primary</item>
         <item name="colorOnPrimary">@color/color_on_primary</item>
         <item name="colorPrimaryDark">?colorSurface</item>
         <item name="colorPrimaryContainer">@color/color_primary_container</item>
@@ -9,7 +9,7 @@
         <item name="colorSecondary">?colorPrimary</item>
         <item name="colorOnSecondary">?colorOnPrimary</item>
         <item name="colorSecondaryContainer">?colorPrimary</item>
-        <item name="colorOnSecondaryContainer">?colorOnPrimary</item>
+        <item name="colorOnSecondaryContainer">?colorOnPrimary</item> -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -21,6 +21,7 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
         <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
+        <item name="simpleMenuPreferenceStyle">@style/Preference.Rikka.SimpleMenuPreference.Material3</item>
     </style>
 
     <style name="Theme.Hail" parent="Theme.Base">
