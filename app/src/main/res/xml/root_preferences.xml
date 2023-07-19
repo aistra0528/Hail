@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListPreference
+    <rikka.preference.SimpleMenuPreference
         app:defaultValue="default"
         app:entries="@array/working_mode_entries"
         app:entryValues="@array/working_mode_values"
@@ -35,7 +35,7 @@
             app:icon="@drawable/ic_outline_layers"
             app:key="synthesize_adaptive_icons"
             app:title="@string/synthesize_adaptive_icons" />
-        <ListPreference
+        <rikka.preference.SimpleMenuPreference
             app:defaultValue="lock_freeze"
             app:entries="@array/tile_action_entries"
             app:entryValues="@array/tile_action_values"
@@ -91,7 +91,7 @@
             app:icon="@drawable/ic_outline_shortcut"
             app:key="add_pin_shortcut"
             app:title="@string/action_add_pin_shortcut" />
-        <ListPreference
+        <rikka.preference.SimpleMenuPreference
             app:defaultValue="none"
             app:entries="@array/dynamic_shortcut_action_entries"
             app:entryValues="@array/dynamic_shortcut_action_values"
