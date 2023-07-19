@@ -64,13 +64,18 @@ class AboutFragment : MainFragment(), View.OnClickListener {
             binding.actionDonate -> onDonate()
             binding.actionGithub -> HUI.openLink(HailData.URL_GITHUB)
             binding.actionTranslate -> HUI.openLink(HailData.URL_TRANSLATE)
-            binding.actionLicenses -> MaterialAlertDialogBuilder(activity).setTitle(R.string.action_licenses)
-                .setView(MaterialTextView(activity).apply {
-                    val padding = resources.getDimensionPixelOffset(R.dimen.dialog_padding)
-                    setPadding(padding, 0, padding, 0)
-                    text = resources.openRawResource(R.raw.licenses).bufferedReader().readText()
+            binding.actionLicenses -> MaterialAlertDialogBuilder(activity)
+                .setTitle(R.string.action_licenses)
+                .setMessage(resources.openRawResource(R.raw.licenses).bufferedReader().readText())
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+                .findViewById<MaterialTextView>(android.R.id.message)?.apply {
+                    setTextIsSelectable(true)
                     Linkify.addLinks(this, Linkify.EMAIL_ADDRESSES or Linkify.WEB_URLS)
-                }).setPositiveButton(android.R.string.ok, null).show()
+                    // The first time the link is clicked the background does not change color and
+                    // the view needs to get focus once.
+                    requestFocus()
+                }
         }
     }
 
