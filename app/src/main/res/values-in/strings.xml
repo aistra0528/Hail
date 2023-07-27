@@ -108,7 +108,7 @@
     <string name="dynamic_shortcut_action">Pintasan aksi dinamis</string>
     <string name="action_freeze_tag">Bekukan berdasar label</string>
     <string name="action_unfreeze_tag">Aktifkan berdasar label</string>
-    <string name="action_add_pin_shortcut">Tambahkan ke layar beranda</string>
+    <string name="action_add_pin_shortcut">Tambahkan pintasan ke Layar Beranda</string>
     <string name="action_tag_set">Atur label</string>
     <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
