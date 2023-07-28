@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#FFF59D</color>
+    <!-- <color name="color_primary">#FFF59D</color>
     <color name="color_on_primary">@android:color/black</color>
     <color name="color_primary_container">#FFF9C4</color>
-    <color name="color_on_primary_container">@android:color/black</color>
+    <color name="color_on_primary_container">@android:color/black</color> -->
     <color name="color_warn">@color/error_color_material_dark</color>
 </resources>

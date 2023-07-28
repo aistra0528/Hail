@@ -6,21 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
+    <!-- Enable liftOnScroll as soon as it's bug fixed! -->
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Hail.AppBarOverlay">
+        android:theme="@style/Theme.Hail.AppBarOverlay"
+        app:liftOnScroll="false"
+        app:liftOnScrollColor="@android:color/transparent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="?colorPrimaryDark"
+            android:background="@null"
             app:popupTheme="@style/Theme.Hail.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include
+        android:id="@+id/content_main"
+        layout="@layout/content_main" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
