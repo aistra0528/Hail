@@ -20,7 +20,6 @@ import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
 import com.aistra.hail.utils.HUI
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
@@ -43,9 +42,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             object : BiometricPrompt.AuthenticationCallback() {
                 private fun unlock() {
                     binding.root.isVisible = true
-                    binding.appBarMain.toolbar.setBackgroundColor(
-                        MaterialColors.getColor(binding.root, R.attr.colorPrimaryDark)
-                    )
                     showGuide()
                 }
 

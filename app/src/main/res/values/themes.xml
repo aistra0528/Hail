@@ -21,11 +21,13 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
         <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
-        <item name="simpleMenuPreferenceStyle">@style/Preference.Rikka.SimpleMenuPreference.Material3</item>
     </style>
 
     <style name="Theme.Hail" parent="Theme.Base">
         <item name="alertDialogTheme">@style/Theme.Hail.AlertDialogOverlay</item>
+        <item name="simpleMenuPreferenceStyle">
+            @style/Preference.Rikka.SimpleMenuPreference.Material3
+        </item>
     </style>
 
     <style name="Theme.Hail.Dialog">
