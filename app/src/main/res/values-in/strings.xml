@@ -18,7 +18,7 @@
     <string name="action_freeze_all">Bekukan semua</string>
     <string name="action_freeze_current">Bekukan label ini</string>
     <string name="action_unfreeze_all">Aktifkan semua</string>
-    <string name="action_freeze_non_whitelisted">Bekukan selain daftar putih</string>
+    <string name="action_freeze_non_whitelisted">Bekukan semua selain daftar putih</string>
     <string name="action_lock">Kunci</string>
     <string name="action_launch">Luncurkan</string>
     <string name="action_uninstall">Copot</string>
