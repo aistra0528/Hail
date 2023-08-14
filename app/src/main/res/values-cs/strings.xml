@@ -1,2 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="title_apps">Aplikace</string>
+    <string name="title_settings">Nastavení</string>
+    <string name="title_about">O nás</string>
+    <string name="label_default">Výchozí</string>
+    <string name="label_version">Verze</string>
+    <string name="action_qq">Skupina QQ</string>
+    <string name="action_coolapk">ZmrazitApk</string>
+    <string name="action_donate">Přispět</string>
+    <string name="action_github">GitHub</string>
+    <string name="action_translate">Přeložit</string>
+    <string name="action_licenses">Licence</string>
+    <string name="action_freeze_all">Zmrazit všechny</string>
+    <string name="action_unfreeze_all">Odmrazit všechny</string>
+    <string name="action_freeze_current">Zmrazit aktuální</string>
+    <string name="action_unfreeze_current">Odmrazit aktuální</string>
+    <string name="action_freeze_non_whitelisted">Zmrazit nezařazené na bílou listinu</string>
+    <string name="action_lock">Zamknout</string>
+    <string name="action_lock_freeze">Uzamknout a Zmrazit</string>
+    <string name="action_launch">Spustit</string>
+    <string name="action_freeze">Zmrazit</string>
+    <string name="action_unfreeze">Odmrazit</string>
+    <string name="action_tag_add">Přidat štítek</string>
+    <string name="action_tag_remove">Odstranit štítek</string>
+    <string name="action_add_pin_shortcut">Přidat na dom. obrazovku</string>
+    <string name="action_export_clipboard">Exportovat do schránky</string>
+    <string name="action_import_clipboard">Importovat ze schránky</string>
+    <string name="action_remove_home">Odebrat z domů</string>
+    <string name="action_undo">Zpátky</string>
+    <string name="action_extract_apk">Extrahovat APK</string>
+    <string name="msg_uninstall">Chceš odinstalovat tuto aplikaci\?</string>
+    <string name="working_mode">Režim fungování</string>
+    <string name="mode_default">Nečinná</string>
+    <string name="mode_owner_hide">Majitel Zařízení - Skrýt</string>
+    <string name="mode_su_suspend">Superuser - Suspendovat</string>
+    <string name="mode_shizuku_disable">Shizuku - Deaktivovat</string>
+    <string name="app_name">Hail</string>
+    <string name="title_home">Domů</string>
+    <string name="action_telegram">Skupina telegram</string>
+    <string name="action_redeem">Uplatnit kód</string>
+    <string name="action_tag_set">Nastavit štítek</string>
+    <string name="action_unfreeze_remove_home">Odmrazit a Odstranit z Domů</string>
+    <string name="action_deselect">Zrušit výběr</string>
+    <string name="action_uninstall">Odinstalovat</string>
+    <string name="action_help">Pomoc</string>
+    <string name="action_search">Najít</string>
+    <string name="action_details">Informace o aplikaci</string>
+    <string name="mode_owner_suspend">Majitel Zařízení - Suspendovat</string>
+    <string name="mode_su_disable">Superuser - Deaktivovat</string>
+</resources>
