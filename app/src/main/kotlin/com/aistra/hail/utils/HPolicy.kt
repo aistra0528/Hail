@@ -11,7 +11,7 @@ import com.aistra.hail.receiver.DeviceAdminReceiver
 object HPolicy {
     private val dpm = app.getSystemService<DevicePolicyManager>()!!
     private val admin = ComponentName(app, DeviceAdminReceiver::class.java)
-    val DPM_COMMAND = "dpm set-device-owner ${admin.flattenToShortString()}"
+    private val DPM_COMMAND = "dpm set-device-owner ${admin.flattenToShortString()}"
     val ADB_COMMAND = "adb shell $DPM_COMMAND"
 
     private val isDeviceOwner get() = dpm.isDeviceOwnerApp(app.packageName)
@@ -40,6 +40,7 @@ object HPolicy {
             )
             true
         }
+
         else -> false
     }
 
