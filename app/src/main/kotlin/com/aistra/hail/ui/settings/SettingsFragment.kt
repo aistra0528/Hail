@@ -96,6 +96,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 it, PackageManager.ResolveInfoFlags.of(0)
             ) else app.packageManager.queryIntentActivities(it, 0)
         }.map { it.activityInfo }
+        if (list.isEmpty()) {
+            HUI.showToast(R.string.app_not_installed)
+            return
+        }
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.icon_pack)
             .setItems(list.map { it.loadLabel(app.packageManager) }.toTypedArray()) { _, which ->
                 if (HailData.iconPack == list[which].packageName) return@setItems
