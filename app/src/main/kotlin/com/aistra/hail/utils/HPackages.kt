@@ -38,10 +38,13 @@ object HPackages {
     fun isAppDisabled(packageName: String): Boolean =
         getApplicationInfoOrNull(packageName)?.enabled?.not() ?: false
 
+    fun isAppHidden(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
+        (ApplicationInfo::class.java.getField("privateFlags").get(it) as Int) and 1 == 1
+    } ?: false
+
     fun isAppSuspended(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
-        val pm = app.packageManager
         when {
-            HTarget.Q -> pm.isPackageSuspended(packageName)
+            HTarget.Q -> app.packageManager.isPackageSuspended(packageName)
             HTarget.N -> it.flags and ApplicationInfo.FLAG_SUSPENDED == ApplicationInfo.FLAG_SUSPENDED
             else -> false
         }

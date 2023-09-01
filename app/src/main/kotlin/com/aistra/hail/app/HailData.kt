@@ -35,13 +35,14 @@ object HailData {
     const val SU = "su_"
     const val SHIZUKU = "shizuku_"
     private const val DISABLE = "disable"
-    private const val HIDE = "hide"
+    const val HIDE = "hide"
     const val SUSPEND = "suspend"
     const val MODE_OWNER_HIDE = OWNER + HIDE
     const val MODE_OWNER_SUSPEND = OWNER + SUSPEND
     const val MODE_DHIZUKU_HIDE = DHIZUKU + HIDE
     const val MODE_DHIZUKU_SUSPEND = DHIZUKU + SUSPEND
     const val MODE_SU_DISABLE = SU + DISABLE
+    const val MODE_SU_HIDE = SU + HIDE
     const val MODE_SU_SUSPEND = SU + SUSPEND
     const val MODE_SHIZUKU_DISABLE = SHIZUKU + DISABLE
     const val MODE_SHIZUKU_HIDE = SHIZUKU + HIDE

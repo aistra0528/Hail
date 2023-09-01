@@ -21,6 +21,9 @@ object HShell {
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean =
         execSU("pm ${if (disabled) "disable" else "enable"} $packageName").first == 0
 
+    fun setAppHidden(packageName: String, hidden: Boolean): Boolean =
+        execSU("pm ${if (hidden) "hide" else "unhide"} $packageName").first == 0
+
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
         execSU("pm ${if (suspended) "suspend" else "unsuspend"} $packageName").first == 0
 

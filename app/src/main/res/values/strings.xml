@@ -137,4 +137,5 @@
     <string name="action_terminal">Terminal</string>
     <string name="mode_dhizuku_hide">Dhizuku - Hide</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Suspend</string>
+    <string name="mode_su_hide">Superuser - Hide</string>
 </resources>
