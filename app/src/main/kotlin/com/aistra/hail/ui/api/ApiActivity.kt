@@ -62,7 +62,7 @@ class ApiActivity : AppCompatActivity() {
 
     private fun requirePackage(extraName: String = HailData.KEY_PACKAGE): String =
         intent?.getStringExtra(extraName)?.also {
-            HPackages.getPackageInfoOrNull(it)
+            HPackages.getApplicationInfoOrNull(it)
                 ?: throw NameNotFoundException(getString(R.string.app_not_installed))
         } ?: throw IllegalArgumentException("package must not be null")
 

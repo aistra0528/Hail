@@ -430,7 +430,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
         var i = 0
         for (index in 0 until json.length()) {
             val pkg = json.getString(index)
-            if (HPackages.getPackageInfoOrNull(pkg) != null && !HailData.isChecked(pkg)) {
+            if (HPackages.getApplicationInfoOrNull(pkg) != null && !HailData.isChecked(pkg)) {
                 HailData.addCheckedApp(pkg, false, tag.second)
                 i++
             }
@@ -443,7 +443,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
     }
 
     private suspend fun importFrozenApp() = withContext(Dispatchers.IO) {
-        HPackages.getInstalledPackages().map { it.packageName }
+        HPackages.getInstalledApplications().map { it.packageName }
             .filter { AppManager.isAppFrozen(it) && !HailData.isChecked(it) }
             .onEach { HailData.addCheckedApp(it, false, tag.second) }.size
     }

@@ -64,7 +64,7 @@ object HShizuku {
     }
 
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean {
-        HPackages.getPackageInfoOrNull(packageName) ?: return false
+        HPackages.getApplicationInfoOrNull(packageName) ?: return false
         if (disabled) forceStopApp(packageName)
         runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
@@ -88,7 +88,7 @@ object HShizuku {
     }
 
     fun isAppHidden(packageName: String): Boolean {
-        HPackages.getPackageInfoOrNull(packageName) ?: return false
+        HPackages.getApplicationInfoOrNull(packageName) ?: return false
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             (if (HTarget.P) HiddenApiBypass.invoke(
@@ -103,7 +103,7 @@ object HShizuku {
     }
 
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean {
-        HPackages.getPackageInfoOrNull(packageName) ?: return false
+        HPackages.getApplicationInfoOrNull(packageName) ?: return false
         if (hidden) forceStopApp(packageName)
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
@@ -120,7 +120,7 @@ object HShizuku {
     }
 
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean {
-        HPackages.getPackageInfoOrNull(packageName) ?: return false
+        HPackages.getApplicationInfoOrNull(packageName) ?: return false
         if (suspended) forceStopApp(packageName)
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")

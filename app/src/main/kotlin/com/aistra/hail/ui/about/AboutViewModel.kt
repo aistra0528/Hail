@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 class AboutViewModel(val app: Application) : AndroidViewModel(app) {
     val time = MutableLiveData<String>().apply {
         value = SimpleDateFormat.getDateInstance()
-            .format(HPackages.getPackageInfoOrNull(app.packageName)!!.firstInstallTime)
+            .format(HPackages.getUnhiddenPackageInfoOrNull(app.packageName)!!.firstInstallTime)
     }
 
     val snack = MutableLiveData<Int>()
