@@ -289,6 +289,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     setMessage(getString(R.string.operation_failed, exitValue.toString()))
                 }
             }.setPositiveButton(android.R.string.ok, null).show()
+                .findViewById<MaterialTextView>(android.R.id.message)?.setTextIsSelectable(true)
         }
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
