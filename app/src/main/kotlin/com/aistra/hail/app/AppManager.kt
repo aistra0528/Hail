@@ -22,9 +22,12 @@ object AppManager {
         }
 
     fun isAppFrozen(packageName: String): Boolean = when {
+        HailData.workingMode.endsWith(HailData.DISABLE) -> HPackages.isAppDisabled(packageName)
         HailData.workingMode.endsWith(HailData.HIDE) -> HPackages.isAppHidden(packageName)
         HailData.workingMode.endsWith(HailData.SUSPEND) -> HPackages.isAppSuspended(packageName)
         else -> HPackages.isAppDisabled(packageName)
+                || HPackages.isAppHidden(packageName)
+                || HPackages.isAppSuspended(packageName)
     }
 
     fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =
@@ -44,25 +47,17 @@ object AppManager {
 
     fun uninstallApp(packageName: String): Boolean {
         when {
-            HailData.workingMode.startsWith(HailData.OWNER) -> if (HPolicy.uninstallApp(
-                    packageName
-                )
-            ) return true
+            HailData.workingMode.startsWith(HailData.OWNER) ->
+                if (HPolicy.uninstallApp(packageName)) return true
 
-            HailData.workingMode.startsWith(HailData.DHIZUKU) -> if (HDhizuku.uninstallApp(
-                    packageName
-                )
-            ) return true
+            HailData.workingMode.startsWith(HailData.DHIZUKU) ->
+                if (HDhizuku.uninstallApp(packageName)) return true
 
-            HailData.workingMode.startsWith(HailData.SU) -> if (HShell.uninstallApp(
-                    packageName
-                )
-            ) return true
+            HailData.workingMode.startsWith(HailData.SU) ->
+                if (HShell.uninstallApp(packageName)) return true
 
-            HailData.workingMode.startsWith(HailData.SHIZUKU) -> if (HShizuku.uninstallApp(
-                    packageName
-                )
-            ) return true
+            HailData.workingMode.startsWith(HailData.SHIZUKU) ->
+                if (HShizuku.uninstallApp(packageName)) return true
         }
         HUI.startActivity(Intent.ACTION_DELETE, HPackages.packageUri(packageName))
         return false
