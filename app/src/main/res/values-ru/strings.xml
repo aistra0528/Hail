@@ -11,7 +11,6 @@
     <string name="label_time">Время установки</string>
     <string name="action_telegram">Группа в Telegram</string>
     <string name="action_qq">QQ группа</string>
-    <string name="action_coolapk">CoolApk</string>
     <string name="action_donate">Пожертвования</string>
     <string name="action_redeem">Промокод</string>
     <string name="action_github">GitHub</string>

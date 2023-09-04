@@ -7,7 +7,6 @@
     <string name="label_default">Varsayılan</string>
     <string name="label_version">Sürüm</string>
     <string name="label_time">Kurulma zamanı</string>
-    <string name="action_coolapk">CoolApk</string>
     <string name="action_donate">Bağış</string>
     <string name="action_redeem">Kod kullan</string>
     <string name="action_github">GitHub</string>

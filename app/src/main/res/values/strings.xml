@@ -11,7 +11,6 @@
     <string name="label_time">Install time</string>
     <string name="action_telegram">Telegram Group</string>
     <string name="action_qq">QQ Group</string>
-    <string name="action_coolapk">CoolApk</string>
     <string name="action_donate">Donate</string>
     <string name="action_redeem">Redeem code</string>
     <string name="action_github">GitHub</string>
@@ -138,4 +137,5 @@
     <string name="mode_dhizuku_hide">Dhizuku - Hide</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Suspend</string>
     <string name="mode_su_hide">Superuser - Hide</string>
+    <string name="action_fdroid">F-Droid</string>
 </resources>

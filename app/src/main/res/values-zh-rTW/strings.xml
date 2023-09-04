@@ -11,7 +11,6 @@
     <string name="label_time">安裝時間</string>
     <string name="action_telegram">Telegram 群組</string>
     <string name="action_qq">QQ 群組</string>
-    <string name="action_coolapk">酷安</string>
     <string name="action_donate">捐贈</string>
     <string name="action_redeem">兌換代碼</string>
     <string name="action_github">GitHub</string>
@@ -139,4 +138,5 @@
     <string name="mode_dhizuku_suspend">Dhizuku - 暫停</string>
     <string name="action_terminal">終端機</string>
     <string name="mode_su_hide">超級使用者 - 隱藏</string>
+    <string name="action_fdroid">F-Droid</string>
 </resources>

@@ -14,7 +14,6 @@
     <string name="label_time">Temps d\'installation</string>
     <string name="action_telegram">Groupe Telegram</string>
     <string name="action_qq">Groupe QQ</string>
-    <string name="action_coolapk">CoolApk</string>
     <string name="action_freeze_non_whitelisted">Geler tout sauf la liste blanche</string>
     <string name="action_lock">Verrouiller</string>
     <string name="action_lock_freeze">Verrouiller et geler</string>

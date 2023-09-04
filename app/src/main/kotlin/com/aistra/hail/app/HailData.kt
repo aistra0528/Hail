@@ -17,7 +17,7 @@ object HailData {
     const val URL_RELEASES = "$URL_GITHUB/releases"
     const val URL_TELEGRAM = "https://t.me/+yvRXYTounDIxODFl"
     const val URL_QQ = "http://qm.qq.com/cgi-bin/qm/qr?k=I2g_Ymanc6bQMo4cVKTG0knARE0twtSG"
-    const val URL_COOLAPK = "https://www.coolapk.com/apk/${BuildConfig.APPLICATION_ID}"
+    const val URL_FDROID = "https://f-droid.org/packages/${BuildConfig.APPLICATION_ID}"
     const val URL_ALIPAY = "https://qr.alipay.com/tsx02922ajwj6xekqyd1rbf"
     const val URL_ALIPAY_API = "alipays://platformapi/startapp?saId=10000007&qrcode=$URL_ALIPAY"
     const val URL_BILIBILI = "https://space.bilibili.com/9261272"
