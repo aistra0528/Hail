@@ -7,16 +7,9 @@
 [![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)
 [![License](https://img.shields.io/github/license/aistra0528/Hail)](LICENSE)
 
-雹是一款用于冻结 Android 应用的自由软件，您可自由享用所有功能。
+雹是一款用于冻结 Android 应用的自由软件。[GitHub Releases](https://github.com/aistra0528/Hail/releases)
 
-[<img src="coolapk-badge.png" alt="Get it on CoolApk" height="80">](https://www.coolapk.com/apk/com.aistra.hail)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.aistra.hail/)
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.aistra.hail)
-
-酷安版签名与 [GitHub Releases](https://github.com/aistra0528/Hail/releases) 一致，F-Droid 版由 F-Droid 签名。
-
-Google Play 版为 [@purofle](https://github.com/purofle) 的 [Fork](https://github.com/purofle/Hail)，由
-Google 签名。
 
 <img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/1.png" width="32%" /> <img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/2.png" width="32%" /> <img src="fastlane/metadata/android/zh-CN/images/phoneScreenshots/3.png" width="32%" />
 
@@ -45,15 +38,15 @@ Google 签名。
 
 ## 工作模式
 
-雹支持以`设备所有者`、`超级用户` (Root) 和`Shizuku` (含 Sui) 模式工作。
+雹支持以`设备所有者`、`Dhizuku`、`超级用户` (Root) 和`Shizuku` (含 Sui) 模式工作。
 
 **冻结的应用需要通过相同工作模式解冻。**
 
-1. 如果您的设备支持无线调试或已 root，推荐选择`Shizuku`。[关于 Shizuku](https://github.com/RikkaApps/Shizuku)
+1. 如果您的设备支持无线调试或已 root，推荐选择`Shizuku`。
 
 2. 如果您的设备已 root，可选择`超级用户`。**此模式速度相对较慢。**
 
-3. 如果您的设备不支持无线调试且未 root，可选择`设备所有者`。**此模式设置较为繁琐。**
+3. 如果您的设备不支持无线调试且未 root，可选择`设备所有者`或`Dhizuku`。**这些模式设置较为繁琐。**
 
 ### 设备所有者 - 隐藏 / 暂停
 
@@ -90,35 +83,45 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 在雹的应用界面长按雹，在弹出的选项中选择卸载。
 
-### 超级用户 - 停用 / 暂停
+### Dhizuku - 隐藏 / 暂停
+
+此模式通过将 [Dhizuku](https://github.com/iamr0s/Dhizuku) 设置为设备所有者 (Device Owner)，调用：
+
+- `DevicePolicyManager.setApplicationHidden`方法隐藏应用。
+
+- `DevicePolicyManager.setPackagesSuspended`方法暂停应用。
+
+### 超级用户 - 停用 / 隐藏 / 暂停
 
 此模式通过授予雹超级用户 (Superuser) 权限，执行：
 
 - `pm disable`命令停用应用。
 
+- `pm hide`命令隐藏应用。
+
 - `pm suspend`命令暂停应用。
 
 ### Shizuku - 停用 / 隐藏 / 暂停
 
-此模式通过 Shizuku 调用非 SDK 接口：
+此模式通过 [Shizuku](https://github.com/RikkaApps/Shizuku) 调用非 SDK 接口：
 
 - `IPackageManager.setApplicationEnabledSetting`方法停用应用。
 
-- `IPackageManager.setApplicationHiddenSettingAsUser`方法隐藏应用。 (可能需要 root)
+- `IPackageManager.setApplicationHiddenSettingAsUser`方法隐藏应用。 (需要 root)
 
 - `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。
 
 ## 恢复
 
-### 通过 adb (可能需要 root)
+### 通过 adb
 
 替换 com.package.name 为目标应用的包名。
 
 ```shell
 # 启用应用
 adb shell pm enable com.package.name
-# 取消隐藏应用
-adb shell pm unhide com.package.name
+# 取消隐藏应用 (需要 root)
+adb shell su -c pm unhide com.package.name
 # 取消暂停应用
 adb shell pm unsuspend com.package.name
 ```

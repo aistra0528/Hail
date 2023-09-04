@@ -9,18 +9,9 @@
 [![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)
 [![License](https://img.shields.io/github/license/aistra0528/Hail)](LICENSE)
 
-Hail is a free-as-in-freedom software to freeze Android apps. Enjoy all features freely!
+Hail is a free-as-in-freedom software to freeze Android apps. [GitHub Releases](https://github.com/aistra0528/Hail/releases)
 
-[<img src="coolapk-badge.png" alt="Get it on CoolApk" height="80">](https://www.coolapk.com/apk/com.aistra.hail)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.aistra.hail/)
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.aistra.hail)
-
-CoolApk releases are signed the same
-as [GitHub Releases](https://github.com/aistra0528/Hail/releases), and F-Droid releases are signed
-by F-Droid.
-
-Google Play releases are the [Fork](https://github.com/purofle/Hail)
-by [@purofle](https://github.com/purofle), signed by Google.
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="32%" /> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="32%" />
 
@@ -54,16 +45,15 @@ Suspended apps will be shown as grayscale icons in the launcher. Unsuspend them 
 
 ## Working mode
 
-Hail can work with `Device Owner`, `Superuser` (Root) and `Shizuku` (including Sui).
+Hail can work with `Device Owner`, `Dhizuku`, `Superuser` (Root) and `Shizuku` (including Sui).
 
 **Frozen app need to be unfrozen by the same working mode.**
 
-1. For devices support wifi adb or rooted, `Shizuku` is
-   recommend. [About Shizuku](https://github.com/RikkaApps/Shizuku)
+1. For devices support wifi adb or rooted, `Shizuku` is recommend.
 
 2. For rooted devices, `Superuser` is alternative. **It is slower.**
 
-3. Select `Device Owner` otherwise. **It's a pain to set up.**
+3. Select `Device Owner` or `Dhizuku` otherwise. **These are a pain to set up.**
 
 ### Device Owner - Hide / Suspend
 
@@ -100,35 +90,45 @@ Search the message by search engine otherwise.
 
 Long press Hail at Apps, then select Uninstall in options.
 
-### Superuser - Disable / Suspend
+### [Dhizuku](https://github.com/iamr0s/Dhizuku) - Hide / Suspend
+
+This mode invoke:
+
+- `DevicePolicyManager.setApplicationHidden` to hide apps.
+
+- `DevicePolicyManager.setPackagesSuspended` to suspend apps.
+
+### Superuser - Disable / Hide / Suspend
 
 This mode execute:
 
 - `pm disable` to disable apps.
 
+- `pm hide` to hide apps.
+
 - `pm suspend` to suspend apps.
 
-### Shizuku - Disable / Hide / Suspend
+### [Shizuku](https://github.com/RikkaApps/Shizuku) - Disable / Hide / Suspend
 
 This mode invoke non-SDK interface:
 
 - `IPackageManager.setApplicationEnabledSetting` to disable apps.
 
-- `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps. (root may be required)
+- `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps. (root required)
 
 - `IPackageManager.setPackagesSuspendedAsUser` to suspend apps.
 
 ## Revert
 
-### By adb (root may be required)
+### By adb
 
 Replace com.package.name to the package name of target app.
 
 ```shell
 # Enable app
 adb shell pm enable com.package.name
-# Unhide app
-adb shell pm unhide com.package.name
+# Unhide app (root required)
+adb shell su -c pm unhide com.package.name
 # Unsuspend app
 adb shell pm unsuspend com.package.name
 ```
