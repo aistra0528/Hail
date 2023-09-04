@@ -12,17 +12,4 @@
 <h4>暂停</h4>
 <p>被暂停<code>suspend</code>的应用在启动器中会显示为灰度图标。取消暂停<code>unsuspend</code>应用即可恢复。</p>
 <h3>工作模式</h3>
-<p>雹支持以<code>设备所有者</code>、<code>超级用户</code> (Root) 和<code>Shizuku</code> (含 Sui) 模式工作。</p>
-<p><strong>冻结的应用需要通过相同工作模式解冻。</strong></p>
-<ol>
-    <li>
-        <p>如果您的设备支持无线调试或已 root，推荐选择<code>Shizuku</code>。<a
-                href="https://github.com/RikkaApps/Shizuku">关于 Shizuku</a></p>
-    </li>
-    <li>
-        <p>如果您的设备已 root，可选择<code>超级用户</code>。<strong>此模式速度相对较慢。</strong></p>
-    </li>
-    <li>
-        <p>如果您的设备不支持无线调试且未 root，可选择<code>设备所有者</code>。<strong>此模式设置较为繁琐。</strong></p>
-    </li>
-</ol>
+<p>雹支持以<code>设备所有者</code>、<code>Dhizuku</code>、<code>超级用户</code> (Root) 和<code>Shizuku</code> (含 Sui) 模式工作。</p>

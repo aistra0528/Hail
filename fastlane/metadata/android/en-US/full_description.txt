@@ -12,19 +12,5 @@
 <h4>Suspend</h4>
 <p>Suspended apps will be shown as grayscale icons in the launcher. Unsuspend them to revert.</p>
 <h3>Working mode</h3>
-<p>Hail can work with <code>Device Owner</code>, <code>Superuser</code> (Root) and
+<p>Hail can work with <code>Device Owner</code>, <code>Dhizuku</code>, <code>Superuser</code> (Root) and
     <code>Shizuku</code> (including Sui).</p>
-<p><strong>Frozen app need to be unfrozen by the same working mode.</strong></p>
-<ol>
-    <li>
-        <p>For devices support wifi adb or rooted, <code>Shizuku</code> is
-            recommend. <a href="https://github.com/RikkaApps/Shizuku">About Shizuku</a></p>
-    </li>
-    <li>
-        <p>For rooted devices, <code>Superuser</code> is alternative. <strong>It is slower.</strong>
-        </p>
-    </li>
-    <li>
-        <p>Select <code>Device Owner</code> otherwise. <strong>It's a pain to set up.</strong></p>
-    </li>
-</ol>
