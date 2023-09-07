@@ -7,6 +7,12 @@
         android:visible="false"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_remove_owner"
+        android:icon="@drawable/ic_outline_remove_owner"
+        android:title="@string/title_remove_owner"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_help"
         android:icon="@drawable/ic_outline_help"
         android:title="@string/action_help"

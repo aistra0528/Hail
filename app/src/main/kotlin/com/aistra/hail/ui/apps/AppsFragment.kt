@@ -100,15 +100,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                     3 -> when {
                         pkg == app.packageName -> {
                             when {
-                                HPolicy.isDeviceOwnerActive -> MaterialAlertDialogBuilder(activity).setTitle(
-                                    R.string.title_remove_owner
-                                ).setMessage(R.string.msg_remove_owner)
-                                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                                        HPolicy.setOrganizationName()
-                                        HPolicy.clearDeviceOwnerApp()
-                                        uninstallDialog(name, pkg)
-                                    }.setNegativeButton(android.R.string.cancel, null).show()
-
+                                HPolicy.isDeviceOwnerActive -> activity.ownerRemoveDialog()
                                 HPolicy.isAdminActive -> {
                                     HPolicy.removeActiveAdmin()
                                     uninstallDialog(name, pkg)

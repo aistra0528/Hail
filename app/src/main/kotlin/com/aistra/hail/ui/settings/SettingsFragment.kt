@@ -21,6 +21,7 @@ import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
+import com.aistra.hail.ui.main.MainActivity
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
@@ -311,6 +312,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     }.setNegativeButton(android.R.string.cancel, null).show()
             }
 
+            R.id.action_remove_owner -> (requireActivity() as MainActivity).ownerRemoveDialog()
             R.id.action_help -> HUI.openLink(HailData.URL_README)
         }
         return false
@@ -318,8 +320,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_settings, menu)
-        if (HailData.workingMode.startsWith(HailData.SU) || HailData.workingMode.startsWith(HailData.SHIZUKU)) menu.findItem(
-            R.id.action_terminal
-        ).isVisible = true
+        if (HailData.workingMode.startsWith(HailData.SU) || HailData.workingMode.startsWith(HailData.SHIZUKU))
+            menu.findItem(R.id.action_terminal).isVisible = true
+        else if (HPolicy.isDeviceOwnerActive)
+            menu.findItem(R.id.action_remove_owner).isVisible = true
     }
 }
