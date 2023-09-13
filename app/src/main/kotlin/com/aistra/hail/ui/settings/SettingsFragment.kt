@@ -60,6 +60,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             val isGranted = NotificationManagerCompat.getEnabledListenerPackages(requireContext())
                 .contains(requireContext().packageName)
             if (value == true && !isGranted) {
+                app.setAutoFreezeServiceEnabled(true)
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 false
             } else true

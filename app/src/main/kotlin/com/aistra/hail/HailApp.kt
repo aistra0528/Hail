@@ -28,18 +28,21 @@ class HailApp : Application() {
                     && !it.whitelisted
         }
         val intent = Intent(app, AutoFreezeService::class.java)
-        val name = ComponentName(app, AutoFreezeService::class.java)
         if (start) {
-            packageManager.setComponentEnabledSetting(
-                name, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP
-            )
+            setAutoFreezeServiceEnabled(true)
             ContextCompat.startForegroundService(app, intent)
         } else {
             stopService(intent)
-            packageManager.setComponentEnabledSetting(
-                name, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP
-            )
+            setAutoFreezeServiceEnabled(false)
         }
+    }
+
+    fun setAutoFreezeServiceEnabled(enabled: Boolean) {
+        packageManager.setComponentEnabledSetting(
+            ComponentName(app, AutoFreezeService::class.java),
+            if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP
+        )
     }
 
     companion object {
