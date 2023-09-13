@@ -28,7 +28,7 @@
     <string name="action_deferred_task">延期工作</string>
     <string name="action_tag_add">新增標籤</string>
     <string name="action_tag_remove">移除標籤</string>
-    <string name="action_tag_set">設定標籤</string>
+    <string name="action_tag_set">標籤分組</string>
     <string name="action_add_pin_shortcut">新增至主畫面</string>
     <string name="action_export_clipboard">匯出至剪貼簿</string>
     <string name="action_import_clipboard">從剪貼簿匯入</string>
