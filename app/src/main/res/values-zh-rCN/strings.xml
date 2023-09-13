@@ -28,7 +28,7 @@
     <string name="action_deferred_task">定时任务</string>
     <string name="action_tag_add">添加标签</string>
     <string name="action_tag_remove">移除标签</string>
-    <string name="action_tag_set">设置标签</string>
+    <string name="action_tag_set">标签分组</string>
     <string name="action_add_pin_shortcut">添加到主屏幕</string>
     <string name="action_export_clipboard">导出到剪切板</string>
     <string name="action_import_clipboard">从剪切板导入</string>
