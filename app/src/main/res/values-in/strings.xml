@@ -39,8 +39,8 @@
     <string name="msg_uninstall">Copot pemasangan aplikasi ini\?</string>
     <string name="working_mode">Mode kerja</string>
     <string name="mode_owner_hide">Pemilik Perangkat - Sembunyikan</string>
-    <string name="mode_su_suspend">SuperUser - Tangguhkan</string>
-    <string name="mode_su_disable">SuperUser - Matikan</string>
+    <string name="mode_su_suspend">Superuser - Tangguhkan</string>
+    <string name="mode_su_disable">Superuser - Matikan</string>
     <string name="mode_shizuku_disable">Shizuku - Matikan</string>
     <string name="mode_shizuku_suspend">Shizuku - Tangguhkan</string>
     <string name="msg_redeem_invalid">Kode salah</string>
@@ -135,4 +135,7 @@
     <string name="action_select_all">Tandai semua</string>
     <string name="mode_dhizuku_hide">Dhizuku - Sembunyikan</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Tangguhkan</string>
+    <string name="action_skip">Lewati</string>
+    <string name="mode_su_hide">Superuser - Sembunyikan</string>
+    <string name="action_fdroid">F-Droid</string>
 </resources>
