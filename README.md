@@ -81,7 +81,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 #### 移除雹的设备所有者
 
-在雹的应用界面长按雹，在弹出的选项中选择卸载。
+设置 > 移除设备所有者
 
 ### Dhizuku - 隐藏 / 暂停
 

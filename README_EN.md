@@ -88,7 +88,7 @@ Search the message by search engine otherwise.
 
 #### Remove device owner
 
-Long press Hail at Apps, then select Uninstall in options.
+Settings > Remove Device Owner
 
 ### [Dhizuku](https://github.com/iamr0s/Dhizuku) - Hide / Suspend
 
