@@ -139,4 +139,5 @@
     <string name="action_terminal">終端機</string>
     <string name="mode_su_hide">超級使用者 - 隱藏</string>
     <string name="action_fdroid">F-Droid</string>
+    <string name="action_skip">跳過</string>
 </resources>
