@@ -15,6 +15,7 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
         if ((inputData.getBoolean(HailData.ACTION_LOCK, true)
                     && HSystem.isInteractive(applicationContext))
             || isSkipWhileCharging(applicationContext)
+            || HailData.autoFreezeDisabledUntil > System.currentTimeMillis()
         ) return Result.success() // Not stopping the AutoFreezeService here. The worker will run at some point. Then we'll stop the Service
         var i = 0
         var denied = false
@@ -38,4 +39,14 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
         AppManager.isAppFrozen(appInfo.packageName) || (HailData.skipForegroundApp && HSystem.isForegroundApp(
             context, appInfo.packageName
         )) || (HailData.skipNotifyingApp && AutoFreezeService.instance.activeNotifications.any { it.packageName == appInfo.packageName }) || appInfo.whitelisted
+
+    class RestartAutoFreezeServiceWorker(private val context: Context, params: WorkerParameters) : Worker(context, params) {
+        override fun doWork(): Result {
+            app.setAutoFreezeService()
+            if (!HSystem.isInteractive(context)) { // Only run freeze directly if screen is off
+                HWork.setAutoFreeze(false) // TODO is false correct here? This was added after I implemented it and I'm not sure right now...
+            }
+            return Result.success()
+        }
+    }
 }

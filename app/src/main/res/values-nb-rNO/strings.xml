@@ -102,6 +102,9 @@
     <string name="mode_shizuku_hide">Shizuku — skjul</string>
     <string name="tile_action">Flishandling</string>
     <string name="auto_freeze_notification_title">Autofrysningstjenesten kjører</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="mode_shizuku_suspend">Shizuku — hvilemodus</string>
     <string name="title_remove_owner">Fjern enhetseier</string>
     <string name="tap_to_select">Trykk for å å velge flere</string>

@@ -51,6 +51,9 @@
     <string name="auto_freeze_after_lock">Після блокування екрану</string>
     <string name="auto_freeze_delay">Затримка заморозки (хвилини)</string>
     <string name="auto_freeze_notification_title">Запущено службу автозаморожування</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="compact_icon">Компактні іконки</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_bilibili">Bilibili</string>

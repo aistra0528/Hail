@@ -90,6 +90,9 @@
     <string name="tile_action">Hızlı eylem</string>
     <string name="auto_freeze">Otomatik dondur</string>
     <string name="auto_freeze_notification_title">Otomatik dondurma hizmeti çalışıyor</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="msg_set_owner">adb komutu hatalı:
 \n%s</string>
     <string name="synthesize_adaptive_icons">Uyarlanabilir simgeler kullan</string>

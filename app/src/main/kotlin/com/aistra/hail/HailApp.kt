@@ -37,6 +37,11 @@ class HailApp : Application() {
         }
     }
 
+    fun stopAutoFreezeService() {
+        stopService(Intent(app, AutoFreezeService::class.java))
+        setAutoFreezeServiceEnabled(false)
+    }
+
     fun setAutoFreezeServiceEnabled(enabled: Boolean) {
         packageManager.setComponentEnabledSetting(
             ComponentName(app, AutoFreezeService::class.java),

@@ -101,6 +101,9 @@
     <string name="tile_action">Acción del Tile</string>
     <string name="auto_freeze">Congelación automática</string>
     <string name="auto_freeze_notification_title">El servicio de congelación automática está funcionando</string>
+    <string name="auto_freeze_notification_text_disabled_until">Desactivado hasta %s</string>
+    <string name="auto_freeze_tile_on">Activado</string>
+    <string name="auto_freeze_tile_off">Desactivado</string>
     <string name="auto_freeze_after_lock">Después de bloquear la pantalla</string>
     <string name="skip_while_charging">Omitir durante la carga</string>
     <string name="skip_foreground_app">Omitir aplicación corriendo en primer plano</string>

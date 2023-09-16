@@ -4,6 +4,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.aistra.hail.HailApp
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
@@ -35,6 +36,16 @@ object HWork {
                 setInputData(workDataOf(HailData.ACTION_LOCK to screenOff))
                 build()
             }
+        )
+    }
+
+    fun disableAutoFreezeServiceFor(delay: Long) {
+        WorkManager.getInstance(HailApp.app).enqueueUniqueWork(
+            HailApi.DISABLE_AUTO_FREEZE_SERVICE_TEMPORARILY,
+            ExistingWorkPolicy.REPLACE,
+            OneTimeWorkRequestBuilder<AutoFreezeWorker.RestartAutoFreezeServiceWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .build()
         )
     }
 }

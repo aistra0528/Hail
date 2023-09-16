@@ -104,6 +104,9 @@
     <string name="tile_action">Kachel-Aktion</string>
     <string name="auto_freeze">Automatisches Einfrieren</string>
     <string name="auto_freeze_notification_title">Der automatische Einfrierdienst läuft</string>
+    <string name="auto_freeze_notification_text_disabled_until">Deaktiviert bis %s</string>
+    <string name="auto_freeze_tile_on">An</string>
+    <string name="auto_freeze_tile_off">Aus</string>
     <string name="auto_freeze_after_lock">Nach der Bildschirmsperre</string>
     <string name="skip_while_charging">Überspringen beim Laden</string>
     <string name="skip_foreground_app">Anwendung im Vordergrund überspringen</string>

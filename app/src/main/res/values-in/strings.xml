@@ -68,6 +68,9 @@
     <string name="msg_text_copied">Disalin: %s</string>
     <string name="auto_freeze">Bekukan otomatis</string>
     <string name="auto_freeze_notification_title">Layanan bekukan otomatis sedang berjalan</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="shizuku_missing">Shizuku tidak ditemukan :(</string>
     <string name="msg_exported">Terekspor : %s</string>
     <plurals name="deferred_task_entry">

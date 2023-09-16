@@ -101,6 +101,9 @@
     <string name="tile_action">Действие плитки</string>
     <string name="auto_freeze">Автозаморозка</string>
     <string name="auto_freeze_notification_title">Служба автозаморозки работает</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="auto_freeze_after_lock">После блокировки экрана</string>
     <string name="skip_while_charging">Не замораживать во время зарядки</string>
     <string name="skip_foreground_app">Не замораживать приложения переднего плана</string>

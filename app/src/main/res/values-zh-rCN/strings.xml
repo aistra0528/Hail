@@ -101,6 +101,9 @@
     <string name="tile_action">快捷设置操作</string>
     <string name="auto_freeze">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="auto_freeze_after_lock">锁屏后</string>
     <string name="skip_while_charging">充电时例外</string>
     <string name="skip_foreground_app">保留前台应用</string>

@@ -33,6 +33,9 @@
     <string name="working_mode">وضع العمل</string>
     <string name="sort_name">التسمية</string>
     <string name="auto_freeze_notification_title">خدمة التجميد التلقائي قيد التشغيل</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="filter_frozen_apps">مجمد</string>
     <string name="msg_selected">المحدد: %s</string>
     <string name="action_terminal">الطرفية</string>

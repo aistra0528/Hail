@@ -33,6 +33,9 @@
     <string name="working_mode">Modo de trabalho</string>
     <string name="sort_name">Nome</string>
     <string name="auto_freeze_notification_title">O serviço de auto congelamento está em execução</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="filter_frozen_apps">Congelados</string>
     <string name="msg_selected">Selecionado: %s</string>
     <string name="action_terminal">Terminal</string>

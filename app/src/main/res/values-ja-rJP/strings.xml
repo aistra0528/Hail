@@ -96,6 +96,9 @@
     <string name="tile_action">タイルアクション</string>
     <string name="auto_freeze">自動凍結</string>
     <string name="auto_freeze_notification_title">自動凍結を待機中</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="auto_freeze_after_lock">画面ロック後</string>
     <string name="skip_while_charging">充電時にスキップ</string>
     <string name="skip_foreground_app">フォアグラウンドアプリをスキップ</string>

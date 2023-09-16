@@ -102,6 +102,9 @@
     <string name="tile_action">Tile action</string>
     <string name="auto_freeze">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>
     <string name="auto_freeze_after_lock">After screen locked</string>
     <string name="skip_while_charging">Skip while charging</string>
     <string name="skip_foreground_app">Skip foreground app</string>

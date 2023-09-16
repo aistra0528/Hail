@@ -100,6 +100,9 @@
     <string name="tile_action">圖塊動作</string>
     <string name="auto_freeze">自動凍結</string>
     <string name="auto_freeze_notification_title">自動凍結服務正在執行</string>
+    <string name="auto_freeze_notification_text_disabled_until">Disabled until %s</string>
+    <string name="auto_freeze_tile_on">On</string>
+    <string name="auto_freeze_tile_off">Off</string>x
     <string name="auto_freeze_after_lock">螢幕鎖定後</string>
     <string name="skip_while_charging">充電時跳過</string>
     <string name="skip_foreground_app">跳過前景應用程式</string>
