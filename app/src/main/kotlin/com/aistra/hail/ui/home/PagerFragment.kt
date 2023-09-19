@@ -129,7 +129,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
     }
 
     private fun updateBarTitle() {
-        activity.supportActionBar?.title =
+        toolbar.title =
             if (multiselect) getString(R.string.msg_selected, selectedList.size.toString())
             else getString(R.string.app_name)
     }
