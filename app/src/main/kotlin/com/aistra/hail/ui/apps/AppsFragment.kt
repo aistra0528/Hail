@@ -12,9 +12,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.PackageInfoCompat
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -39,10 +37,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val menuHost = requireActivity() as MenuHost
-        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         _binding = FragmentAppsBinding.inflate(inflater, container, false)
-
+        setupToolbar(binding.toolbar)
         binding.refreshLayout.apply {
             refreshLayout = this
             setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
