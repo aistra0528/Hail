@@ -72,6 +72,8 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.work:work-runtime-ktx:2.8.1")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("dev.rikka.rikkax.insets:insets:1.3.0")
+    implementation("dev.rikka.rikkax.layoutinflater:layoutinflater:1.3.0")
     implementation("dev.rikka.rikkax.preference:simplemenu-preference:1.0.3")
     implementation("dev.rikka.shizuku:api:13.1.4")
     implementation("dev.rikka.shizuku:provider:13.1.4")

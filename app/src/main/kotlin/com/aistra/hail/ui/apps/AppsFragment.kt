@@ -17,12 +17,12 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.databinding.FragmentAppsBinding
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HFiles
 import com.aistra.hail.utils.HPackages
@@ -34,25 +34,28 @@ import kotlinx.coroutines.launch
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener, MenuProvider {
     private lateinit var refreshLayout: SwipeRefreshLayout
-
+    private var _binding: FragmentAppsBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        return SwipeRefreshLayout(activity).apply {
+        _binding = FragmentAppsBinding.inflate(inflater, container, false)
+
+        binding.refreshLayout.apply {
             refreshLayout = this
-            addView(RecyclerView(activity).apply {
-                layoutManager =
-                    GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
-                adapter = AppsAdapter.apply {
-                    onItemClickListener = this@AppsFragment
-                    onItemLongClickListener = this@AppsFragment
-                    onItemCheckedChangeListener = this@AppsFragment
-                }
-            })
             setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
         }
+        binding.recyclerView.apply {
+            layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
+            adapter = AppsAdapter.apply {
+                onItemClickListener = this@AppsFragment
+                onItemLongClickListener = this@AppsFragment
+                onItemCheckedChangeListener = this@AppsFragment
+            }
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

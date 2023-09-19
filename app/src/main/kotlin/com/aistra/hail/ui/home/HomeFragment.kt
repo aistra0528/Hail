@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailData.tags
 import com.aistra.hail.databinding.FragmentHomeBinding
@@ -21,13 +22,18 @@ class HomeFragment : MainFragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        setupToolbar(binding.toolbar, Lifecycle.State.RESUMED)
+
         if (tags.size == 1) binding.tabs.isVisible = false
         binding.pager.adapter = HomeAdapter(this)
         TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = tags[position].first
         }.attach()
+
         return binding.root
     }
+
 
     override fun onDestroyView() {
         multiselect = false

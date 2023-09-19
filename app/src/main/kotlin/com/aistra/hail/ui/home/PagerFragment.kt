@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuHost
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -32,6 +32,7 @@ import com.aistra.hail.utils.HShortcuts
 import com.aistra.hail.utils.HUI
 import com.aistra.hail.utils.NameComparator
 import com.aistra.hail.work.HWork
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -54,6 +55,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
         get() = (parentFragment as HomeFragment).multiselect
     private val selectedList get() = (parentFragment as HomeFragment).selectedList
     private val tabs: TabLayout get() = (parentFragment as HomeFragment).binding.tabs
+    private val appbar: AppBarLayout get() = (parentFragment as HomeFragment).binding.appbar
+    private val toolbar: Toolbar get() = (parentFragment as HomeFragment).binding.toolbar
     private val adapter get() = (parentFragment as HomeFragment).binding.pager.adapter as HomeAdapter
     private val tag: Pair<String, Int> get() = HailData.tags[tabs.selectedTabPosition]
     override fun onCreateView(
@@ -61,9 +64,11 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val menuHost = requireActivity() as MenuHost
-        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         _binding = FragmentPagerBinding.inflate(inflater, container, false)
+
+        setupToolbar(toolbar, Lifecycle.State.RESUMED)
+
         pagerAdapter = PagerAdapter(selectedList).apply {
             onItemClickListener = this@PagerFragment
             onItemLongClickListener = this@PagerFragment
@@ -99,10 +104,12 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
         super.onResume()
         updateCurrentList()
         updateBarTitle()
+        appbar.setLiftOnScrollTargetView(binding.recyclerView)
         tabs.getTabAt(tabs.selectedTabPosition)?.view?.setOnLongClickListener {
             if (isResumed) showTagDialog()
             true
         }
+
         activity.fab.setOnClickListener {
             setListFrozen(true, pagerAdapter.currentList.filterNot { it.whitelisted })
         }

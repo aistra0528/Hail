@@ -2,4 +2,6 @@
     <integer name="home_span">8</integer>
     <integer name="home_span_compact">10</integer>
     <integer name="apps_span">2</integer>
+    <!-- Insets -->
+    <integer name="main_content_consume_insets">8388611</integer> <!-- start -->
 </resources>

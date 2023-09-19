@@ -9,31 +9,14 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:fitsSystemWindowsInsets="top|start|end"
         app:liftOnScrollTargetViewId="@id/recycler_view">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_fitsSystemWindowsInsets="top|start|end" />
+            android:layout_height="wrap_content" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable" />
     </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -29,6 +29,9 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
+
+        setupToolbar(binding.toolbar)
+
         binding.descVersion.text = HailData.VERSION
         aboutViewModel = ViewModelProvider(this)[AboutViewModel::class.java]
         aboutViewModel.time.observe(viewLifecycleOwner) {
@@ -87,6 +90,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                     0 -> if (HUI.openLink(HailData.URL_ALIPAY_API).not()) {
                         HUI.openLink(HailData.URL_ALIPAY)
                     }
+
                     1 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setView(ShapeableImageView(activity).apply {
                             val padding = resources.getDimensionPixelOffset(R.dimen.dialog_padding)
@@ -98,11 +102,13 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                                 startActivity(it)
                             } ?: HUI.showToast(R.string.app_not_installed)
                         }.setNegativeButton(android.R.string.cancel, null).show()
+
                     2 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setMessage(R.string.donate_bilibili_msg)
                         .setPositiveButton(R.string.donate_bilibili_space) { _, _ ->
                             HUI.openLink(HailData.URL_BILIBILI)
                         }.setNegativeButton(R.string.donate_bilibili_cancel, null).show()
+
                     3 -> HUI.openLink(HailData.URL_LIBERAPAY)
                     4 -> HUI.openLink(HailData.URL_PAYPAL)
                 }

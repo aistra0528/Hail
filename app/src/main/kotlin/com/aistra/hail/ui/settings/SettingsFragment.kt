@@ -7,22 +7,28 @@ import android.provider.Settings
 import android.view.*
 import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
+import com.aistra.hail.databinding.FragmentSettingsBinding
 import com.aistra.hail.ui.main.MainActivity
 import com.aistra.hail.utils.*
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.rosan.dhizuku.api.Dhizuku
@@ -39,12 +45,31 @@ import rikka.shizuku.Shizuku
 
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
     MenuProvider {
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val menuHost = requireActivity() as MenuHost
-        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        binding.toolbar.title = findNavController().currentDestination?.label
+        binding.toolbar.addMenuProvider(this, viewLifecycleOwner)
+        val view = super.onCreateView(inflater, binding.root, savedInstanceState)
+        val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        layoutParams.behavior = AppBarLayout.ScrollingViewBehavior(activity, null)
+        binding.root.addView(view, layoutParams)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+        ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(
+                right = insets.right,
+                left = insets.left,
+                bottom = insets.bottom,
+            )
+            WindowInsetsCompat.CONSUMED
+        }
+
+        return binding.root
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

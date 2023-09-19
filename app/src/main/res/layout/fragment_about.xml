@@ -1,345 +1,367 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    app:consumeSystemWindowsInsets="@integer/main_content_consume_insets">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:fitsSystemWindowsInsets="top|start|end"
+        app:liftOnScrollTargetViewId="@id/scroll_view">
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Material3.CardView.Filled"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/header_height"
-            android:layout_marginStart="@dimen/container_margin"
-            android:layout_marginTop="@dimen/container_margin"
-            android:layout_marginEnd="@dimen/container_margin">
+            android:layout_height="wrap_content" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <LinearLayout
-                android:id="@+id/actionLibre"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingVertical="@dimen/control_padding">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:fitsSystemWindowsInsets="bottom|start|end"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:shapeAppearance="@style/CircularStyle"
-                    app:srcCompat="@mipmap/ic_launcher" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/control_margin"
-                    android:layout_marginBottom="@dimen/control_margin"
-                    android:text="@string/app_name"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_slogan" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/container_margin"
-            android:layout_marginTop="@dimen/container_margin"
-            android:layout_marginEnd="@dimen/container_margin">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Filled"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="@dimen/header_height"
+                android:layout_marginStart="@dimen/container_margin"
+                android:layout_marginTop="@dimen/container_margin"
+                android:layout_marginEnd="@dimen/container_margin">
 
                 <LinearLayout
-                    android:id="@+id/action_version"
+                    android:id="@+id/actionLibre"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
                     android:paddingVertical="@dimen/control_padding">
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:padding="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_outline_update"
-                        app:tint="?colorOnSurface" />
+                        app:shapeAppearance="@style/CircularStyle"
+                        app:srcCompat="@mipmap/ic_launcher" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/control_margin"
+                        android:layout_marginBottom="@dimen/control_margin"
+                        android:text="@string/app_name"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_slogan" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/container_margin"
+                android:layout_marginTop="@dimen/container_margin"
+                android:layout_marginEnd="@dimen/container_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/action_version"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:padding="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_outline_update"
+                            app:tint="?colorOnSurface" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_version"
+                                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/desc_version"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/action_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:padding="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_outline_download"
+                            app:tint="?colorOnSurface" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_time"
+                                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/desc_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/container_margin"
+                android:layout_marginTop="@dimen/container_margin"
+                android:layout_marginEnd="@dimen/container_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/action_telegram"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:paddingStart="@dimen/control_padding"
+                            android:paddingEnd="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_baseline_send"
+                            app:tint="?colorOnSurface" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/label_version"
+                            android:text="@string/action_telegram"
                             android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/desc_version"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/action_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/control_padding">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:padding="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_outline_download"
-                        app:tint="?colorOnSurface" />
 
                     <LinearLayout
+                        android:id="@+id/action_qq"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:paddingStart="@dimen/control_padding"
+                            android:paddingEnd="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_outline_group"
+                            app:tint="?colorOnSurface" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/label_time"
+                            android:text="@string/action_qq"
                             android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/action_fdroid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:paddingStart="@dimen/control_padding"
+                            android:paddingEnd="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_outline_local_mall"
+                            app:tint="?colorOnSurface" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/desc_time"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_fdroid"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/action_donate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:paddingStart="@dimen/control_padding"
+                            android:paddingEnd="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_outline_giftcard"
+                            app:tint="?colorOnSurface" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_donate"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/container_margin"
-            android:layout_marginTop="@dimen/container_margin"
-            android:layout_marginEnd="@dimen/container_margin">
-
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="@dimen/container_margin">
 
                 <LinearLayout
-                    android:id="@+id/action_telegram"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/control_padding">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/action_github"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:paddingStart="@dimen/control_padding"
-                        android:paddingEnd="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_baseline_send"
-                        app:tint="?colorOnSurface" />
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:paddingStart="@dimen/control_padding"
+                            android:paddingEnd="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_outline_code"
+                            app:tint="?colorOnSurface" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_github"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/action_translate"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/action_telegram"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:paddingStart="@dimen/control_padding"
+                            android:paddingEnd="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_outline_translate"
+                            app:tint="?colorOnSurface" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_translate"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/action_licenses"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/control_padding">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/container_margin"
+                            android:contentDescription="@null"
+                            android:paddingStart="@dimen/control_padding"
+                            android:paddingEnd="@dimen/control_padding"
+                            app:srcCompat="@drawable/ic_outline_description"
+                            app:tint="?colorOnSurface" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_licenses"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                    </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/action_qq"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/control_padding">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:paddingStart="@dimen/control_padding"
-                        android:paddingEnd="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_outline_group"
-                        app:tint="?colorOnSurface" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_qq"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/action_fdroid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/control_padding">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:paddingStart="@dimen/control_padding"
-                        android:paddingEnd="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_outline_local_mall"
-                        app:tint="?colorOnSurface" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_fdroid"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/action_donate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/control_padding">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:paddingStart="@dimen/control_padding"
-                        android:paddingEnd="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_outline_giftcard"
-                        app:tint="?colorOnSurface" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_donate"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/container_margin">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/action_github"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/control_padding">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:paddingStart="@dimen/control_padding"
-                        android:paddingEnd="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_outline_code"
-                        app:tint="?colorOnSurface" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_github"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/action_translate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/control_padding">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:paddingStart="@dimen/control_padding"
-                        android:paddingEnd="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_outline_translate"
-                        app:tint="?colorOnSurface" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_translate"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/action_licenses"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/control_padding">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/container_margin"
-                        android:contentDescription="@null"
-                        android:paddingStart="@dimen/control_padding"
-                        android:paddingEnd="@dimen/control_padding"
-                        app:srcCompat="@drawable/ic_outline_description"
-                        app:tint="?colorOnSurface" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_licenses"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

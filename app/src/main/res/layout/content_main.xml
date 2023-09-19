@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
     <fragment
@@ -15,5 +14,6 @@
         app:defaultNavHost="true"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation"
+        tools:layout="@layout/fragment_home"
         tools:ignore="FragmentTagUsage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
