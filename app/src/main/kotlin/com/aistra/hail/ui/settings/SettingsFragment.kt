@@ -44,6 +44,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        (requireActivity() as MainActivity).appbar.liftOnScrollTargetViewId = R.id.recycler_view
+
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

@@ -99,6 +99,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
         super.onResume()
         updateCurrentList()
         updateBarTitle()
+        activity.appbar.setLiftOnScrollTargetView(binding.recyclerView)
         tabs.getTabAt(tabs.selectedTabPosition)?.view?.setOnLongClickListener {
             if (isResumed) showTagDialog()
             true

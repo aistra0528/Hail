@@ -43,6 +43,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         return SwipeRefreshLayout(activity).apply {
             refreshLayout = this
             addView(RecyclerView(activity).apply {
+                activity.appbar.setLiftOnScrollTargetView(this)
+
                 layoutManager =
                     GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
                 adapter = AppsAdapter.apply {
