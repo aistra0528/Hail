@@ -137,6 +137,8 @@
     <string name="action_terminal">终端</string>
     <string name="mode_dhizuku_hide">Dhizuku - 隐藏</string>
     <string name="mode_dhizuku_suspend">Dhizuku - 暂停</string>
+    <string name="mode_island_hide">炼妖壶 - 隐藏</string>
+    <string name="mode_island_suspend">炼妖壶 - 暂停</string>
     <string name="mode_su_hide">超级用户 - 隐藏</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">跳过</string>

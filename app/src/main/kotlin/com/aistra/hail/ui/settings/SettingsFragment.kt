@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.*
 import android.widget.FrameLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.MenuHost
@@ -39,6 +40,7 @@ import rikka.shizuku.Shizuku
 
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
     MenuProvider {
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -271,6 +273,27 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             }.getOrElse {
                 HLog.e(it)
                 HUI.showToast(R.string.shizuku_missing)
+                false
+            }
+
+            mode.startsWith(HailData.ISLAND) -> return runCatching{
+                when{
+                    mode == HailData.MODE_ISLAND_HIDE && HIsland.freezePermissionGranted() -> true
+                    mode == HailData.MODE_ISLAND_SUSPEND && HIsland.suspendPermissionGranted() -> true
+                    else -> {
+                        lifecycleScope.launch {
+                            requestPermissionLauncher.launch(if(mode == HailData.MODE_ISLAND_HIDE)
+                                HIsland.PERMISSION_FREEZE_PACKAGE
+                            else
+                                HIsland.PERMISSION_SUSPEND_PACKAGE
+                            )
+                        }
+                        false
+                    }
+                }
+            }.getOrElse {
+                HLog.e(it)
+                HUI.showToast(R.string.permission_denied)
                 false
             }
         }
