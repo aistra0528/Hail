@@ -29,6 +29,8 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
+        activity.appbar.setLiftOnScrollTargetView(binding.root)
+
         binding.descVersion.text = HailData.VERSION
         aboutViewModel = ViewModelProvider(this)[AboutViewModel::class.java]
         aboutViewModel.time.observe(viewLifecycleOwner) {
