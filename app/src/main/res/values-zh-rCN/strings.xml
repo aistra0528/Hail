@@ -102,8 +102,8 @@
     <string name="auto_freeze">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
     <string name="auto_freeze_after_lock">锁屏后</string>
-    <string name="skip_while_charging">充电时跳过</string>
-    <string name="skip_foreground_app">跳过前台应用</string>
+    <string name="skip_while_charging">充电时例外</string>
+    <string name="skip_foreground_app">保留前台应用</string>
     <string name="title_customize">自定义</string>
     <string name="grayscale_icon">灰度图标</string>
     <string name="compact_icon">紧凑图标</string>
@@ -119,7 +119,7 @@
     <string name="synthesize_adaptive_icons">合成自适应图标</string>
     <string name="action_export_current">导出当前</string>
     <string name="action_export_all">全部导出</string>
-    <string name="skip_notifying_app">跳过通知中应用</string>
+    <string name="skip_notifying_app">保留通知中应用</string>
     <string name="auto_freeze_delay">冻结延时（分钟）</string>
     <string name="mode_owner_suspend">设备所有者 - 暂停</string>
     <string name="mode_su_suspend">超级用户 - 暂停</string>
