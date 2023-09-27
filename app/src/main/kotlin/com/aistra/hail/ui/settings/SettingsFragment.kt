@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
@@ -46,6 +47,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        (requireActivity() as MainActivity).appbar.liftOnScrollTargetViewId = R.id.recycler_view
+
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -195,6 +198,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
+        // Show/hide terminal menu.
+        activity?.invalidateOptionsMenu()
         val mode = newValue as String
         when {
             mode.startsWith(HailData.OWNER) -> if (!HPolicy.isDeviceOwnerActive) {
@@ -297,6 +302,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 false
             }
         }
+
         return true
     }
 
@@ -344,6 +350,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_settings, menu)
+    }
+
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
         if (HailData.workingMode.startsWith(HailData.SU) || HailData.workingMode.startsWith(HailData.SHIZUKU))
             menu.findItem(R.id.action_terminal).isVisible = true
         else if (HPolicy.isDeviceOwnerActive)
