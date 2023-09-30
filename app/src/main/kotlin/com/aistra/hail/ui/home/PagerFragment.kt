@@ -1,5 +1,6 @@
 package com.aistra.hail.ui.home
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -12,7 +13,10 @@ import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -87,6 +91,17 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                     }
                 }
             })
+            val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            ViewCompat.setOnApplyWindowInsetsListener(this) { v, windowInsets ->
+                val insets =
+                    windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+                v.updatePadding(
+                    left = if (isLandscape) 0 else insets.left,
+                    right = insets.right,
+                    bottom = if (isLandscape) insets.bottom else 0
+                )
+                windowInsets
+            }
         }
         binding.refresh.setOnRefreshListener {
             updateCurrentList()

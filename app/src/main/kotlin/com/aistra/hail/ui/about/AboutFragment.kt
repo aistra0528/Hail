@@ -1,5 +1,6 @@
 package com.aistra.hail.ui.about
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
@@ -7,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
@@ -52,6 +56,17 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         binding.actionGithub.setOnClickListener(this)
         binding.actionTranslate.setOnClickListener(this)
         binding.actionLicenses.setOnClickListener(this)
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        ViewCompat.setOnApplyWindowInsetsListener(binding.scrollView) { v, windowInsets ->
+            val insets =
+                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            v.updatePadding(
+                left = if (isLandscape) 0 else insets.left,
+                right = insets.right,
+                bottom = if (isLandscape) insets.bottom else 0
+            )
+            windowInsets
+        }
         return binding.root
     }
 

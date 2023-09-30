@@ -1,6 +1,7 @@
 package com.aistra.hail.ui.apps
 
 import android.content.pm.ApplicationInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -14,6 +15,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -41,6 +45,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return SwipeRefreshLayout(activity).apply {
+            id = R.id.scrollView
             refreshLayout = this
             addView(RecyclerView(activity).apply {
                 activity.appbar.setLiftOnScrollTargetView(this)
@@ -52,8 +57,21 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                     onItemLongClickListener = this@AppsFragment
                     onItemCheckedChangeListener = this@AppsFragment
                 }
+                val isLandscape =
+                    resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                ViewCompat.setOnApplyWindowInsetsListener(this) { v, windowInsets ->
+                    val insets =
+                        windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+                    v.updatePadding(
+                        left = if (isLandscape) 0 else insets.left,
+                        right = insets.right,
+                        bottom = if (isLandscape) insets.bottom else 0
+                    )
+                    windowInsets
+                }
             })
             setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
+
         }
     }
 

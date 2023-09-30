@@ -1,5 +1,6 @@
 package com.aistra.hail.ui.main
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
@@ -80,23 +81,30 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav?.setupWithNavController(navController)
         navRail?.setupWithNavController(navController)
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
         ViewCompat.setOnApplyWindowInsetsListener(appBarMain.appBarLayout) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val cutoutInsets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(top = insets.top, right = insets.right + cutoutInsets.right)
+            val insets =
+                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            view.updatePadding(
+                top = insets.top,
+                right = insets.right,
+                left = if (isLandscape) 0 else insets.left
+            )
             windowInsets
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(appBarMain.contentMain.root) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val cutoutInsets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(right = insets.right + cutoutInsets.right)
-            windowInsets
-        }
+        /* ViewCompat.setOnApplyWindowInsetsListener(appBarMain.contentMain.root) { view, windowInsets ->
+             *//* val insets =
+                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            view.updatePadding(right = insets.right, left = insets.left)
+            windowInsets *//*
+        WindowInsetsCompat.CONSUMED
+        } */
 
         if (bottomNav != null) ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val insets =
+                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
             view.updatePadding(
                 left = insets.left, right = insets.right, bottom = insets.bottom
             )
