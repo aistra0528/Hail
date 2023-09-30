@@ -11,7 +11,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -72,7 +72,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setSupportActionBar(appBarMain.toolbar)
         fab = appBarMain.fab
         appbar = appBarMain.appBarLayout
-        navController = findNavController(R.id.nav_host_fragment)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
         navController.addOnDestinationChangedListener(this@MainActivity)
         appBarConfiguration = AppBarConfiguration.Builder(
             R.id.nav_home, R.id.nav_apps, R.id.nav_settings, R.id.nav_about
