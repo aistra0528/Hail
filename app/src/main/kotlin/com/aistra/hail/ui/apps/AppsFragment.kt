@@ -45,11 +45,10 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return SwipeRefreshLayout(activity).apply {
-            id = R.id.scrollView
             refreshLayout = this
             addView(RecyclerView(activity).apply {
                 activity.appbar.setLiftOnScrollTargetView(this)
-
+                id = R.id.recycler_view
                 layoutManager =
                     GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
                 adapter = AppsAdapter.apply {
