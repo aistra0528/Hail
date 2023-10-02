@@ -20,6 +20,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
 import com.google.android.material.appbar.AppBarLayout
@@ -81,35 +83,17 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav?.setupWithNavController(navController)
         navRail?.setupWithNavController(navController)
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-        ViewCompat.setOnApplyWindowInsetsListener(appBarMain.appBarLayout) { view, windowInsets ->
-            val insets =
-                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(
-                top = insets.top,
-                right = insets.right,
-                left = if (isLandscape) 0 else insets.left
-            )
-            windowInsets
-        }
-
-        /* ViewCompat.setOnApplyWindowInsetsListener(appBarMain.contentMain.root) { view, windowInsets ->
-             *//* val insets =
-                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(right = insets.right, left = insets.left)
-            windowInsets *//*
-        WindowInsetsCompat.CONSUMED
-        } */
-
-        if (bottomNav != null) ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, windowInsets ->
-            val insets =
-                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(
-                left = insets.left, right = insets.right, bottom = insets.bottom
-            )
-            windowInsets
-        }
+        appBarMain.appBarLayout.applyInsetsPadding(
+            start = !isLandscape,
+            end = true,
+            top = true
+        )
+        bottomNav?.applyInsetsPadding(
+            start = true,
+            end = true,
+            bottom = true
+        )
     }
 
     private fun showGuide() {

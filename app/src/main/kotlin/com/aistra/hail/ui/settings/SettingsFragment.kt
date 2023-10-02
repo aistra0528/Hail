@@ -2,7 +2,6 @@ package com.aistra.hail.ui.settings
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
 import android.view.*
@@ -11,9 +10,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
@@ -26,6 +22,8 @@ import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainActivity
 import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -49,20 +47,17 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        (requireActivity() as MainActivity).appbar.liftOnScrollTargetViewId = R.id.recycler_view
+        val activity = (requireActivity() as MainActivity)
+        activity.appbar.liftOnScrollTargetViewId = R.id.recycler_view
         val view = super.onCreateView(inflater, container, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { v, windowInsets ->
-            val insets =
-                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
-            v.updatePadding(
-                left = if (isLandscape) 0 else insets.left,
-                right = insets.right,
-                bottom = if (isLandscape) insets.bottom else 0
-            )
-            windowInsets
-        }
+
+        recyclerView.applyInsetsPadding(
+            start = !activity.isLandscape,
+            end = true,
+            bottom = activity.isLandscape
+        )
+
         return view
     }
 
@@ -76,8 +71,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             } else true
         }
         findPreference<Preference>(HailData.SKIP_NOTIFYING_APP)?.setOnPreferenceChangeListener { _, value ->
-            val isGranted = NotificationManagerCompat.getEnabledListenerPackages(requireContext())
-                .contains(requireContext().packageName)
+            val isGranted =
+                NotificationManagerCompat.getEnabledListenerPackages(requireContext())
+                    .contains(requireContext().packageName)
             if (value == true && !isGranted) {
                 app.setAutoFreezeServiceEnabled(true)
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
@@ -122,7 +118,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             return
         }
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.icon_pack)
-            .setItems(list.map { it.loadLabel(app.packageManager) }.toTypedArray()) { _, which ->
+            .setItems(list.map { it.loadLabel(app.packageManager) }
+                .toTypedArray()) { _, which ->
                 if (HailData.iconPack == list[which].packageName) return@setItems
                 HailData.setIconPack(list[which].packageName)
                 AppIconCache.clear()
@@ -222,7 +219,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     .setPositiveButton(android.R.string.ok, null)
                     .setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(HPolicy.ADB_COMMAND) }
                     .show()
-                    .findViewById<MaterialTextView>(android.R.id.message)?.setTextIsSelectable(true)
+                    .findViewById<MaterialTextView>(android.R.id.message)
+                    ?.setTextIsSelectable(true)
                 return false
             }
 
@@ -320,7 +318,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         when (item.itemId) {
             R.id.action_terminal -> {
                 val input =
-                    DialogInputBinding.inflate(layoutInflater, FrameLayout(requireActivity()), true)
+                    DialogInputBinding.inflate(
+                        layoutInflater,
+                        FrameLayout(requireActivity()),
+                        true
+                    )
                 input.inputLayout.setHint(R.string.action_terminal)
                 input.editText.run {
                     setSingleLine()
@@ -347,7 +349,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     override fun onPrepareMenu(menu: Menu) {
         super.onPrepareMenu(menu)
-        if (HailData.workingMode.startsWith(HailData.SU) || HailData.workingMode.startsWith(HailData.SHIZUKU))
+        if (HailData.workingMode.startsWith(HailData.SU) || HailData.workingMode.startsWith(
+                HailData.SHIZUKU
+            )
+        )
             menu.findItem(R.id.action_terminal).isVisible = true
         else if (HPolicy.isDeviceOwnerActive)
             menu.findItem(R.id.action_remove_owner).isVisible = true

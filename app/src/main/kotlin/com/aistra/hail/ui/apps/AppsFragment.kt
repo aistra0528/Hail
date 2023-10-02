@@ -1,7 +1,6 @@
 package com.aistra.hail.ui.apps
 
 import android.content.pm.ApplicationInfo
-import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -15,9 +14,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,6 +23,8 @@ import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HFiles
 import com.aistra.hail.utils.HPackages
@@ -56,18 +54,12 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                     onItemLongClickListener = this@AppsFragment
                     onItemCheckedChangeListener = this@AppsFragment
                 }
-                val isLandscape =
-                    resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-                ViewCompat.setOnApplyWindowInsetsListener(this) { v, windowInsets ->
-                    val insets =
-                        windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
-                    v.updatePadding(
-                        left = if (isLandscape) 0 else insets.left,
-                        right = insets.right,
-                        bottom = if (isLandscape) insets.bottom else 0
-                    )
-                    windowInsets
-                }
+
+                this.applyInsetsPadding(
+                    start = !activity.isLandscape,
+                    end = true,
+                    bottom = activity.isLandscape
+                )
             })
             setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
 

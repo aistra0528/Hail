@@ -17,6 +17,8 @@ import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentAboutBinding
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -56,17 +58,12 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         binding.actionGithub.setOnClickListener(this)
         binding.actionTranslate.setOnClickListener(this)
         binding.actionLicenses.setOnClickListener(this)
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        ViewCompat.setOnApplyWindowInsetsListener(binding.scrollView) { v, windowInsets ->
-            val insets =
-                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
-            v.updatePadding(
-                left = if (isLandscape) 0 else insets.left,
-                right = insets.right,
-                bottom = if (isLandscape) insets.bottom else 0
-            )
-            windowInsets
-        }
+
+        binding.scrollView.applyInsetsPadding(
+            start = !activity.isLandscape,
+            end = true,
+            bottom = activity.isLandscape
+        )
         return binding.root
     }
 
