@@ -7,6 +7,9 @@ import androidx.core.view.updatePaddingRelative
 
 val View.isRtl get() = layoutDirection == View.LAYOUT_DIRECTION_RTL
 
+/**
+ * Very easy to apply insets to a view.
+ * */
 fun View.applyInsetsPadding(
     start: Boolean = false,
     end: Boolean = false,
