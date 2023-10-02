@@ -24,7 +24,7 @@
     <string name="action_import_app">استيراد التطبيق</string>
     <string name="action_import_clipboard">استيراد من الحافظة</string>
     <string name="shizuku_missing">شيزوكو مفقود :(</string>
-    <string name="msg_exported">مصدّر: %s</string>
+    <string name="msg_exported">تم تصدير: %s</string>
     <string name="msg_text_copied">منسوخ: %s</string>
     <string name="donate_liberapay">ليبراباي</string>
     <string name="skip_foreground_app">تخطي التطبيق الأمامي</string>
@@ -57,7 +57,7 @@
     </plurals>
     <string name="action_export_clipboard">تصدير إلى الحافظة</string>
     <string name="action_pin">تثبيت</string>
-    <string name="msg_imported">مستور: %s</string>
+    <string name="msg_imported">تم استيراد: %s</string>
     <string name="action_biometric">تسجيل الدخول البيومتري</string>
     <string name="action_export_current">تصدير الحالية</string>
     <string name="action_freeze">تجميد</string>
@@ -136,15 +136,16 @@
     <string name="title_apps">التطبيقات</string>
     <string name="msg_network_error">غير قادر على الاتصال بالخادم. يرجى إعادة المحاولة لاحقا.</string>
     <string name="title_set_owner">تحديد مالك الجهاز</string>
-    <string name="action_freeze_current">المجيد الحاليا</string>
+    <string name="action_freeze_current">تجميد الحالية</string>
     <string name="msg_extract_apk">مستخرج إلى: %s</string>
     <string name="action_freeze_non_whitelisted">تجميد باستشناء القائمة البيضاء</string>
-    <string name="action_unfreeze_current">إلغاء تجميد الحالي</string>
-    <string name="dynamic_shortcut_action">عمل الاختصار الديناميكي</string>
+    <string name="action_unfreeze_current">إلغاء تجميد الحالية</string>
+    <string name="dynamic_shortcut_action">عمل الإختصار الديناميكي</string>
     <string name="auto_freeze_delay">تأخير التجميد (بالدقائق)</string>
     <string name="action_freeze_all">تجميد الكل</string>
     <string name="skip_notifying_app">تخطي تطبيق الإخطار</string>
     <string name="filter_unfrozen_apps">غير مجمد</string>
     <string name="donate_wechat_scan">مسح ضوئي</string>
     <string name="action_remove_whitelist">إزالة من القائمة البيضاء</string>
+    <string name="action_skip">تخطي</string>
 </resources>
