@@ -55,6 +55,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                     onItemCheckedChangeListener = this@AppsFragment
                 }
 
+                clipToPadding = false
                 this.applyInsetsPadding(
                     start = !activity.isLandscape,
                     end = true,
