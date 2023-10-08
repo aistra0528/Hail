@@ -31,6 +31,7 @@ import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HShortcuts
 import com.aistra.hail.utils.HUI
 import com.aistra.hail.utils.NameComparator
+import com.aistra.hail.utils.PinyinSearch
 import com.aistra.hail.work.HWork
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -115,7 +116,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
 
     private fun updateCurrentList() = HailData.checkedList.filter {
         if (query.isEmpty()) it.tagId == tag.second
-        else it.packageName.contains(query, true) || it.name.contains(query, true)
+        else (it.packageName.contains(query, true)
+                || it.name.contains(query, true)
+                || PinyinSearch.searchPinyinAll(it.name.toString(), query))
     }.sortedWith(NameComparator).let {
         binding.empty.isVisible = it.isEmpty()
         pagerAdapter.submitList(it)
