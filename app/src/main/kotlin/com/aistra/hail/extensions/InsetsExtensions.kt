@@ -3,7 +3,6 @@ package com.aistra.hail.extensions
 import android.content.Context
 import androidx.core.graphics.Insets
 
-
 fun Insets.getStart(context: Context): Int {
     return if (context.isRtl) right else left
 }

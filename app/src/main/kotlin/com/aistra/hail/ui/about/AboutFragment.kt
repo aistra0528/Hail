@@ -1,6 +1,5 @@
 package com.aistra.hail.ui.about
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
@@ -8,9 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
