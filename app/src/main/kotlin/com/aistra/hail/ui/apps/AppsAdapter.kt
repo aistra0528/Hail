@@ -18,6 +18,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.AppIconCache
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.NameComparator
+import com.aistra.hail.utils.PinyinSearch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -58,8 +59,10 @@ object AppsAdapter :
                         && ((HailData.filterFrozenApps && AppManager.isAppFrozen(it.packageName))
                         || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName)))
 
-                        && (query.isNullOrEmpty() || it.packageName.contains(query, true)
-                        || it.loadLabel(pm).toString().contains(query, true))
+                        && (query.isNullOrEmpty()
+                        || it.packageName.contains(query, true)
+                        || it.loadLabel(pm).toString().contains(query, true)
+                        || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
             }.run {
                 when (HailData.sortBy) {
                     HailData.SORT_INSTALL -> sortedBy {
