@@ -1,5 +1,6 @@
 package com.aistra.hail.ui.main
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
@@ -19,6 +20,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
 import com.google.android.material.appbar.AppBarLayout
@@ -84,27 +87,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         bottomNav?.setupWithNavController(navController)
         navRail?.setupWithNavController(navController)
 
-        ViewCompat.setOnApplyWindowInsetsListener(appBarMain.appBarLayout) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val cutoutInsets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(top = insets.top, right = insets.right + cutoutInsets.right)
-            windowInsets
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(appBarMain.contentMain.root) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val cutoutInsets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.updatePadding(right = insets.right + cutoutInsets.right)
-            windowInsets
-        }
-
-        if (bottomNav != null) ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(
-                left = insets.left, right = insets.right, bottom = insets.bottom
-            )
-            windowInsets
-        }
+        appBarMain.appBarLayout.applyInsetsPadding(
+            start = !isLandscape,
+            end = true,
+            top = true
+        )
+        bottomNav?.applyInsetsPadding(
+            start = true,
+            end = true,
+            bottom = true
+        )
     }
 
     private fun showGuide() {

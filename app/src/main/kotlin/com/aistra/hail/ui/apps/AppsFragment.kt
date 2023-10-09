@@ -23,6 +23,8 @@ import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HFiles
 import com.aistra.hail.utils.HPackages
@@ -44,7 +46,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             refreshLayout = this
             addView(RecyclerView(activity).apply {
                 activity.appbar.setLiftOnScrollTargetView(this)
-
+                id = R.id.recycler_view
                 layoutManager =
                     GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
                 adapter = AppsAdapter.apply {
@@ -52,8 +54,16 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                     onItemLongClickListener = this@AppsFragment
                     onItemCheckedChangeListener = this@AppsFragment
                 }
+
+                clipToPadding = false
+                this.applyInsetsPadding(
+                    start = !activity.isLandscape,
+                    end = true,
+                    bottom = activity.isLandscape
+                )
             })
             setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
+
         }
     }
 

@@ -8,6 +8,8 @@ import androidx.core.view.isVisible
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailData.tags
 import com.aistra.hail.databinding.FragmentHomeBinding
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -26,6 +28,7 @@ class HomeFragment : MainFragment() {
         TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = tags[position].first
         }.attach()
+        binding.tabs.applyInsetsPadding(start = !activity.isLandscape, end = true)
         return binding.root
     }
 

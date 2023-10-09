@@ -1,5 +1,6 @@
 package com.aistra.hail.ui.about
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
@@ -7,12 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentAboutBinding
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -52,6 +58,12 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         binding.actionGithub.setOnClickListener(this)
         binding.actionTranslate.setOnClickListener(this)
         binding.actionLicenses.setOnClickListener(this)
+
+        binding.scrollView.applyInsetsPadding(
+            start = !activity.isLandscape,
+            end = true,
+            bottom = activity.isLandscape
+        )
         return binding.root
     }
 
