@@ -87,21 +87,6 @@ object HShizuku {
         return HPackages.isAppDisabled(packageName) == disabled
     }
 
-    fun isAppHidden(packageName: String): Boolean {
-        HPackages.getApplicationInfoOrNull(packageName) ?: return false
-        return runCatching {
-            val pm = asInterface("android.content.pm.IPackageManager", "package")
-            (if (HTarget.P) HiddenApiBypass.invoke(
-                pm::class.java, pm, "getApplicationHiddenSettingAsUser", packageName, userId
-            ) else pm::class.java.getMethod(
-                "getApplicationHiddenSettingAsUser", String::class.java, Int::class.java
-            ).invoke(pm, packageName, userId)) as Boolean
-        }.getOrElse {
-            HLog.e(it)
-            false
-        }
-    }
-
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean {
         HPackages.getApplicationInfoOrNull(packageName) ?: return false
         if (hidden) forceStopApp(packageName)
@@ -137,6 +122,7 @@ object HShizuku {
                     callerPackage,
                     userId
                 )
+
                 HTarget.P -> HiddenApiBypass.invoke(
                     pm::class.java,
                     pm,
@@ -149,12 +135,14 @@ object HShizuku {
                     callerPackage,
                     userId
                 )
+
                 HTarget.N -> pm::class.java.getMethod(
                     "setPackagesSuspendedAsUser",
                     Array<String>::class.java,
                     Boolean::class.java,
                     Int::class.java
                 ).invoke(pm, arrayOf(packageName), suspended, userId)
+
                 else -> return false
             } as Array<*>).isEmpty()
         }.getOrElse {

@@ -3,7 +3,6 @@ package com.aistra.hail.utils
 import net.sourceforge.pinyin4j.PinyinHelper
 import java.util.Locale
 
-
 /**中文拼音搜索类*/
 object PinyinSearch {
     /**
@@ -13,7 +12,7 @@ object PinyinSearch {
      * @param textInput 用户输入
      * */
     fun searchPinyinAll(textToSearch: String?, textInput: String): Boolean {
-        if (textToSearch==null){
+        if (textToSearch == null) {
             return false
         }
         val language = Locale.getDefault().language
@@ -28,7 +27,7 @@ object PinyinSearch {
      * 根据首字母进行搜索
      * 比如搜索”计算器“ 只需要输入 ”jsq“
      * */
-    fun searchCap(appName: String, pinyinCap: String): Boolean {
+    private fun searchCap(appName: String, pinyinCap: String): Boolean {
         if (pinyinCap.length < 80) {
             for (index in getNameStringList(appName)) {
                 if (index.contains(pinyinCap, true)) {
@@ -43,9 +42,9 @@ object PinyinSearch {
 
     /**
      * 根据全部拼音进行搜索
-     * 比如搜索 计算器 只需要输入 "jisuanqi"
+     * 比如搜索”计算器“ 只需要输入 "jisuanqi"
      * */
-    fun searchAllSpell(appName: String, pinyinAll: String): Boolean {
+    private fun searchAllSpell(appName: String, pinyinAll: String): Boolean {
         if (pinyinAll.length < 30) {
             for (index in getNameStringPinyinAll(appName)) {
                 if (index.contains(pinyinAll, true)) {
@@ -58,19 +57,19 @@ object PinyinSearch {
         }
     }
 
-    fun getNameStringPinyinAll(target: String): ArrayList<String> {
+    private fun getNameStringPinyinAll(target: String): ArrayList<String> {
         val res = ArrayList<String>()
         getNameCapListPinyinAll(Array(target.length) { "" }, 0, target, res)
         return res
     }
 
-    fun getNameStringList(target: String): ArrayList<String> {
+    private fun getNameStringList(target: String): ArrayList<String> {
         val res = ArrayList<String>()
         getNameCapList(CharArray(target.length), 0, target, res)
         return res
     }
 
-    fun getNameCapList(
+    private fun getNameCapList(
         capList: CharArray, currentIndex: Int, target: String, result: ArrayList<String>
     ) {
         if (currentIndex == target.length - 1) {
@@ -106,7 +105,7 @@ object PinyinSearch {
         }
     }
 
-    fun getNameCapListPinyinAll(
+    private fun getNameCapListPinyinAll(
         fullList: Array<String>, currentIndex: Int, target: String, result: ArrayList<String>
     ) {
         if (currentIndex == target.length - 1) {
