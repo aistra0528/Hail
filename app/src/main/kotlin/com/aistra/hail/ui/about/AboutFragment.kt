@@ -1,17 +1,14 @@
 package com.aistra.hail.ui.about
 
 import android.os.Bundle
-import android.text.InputFilter
 import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.lifecycle.ViewModelProvider
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
-import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentAboutBinding
 import com.aistra.hail.extensions.applyInsetsPadding
 import com.aistra.hail.extensions.isLandscape
@@ -19,7 +16,6 @@ import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textview.MaterialTextView
 
 class AboutFragment : MainFragment(), View.OnClickListener {
@@ -37,12 +33,6 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         aboutViewModel = ViewModelProvider(this)[AboutViewModel::class.java]
         aboutViewModel.time.observe(viewLifecycleOwner) {
             binding.descTime.text = it
-        }
-        aboutViewModel.snack.observe(viewLifecycleOwner) {
-            if (it != 0) {
-                Snackbar.make(activity.fab, it, Snackbar.LENGTH_LONG).show()
-                aboutViewModel.snack.value = 0
-            }
         }
         binding.actionLibre.setOnClickListener(this)
         binding.actionVersion.setOnClickListener(this)
@@ -67,7 +57,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         when (view) {
             binding.actionLibre -> HUI.openLink(HailData.URL_WHY_FREE_SOFTWARE)
             binding.actionVersion -> HUI.openLink(HailData.URL_RELEASES)
-            binding.actionTime -> onRedeem()
+            binding.actionTime -> HUI.showToast("\uD83E\uDD73")
             binding.actionTelegram -> HUI.openLink(HailData.URL_TELEGRAM)
             binding.actionQq -> HUI.openLink(HailData.URL_QQ)
             binding.actionFdroid -> HUI.openLink(HailData.URL_FDROID)
@@ -97,6 +87,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                     0 -> if (HUI.openLink(HailData.URL_ALIPAY_API).not()) {
                         HUI.openLink(HailData.URL_ALIPAY)
                     }
+
                     1 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setView(ShapeableImageView(activity).apply {
                             val padding = resources.getDimensionPixelOffset(R.dimen.dialog_padding)
@@ -108,30 +99,16 @@ class AboutFragment : MainFragment(), View.OnClickListener {
                                 startActivity(it)
                             } ?: HUI.showToast(R.string.app_not_installed)
                         }.setNegativeButton(android.R.string.cancel, null).show()
+
                     2 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setMessage(R.string.donate_bilibili_msg)
                         .setPositiveButton(R.string.donate_bilibili_space) { _, _ ->
                             HUI.openLink(HailData.URL_BILIBILI)
                         }.setNegativeButton(R.string.donate_bilibili_cancel, null).show()
+
                     3 -> HUI.openLink(HailData.URL_LIBERAPAY)
                     4 -> HUI.openLink(HailData.URL_PAYPAL)
                 }
-            }.setNegativeButton(android.R.string.cancel, null).show()
-    }
-
-    private fun onRedeem() {
-        if (HailData.isDeviceAid) {
-            aboutViewModel.snack.value = R.string.msg_redeem
-            return
-        }
-        val input = DialogInputBinding.inflate(layoutInflater, FrameLayout(activity), true)
-        input.inputLayout.setHint(R.string.action_redeem)
-        input.editText.filters = arrayOf(InputFilter.LengthFilter(64))
-        MaterialAlertDialogBuilder(activity).setView(input.root.parent as View)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                val dialog = MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress)
-                    .setCancelable(false).create()
-                aboutViewModel.codeCheck(input.editText.text.toString(), dialog)
             }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
