@@ -2,6 +2,9 @@ package com.aistra.hail.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -31,7 +34,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val binding = initView()
-        if (!HailData.biometricLogin) {
+        if (!HailData.biometricLogin || BiometricManager.from(this)
+                .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) != BiometricManager.BIOMETRIC_SUCCESS
+        ) {
             showGuide()
             return
         }
@@ -39,21 +44,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         val biometricPrompt = BiometricPrompt(this,
             ContextCompat.getMainExecutor(this),
             object : BiometricPrompt.AuthenticationCallback() {
-                private fun unlock() {
-                    binding.root.isVisible = true
-                    showGuide()
-                }
-
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
                     HUI.showToast(errString)
-                    if (errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS) unlock()
-                    else finishAndRemoveTask()
+                    finishAndRemoveTask()
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    unlock()
+                    binding.root.isVisible = true
+                    showGuide()
                 }
             })
         val promptInfo =
