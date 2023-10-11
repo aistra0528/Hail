@@ -27,6 +27,7 @@ object FuzzySearch {
         val lenTextToSearch = textToSearchUpp.length
         return diff < lenTextToSearch && containsInOrder(textToSearchUpp, queryUpp)
     }
+
     /**
      * 判断一个字符串A是否依次包含另一个字符串B的每个字符，并且这些字符是按顺序从A的开头开始的
      * @param strA
@@ -38,7 +39,7 @@ object FuzzySearch {
             // 在字符串A的当前位置之后查找字符charB
             val foundIndex = strA.indexOf(charB, indexA)
             // 如果未找到字符或者字符的位置不是当前位置，表示不包含按顺序的字符
-            if (foundIndex == -1 || foundIndex != indexA) {
+            if (foundIndex == -1) {
                 return false
             }
             // 移动到下一个位置，以便查找下一个字符
@@ -46,11 +47,19 @@ object FuzzySearch {
         }
         return true
     }
+
+    private fun assertTrue(res: Boolean) {
+        if (!res){
+            throw RuntimeException("测试失败！")
+        }
+    }
+
     @JvmStatic
     fun main(args: Array<String>) {
-        assert(search("支付宝", "支"))
-        assert(search("World Peace", "wp"))
-        assert(search("World Peace", "pee"))
-        assert(!search("World Peace", "dow"))
+        assertTrue(search("支付宝", "支"))
+        assertTrue(search("World Peace", "wp"))
+        assertTrue(search("World Peace", "pee"))
+        assertTrue(!search("World Peace", "dow"))
+        assertTrue(containsInOrder("小费计算器", "小器"))
     }
 }
