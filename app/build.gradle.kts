@@ -73,10 +73,11 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.8.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("dev.rikka.rikkax.preference:simplemenu-preference:1.0.3")
-    implementation("dev.rikka.shizuku:api:13.1.4")
-    implementation("dev.rikka.shizuku:provider:13.1.4")
+    implementation("dev.rikka.shizuku:api:13.1.5")
+    implementation("dev.rikka.shizuku:provider:13.1.5")
     implementation("io.github.iamr0s:Dhizuku-API:2.4")
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
     implementation("com.belerweb:pinyin4j:2.5.1")
+    implementation("org.apache.commons:commons-text:1.10.0")
 }

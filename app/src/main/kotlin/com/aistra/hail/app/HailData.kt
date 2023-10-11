@@ -1,6 +1,5 @@
 package com.aistra.hail.app
 
-import android.provider.Settings
 import androidx.preference.PreferenceManager
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.HailApp.Companion.app
@@ -23,7 +22,6 @@ object HailData {
     const val URL_BILIBILI = "https://space.bilibili.com/9261272"
     const val URL_LIBERAPAY = "https://liberapay.com/aistra0528"
     const val URL_PAYPAL = "https://www.paypal.me/aistra0528"
-    const val URL_REDEEM_CODE = "https://aistra0528.github.io/hail/code"
     const val URL_TRANSLATE = "https://hosted.weblate.org/engage/hail/"
     const val VERSION = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     const val KEY_PACKAGE = "package"
@@ -60,7 +58,6 @@ object HailData {
     const val SORT_UPDATE = "update"
     private const val KEY_ID = "id"
     const val KEY_TAG = "tag"
-    private const val KEY_AID = "aid"
     private const val KEY_PINNED = "pinned"
     private const val KEY_WHITELISTED = "whitelisted"
     const val FILTER_USER_APPS = "filter_user_apps"
@@ -104,13 +101,6 @@ object HailData {
 
     val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE)!!
     fun setIconPack(packageName: String) = sp.edit().putString(ICON_PACK, packageName).apply()
-
-    val isDeviceAid: Boolean get() = sp.getString(KEY_AID, null) == androidId
-
-    fun setAid() = sp.edit().putString(KEY_AID, androidId).apply()
-
-    private val androidId: String
-        get() = Settings.System.getString(app.contentResolver, Settings.Secure.ANDROID_ID)
 
     private val dir = "${app.filesDir.path}/v1"
     private val appsPath = "$dir/apps.json"

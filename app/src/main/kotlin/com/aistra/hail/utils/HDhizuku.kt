@@ -33,12 +33,6 @@ object HDhizuku {
             true
         }.getOrDefault(false)
 
-    fun isAppHidden(packageName: String): Boolean = runCatching {
-        HTarget.O && dpm::class.java.getMethod(
-            "isApplicationHidden", ComponentName::class.java, String::class.java
-        ).invoke(dpm, null, packageName) as Boolean
-    }.getOrDefault(false)
-
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean = runCatching {
         HTarget.O && dpm::class.java.getMethod(
             "setApplicationHidden",

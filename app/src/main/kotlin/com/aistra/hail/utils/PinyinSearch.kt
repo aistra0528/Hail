@@ -10,15 +10,18 @@ object PinyinSearch {
      * 分别使用首字母和全拼进行匹配，满足条件之一就返回true,
      * 如果当前语言不是中文就直接返回false
      * @param textToSearch 需要匹配的字符串
-     * @param textInput 用户输入
+     * @param query 用户输入
      * */
-    fun searchPinyinAll(textToSearch: String?, textInput: String): Boolean {
-        if (textToSearch==null){
+    fun searchPinyinAll(textToSearch: String?, query: String?): Boolean {
+        if (query.isNullOrEmpty()) {
+            return true
+        }
+        if (textToSearch.isNullOrEmpty()) {
             return false
         }
         val language = Locale.getDefault().language
         return if (language.equals(Locale.CHINESE.language)) {
-            searchCap(textToSearch, textInput) || searchAllSpell(textToSearch, textInput)
+            searchCap(textToSearch, query) || searchAllSpell(textToSearch, query)
         } else {
             false
         }
