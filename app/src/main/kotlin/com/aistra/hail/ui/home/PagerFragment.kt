@@ -26,9 +26,8 @@ import com.aistra.hail.app.HailApi.addTag
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentPagerBinding
-import com.aistra.hail.extensions.applyInsetsPadding
-import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
+import com.aistra.hail.utils.FuzzySearch
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HShortcuts
 import com.aistra.hail.utils.HUI
@@ -90,12 +89,6 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                     }
                 }
             })
-
-            this.applyInsetsPadding(
-                start = !activity.isLandscape,
-                end = true,
-                bottom = activity.isLandscape
-            )
         }
         binding.refresh.setOnRefreshListener {
             updateCurrentList()
@@ -124,8 +117,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
 
     private fun updateCurrentList() = HailData.checkedList.filter {
         if (query.isEmpty()) it.tagId == tag.second
-        else (it.packageName.contains(query, true)
-                || it.name.contains(query, true)
+        else (FuzzySearch.search(it.packageName, query)
+                || FuzzySearch.search(it.name.toString(), query)
                 || PinyinSearch.searchPinyinAll(it.name.toString(), query))
     }.sortedWith(NameComparator).let {
         binding.empty.isVisible = it.isEmpty()

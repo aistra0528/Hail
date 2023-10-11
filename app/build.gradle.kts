@@ -79,4 +79,5 @@ dependencies {
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
     implementation("com.belerweb:pinyin4j:2.5.1")
+    implementation("org.apache.commons:commons-text:1.10.0")
 }
