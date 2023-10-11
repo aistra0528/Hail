@@ -25,23 +25,32 @@ object FuzzySearch {
         val queryUpp = query.uppercase()
         val diff = levenshteinDistance.apply(textToSearchUpp, queryUpp)
         val lenTextToSearch = textToSearchUpp.length
-        return diff < lenTextToSearch && containsAllChars(textToSearchUpp, queryUpp)
+        return diff < lenTextToSearch && containsInOrder(textToSearchUpp, queryUpp)
     }
-
-    fun containsAllChars(str1: String, str2: String): Boolean {
-        val charSet1 = str1.toSet()
-        val charSet2 = str2.toSet()
-        // 使用交集操作，如果charSet2中的所有字符都在charSet1中，返回true
-        return charSet1.containsAll(charSet2)
+    /**
+     * 判断一个字符串A是否依次包含另一个字符串B的每个字符，并且这些字符是按顺序从A的开头开始的
+     * @param strA
+     * @param strB
+     * */
+    private fun containsInOrder(strA: String, strB: String): Boolean {
+        var indexA = 0  // 用于跟踪字符串A中的位置
+        for (charB in strB) {
+            // 在字符串A的当前位置之后查找字符charB
+            val foundIndex = strA.indexOf(charB, indexA)
+            // 如果未找到字符或者字符的位置不是当前位置，表示不包含按顺序的字符
+            if (foundIndex == -1 || foundIndex != indexA) {
+                return false
+            }
+            // 移动到下一个位置，以便查找下一个字符
+            indexA = foundIndex + 1
+        }
+        return true
     }
-
     @JvmStatic
     fun main(args: Array<String>) {
-        val testResult1 = search("支付宝", "支")
-        assert(testResult1)
-        val testResult2 = search("World Peace", "wp")
-        assert(testResult2)
-        val testResult3 = search("World Peace", "pee")
-        assert(testResult3)
+        assert(search("支付宝", "支"))
+        assert(search("World Peace", "wp"))
+        assert(search("World Peace", "pee"))
+        assert(!search("World Peace", "dow"))
     }
 }
