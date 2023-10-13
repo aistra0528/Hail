@@ -23,6 +23,7 @@ import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.databinding.FragmentAppsBinding
 import com.aistra.hail.extensions.applyInsetsPadding
 import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
@@ -35,41 +36,42 @@ import kotlinx.coroutines.launch
 
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener, MenuProvider {
-    private lateinit var refreshLayout: SwipeRefreshLayout
+
+    private var _binding: FragmentAppsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        return SwipeRefreshLayout(activity).apply {
-            refreshLayout = this
-            addView(RecyclerView(activity).apply {
-                activity.appbar.setLiftOnScrollTargetView(this)
-                id = R.id.recycler_view
-                layoutManager =
-                    GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
-                adapter = AppsAdapter.apply {
-                    onItemClickListener = this@AppsFragment
-                    onItemLongClickListener = this@AppsFragment
-                    onItemCheckedChangeListener = this@AppsFragment
-                }
+        _binding = FragmentAppsBinding.inflate(inflater, container, false)
 
-                clipToPadding = false
-                this.applyInsetsPadding(
-                    start = !activity.isLandscape,
-                    end = true,
-                    bottom = activity.isLandscape
-                )
-            })
+        binding.refresh.apply {
             setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
-
         }
+
+        binding.recyclerView.apply {
+            activity.appbar.setLiftOnScrollTargetView(this)
+            layoutManager =
+                GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
+            adapter = AppsAdapter.apply {
+                onItemClickListener = this@AppsFragment
+                onItemLongClickListener = this@AppsFragment
+                onItemCheckedChangeListener = this@AppsFragment
+            }
+            this.applyInsetsPadding(
+                start = !activity.isLandscape,
+                end = true,
+                bottom = activity.isLandscape
+            )
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AppsAdapter.updateCurrentList(refreshLayout)
+        AppsAdapter.updateCurrentList(binding.refresh)
     }
 
     override fun onItemClick(buttonView: CompoundButton) {
@@ -132,7 +134,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     private fun uninstallDialog(name: CharSequence, pkg: String) {
         MaterialAlertDialogBuilder(activity).setTitle(name).setMessage(R.string.msg_uninstall)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(refreshLayout)
+                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(binding.refresh)
             }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
@@ -150,7 +152,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             SearchView.OnQueryTextListener {
             private var inited = false
             override fun onQueryTextChange(newText: String): Boolean {
-                if (inited) AppsAdapter.updateCurrentList(refreshLayout, newText) else inited = true
+                if (inited) AppsAdapter.updateCurrentList(binding.refresh, newText) else inited =
+                    true
                 return true
             }
 
@@ -190,7 +193,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     private fun changeAppsSort(sort: String, item: MenuItem) {
         item.isChecked = true
         HailData.changeAppsSort(sort)
-        AppsAdapter.updateCurrentList(refreshLayout)
+        AppsAdapter.updateCurrentList(binding.refresh)
     }
 
     private fun changeAppsFilter(filter: String, item: MenuItem) {
@@ -212,11 +215,12 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 HailData.changeAppsFilter(filter, item.isChecked)
             }
         }
-        AppsAdapter.updateCurrentList(refreshLayout)
+        AppsAdapter.updateCurrentList(binding.refresh)
     }
 
     override fun onDestroy() {
         AppsAdapter.onDestroy()
         super.onDestroy()
+        _binding = null
     }
 }
