@@ -37,6 +37,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
 
     private var _binding: FragmentAppsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var appsAdapter: AppsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,17 +45,16 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         _binding = FragmentAppsBinding.inflate(inflater, container, false)
-
+        appsAdapter = AppsAdapter().apply {
+            onItemClickListener = this@AppsFragment
+            onItemLongClickListener = this@AppsFragment
+            onItemCheckedChangeListener = this@AppsFragment
+        }
         binding.refresh.setOnRefreshListener { updateCurrentList() }
-
         binding.recyclerView.apply {
             activity.appbar.setLiftOnScrollTargetView(this)
             layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
-            adapter = AppsAdapter.apply {
-                onItemClickListener = this@AppsFragment
-                onItemLongClickListener = this@AppsFragment
-                onItemCheckedChangeListener = this@AppsFragment
-            }
+            adapter = appsAdapter
             applyInsetsPadding(
                 start = !activity.isLandscape,
                 end = true,
@@ -66,7 +66,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AppsAdapter.updateCurrentList(binding.refresh)
+        appsAdapter.updateCurrentList(binding.refresh)
     }
 
     override fun onItemClick(buttonView: CompoundButton) {
@@ -129,7 +129,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     private fun uninstallDialog(name: CharSequence, pkg: String) {
         MaterialAlertDialogBuilder(activity).setTitle(name).setMessage(R.string.msg_uninstall)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(binding.refresh)
+                if (AppManager.uninstallApp(pkg)) appsAdapter.updateCurrentList(binding.refresh)
             }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
@@ -147,7 +147,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             SearchView.OnQueryTextListener {
             private var inited = false
             override fun onQueryTextChange(newText: String): Boolean {
-                if (inited) AppsAdapter.updateCurrentList(binding.refresh, newText) else inited =
+                if (inited) appsAdapter.updateCurrentList(binding.refresh, newText) else inited =
                     true
                 return true
             }
@@ -213,10 +213,10 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         updateCurrentList()
     }
 
-    private fun updateCurrentList() = AppsAdapter.updateCurrentList(binding.refresh)
+    private fun updateCurrentList() = appsAdapter.updateCurrentList(binding.refresh)
 
     override fun onDestroy() {
-        AppsAdapter.onDestroy()
+        appsAdapter.onDestroy()
         super.onDestroy()
         _binding = null
     }

@@ -23,18 +23,23 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-object AppsAdapter :
-    ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(object :
-        DiffUtil.ItemCallback<ApplicationInfo>() {
-        override fun areItemsTheSame(oldItem: ApplicationInfo, newItem: ApplicationInfo): Boolean =
-            oldItem.packageName == newItem.packageName
+class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
 
-        override fun areContentsTheSame(
-            oldItem: ApplicationInfo,
-            newItem: ApplicationInfo
-        ): Boolean =
-            areItemsTheSame(oldItem, newItem)
-    }) {
+    companion object{
+        val DIFF = object : DiffUtil.ItemCallback<ApplicationInfo>() {
+            override fun areItemsTheSame(
+                oldItem: ApplicationInfo,
+                newItem: ApplicationInfo
+            ): Boolean =
+                oldItem.packageName == newItem.packageName
+
+            override fun areContentsTheSame(
+                oldItem: ApplicationInfo,
+                newItem: ApplicationInfo
+            ): Boolean =
+                areItemsTheSame(oldItem, newItem)
+        }
+    }
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
@@ -100,7 +105,8 @@ object AppsAdapter :
         if (refreshJob?.isActive == true) refreshJob?.cancel()
     }
 
-    class ViewHolder(private val binding: ItemAppsBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemAppsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private lateinit var info: ApplicationInfo
         private val pkg get() = info.packageName
 
