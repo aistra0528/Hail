@@ -3,18 +3,15 @@ package com.aistra.hail.ui.apps
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.databinding.ItemAppsBinding
 import com.aistra.hail.utils.AppIconCache
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.NameComparator
@@ -90,39 +87,12 @@ object AppsAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_apps, parent, false)
+        ItemAppsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val info = currentList[position]
-        val pkg = info.packageName
-        val frozen = AppManager.isAppFrozen(pkg)
-        holder.itemView.run {
-            val btn = findViewById<CompoundButton>(R.id.app_star)
-            setOnClickListener { onItemClickListener.onItemClick(btn) }
-            setOnLongClickListener { onItemLongClickListener.onItemLongClick(info) }
-            findViewById<ImageView>(R.id.app_icon).run {
-                loadIconJob = AppIconCache.loadIconBitmapAsync(
-                    context, info, HPackages.myUserId, this, HailData.grayscaleIcon && frozen
-                )
-            }
-            findViewById<TextView>(R.id.app_name).run {
-                val name = info.loadLabel(context.packageManager)
-                text = if (!HailData.grayscaleIcon && frozen) "❄️$name" else name
-                isEnabled = !HailData.grayscaleIcon || !frozen
-            }
-            findViewById<TextView>(R.id.app_desc).run {
-                text = pkg
-                isEnabled = !HailData.grayscaleIcon || !frozen
-            }
-            btn.run {
-                setOnCheckedChangeListener(null)
-                isChecked = HailData.isChecked(pkg)
-                setOnCheckedChangeListener { button, isChecked ->
-                    onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, pkg)
-                }
-            }
-        }
+        holder.bindInfo(info)
     }
 
     fun onDestroy() {
@@ -130,7 +100,49 @@ object AppsAdapter :
         if (refreshJob?.isActive == true) refreshJob?.cancel()
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class ViewHolder(private val binding: ItemAppsBinding) : RecyclerView.ViewHolder(binding.root) {
+        private lateinit var info: ApplicationInfo
+        private val pkg get() = info.packageName
+
+        /**
+         * Flag that view data is being updated to avoid triggering the event.
+         * */
+        private var updating = false
+
+        init {
+            binding.root.apply {
+                setOnClickListener { onItemClickListener.onItemClick(binding.appStar) }
+                setOnLongClickListener { onItemLongClickListener.onItemLongClick(info) }
+            }
+            binding.appStar.setOnCheckedChangeListener { button, isChecked ->
+                if (!updating)
+                    onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, pkg)
+            }
+        }
+
+        fun bindInfo(info: ApplicationInfo) {
+            updating = true
+            this.info = info
+            val frozen = AppManager.isAppFrozen(pkg)
+
+            binding.appIcon.apply {
+                loadIconJob = AppIconCache.loadIconBitmapAsync(
+                    context, info, HPackages.myUserId, this, HailData.grayscaleIcon && frozen
+                )
+            }
+            binding.appName.apply {
+                val name = info.loadLabel(context.packageManager)
+                text = if (!HailData.grayscaleIcon && frozen) "❄️$name" else name
+                isEnabled = !HailData.grayscaleIcon || !frozen
+            }
+            binding.appDesc.apply {
+                text = pkg
+                isEnabled = !HailData.grayscaleIcon || !frozen
+            }
+            binding.appStar.isChecked = HailData.isChecked(pkg)
+            updating = false
+        }
+    }
 
     interface OnItemClickListener {
         fun onItemClick(buttonView: CompoundButton)
