@@ -17,8 +17,6 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
@@ -215,7 +213,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         updateCurrentList()
     }
 
-    fun updateCurrentList() = AppsAdapter.updateCurrentList(binding.refresh)
+    private fun updateCurrentList() = AppsAdapter.updateCurrentList(binding.refresh)
 
     override fun onDestroy() {
         AppsAdapter.onDestroy()
