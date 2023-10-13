@@ -47,14 +47,11 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         _binding = FragmentAppsBinding.inflate(inflater, container, false)
 
-        binding.refresh.apply {
-            setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
-        }
+        binding.refresh.setOnRefreshListener { updateCurrentList() }
 
         binding.recyclerView.apply {
             activity.appbar.setLiftOnScrollTargetView(this)
-            layoutManager =
-                GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
+            layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
             adapter = AppsAdapter.apply {
                 onItemClickListener = this@AppsFragment
                 onItemLongClickListener = this@AppsFragment
@@ -193,7 +190,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     private fun changeAppsSort(sort: String, item: MenuItem) {
         item.isChecked = true
         HailData.changeAppsSort(sort)
-        AppsAdapter.updateCurrentList(binding.refresh)
+        updateCurrentList()
     }
 
     private fun changeAppsFilter(filter: String, item: MenuItem) {
@@ -215,8 +212,10 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 HailData.changeAppsFilter(filter, item.isChecked)
             }
         }
-        AppsAdapter.updateCurrentList(binding.refresh)
+        updateCurrentList()
     }
+
+    fun updateCurrentList() = AppsAdapter.updateCurrentList(binding.refresh)
 
     override fun onDestroy() {
         AppsAdapter.onDestroy()
