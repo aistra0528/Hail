@@ -55,7 +55,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 onItemLongClickListener = this@AppsFragment
                 onItemCheckedChangeListener = this@AppsFragment
             }
-            this.applyInsetsPadding(
+            applyInsetsPadding(
                 start = !activity.isLandscape,
                 end = true,
                 bottom = activity.isLandscape
