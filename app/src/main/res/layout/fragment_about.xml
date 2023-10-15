@@ -57,8 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/container_margin"
             android:layout_marginTop="@dimen/container_margin"
-            android:layout_marginEnd="@dimen/container_margin"
-            style="?materialCardViewOutlinedStyle">
+            android:layout_marginEnd="@dimen/container_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
