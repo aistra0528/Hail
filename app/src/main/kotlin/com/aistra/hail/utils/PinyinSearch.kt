@@ -3,58 +3,46 @@ package com.aistra.hail.utils
 import net.sourceforge.pinyin4j.PinyinHelper
 import java.util.Locale
 
-/**中文拼音搜索类*/
+/** 中文拼音搜索类 */
 object PinyinSearch {
     /**
-     * 分别使用首字母和全拼进行匹配，满足条件之一就返回true,
-     * 如果当前语言不是中文就直接返回false
-     * @param textToSearch 需要匹配的字符串
-     * @param textInput 用户输入
-     * */
-    fun searchPinyinAll(textToSearch: String?, textInput: String): Boolean {
-        if (textToSearch == null) {
-            return false
-        }
-        val language = Locale.getDefault().language
-        return if (language.equals(Locale.CHINESE.language)) {
-            searchCap(textToSearch, textInput) || searchAllSpell(textToSearch, textInput)
-        } else {
-            false
-        }
+     * 当前语言是中文时使用首字母和全拼进行搜索，满足任一条件则显示在搜索结果中
+     * @param raw 需要匹配的原始字符串
+     * @param query 输入的字符串
+     */
+    fun searchPinyinAll(raw: String?, query: String?): Boolean {
+        if (query.isNullOrEmpty()) return true
+        if (raw.isNullOrEmpty()) return false
+        return if (Locale.getDefault().language != Locale.CHINESE.language) false
+        else searchCap(raw, query) || searchAllSpell(raw, query)
     }
 
     /**
-     * 根据首字母进行搜索
-     * 比如搜索”计算器“ 只需要输入 ”jsq“
-     * */
-    private fun searchCap(appName: String, pinyinCap: String): Boolean {
-        if (pinyinCap.length < 80) {
-            for (index in getNameStringList(appName)) {
-                if (index.contains(pinyinCap, true)) {
-                    return true
-                }
+     * 根据拼音首字母进行搜索
+     * 如搜索“计算器”时只需输入 "jsq"
+     */
+    private fun searchCap(raw: String, pinyinCap: String): Boolean {
+        if (pinyinCap.length > 8) return false // "最强多媒体播放器".length
+        for (index in getNameStringList(raw)) {
+            if (index.contains(pinyinCap, true)) {
+                return true
             }
-            return false
-        } else {
-            return false
         }
+        return false
     }
 
     /**
      * 根据全部拼音进行搜索
-     * 比如搜索”计算器“ 只需要输入 "jisuanqi"
-     * */
-    private fun searchAllSpell(appName: String, pinyinAll: String): Boolean {
-        if (pinyinAll.length < 30) {
-            for (index in getNameStringPinyinAll(appName)) {
-                if (index.contains(pinyinAll, true)) {
-                    return true
-                }
+     * 如搜索“计算器”时只需输入 "jisuanqi"
+     */
+    private fun searchAllSpell(raw: String, pinyinAll: String): Boolean {
+        if (pinyinAll.length > 48) return false // "chuang".length * 8
+        for (index in getNameStringPinyinAll(raw)) {
+            if (index.contains(pinyinAll, true)) {
+                return true
             }
-            return false
-        } else {
-            return false
         }
+        return false
     }
 
     private fun getNameStringPinyinAll(target: String): ArrayList<String> {
