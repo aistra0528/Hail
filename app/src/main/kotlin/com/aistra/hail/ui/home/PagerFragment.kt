@@ -26,6 +26,8 @@ import com.aistra.hail.app.HailApi.addTag
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentPagerBinding
+import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.FuzzySearch
 import com.aistra.hail.utils.HPackages
@@ -89,6 +91,12 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                     }
                 }
             })
+
+            this.applyInsetsPadding(
+                start = !activity.isLandscape,
+                end = true,
+                bottom = activity.isLandscape
+            )
         }
         binding.refresh.setOnRefreshListener {
             updateCurrentList()
