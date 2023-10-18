@@ -139,4 +139,6 @@
     <string name="mode_su_hide">Superuser - Hide</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">Skip</string>
+    <string name="mode_island_hide">Island - Hide</string>
+    <string name="mode_island_suspend">Island - Suspend</string>
 </resources>

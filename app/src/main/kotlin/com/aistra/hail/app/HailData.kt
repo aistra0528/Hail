@@ -32,6 +32,7 @@ object HailData {
     const val DHIZUKU = "dhizuku_"
     const val SU = "su_"
     const val SHIZUKU = "shizuku_"
+    const val ISLAND = "island_"
     const val DISABLE = "disable"
     const val HIDE = "hide"
     const val SUSPEND = "suspend"
@@ -45,6 +46,8 @@ object HailData {
     const val MODE_SHIZUKU_DISABLE = SHIZUKU + DISABLE
     const val MODE_SHIZUKU_HIDE = SHIZUKU + HIDE
     const val MODE_SHIZUKU_SUSPEND = SHIZUKU + SUSPEND
+    const val MODE_ISLAND_HIDE = ISLAND + HIDE
+    const val MODE_ISLAND_SUSPEND = ISLAND + SUSPEND
     private const val TILE_ACTION = "tile_action"
     const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
     const val ACTION_NONE = "none"

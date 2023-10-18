@@ -3,6 +3,7 @@ package com.aistra.hail.app
 import android.content.Intent
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.utils.HDhizuku
+import com.aistra.hail.utils.HIsland
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HShell
@@ -42,6 +43,8 @@ object AppManager {
             HailData.MODE_SHIZUKU_DISABLE -> HShizuku.setAppDisabled(packageName, frozen)
             HailData.MODE_SHIZUKU_HIDE -> HShizuku.setAppHidden(packageName, frozen)
             HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.setAppSuspended(packageName, frozen)
+            HailData.MODE_ISLAND_HIDE -> HIsland.setAppHidden(packageName, frozen)
+            HailData.MODE_ISLAND_SUSPEND -> HIsland.setAppSuspended(packageName, frozen)
             else -> false
         }
 
