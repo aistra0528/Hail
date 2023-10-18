@@ -32,8 +32,10 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/white"
                     app:shapeAppearance="@style/CircularStyle"
-                    app:srcCompat="@mipmap/ic_launcher" />
+                    app:contentPadding="-18dp"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
