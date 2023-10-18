@@ -141,4 +141,6 @@
     <string name="mode_su_hide">Superusuario - Ocultar</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">Omitir</string>
+    <string name="mode_island_hide">Isla - Ocultar</string>
+    <string name="mode_island_suspend">Isla - Suspender</string>
 </resources>
