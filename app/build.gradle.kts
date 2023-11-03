@@ -5,12 +5,13 @@ plugins {
 
 android {
     namespace = "com.aistra.hail"
+    buildToolsVersion = "34.0.0"
     compileSdk = 34
 
     defaultConfig {
         applicationId = "com.aistra.hail"
         minSdk = 23
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 29
         versionName = "1.6.0"
     }
