@@ -17,8 +17,7 @@ android {
 
     val signing = if (file("../signing.properties").exists()) {
         signingConfigs.create("release") {
-            val props =
-                `java.util`.Properties().apply { load(file("../signing.properties").reader()) }
+            val props = `java.util`.Properties().apply { load(file("../signing.properties").reader()) }
             storeFile = file(props.getProperty("storeFile"))
             storePassword = props.getProperty("storePassword")
             keyAlias = props.getProperty("keyAlias")
@@ -77,7 +76,7 @@ dependencies {
     implementation("dev.rikka.shizuku:provider:13.1.5")
     implementation("io.github.iamr0s:Dhizuku-API:2.4")
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
-    implementation("org.apache.commons:commons-text:1.10.0")
+    implementation("org.apache.commons:commons-text:1.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
 }
