@@ -14,6 +14,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,6 +35,8 @@ import kotlinx.coroutines.launch
 
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener, MenuProvider {
+
+    private val model: AppsViewModel by viewModels()
 
     private var _binding: FragmentAppsBinding? = null
     private val binding get() = _binding!!
@@ -61,12 +64,24 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 bottom = activity.isLandscape
             )
         }
+        model.isRefreshing.observe(viewLifecycleOwner) {
+            binding.refresh.isRefreshing = it
+        }
+        model.apps.observe(viewLifecycleOwner) {
+            model.updateDisplayAppList()
+        }
+        model.displayApps.observe(viewLifecycleOwner) {
+            appsAdapter.submitList(it)
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appsAdapter.updateCurrentList(binding.refresh)
+        /* if (!model.isRefreshing.value!!){
+            updateCurrentList()
+        } */
     }
 
     override fun onItemClick(buttonView: CompoundButton) {
@@ -127,10 +142,14 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     private fun uninstallDialog(name: CharSequence, pkg: String) {
-        MaterialAlertDialogBuilder(activity).setTitle(name).setMessage(R.string.msg_uninstall)
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(name)
+            .setMessage(R.string.msg_uninstall)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                if (AppManager.uninstallApp(pkg)) appsAdapter.updateCurrentList(binding.refresh)
-            }.setNegativeButton(android.R.string.cancel, null).show()
+                if (AppManager.uninstallApp(pkg)) updateCurrentList()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     override fun onItemCheckedChange(
@@ -145,10 +164,10 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         inflater.inflate(R.menu.menu_apps, menu)
         (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
-            private var inited = false
+            // private var inited = false
             override fun onQueryTextChange(newText: String): Boolean {
-                if (inited) appsAdapter.updateCurrentList(binding.refresh, newText) else inited =
-                    true
+                 model.postQuery(newText)
+                // else inited = true
                 return true
             }
 
@@ -213,7 +232,42 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         updateCurrentList()
     }
 
-    private fun updateCurrentList() = appsAdapter.updateCurrentList(binding.refresh)
+    private fun updateCurrentList() = model.updateAppList()
+
+    /* private val ApplicationInfo.isSystemApp: Boolean
+        get() = flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
+
+    private fun filterList(
+        appsList: List<ApplicationInfo>,
+        query: String? = null
+    ): List<ApplicationInfo> {
+        val pm = activity.packageManager
+        return appsList.filter {
+            ((HailData.filterUserApps && !it.isSystemApp)
+                    || (HailData.filterSystemApps && it.isSystemApp))
+
+                    && ((HailData.filterFrozenApps && AppManager.isAppFrozen(it.packageName))
+                    || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName)))
+
+                    && (query.isNullOrEmpty()
+                    || it.packageName.contains(query, true)
+                    || it.loadLabel(pm).toString().contains(query, true)
+                    || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
+        }.run {
+            when (HailData.sortBy) {
+                HailData.SORT_INSTALL -> sortedBy {
+                    HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
+                        ?.firstInstallTime ?: 0
+                }
+
+                HailData.SORT_UPDATE -> sortedByDescending {
+                    HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.lastUpdateTime ?: 0
+                }
+
+                else -> sortedWith(NameComparator)
+            }
+        }
+    } */
 
     override fun onDestroy() {
         appsAdapter.onDestroy()
