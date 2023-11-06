@@ -138,4 +138,6 @@
     <string name="action_skip">Lewati</string>
     <string name="mode_su_hide">Superuser - Sembunyikan</string>
     <string name="action_fdroid">F-Droid</string>
+    <string name="mode_island_hide">Island - Sembunyikan</string>
+    <string name="mode_island_suspend">Island - Tangguhkan</string>
 </resources>

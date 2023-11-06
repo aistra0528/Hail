@@ -148,4 +148,6 @@
     <string name="donate_wechat_scan">مسح ضوئي</string>
     <string name="action_remove_whitelist">إزالة من القائمة البيضاء</string>
     <string name="action_skip">تخطي</string>
+    <string name="mode_island_hide">Island - إخفاء</string>
+    <string name="mode_island_suspend">Island - تعليق</string>
 </resources>

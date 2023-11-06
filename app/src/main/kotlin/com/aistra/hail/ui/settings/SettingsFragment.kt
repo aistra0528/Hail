@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.*
 import android.widget.FrameLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.MenuHost
@@ -40,8 +41,8 @@ import kotlinx.coroutines.withContext
 import rikka.shizuku.Shizuku
 
 
-class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
-    MenuProvider {
+class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener, MenuProvider {
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -53,9 +54,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
         recyclerView.applyInsetsPadding(
-            start = !activity.isLandscape,
-            end = true,
-            bottom = activity.isLandscape
+            start = !activity.isLandscape, end = true, bottom = activity.isLandscape
         )
 
         return view
@@ -66,17 +65,16 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         findPreference<Preference>(HailData.WORKING_MODE)?.onPreferenceChangeListener = this
         findPreference<Preference>(HailData.SKIP_FOREGROUND_APP)?.setOnPreferenceChangeListener { _, value ->
             if (value == true && !HSystem.checkOpUsageStats(requireContext())) {
-                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 false
             } else true
         }
         findPreference<Preference>(HailData.SKIP_NOTIFYING_APP)?.setOnPreferenceChangeListener { _, value ->
-            val isGranted =
-                NotificationManagerCompat.getEnabledListenerPackages(requireContext())
-                    .contains(requireContext().packageName)
+            val isGranted = NotificationManagerCompat.getEnabledListenerPackages(requireContext())
+                .contains(requireContext().packageName)
             if (value == true && !isGranted) {
                 app.setAutoFreezeServiceEnabled(true)
-                startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 false
             } else true
         }
@@ -118,8 +116,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             return
         }
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.icon_pack)
-            .setItems(list.map { it.loadLabel(app.packageManager) }
-                .toTypedArray()) { _, which ->
+            .setItems(list.map { it.loadLabel(app.packageManager) }.toTypedArray()) { _, which ->
                 if (HailData.iconPack == list[which].packageName) return@setItems
                 HailData.setIconPack(list[which].packageName)
                 AppIconCache.clear()
@@ -190,10 +187,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     5 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_outline_lock_shortcut
-                        )!!,
-                        HailApi.ACTION_LOCK,
-                        getString(R.string.action_lock),
-                        Intent(HailApi.ACTION_LOCK)
+                        )!!, HailApi.ACTION_LOCK, getString(R.string.action_lock), Intent(HailApi.ACTION_LOCK)
                     )
 
                     6 -> HShortcuts.addPinShortcut(
@@ -217,10 +211,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_owner)
                     .setMessage(getString(R.string.msg_set_owner, HPolicy.ADB_COMMAND))
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(HPolicy.ADB_COMMAND) }
-                    .show()
-                    .findViewById<MaterialTextView>(android.R.id.message)
-                    ?.setTextIsSelectable(true)
+                    .setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(HPolicy.ADB_COMMAND) }.show()
+                    .findViewById<MaterialTextView>(android.R.id.message)?.setTextIsSelectable(true)
                 return false
             }
 
@@ -231,8 +223,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     else -> {
                         lifecycleScope.launch {
                             val result = callbackFlow {
-                                Dhizuku.requestPermission(object :
-                                    DhizukuRequestPermissionListener() {
+                                Dhizuku.requestPermission(object : DhizukuRequestPermissionListener() {
                                     override fun onRequestPermission(grantResult: Int) {
                                         trySendBlocking(grantResult == PackageManager.PERMISSION_GRANTED)
                                     }
@@ -271,11 +262,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         lifecycleScope.launch {
                             val result = callbackFlow {
                                 val shizukuRequestCode = 0
-                                val listener =
-                                    Shizuku.OnRequestPermissionResultListener { requestCode, grantResult ->
-                                        if (requestCode != shizukuRequestCode) return@OnRequestPermissionResultListener
-                                        trySendBlocking(grantResult == PackageManager.PERMISSION_GRANTED)
-                                    }
+                                val listener = Shizuku.OnRequestPermissionResultListener { requestCode, grantResult ->
+                                    if (requestCode != shizukuRequestCode) return@OnRequestPermissionResultListener
+                                    trySendBlocking(grantResult == PackageManager.PERMISSION_GRANTED)
+                                }
                                 Shizuku.addRequestPermissionResultListener(listener)
                                 Shizuku.requestPermission(shizukuRequestCode)
                                 awaitClose {
@@ -292,37 +282,53 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 HUI.showToast(R.string.shizuku_missing)
                 false
             }
+
+            mode.startsWith(HailData.ISLAND) -> return runCatching {
+                when {
+                    mode == HailData.MODE_ISLAND_HIDE && HIsland.freezePermissionGranted() -> true
+                    mode == HailData.MODE_ISLAND_SUSPEND && HIsland.suspendPermissionGranted() -> true
+                    else -> {
+                        lifecycleScope.launch {
+                            requestPermissionLauncher.launch(
+                                if (mode == HailData.MODE_ISLAND_HIDE) HIsland.PERMISSION_FREEZE_PACKAGE
+                                else HIsland.PERMISSION_SUSPEND_PACKAGE
+                            )
+                        }
+                        false
+                    }
+                }
+            }.getOrElse {
+                HLog.e(it)
+                HUI.showToast(R.string.permission_denied)
+                false
+            }
         }
 
         return true
     }
 
-    private suspend fun onTerminalResult(exitValue: Int, msg: String?) =
-        withContext(Dispatchers.Main) {
-            if (exitValue == 0 && msg.isNullOrBlank()) return@withContext
-            MaterialAlertDialogBuilder(requireActivity()).apply {
-                if (!msg.isNullOrBlank()) {
-                    if (exitValue != 0) {
-                        setTitle(getString(R.string.operation_failed, exitValue.toString()))
-                    }
-                    setMessage(msg)
-                    setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(msg) }
-                } else if (exitValue != 0) {
-                    setMessage(getString(R.string.operation_failed, exitValue.toString()))
+    private suspend fun onTerminalResult(exitValue: Int, msg: String?) = withContext(Dispatchers.Main) {
+        if (exitValue == 0 && msg.isNullOrBlank()) return@withContext
+        MaterialAlertDialogBuilder(requireActivity()).apply {
+            if (!msg.isNullOrBlank()) {
+                if (exitValue != 0) {
+                    setTitle(getString(R.string.operation_failed, exitValue.toString()))
                 }
-            }.setPositiveButton(android.R.string.ok, null).show()
-                .findViewById<MaterialTextView>(android.R.id.message)?.setTextIsSelectable(true)
-        }
+                setMessage(msg)
+                setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(msg) }
+            } else if (exitValue != 0) {
+                setMessage(getString(R.string.operation_failed, exitValue.toString()))
+            }
+        }.setPositiveButton(android.R.string.ok, null).show().findViewById<MaterialTextView>(android.R.id.message)
+            ?.setTextIsSelectable(true)
+    }
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_terminal -> {
-                val input =
-                    DialogInputBinding.inflate(
-                        layoutInflater,
-                        FrameLayout(requireActivity()),
-                        true
-                    )
+                val input = DialogInputBinding.inflate(
+                    layoutInflater, FrameLayout(requireActivity()), true
+                )
                 input.inputLayout.setHint(R.string.action_terminal)
                 input.editText.run {
                     setSingleLine()
@@ -352,9 +358,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         if (HailData.workingMode.startsWith(HailData.SU) || HailData.workingMode.startsWith(
                 HailData.SHIZUKU
             )
-        )
-            menu.findItem(R.id.action_terminal).isVisible = true
-        else if (HPolicy.isDeviceOwnerActive)
-            menu.findItem(R.id.action_remove_owner).isVisible = true
+        ) menu.findItem(R.id.action_terminal).isVisible = true
+        else if (HPolicy.isDeviceOwnerActive) menu.findItem(R.id.action_remove_owner).isVisible = true
     }
 }

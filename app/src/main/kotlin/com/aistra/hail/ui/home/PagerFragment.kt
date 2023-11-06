@@ -2,12 +2,7 @@ package com.aistra.hail.ui.home
 
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
@@ -29,11 +24,7 @@ import com.aistra.hail.databinding.FragmentPagerBinding
 import com.aistra.hail.extensions.applyInsetsPadding
 import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
-import com.aistra.hail.utils.HPackages
-import com.aistra.hail.utils.HShortcuts
-import com.aistra.hail.utils.HUI
-import com.aistra.hail.utils.NameComparator
-import com.aistra.hail.utils.PinyinSearch
+import com.aistra.hail.utils.*
 import com.aistra.hail.work.HWork
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -124,8 +115,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
 
     private fun updateCurrentList() = HailData.checkedList.filter {
         if (query.isEmpty()) it.tagId == tag.second
-        else (it.packageName.contains(query, true)
-                || it.name.contains(query, true)
+        else (FuzzySearch.search(it.packageName, query)
+                || FuzzySearch.search(it.name.toString(), query)
                 || PinyinSearch.searchPinyinAll(it.name.toString(), query))
     }.sortedWith(NameComparator).let {
         binding.empty.isVisible = it.isEmpty()
@@ -468,7 +459,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
     private fun MenuItem.updateIcon() = icon?.setTint(
         MaterialColors.getColor(
             activity.findViewById(R.id.toolbar),
-            if (multiselect) R.attr.colorPrimary else R.attr.colorOnSurface
+            if (multiselect) androidx.appcompat.R.attr.colorPrimary else com.google.android.material.R.attr.colorOnSurface
         )
     )
 

@@ -1,12 +1,8 @@
 Android Jetpack (Apache 2.0): https://developer.android.com/jetpack
 
-Kotlin (Apache 2.0): https://kotlinlang.org
+Chinese to Pinyin (BSD): https://github.com/belerweb/pinyin4j
 
 Material Components for Android (Apache 2.0): https://github.com/material-components/material-components-android
-
-Dhizuku (GPL 3.0): https://github.com/iamr0s/Dhizuku
-
-Dhizuku-API (MIT): https://github.com/iamr0s/Dhizuku-API
 
 RikkaX (MIT): https://github.com/RikkaApps/RikkaX
 
@@ -14,6 +10,14 @@ Shizuku (Apache 2.0): https://github.com/RikkaApps/Shizuku
 
 Shizuku-API (MIT): https://github.com/RikkaApps/Shizuku-API
 
+Dhizuku (GPL 3.0): https://github.com/iamr0s/Dhizuku
+
+Dhizuku-API (MIT): https://github.com/iamr0s/Dhizuku-API
+
 AppIconLoader (Apache 2.0): https://github.com/zhanghai/AppIconLoader
+
+Apache Commons Text (Apache 2.0): https://github.com/apache/commons-text
+
+Kotlin (Apache 2.0): https://kotlinlang.org
 
 AndroidHiddenApiBypass (Apache 2.0): https://github.com/LSPosed/AndroidHiddenApiBypass
