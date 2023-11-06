@@ -70,7 +70,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         model.apps.observe(viewLifecycleOwner) {
             model.updateDisplayAppList()
         }
-        model.query.observe(viewLifecycleOwner){
+        model.query.observe(viewLifecycleOwner) {
             model.updateDisplayAppList()
         }
         model.displayApps.observe(viewLifecycleOwner) {
@@ -166,7 +166,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                model.postQuery(query)
+                model.postQuery(query, 0L)
                 return true
             }
         })

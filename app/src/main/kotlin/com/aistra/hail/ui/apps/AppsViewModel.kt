@@ -28,11 +28,15 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private var refreshJob: Job? = null
-    fun postQuery(text: String) {
+    fun postQuery(text: String, delayTime: Long = 500L) {
         refreshJob?.cancel()
-        refreshJob = viewModelScope.launch {
-            delay(500)
-            this@AppsViewModel.query.postValue(text)
+        if (delayTime == 0L)
+            this.query.postValue(text)
+        else {
+            refreshJob = viewModelScope.launch {
+                delay(delayTime)
+                this@AppsViewModel.query.postValue(text)
+            }
         }
     }
 
