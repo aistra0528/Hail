@@ -47,50 +47,6 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
     private var loadIconJob: Job? = null
     private var refreshJob: Job? = null
 
-    private val ApplicationInfo.isSystemApp: Boolean
-        get() = flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
-
-    private suspend fun filterList(
-        query: String? = null,
-        pm: PackageManager
-    ): List<ApplicationInfo> =
-        withContext(Dispatchers.Default) {
-            HPackages.getInstalledApplications().filter {
-                ((HailData.filterUserApps && !it.isSystemApp)
-                        || (HailData.filterSystemApps && it.isSystemApp))
-
-                        && ((HailData.filterFrozenApps && AppManager.isAppFrozen(it.packageName))
-                        || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName)))
-
-                        && (FuzzySearch.search(it.packageName, query)
-                        || FuzzySearch.search(it.loadLabel(pm).toString(), query)
-                        || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
-            }.run {
-                when (HailData.sortBy) {
-                    HailData.SORT_INSTALL -> sortedBy {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
-                            ?.firstInstallTime ?: 0
-                    }
-
-                    HailData.SORT_UPDATE -> sortedByDescending {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.lastUpdateTime ?: 0
-                    }
-
-                    else -> sortedWith(NameComparator)
-                }
-            }
-        }
-
-    fun updateCurrentList(layout: SwipeRefreshLayout, query: String? = null) {
-        refreshJob?.cancel()
-        refreshJob = CoroutineScope(Dispatchers.Main).launch {
-            if (query.isNullOrEmpty()) layout.isRefreshing = true else delay(500)
-            val list = filterList(query, layout.context.packageManager)
-            submitList(list)
-            layout.isRefreshing = false
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         ItemAppsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )

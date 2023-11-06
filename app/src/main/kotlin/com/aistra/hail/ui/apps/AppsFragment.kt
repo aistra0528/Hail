@@ -231,41 +231,6 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
 
     private fun updateCurrentList() = model.updateAppList()
 
-    /* private val ApplicationInfo.isSystemApp: Boolean
-        get() = flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
-
-    private fun filterList(
-        appsList: List<ApplicationInfo>,
-        query: String? = null
-    ): List<ApplicationInfo> {
-        val pm = activity.packageManager
-        return appsList.filter {
-            ((HailData.filterUserApps && !it.isSystemApp)
-                    || (HailData.filterSystemApps && it.isSystemApp))
-
-                    && ((HailData.filterFrozenApps && AppManager.isAppFrozen(it.packageName))
-                    || (HailData.filterUnfrozenApps && !AppManager.isAppFrozen(it.packageName)))
-
-                    && (query.isNullOrEmpty()
-                    || it.packageName.contains(query, true)
-                    || it.loadLabel(pm).toString().contains(query, true)
-                    || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
-        }.run {
-            when (HailData.sortBy) {
-                HailData.SORT_INSTALL -> sortedBy {
-                    HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
-                        ?.firstInstallTime ?: 0
-                }
-
-                HailData.SORT_UPDATE -> sortedByDescending {
-                    HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.lastUpdateTime ?: 0
-                }
-
-                else -> sortedWith(NameComparator)
-            }
-        }
-    } */
-
     override fun onDestroy() {
         appsAdapter.onDestroy()
         super.onDestroy()
