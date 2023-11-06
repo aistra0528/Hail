@@ -80,13 +80,6 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        /* if (!model.isRefreshing.value!!){
-            updateCurrentList()
-        } */
-    }
-
     override fun onItemClick(buttonView: CompoundButton) {
         buttonView.toggle()
     }
