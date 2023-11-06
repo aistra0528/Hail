@@ -70,6 +70,9 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         model.apps.observe(viewLifecycleOwner) {
             model.updateDisplayAppList()
         }
+        model.query.observe(viewLifecycleOwner){
+            model.updateDisplayAppList()
+        }
         model.displayApps.observe(viewLifecycleOwner) {
             appsAdapter.submitList(it)
         }
@@ -164,14 +167,15 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         inflater.inflate(R.menu.menu_apps, menu)
         (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
-            // private var inited = false
             override fun onQueryTextChange(newText: String): Boolean {
-                 model.postQuery(newText)
-                // else inited = true
+                model.postQuery(newText)
                 return true
             }
 
-            override fun onQueryTextSubmit(query: String): Boolean = true
+            override fun onQueryTextSubmit(query: String): Boolean {
+                model.postQuery(query)
+                return true
+            }
         })
     }
 

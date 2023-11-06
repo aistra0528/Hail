@@ -11,14 +11,16 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.NameComparator
 import com.aistra.hail.utils.PinyinSearch
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AppsViewModel(application: Application) : AndroidViewModel(application) {
     val apps = MutableLiveData<List<ApplicationInfo>>()
     val isRefreshing = MutableLiveData(false)
-    private val query = MutableLiveData<String>("")
+    val query = MutableLiveData("")
     val displayApps = MutableLiveData<List<ApplicationInfo>>()
 
     init {
@@ -26,62 +28,66 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private var refreshJob: Job? = null
-    fun postQuery(query: String) {
+    fun postQuery(text: String) {
         refreshJob?.cancel()
         refreshJob = viewModelScope.launch {
             delay(500)
-            this@AppsViewModel.query.postValue(query)
-            updateDisplayAppList()
+            this@AppsViewModel.query.postValue(text)
         }
     }
 
     fun updateAppList() {
         viewModelScope.launch {
-            /* if (queryText.isNullOrEmpty())
-                isRefreshing.postValue(true) // else delay(500) */
             isRefreshing.postValue(true)
             apps.postValue(HPackages.getInstalledApplications())
-            // query.postValue(queryText)
-            isRefreshing.postValue(false)
         }
     }
 
     fun updateDisplayAppList() {
-        displayApps.value = apps.value?.let { filterList(it, query.value) }
+        viewModelScope.launch {
+            apps.value?.let {
+                isRefreshing.postValue(true)
+                displayApps.postValue(filterList(it, query.value))
+                isRefreshing.postValue(false)
+            }
+        }
     }
 
-    /*  override fun onCleared() {
-         refreshJob?.cancel()
-     } */
 
     private val ApplicationInfo.isSystemApp: Boolean
         get() = flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
     private val ApplicationInfo.isAppFrozen get() = AppManager.isAppFrozen(packageName)
-    private fun filterList(appList: List<ApplicationInfo>, query: String?): List<ApplicationInfo> {
+
+    private suspend fun filterList(
+        appList: List<ApplicationInfo>,
+        query: String?
+    ): List<ApplicationInfo> {
         val pm = getApplication<HailApp>().packageManager
-        return appList.filter {
-            ((HailData.filterUserApps && !it.isSystemApp)
-                    || (HailData.filterSystemApps && it.isSystemApp))
+        return withContext(Dispatchers.Default) {
+            return@withContext appList.filter {
+                ((HailData.filterUserApps && !it.isSystemApp)
+                        || (HailData.filterSystemApps && it.isSystemApp))
 
-                    && ((HailData.filterFrozenApps && it.isAppFrozen)
-                    || (HailData.filterUnfrozenApps && !it.isAppFrozen))
-                    // Search apps
-                    && (query.isNullOrEmpty()
-                    || it.packageName.contains(query, true)
-                    || it.loadLabel(pm).toString().contains(query, true)
-                    || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
-        }.run {
-            when (HailData.sortBy) {
-                HailData.SORT_INSTALL -> sortedBy {
-                    HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
-                        ?.firstInstallTime ?: 0
+                        && ((HailData.filterFrozenApps && it.isAppFrozen)
+                        || (HailData.filterUnfrozenApps && !it.isAppFrozen))
+                        // Search apps
+                        && (query.isNullOrEmpty()
+                        || it.packageName.contains(query, true)
+                        || it.loadLabel(pm).toString().contains(query, true)
+                        || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
+            }.run {
+                when (HailData.sortBy) {
+                    HailData.SORT_INSTALL -> sortedBy {
+                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
+                            ?.firstInstallTime ?: 0
+                    }
+
+                    HailData.SORT_UPDATE -> sortedByDescending {
+                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.lastUpdateTime ?: 0
+                    }
+
+                    else -> sortedWith(NameComparator)
                 }
-
-                HailData.SORT_UPDATE -> sortedByDescending {
-                    HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.lastUpdateTime ?: 0
-                }
-
-                else -> sortedWith(NameComparator)
             }
         }
     }
