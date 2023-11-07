@@ -123,21 +123,21 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                                 HPolicy.isDeviceOwnerActive -> activity.ownerRemoveDialog()
                                 HPolicy.isAdminActive -> {
                                     HPolicy.removeActiveAdmin()
-                                    uninstallDialog(name, pkg)
+                                    showUninstallDialog(name, pkg)
                                 }
 
-                                else -> uninstallDialog(name, pkg)
+                                else -> showUninstallDialog(name, pkg)
                             }
                         }
 
                         HailData.workingMode == HailData.MODE_DEFAULT -> AppManager.uninstallApp(pkg)
-                        else -> uninstallDialog(name, pkg)
+                        else -> showUninstallDialog(name, pkg)
                     }
                 }
             }.show()
     }
 
-    private fun uninstallDialog(name: CharSequence, pkg: String) {
+    private fun showUninstallDialog(name: CharSequence, pkg: String) {
         MaterialAlertDialogBuilder(activity)
             .setTitle(name)
             .setMessage(R.string.msg_uninstall)
