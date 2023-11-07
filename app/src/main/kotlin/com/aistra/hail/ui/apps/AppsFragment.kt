@@ -53,7 +53,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             onItemLongClickListener = this@AppsFragment
             onItemCheckedChangeListener = this@AppsFragment
         }
-        binding.refresh.setOnRefreshListener { updateCurrentList() }
+        binding.refresh.setOnRefreshListener { updateAppList() }
         binding.recyclerView.apply {
             activity.appbar.setLiftOnScrollTargetView(this)
             layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
@@ -68,10 +68,10 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             binding.refresh.isRefreshing = it
         }
         model.apps.observe(viewLifecycleOwner) {
-            model.updateDisplayAppList()
+            updateDisplayAppList()
         }
         model.query.observe(viewLifecycleOwner) {
-            model.updateDisplayAppList()
+            updateDisplayAppList()
         }
         model.displayApps.observe(viewLifecycleOwner) {
             appsAdapter.submitList(it)
@@ -142,7 +142,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             .setTitle(name)
             .setMessage(R.string.msg_uninstall)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                if (AppManager.uninstallApp(pkg)) updateCurrentList()
+                if (AppManager.uninstallApp(pkg)) updateAppList()
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
@@ -204,7 +204,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     private fun changeAppsSort(sort: String, item: MenuItem) {
         item.isChecked = true
         HailData.changeAppsSort(sort)
-        updateCurrentList()
+        updateDisplayAppList()
     }
 
     private fun changeAppsFilter(filter: String, item: MenuItem) {
@@ -226,10 +226,11 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 HailData.changeAppsFilter(filter, item.isChecked)
             }
         }
-        updateCurrentList()
+        updateDisplayAppList()
     }
 
-    private fun updateCurrentList() = model.updateAppList()
+    private fun updateAppList() = model.updateAppList()
+    private fun updateDisplayAppList() = model.updateDisplayAppList()
 
     override fun onDestroy() {
         appsAdapter.onDestroy()
