@@ -2,6 +2,7 @@ package com.aistra.hail.ui.apps
 
 import android.app.Application
 import android.content.pm.ApplicationInfo
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -28,6 +29,24 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private var refreshJob: Job? = null
+    private var refreshStateJob: Job? = null
+
+    /**
+     * Delaying changes to the refreshing state prevents the progress bar from flickering.
+     * */
+    private fun postRefreshState(state: Boolean, delayTime: Long = 500L) {
+        if (!state) {
+            refreshStateJob?.cancel()
+            isRefreshing.postValue(false)
+        } else {
+            if (refreshStateJob == null || refreshStateJob!!.isCompleted)
+                refreshStateJob = viewModelScope.launch {
+                    delay(delayTime)
+                    this@AppsViewModel.isRefreshing.postValue(state)
+                }
+        }
+    }
+
     fun postQuery(text: String, delayTime: Long = 500L) {
         refreshJob?.cancel()
         if (delayTime == 0L)
@@ -46,7 +65,7 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
      * */
     fun updateAppList() {
         viewModelScope.launch {
-            isRefreshing.postValue(true)
+            postRefreshState(true)
             apps.postValue(HPackages.getInstalledApplications())
         }
     }
@@ -58,11 +77,12 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
      * from `apps` and places it in `displayApps`.
      * */
     fun updateDisplayAppList() {
-        viewModelScope.launch {
-            apps.value?.let {
-                isRefreshing.postValue(true)
+        apps.value?.let {
+            viewModelScope.launch {
+                Log.d("TAG", "updateDisplayAppList: ")
+                postRefreshState(true)
                 displayApps.postValue(filterList(it, query.value))
-                isRefreshing.postValue(false)
+                postRefreshState(false)
             }
         }
     }

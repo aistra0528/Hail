@@ -42,6 +42,12 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     private val binding get() = _binding!!
     private lateinit var appsAdapter: AppsAdapter
 
+    // Prevent the same data from being filtered twice in `onCreateView`
+    private var lastAppsHash: Int = 0
+    private lateinit var lastQuery: String
+    private val isAppsChanged get() = model.apps.value.hashCode() != lastAppsHash
+    private val isQueryChanged get() = model.query.value != lastQuery
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -68,11 +74,19 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         model.isRefreshing.observe(viewLifecycleOwner) {
             binding.refresh.isRefreshing = it
         }
-        model.apps.observe(viewLifecycleOwner) {
-            updateDisplayAppList()
+        model.apps.apply {
+            lastAppsHash = value.hashCode()
+            observe(viewLifecycleOwner) {
+                if (isAppsChanged) updateDisplayAppList()
+                lastAppsHash = it.hashCode()
+            }
         }
-        model.query.observe(viewLifecycleOwner) {
-            updateDisplayAppList()
+        model.query.apply {
+            lastQuery = value ?: ""
+            observe(viewLifecycleOwner) {
+                if (isQueryChanged) updateDisplayAppList()
+                lastQuery = it
+            }
         }
         model.displayApps.observe(viewLifecycleOwner) {
             appsAdapter.submitList(it)
@@ -163,7 +177,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
-                model.postQuery(newText)
+                model.postQuery(newText, if (newText.isEmpty()) 0L else 500L)
                 return true
             }
 
