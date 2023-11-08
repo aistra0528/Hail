@@ -64,6 +64,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 bottom = activity.isLandscape
             )
         }
+
         model.isRefreshing.observe(viewLifecycleOwner) {
             binding.refresh.isRefreshing = it
         }
@@ -87,7 +88,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     override fun onItemLongClick(info: ApplicationInfo): Boolean = true.also {
         val name = info.loadLabel(app.packageManager)
         val pkg = info.packageName
-        MaterialAlertDialogBuilder(activity).setTitle(name)
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(name)
             .setItems(resources.getStringArray(R.array.apps_action_entries)) { _, which ->
                 when (which) {
                     0 -> HUI.startActivity(
@@ -158,8 +160,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
 
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_apps, menu)
-        (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
                 model.postQuery(newText)
                 return true

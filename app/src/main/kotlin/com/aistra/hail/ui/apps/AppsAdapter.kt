@@ -1,32 +1,22 @@
 package com.aistra.hail.ui.apps
 
 import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ItemAppsBinding
 import com.aistra.hail.utils.AppIconCache
-import com.aistra.hail.utils.FuzzySearch
 import com.aistra.hail.utils.HPackages
-import com.aistra.hail.utils.NameComparator
-import com.aistra.hail.utils.PinyinSearch
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
 
-    companion object{
+    companion object {
         val DIFF = object : DiffUtil.ItemCallback<ApplicationInfo>() {
             override fun areItemsTheSame(
                 oldItem: ApplicationInfo,
@@ -45,7 +35,6 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
     lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
     private var loadIconJob: Job? = null
-    private var refreshJob: Job? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         ItemAppsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -58,7 +47,6 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
 
     fun onDestroy() {
         if (loadIconJob?.isActive == true) loadIconJob?.cancel()
-        if (refreshJob?.isActive == true) refreshJob?.cancel()
     }
 
     inner class ViewHolder(private val binding: ItemAppsBinding) :

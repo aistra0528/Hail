@@ -40,6 +40,10 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * This method is only used to refresh all the applications that the user has installed
+     * and has no filtering or sorting effect.
+     * */
     fun updateAppList() {
         viewModelScope.launch {
             isRefreshing.postValue(true)
@@ -47,6 +51,12 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * The list that the user actually sees.
+     *
+     * This method is different from `updateAppList()` in that it filters and rearranges the data
+     * from `apps` and places it in `displayApps`.
+     * */
     fun updateDisplayAppList() {
         viewModelScope.launch {
             apps.value?.let {
