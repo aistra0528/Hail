@@ -34,7 +34,7 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * Delaying changes to the refreshing state prevents the progress bar from flickering.
      * */
-    private fun postRefreshState(state: Boolean, delayTime: Long = 500L) {
+    private fun postRefreshState(state: Boolean, delayTime: Long = 200L) {
         if (!state) {
             refreshStateJob?.cancel()
             isRefreshing.postValue(false)
@@ -47,7 +47,7 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun postQuery(text: String, delayTime: Long = 500L) {
+    fun postQuery(text: String, delayTime: Long = 300L) {
         refreshJob?.cancel()
         if (delayTime == 0L)
             this.query.postValue(text)
