@@ -32,7 +32,6 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
         }
     }
     lateinit var onItemClickListener: OnItemClickListener
-    lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
     private var loadIconJob: Job? = null
 
@@ -51,7 +50,7 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
 
     inner class ViewHolder(private val binding: ItemAppsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private lateinit var info: ApplicationInfo
+        lateinit var info: ApplicationInfo
         private val pkg get() = info.packageName
 
         /**
@@ -62,7 +61,7 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
         init {
             binding.root.apply {
                 setOnClickListener { onItemClickListener.onItemClick(binding.appStar) }
-                setOnLongClickListener { onItemLongClickListener.onItemLongClick(info) }
+                isLongClickable=true
             }
             binding.appStar.setOnCheckedChangeListener { button, isChecked ->
                 if (!updating)
@@ -96,10 +95,6 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
 
     interface OnItemClickListener {
         fun onItemClick(buttonView: CompoundButton)
-    }
-
-    interface OnItemLongClickListener {
-        fun onItemLongClick(info: ApplicationInfo): Boolean
     }
 
     interface OnItemCheckedChangeListener {
