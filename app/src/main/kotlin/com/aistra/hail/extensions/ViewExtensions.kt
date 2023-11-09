@@ -46,14 +46,14 @@ fun View.applyInsetsMargin(
     ViewCompat.setOnApplyWindowInsetsListener(this) { v, windowInsets ->
         val insets = windowInsets.getInsets(systemBars() or displayCutout())
         (v.layoutParams as MarginLayoutParams).apply {
+            val marginStart = origin.getStart(v) + if (start) insets.getStart(v) else 0
+            val marginEnd = origin.getEnd(v) + if (end) insets.getEnd(v) else 0
             setMargins(
-                0,
+                if (isRtl) marginEnd else marginStart,
                 origin.top + if (top) insets.top else 0,
-                0,
+                if (isRtl) marginStart else marginEnd,
                 origin.bottom + if (bottom) insets.bottom else 0
             )
-            marginStart = origin.getStart(v) + if (start) insets.getStart(v) else 0
-            marginEnd = origin.getEnd(v) + if (end) insets.getEnd(v) else 0
         }
         windowInsets
     }
