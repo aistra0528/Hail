@@ -127,24 +127,13 @@ class ApiActivity : AppCompatActivity() {
         list: List<AppInfo> = HailData.checkedList,
         skipWhitelisted: Boolean = false
     ) {
-        var i = 0
-        var denied = false
-        var name = String()
-        for (it in list) when {
-            AppManager.isAppFrozen(it.packageName) == frozen || (skipWhitelisted && it.whitelisted) -> continue
-            AppManager.setAppFrozen(it.packageName, frozen) -> {
-                i++
-                name = it.name.toString()
-            }
-
-            it.packageName != packageName && it.applicationInfo != null -> denied = true
-        }
-        when {
-            denied && i == 0 -> throw IllegalStateException(getString(R.string.permission_denied))
-            i > 0 -> {
+        val list = list.filter { AppManager.isAppFrozen(it.packageName) != frozen && !(skipWhitelisted && it.whitelisted) }
+        when (val result = AppManager.setListFrozen(frozen, *list.toTypedArray())) {
+            null -> throw IllegalStateException(getString(R.string.permission_denied))
+            else -> {
                 HUI.showToast(
                     if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                    if (i > 1) i.toString() else name
+                    result
                 )
                 app.setAutoFreezeService()
             }

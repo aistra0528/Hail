@@ -344,25 +344,14 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
     private fun setListFrozen(
         frozen: Boolean, list: List<AppInfo> = HailData.checkedList, updateList: Boolean = true
     ) {
-        var i = 0
-        var denied = false
-        var name = String()
-        for (it in list) when {
-            AppManager.isAppFrozen(it.packageName) == frozen -> continue
-            AppManager.setAppFrozen(it.packageName, frozen) -> {
-                i++
-                name = it.name.toString()
-            }
-
-            it.packageName != app.packageName && it.applicationInfo != null -> denied = true
-        }
-        when {
-            denied && i == 0 -> HUI.showToast(R.string.permission_denied)
-            i > 0 -> {
+        val list = list.filter { AppManager.isAppFrozen(it.packageName) != frozen }
+        when (val result = AppManager.setListFrozen(frozen, *list.toTypedArray())) {
+            null -> HUI.showToast(R.string.permission_denied)
+            else -> {
                 if (updateList) updateCurrentList()
                 HUI.showToast(
                     if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                    if (i > 1) i.toString() else name
+                    result
                 )
             }
         }
