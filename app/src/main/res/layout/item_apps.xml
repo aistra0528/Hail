@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="?selectableItemBackground"
-    android:gravity="center_vertical"
-    tools:viewBindingIgnore="true">
+    android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/app_icon"
         android:layout_width="@dimen/app_icon_size"
         android:layout_height="@dimen/app_icon_size"
         android:contentDescription="@null"
-        android:padding="@dimen/control_padding" />
+        android:padding="@dimen/control_padding"
+        tools:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            tools:text="@string/app_name" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_desc"
@@ -34,7 +35,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            tools:text="com.aistra.hail" />
     </LinearLayout>
 
     <com.google.android.material.checkbox.MaterialCheckBox

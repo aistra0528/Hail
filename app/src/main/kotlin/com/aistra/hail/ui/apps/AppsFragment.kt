@@ -3,26 +3,21 @@ package com.aistra.hail.ui.apps
 import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CompoundButton
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.databinding.FragmentAppsBinding
 import com.aistra.hail.extensions.applyInsetsPadding
 import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
@@ -35,41 +30,64 @@ import kotlinx.coroutines.launch
 
 class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     AppsAdapter.OnItemLongClickListener, AppsAdapter.OnItemCheckedChangeListener, MenuProvider {
-    private lateinit var refreshLayout: SwipeRefreshLayout
+
+    private val model: AppsViewModel by viewModels()
+
+    private var _binding: FragmentAppsBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var appsAdapter: AppsAdapter
+
+    // Prevent the same data from being filtered twice in `onCreateView`
+    private var lastAppsHash: Int = 0
+    private lateinit var lastQuery: String
+    private val isAppsChanged get() = model.apps.value.hashCode() != lastAppsHash
+    private val isQueryChanged get() = model.query.value != lastQuery
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        return SwipeRefreshLayout(activity).apply {
-            refreshLayout = this
-            addView(RecyclerView(activity).apply {
-                activity.appbar.setLiftOnScrollTargetView(this)
-                id = R.id.recycler_view
-                layoutManager =
-                    GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
-                adapter = AppsAdapter.apply {
-                    onItemClickListener = this@AppsFragment
-                    onItemLongClickListener = this@AppsFragment
-                    onItemCheckedChangeListener = this@AppsFragment
-                }
-
-                clipToPadding = false
-                this.applyInsetsPadding(
-                    start = !activity.isLandscape,
-                    end = true,
-                    bottom = activity.isLandscape
-                )
-            })
-            setOnRefreshListener { AppsAdapter.updateCurrentList(this) }
-
+        _binding = FragmentAppsBinding.inflate(inflater, container, false)
+        appsAdapter = AppsAdapter().apply {
+            onItemClickListener = this@AppsFragment
+            onItemLongClickListener = this@AppsFragment
+            onItemCheckedChangeListener = this@AppsFragment
         }
-    }
+        binding.refresh.setOnRefreshListener { updateAppList() }
+        binding.recyclerView.apply {
+            activity.appbar.setLiftOnScrollTargetView(this)
+            layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
+            adapter = appsAdapter
+            applyInsetsPadding(
+                start = !activity.isLandscape,
+                end = true,
+                bottom = activity.isLandscape
+            )
+        }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        AppsAdapter.updateCurrentList(refreshLayout)
+        model.isRefreshing.observe(viewLifecycleOwner) {
+            binding.refresh.isRefreshing = it
+        }
+        model.apps.apply {
+            lastAppsHash = value.hashCode()
+            observe(viewLifecycleOwner) {
+                if (isAppsChanged) updateDisplayAppList()
+                lastAppsHash = it.hashCode()
+            }
+        }
+        model.query.apply {
+            lastQuery = value ?: ""
+            observe(viewLifecycleOwner) {
+                if (isQueryChanged) updateDisplayAppList()
+                lastQuery = it
+            }
+        }
+        model.displayApps.observe(viewLifecycleOwner) {
+            appsAdapter.submitList(it)
+        }
+
+        return binding.root
     }
 
     override fun onItemClick(buttonView: CompoundButton) {
@@ -79,7 +97,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     override fun onItemLongClick(info: ApplicationInfo): Boolean = true.also {
         val name = info.loadLabel(app.packageManager)
         val pkg = info.packageName
-        MaterialAlertDialogBuilder(activity).setTitle(name)
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(name)
             .setItems(resources.getStringArray(R.array.apps_action_entries)) { _, which ->
                 when (which) {
                     0 -> HUI.startActivity(
@@ -115,25 +134,29 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                                 HPolicy.isDeviceOwnerActive -> activity.ownerRemoveDialog()
                                 HPolicy.isAdminActive -> {
                                     HPolicy.removeActiveAdmin()
-                                    uninstallDialog(name, pkg)
+                                    showUninstallDialog(name, pkg)
                                 }
 
-                                else -> uninstallDialog(name, pkg)
+                                else -> showUninstallDialog(name, pkg)
                             }
                         }
 
                         HailData.workingMode == HailData.MODE_DEFAULT -> AppManager.uninstallApp(pkg)
-                        else -> uninstallDialog(name, pkg)
+                        else -> showUninstallDialog(name, pkg)
                     }
                 }
             }.show()
     }
 
-    private fun uninstallDialog(name: CharSequence, pkg: String) {
-        MaterialAlertDialogBuilder(activity).setTitle(name).setMessage(R.string.msg_uninstall)
+    private fun showUninstallDialog(name: CharSequence, pkg: String) {
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(name)
+            .setMessage(R.string.msg_uninstall)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                if (AppManager.uninstallApp(pkg)) AppsAdapter.updateCurrentList(refreshLayout)
-            }.setNegativeButton(android.R.string.cancel, null).show()
+                if (AppManager.uninstallApp(pkg)) updateAppList()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     override fun onItemCheckedChange(
@@ -146,15 +169,17 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
 
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_apps, menu)
-        (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
-            private var inited = false
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
-                if (inited) AppsAdapter.updateCurrentList(refreshLayout, newText) else inited = true
+                model.postQuery(newText, if (newText.isEmpty()) 0L else 300L)
                 return true
             }
 
-            override fun onQueryTextSubmit(query: String): Boolean = true
+            override fun onQueryTextSubmit(query: String): Boolean {
+                model.postQuery(query, 0L)
+                return true
+            }
         })
     }
 
@@ -190,7 +215,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     private fun changeAppsSort(sort: String, item: MenuItem) {
         item.isChecked = true
         HailData.changeAppsSort(sort)
-        AppsAdapter.updateCurrentList(refreshLayout)
+        updateDisplayAppList()
     }
 
     private fun changeAppsFilter(filter: String, item: MenuItem) {
@@ -212,11 +237,15 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 HailData.changeAppsFilter(filter, item.isChecked)
             }
         }
-        AppsAdapter.updateCurrentList(refreshLayout)
+        updateDisplayAppList()
     }
 
+    private fun updateAppList() = model.updateAppList()
+    private fun updateDisplayAppList() = model.updateDisplayAppList()
+
     override fun onDestroy() {
-        AppsAdapter.onDestroy()
+        appsAdapter.onDestroy()
         super.onDestroy()
+        _binding = null
     }
 }
