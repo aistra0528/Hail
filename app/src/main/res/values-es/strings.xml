@@ -18,8 +18,8 @@
     <string name="action_licenses">Licencias</string>
     <string name="action_freeze_all">Congelar todo</string>
     <string name="action_unfreeze_all">Descongelar todo</string>
-    <string name="action_freeze_current">Congelar actuales</string>
-    <string name="action_unfreeze_current">Descongelar actuales</string>
+    <string name="action_freeze_current">Congelación visible</string>
+    <string name="action_unfreeze_current">Descongelación visible</string>
     <string name="action_lock">Bloquear</string>
     <string name="action_lock_freeze">Bloquear y Congelar</string>
     <string name="action_launch">Lanzar</string>
@@ -141,6 +141,6 @@
     <string name="mode_su_hide">Superusuario - Ocultar</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">Omitir</string>
-    <string name="mode_island_hide">Isla - Ocultar</string>
+    <string name="mode_island_hide">Isla/Insular - Ocultar</string>
     <string name="mode_island_suspend">Isla - Suspender</string>
 </resources>
