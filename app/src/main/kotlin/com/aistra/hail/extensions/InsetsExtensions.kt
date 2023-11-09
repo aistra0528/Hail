@@ -1,12 +1,12 @@
 package com.aistra.hail.extensions
 
-import android.content.Context
+import android.view.View
 import androidx.core.graphics.Insets
 
-fun Insets.getStart(context: Context): Int {
-    return if (context.isRtl) right else left
+fun Insets.getStart(view: View): Int {
+    return if (view.isRtl) right else left
 }
 
-fun Insets.getEnd(context: Context): Int {
-    return if (context.isRtl) left else right
+fun Insets.getEnd(view: View): Int {
+    return if (view.isRtl) left else right
 }

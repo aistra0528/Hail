@@ -20,8 +20,8 @@ fun View.applyInsetsPadding(
         val insets =
             windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
         v.updatePaddingRelative(
-            start = if (start) insets.getStart(context) else 0,
-            end = if (end) insets.getEnd(context) else 0,
+            start = if (start) insets.getStart(v) else 0,
+            end = if (end) insets.getEnd(v) else 0,
             bottom = if (bottom) insets.bottom else 0,
             top = if (top) insets.top else 0,
         )
