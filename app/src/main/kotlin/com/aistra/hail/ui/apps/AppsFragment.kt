@@ -3,12 +3,7 @@ package com.aistra.hail.ui.apps
 import android.os.Bundle
 import android.provider.Settings
 import android.view.ContextMenu
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CompoundButton
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.pm.PackageInfoCompat
@@ -202,7 +197,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
-                model.postQuery(newText, if (newText.isEmpty()) 0L else 500L)
+                model.postQuery(newText, if (newText.isEmpty()) 0L else 300L)
                 return true
             }
 

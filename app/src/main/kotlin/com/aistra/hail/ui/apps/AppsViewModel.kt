@@ -2,21 +2,17 @@ package com.aistra.hail.ui.apps
 
 import android.app.Application
 import android.content.pm.ApplicationInfo
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aistra.hail.HailApp
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.utils.FuzzySearch
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.NameComparator
 import com.aistra.hail.utils.PinyinSearch
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class AppsViewModel(application: Application) : AndroidViewModel(application) {
     val apps = MutableLiveData<List<ApplicationInfo>>()
@@ -42,7 +38,7 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
             if (refreshStateJob == null || refreshStateJob!!.isCompleted)
                 refreshStateJob = viewModelScope.launch {
                     delay(delayTime)
-                    this@AppsViewModel.isRefreshing.postValue(state)
+                    isRefreshing.postValue(state)
                 }
         }
     }
@@ -50,11 +46,11 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     fun postQuery(text: String, delayTime: Long = 300L) {
         refreshJob?.cancel()
         if (delayTime == 0L)
-            this.query.postValue(text)
+            query.postValue(text)
         else {
             refreshJob = viewModelScope.launch {
                 delay(delayTime)
-                this@AppsViewModel.query.postValue(text)
+                query.postValue(text)
             }
         }
     }
@@ -79,7 +75,6 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     fun updateDisplayAppList() {
         apps.value?.let {
             viewModelScope.launch {
-                Log.d("TAG", "updateDisplayAppList: ")
                 postRefreshState(true)
                 displayApps.postValue(filterList(it, query.value))
                 postRefreshState(false)
@@ -105,9 +100,8 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
                         && ((HailData.filterFrozenApps && it.isAppFrozen)
                         || (HailData.filterUnfrozenApps && !it.isAppFrozen))
                         // Search apps
-                        && (query.isNullOrEmpty()
-                        || it.packageName.contains(query, true)
-                        || it.loadLabel(pm).toString().contains(query, true)
+                        && (FuzzySearch.search(it.packageName, query)
+                        || FuzzySearch.search(it.loadLabel(pm).toString(), query)
                         || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
             }.run {
                 when (HailData.sortBy) {

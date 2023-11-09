@@ -18,8 +18,8 @@
     <string name="action_licenses">许可证</string>
     <string name="action_freeze_all">全部冻结</string>
     <string name="action_unfreeze_all">全部解冻</string>
-    <string name="action_freeze_current">冻结当前</string>
-    <string name="action_unfreeze_current">解冻当前</string>
+    <string name="action_freeze_current">冻结可见</string>
+    <string name="action_unfreeze_current">解冻可见</string>
     <string name="action_lock">锁屏</string>
     <string name="action_lock_freeze">锁屏冻结</string>
     <string name="action_launch">启动</string>

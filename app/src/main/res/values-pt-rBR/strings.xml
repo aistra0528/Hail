@@ -142,4 +142,6 @@
     <string name="donate_wechat_scan">Escanear</string>
     <string name="action_remove_whitelist">Remover da lista de permissões</string>
     <string name="action_skip">Pular</string>
+    <string name="mode_island_hide">Island - Ocultar</string>
+    <string name="mode_island_suspend">Island - Suspender</string>
 </resources>
