@@ -17,29 +17,28 @@ Hail is a free-as-in-freedom software to freeze Android apps. [GitHub Releases](
 
 ## Freeze
 
-Freeze is a word to describe the action of **forbid apps when they are unnecessary** to use device
-in a better way, cut down the usage of ram and save power. User can unfreeze them to revert.
+Freeze is a word that describes the action of **forbid (immediately stop) apps when they are unnecessary (on-demand request)** to use the device
+in a better way, cut down the usage of ram and save power. User can also unfreeze them to revert to their original state.
 
 In general, "freeze" means disable, but also Hail can "freeze" apps by hiding and suspending them.
 
 ### Disable
 
-Disabled apps will not be shown in the launcher and will be shown as "Disabled" in the installed
-apps list. Enable them to revert.
+Disabled apps will not be shown in the launcher and will be shown as "Disabled" in the installed apps list. Enable them to revert the action.
 
 ### Hide
 
-Hidden apps will not be shown in the launcher and installed apps list. Unhide them to revert.
+Hidden apps will not be shown in the launcher and installed apps list. Unhide them to revert the action.
 
-> While in this state, which is almost like an uninstalled state, making the package unavailable,
+> While in this state, which is almost like an uninstalled state, makes the package unavailable,
 > but it doesn't remove the data or the actual package file.
 
 ### Suspend (Android 7.0+)
 
-Suspended apps will be shown as grayscale icons in the launcher. Unsuspend them to revert.
+Suspended apps will have their icons shown in a grayscale in the device's launcher. Unsuspend them to revert the action.
 
 > While in this state, the application's notifications will be hidden, any of its started activities
-> will be stopped and it will not be able to show toasts or dialogs or play audio. When the user tries
+> will be stopped and it will not be able to show toasts, dialogs or even play audio. When the user tries
 > to launch a suspended app, the system will, instead, show a dialog to the user informing them that
 > they cannot use this app while it is suspended.
 
