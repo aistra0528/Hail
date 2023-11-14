@@ -2,7 +2,6 @@ package com.aistra.hail.ui.apps
 
 import android.os.Bundle
 import android.provider.Settings
-import android.view.ContextMenu
 import android.view.*
 import android.widget.CompoundButton
 import androidx.appcompat.widget.SearchView
@@ -29,8 +28,8 @@ import com.aistra.hail.views.HRecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
-class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
-    AppsAdapter.OnItemCheckedChangeListener, MenuProvider {
+class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapter.OnItemCheckedChangeListener,
+    MenuProvider {
 
     private val model: AppsViewModel by viewModels()
 
@@ -61,9 +60,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
             adapter = appsAdapter
             applyInsetsPadding(
-                start = !activity.isLandscape,
-                end = true,
-                bottom = activity.isLandscape
+                start = !activity.isLandscape, end = true, bottom = activity.isLandscape
             )
             registerForContextMenu(this)
         }
@@ -97,13 +94,10 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
+        menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?
     ) {
         contextMenuInfo = menuInfo
-        val viewHolder =
-            ((menuInfo as HRecyclerView.RecyclerViewContextMenuInfo).viewHolder as AppsAdapter.ViewHolder)
+        val viewHolder = ((menuInfo as HRecyclerView.RecyclerViewContextMenuInfo).viewHolder as AppsAdapter.ViewHolder)
         menu.setHeaderTitle(viewHolder.info.loadLabel(activity.packageManager))
         activity.menuInflater.inflate(R.menu.menu_apps_action, menu)
         super.onCreateContextMenu(menu, v, menuInfo)
@@ -117,8 +111,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
         val pkg = info.packageName
         when (item.itemId) {
             R.id.action_details -> HUI.startActivity(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                HPackages.packageUri(pkg)
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS, HPackages.packageUri(pkg)
             )
 
             R.id.action_export_clipboard -> {
@@ -135,16 +128,13 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
 
     private fun extractApk(name: CharSequence, pkg: String, sourceDir: String) {
         lifecycleScope.launch {
-            val dialog = MaterialAlertDialogBuilder(activity)
-                .setView(R.layout.dialog_progress)
-                .setCancelable(false)
-                .create()
+            val dialog =
+                MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress).setCancelable(false).create()
             dialog.show()
             val target = "${HFiles.DIR_OUTPUT}/$name-${
                 HPackages.getUnhiddenPackageInfoOrNull(pkg)?.versionName ?: "unknown"
             }-${
-                HPackages.getUnhiddenPackageInfoOrNull(pkg)
-                    ?.let { PackageInfoCompat.getLongVersionCode(it) } ?: 0
+                HPackages.getUnhiddenPackageInfoOrNull(pkg)?.let { PackageInfoCompat.getLongVersionCode(it) } ?: 0
             }.apk"
             HUI.showToast(
                 if (HFiles.copy(sourceDir, target)) R.string.msg_extract_apk
@@ -174,14 +164,10 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     private fun showUninstallDialog(name: CharSequence, pkg: String) {
-        MaterialAlertDialogBuilder(activity)
-            .setTitle(name)
-            .setMessage(R.string.msg_uninstall)
+        MaterialAlertDialogBuilder(activity).setTitle(name).setMessage(R.string.msg_uninstall)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 if (AppManager.uninstallApp(pkg)) updateAppList()
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+            }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
     override fun onItemCheckedChange(
