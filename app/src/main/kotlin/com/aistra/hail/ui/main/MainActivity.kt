@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
+import com.aistra.hail.extensions.applyInsetsMargin
 import com.aistra.hail.extensions.applyInsetsPadding
 import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.utils.HPolicy
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             end = true,
             bottom = true
         )
+        fab.applyInsetsMargin(end = true, bottom = isLandscape)
     }
 
     private fun showGuide() {
