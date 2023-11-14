@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_details"
+        android:title="@string/action_details" />
+    <item
+        android:id="@+id/action_export_clipboard"
+        android:title="@string/action_export_clipboard" />
+    <item
+        android:id="@+id/action_extract_apk"
+        android:title="@string/action_extract_apk" />
+    <item
+        android:id="@+id/action_uninstall"
+        android:title="@string/action_uninstall" />
+</menu>
