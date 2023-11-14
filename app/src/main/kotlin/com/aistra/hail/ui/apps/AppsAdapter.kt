@@ -19,20 +19,16 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
     companion object {
         val DIFF = object : DiffUtil.ItemCallback<ApplicationInfo>() {
             override fun areItemsTheSame(
-                oldItem: ApplicationInfo,
-                newItem: ApplicationInfo
-            ): Boolean =
-                oldItem.packageName == newItem.packageName
+                oldItem: ApplicationInfo, newItem: ApplicationInfo
+            ): Boolean = oldItem.packageName == newItem.packageName
 
             override fun areContentsTheSame(
-                oldItem: ApplicationInfo,
-                newItem: ApplicationInfo
-            ): Boolean =
-                areItemsTheSame(oldItem, newItem)
+                oldItem: ApplicationInfo, newItem: ApplicationInfo
+            ): Boolean = areItemsTheSame(oldItem, newItem)
         }
     }
+
     lateinit var onItemClickListener: OnItemClickListener
-    lateinit var onItemLongClickListener: OnItemLongClickListener
     lateinit var onItemCheckedChangeListener: OnItemCheckedChangeListener
     private var loadIconJob: Job? = null
 
@@ -49,9 +45,8 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
         if (loadIconJob?.isActive == true) loadIconJob?.cancel()
     }
 
-    inner class ViewHolder(private val binding: ItemAppsBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        private lateinit var info: ApplicationInfo
+    inner class ViewHolder(private val binding: ItemAppsBinding) : RecyclerView.ViewHolder(binding.root) {
+        lateinit var info: ApplicationInfo
         private val pkg get() = info.packageName
 
         /**
@@ -62,11 +57,10 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
         init {
             binding.root.apply {
                 setOnClickListener { onItemClickListener.onItemClick(binding.appStar) }
-                setOnLongClickListener { onItemLongClickListener.onItemLongClick(info) }
+                isLongClickable = true
             }
             binding.appStar.setOnCheckedChangeListener { button, isChecked ->
-                if (!updating)
-                    onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, pkg)
+                if (!updating) onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, pkg)
             }
         }
 
@@ -96,10 +90,6 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
 
     interface OnItemClickListener {
         fun onItemClick(buttonView: CompoundButton)
-    }
-
-    interface OnItemLongClickListener {
-        fun onItemLongClick(info: ApplicationInfo): Boolean
     }
 
     interface OnItemCheckedChangeListener {
