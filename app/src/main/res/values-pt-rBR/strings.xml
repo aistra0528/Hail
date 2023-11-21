@@ -125,10 +125,10 @@
     <string name="label_version">Versão</string>
     <string name="title_apps">Apps</string>
     <string name="title_set_owner">Definir proprietário do dispositivo</string>
-    <string name="action_freeze_current">Congelar o atual</string>
+    <string name="action_freeze_current">Congelar o visível</string>
     <string name="msg_extract_apk">Extraído para: %s</string>
     <string name="action_freeze_non_whitelisted">Congelar não incluído na lista de permissões</string>
-    <string name="action_unfreeze_current">Descongelar o atual</string>
+    <string name="action_unfreeze_current">Descongelar o visível</string>
     <string name="dynamic_shortcut_action">Ação de atalho dinâmico</string>
     <string name="auto_freeze_delay">Atraso de congelamento (minutos)</string>
     <string name="action_freeze_all">Congelar tudo</string>
@@ -137,6 +137,6 @@
     <string name="donate_wechat_scan">Escanear</string>
     <string name="action_remove_whitelist">Remover da lista de permissões</string>
     <string name="action_skip">Pular</string>
-    <string name="mode_island_hide">Island - Ocultar</string>
-    <string name="mode_island_suspend">Island - Suspender</string>
+    <string name="mode_island_hide">Island/Insular - Ocultar</string>
+    <string name="mode_island_suspend">Island/Insular - Suspender</string>
 </resources>
