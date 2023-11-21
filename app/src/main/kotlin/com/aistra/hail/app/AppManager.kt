@@ -31,6 +31,29 @@ object AppManager {
                 || HPackages.isAppSuspended(packageName)
     }
 
+    fun setListFrozen(frozen: Boolean, vararg appInfo: AppInfo): String? {
+        val appInfo = appInfo.filter { it.packageName != BuildConfig.APPLICATION_ID }
+        var i = 0
+        var denied = false
+        var name = String()
+        when (HailData.workingMode) {
+            // call setListFrozen for some batch-style working mode here
+            // fallback to setAppFrozen otherwise
+            else -> {
+                appInfo.forEach {
+                    when {
+                        setAppFrozen(it.packageName, frozen) -> {
+                            i++
+                            name = it.name.toString()
+                        }
+                        it.applicationInfo != null -> denied = true
+                    }
+                }
+            }
+        }
+        return if (denied && i == 0) null else if (i > 1) i.toString() else name
+    }
+
     fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =
         packageName != BuildConfig.APPLICATION_ID && when (HailData.workingMode) {
             HailData.MODE_OWNER_HIDE -> HPolicy.setAppHidden(packageName, frozen)
