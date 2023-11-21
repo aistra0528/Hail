@@ -301,6 +301,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 HLog.e(it)
                 HUI.showToast(R.string.permission_denied)
                 false
+            }.also {
+                if (it) {
+                    HIsland.checkOwnerApp()
+                }
             }
         }
 
