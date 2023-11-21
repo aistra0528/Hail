@@ -9,8 +9,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 object HailData {
-    const val URL_WHY_FREE_SOFTWARE =
-        "https://www.gnu.org/philosophy/free-software-even-more-important.html"
+    const val URL_WHY_FREE_SOFTWARE = "https://www.gnu.org/philosophy/free-software-even-more-important.html"
     const val URL_GITHUB = "https://github.com/aistra0528/Hail"
     const val URL_README = "$URL_GITHUB#readme"
     const val URL_RELEASES = "$URL_GITHUB/releases"
@@ -88,7 +87,7 @@ object HailData {
     val biometricLogin get() = sp.getBoolean(BIOMETRIC_LOGIN, false)
     val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)
     val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
-    val tileAction get() = sp.getString(TILE_ACTION, ACTION_LOCK_FREEZE)
+    val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
     val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
@@ -96,11 +95,6 @@ object HailData {
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
-
-    private const val KEY_GUIDE_VERSION = "guide_version"
-    const val GUIDE_VERSION = 1
-    val guideVersion get() = sp.getInt(KEY_GUIDE_VERSION, 0)
-    fun setGuideVersion() = sp.edit().putInt(KEY_GUIDE_VERSION, GUIDE_VERSION).apply()
 
     val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE)!!
     fun setIconPack(packageName: String) = sp.edit().putString(ICON_PACK, packageName).apply()
@@ -116,10 +110,7 @@ object HailData {
                 for (i in 0 until json.length()) {
                     add(with(json.getJSONObject(i)) {
                         AppInfo(
-                            getString(KEY_PACKAGE),
-                            optBoolean(KEY_PINNED),
-                            optInt(KEY_TAG),
-                            optBoolean(KEY_WHITELISTED)
+                            getString(KEY_PACKAGE), optBoolean(KEY_PINNED), optInt(KEY_TAG), optBoolean(KEY_WHITELISTED)
                         )
                     })
                 }
@@ -144,8 +135,8 @@ object HailData {
         HFiles.write(appsPath, JSONArray().run {
             checkedList.forEach {
                 put(
-                    JSONObject().put(KEY_PACKAGE, it.packageName).put(KEY_PINNED, it.pinned)
-                        .put(KEY_TAG, it.tagId).put(KEY_WHITELISTED, it.whitelisted)
+                    JSONObject().put(KEY_PACKAGE, it.packageName).put(KEY_PINNED, it.pinned).put(KEY_TAG, it.tagId)
+                        .put(KEY_WHITELISTED, it.whitelisted)
                 )
             }
             toString()
@@ -177,6 +168,5 @@ object HailData {
 
     fun changeAppsSort(sort: String) = sp.edit().putString(SORT_BY, sort).apply()
 
-    fun changeAppsFilter(filter: String, enabled: Boolean) =
-        sp.edit().putBoolean(filter, enabled).apply()
+    fun changeAppsFilter(filter: String, enabled: Boolean) = sp.edit().putBoolean(filter, enabled).apply()
 }

@@ -37,10 +37,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         val binding = initView()
         if (!HailData.biometricLogin || BiometricManager.from(this)
                 .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) != BiometricManager.BIOMETRIC_SUCCESS
-        ) {
-            showGuide()
-            return
-        }
+        ) return
         binding.root.isVisible = false
         val biometricPrompt = BiometricPrompt(this,
             ContextCompat.getMainExecutor(this),
@@ -54,7 +51,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     binding.root.isVisible = true
-                    showGuide()
                 }
             })
         val promptInfo =
@@ -92,14 +88,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             bottom = true
         )
         fab.applyInsetsMargin(end = true, bottom = isLandscape)
-    }
-
-    private fun showGuide() {
-        if (HailData.guideVersion == HailData.GUIDE_VERSION) return
-        if (HailData.workingMode != HailData.MODE_DEFAULT) HailData.setGuideVersion()
-        else MaterialAlertDialogBuilder(this).setMessage(R.string.msg_guide)
-            .setPositiveButton(android.R.string.ok) { _, _ -> HailData.setGuideVersion() }
-            .setOnDismissListener { HailData.setGuideVersion() }.show()
     }
 
     fun ownerRemoveDialog() {

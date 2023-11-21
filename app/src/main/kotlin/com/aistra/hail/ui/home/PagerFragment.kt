@@ -344,6 +344,12 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
     private fun setListFrozen(
         frozen: Boolean, list: List<AppInfo> = HailData.checkedList, updateList: Boolean = true
     ) {
+        if (HailData.workingMode == HailData.MODE_DEFAULT) {
+            MaterialAlertDialogBuilder(activity)
+                .setMessage(R.string.msg_guide)
+                .setPositiveButton(android.R.string.ok, null).show()
+            return
+        }
         val list = list.filter { AppManager.isAppFrozen(it.packageName) != frozen }
         when (val result = AppManager.setListFrozen(frozen, *list.toTypedArray())) {
             null -> HUI.showToast(R.string.permission_denied)
