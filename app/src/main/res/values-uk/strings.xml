@@ -26,7 +26,6 @@
     <string name="action_lock_freeze">Заблокувати та заморозити</string>
     <string name="action_pin">Пін-код</string>
     <string name="action_qq">Група QQ</string>
-    <string name="action_redeem">Активувати промокод</string>
     <string name="action_remove_home">Видалити з Домашньої</string>
     <string name="action_remove_whitelist">Видалити з білого списку</string>
     <string name="action_search">Пошук</string>
@@ -83,10 +82,6 @@
     <string name="msg_freeze">Заморожено: %s</string>
     <string name="msg_guide">Перед заморожуванням додатків, будь ласка, виберіть робочий режим в налаштуваннях.</string>
     <string name="msg_imported">Імпортовано: %s</string>
-    <string name="msg_network_error">Не вдалося встановити зв\'язок з сервером. Будь ласка, повторіть спробу пізніше.</string>
-    <string name="msg_redeem">Дякуємо!</string>
-    <string name="msg_redeem_expired">Термін дії коду закінчився</string>
-    <string name="msg_redeem_invalid">Невірний код</string>
     <string name="msg_remove_owner">Якщо Hail видалено як власника пристрою, після його видалення можуть виникнути труднощі з реорганізацією додатків.
 \nЗаморожені додатки залишаться замороженими після видалення, будь ласка, переконайтеся, що ви розморозили важливі додатки.</string>
     <string name="msg_selected">Вибрано: %s</string>

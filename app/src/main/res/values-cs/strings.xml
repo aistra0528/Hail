@@ -37,7 +37,6 @@
     <string name="app_name">Hail</string>
     <string name="title_home">Domů</string>
     <string name="action_telegram">Skupina telegram</string>
-    <string name="action_redeem">Uplatnit kód</string>
     <string name="action_tag_set">Nastavit štítek</string>
     <string name="action_unfreeze_remove_home">Odmrazit a Odstranit z Domů</string>
     <string name="action_deselect">Zrušit výběr</string>

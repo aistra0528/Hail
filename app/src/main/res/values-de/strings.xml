@@ -12,7 +12,6 @@
     <string name="action_telegram">Telegram Gruppe</string>
     <string name="action_qq">QQ Gruppe</string>
     <string name="action_donate">Spenden</string>
-    <string name="action_redeem">Gutscheincode einlösen</string>
     <string name="action_github">GitHub</string>
     <string name="action_translate">Übersetzen</string>
     <string name="action_licenses">Lizenzen</string>
@@ -76,10 +75,6 @@
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">Vielen Dank!</string>
-    <string name="msg_redeem_invalid">Ungültiger Code</string>
-    <string name="msg_redeem_expired">Code ist bereits abgelaufen</string>
-    <string name="msg_network_error">Die Verbindung zum Server kann nicht hergestellt werden. Bitte versuche es später noch einmal.</string>
     <string name="permission_denied">Zugriff verweigert</string>
     <string name="app_not_installed">Anwendung ist nicht installiert</string>
     <string name="activity_not_found">Startaktivität nicht gefunden</string>

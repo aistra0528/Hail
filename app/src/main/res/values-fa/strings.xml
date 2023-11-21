@@ -66,8 +66,6 @@
     <string name="donate_bilibili_space">مای اسپیس</string>
     <string name="donate_liberapay">لیبراپی</string>
     <string name="donate_paypal">پی‌پل</string>
-    <string name="msg_redeem_invalid">کد نامعتبر</string>
-    <string name="msg_redeem_expired">کد منقضی</string>
     <string name="app_not_installed">کاره نصب نشده</string>
     <string name="shizuku_missing">شیزوکو نصب نیست :(</string>
     <string name="operation_failed">عملیات شکست خورد: %s</string>
@@ -98,5 +96,4 @@
 \n%s</string>
     <string name="donate_alipay">علی‌پی</string>
     <string name="donate_bilibili_cancel">\@android:string/cancel</string>
-    <string name="msg_redeem">سپاس از شما!</string>
 </resources>

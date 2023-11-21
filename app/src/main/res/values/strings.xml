@@ -12,7 +12,6 @@
     <string name="action_telegram">Telegram Group</string>
     <string name="action_qq">QQ Group</string>
     <string name="action_donate">Donate</string>
-    <string name="action_redeem">Redeem code</string>
     <string name="action_github">GitHub</string>
     <string name="action_translate">Translate</string>
     <string name="action_licenses">Licenses</string>
@@ -77,10 +76,6 @@
     <string name="donate_bilibili_cancel">Cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">Thank you!</string>
-    <string name="msg_redeem_invalid">Invalid code</string>
-    <string name="msg_redeem_expired">Code has expired</string>
-    <string name="msg_network_error">Unable to communicate with the server. Please try again later.</string>
     <string name="permission_denied">Permission denied</string>
     <string name="app_not_installed">App not installed</string>
     <string name="activity_not_found">Launch activity not found</string>

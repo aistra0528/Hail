@@ -12,7 +12,6 @@
     <string name="action_telegram">Telegram 群组</string>
     <string name="action_qq">QQ群</string>
     <string name="action_donate">捐赠</string>
-    <string name="action_redeem">兑换码</string>
     <string name="action_github">GitHub</string>
     <string name="action_translate">翻译</string>
     <string name="action_licenses">许可证</string>
@@ -75,10 +74,6 @@
     <string name="donate_bilibili_cancel">下次一定</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">谢谢你。</string>
-    <string name="msg_redeem_invalid">无效的兑换码</string>
-    <string name="msg_redeem_expired">兑换码已失效</string>
-    <string name="msg_network_error">无法连接服务器。请稍后再试。</string>
     <string name="permission_denied">没有权限</string>
     <string name="app_not_installed">应用未安装</string>
     <string name="activity_not_found">无可启动活动</string>

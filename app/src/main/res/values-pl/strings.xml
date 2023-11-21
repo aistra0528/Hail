@@ -8,7 +8,6 @@
     <string name="action_telegram">Grupa Telegram</string>
     <string name="action_qq">Grupa QQ</string>
     <string name="action_donate">Wspomóż</string>
-    <string name="action_redeem">Wykorzystaj kod</string>
     <string name="action_translate">Przetłumacz</string>
     <string name="action_licenses">Licencje</string>
     <string name="action_freeze_current">Zamroż aktualne</string>
@@ -49,10 +48,6 @@
     <string name="donate_bilibili">bilibili</string>
     <string name="donate_bilibili_msg">Śledź mnie na bilibili.</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">Dziękuję!</string>
-    <string name="msg_redeem_invalid">Niepoprawny kod</string>
-    <string name="msg_redeem_expired">Kod stracił ważność</string>
-    <string name="msg_network_error">Nie można nawiązać połączenia z serwerem. Spróbuj ponownie później.</string>
     <string name="permission_denied">Odmowa dostępu</string>
     <string name="app_not_installed">Aplikacja nie zainstalowana</string>
     <string name="shizuku_missing">Brak Shizuku :(</string>

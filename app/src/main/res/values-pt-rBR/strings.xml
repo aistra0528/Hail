@@ -4,11 +4,9 @@
     <string name="msg_remove_owner">Se o Hail for removido como proprietário do dispositivo, poderá haver dificuldades para reorganizar os aplicativos após a remoção do Hail.
 \nOs aplicativos congelados permanecerão congelados após a remoção. Certifique-se de descongelar os aplicativos importantes.</string>
     <string name="msg_freeze">Congelado: %s</string>
-    <string name="msg_redeem">Obrigado!</string>
     <string name="action_whitelist">Adicionar à lista de permissões</string>
     <string name="synthesize_adaptive_icons">Sintetizar ícones adaptativos</string>
     <string name="title_customize">Customizar</string>
-    <string name="msg_redeem_invalid">Código inválido</string>
     <string name="action_unpin">Unpin</string>
     <string name="title_remove_owner">Remover proprietário do dispositivo</string>
     <string name="action_deselect">Desmarcar</string>
@@ -73,7 +71,6 @@
     <string name="title_donate">Obrigado!</string>
     <string name="compact_icon">Ícone compacto</string>
     <string name="donate_bilibili">Bilibili</string>
-    <string name="action_redeem">Resgatar código</string>
     <string name="donate_bilibili_cancel">Cancelar</string>
     <string name="action_uninstall">Desinstalar</string>
     <string name="mode_dhizuku_hide">Dhizuku – Oculto</string>
@@ -106,7 +103,6 @@
     <string name="action_lock">Bloquear</string>
     <string name="msg_guide">Antes de congelar aplicativos, selecione um modo de funcionamento nas configurações.</string>
     <string name="sort_update">Última atualização</string>
-    <string name="msg_redeem_expired">O código expirou</string>
     <string name="action_unfreeze">Descongelar</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="msg_biometric">Faça login usando sua credencial biométrica</string>
@@ -128,7 +124,6 @@
     <string name="title_settings">Configurações</string>
     <string name="label_version">Versão</string>
     <string name="title_apps">Apps</string>
-    <string name="msg_network_error">Não foi possível se comunicar com o servidor. Por favor, tente novamente mais tarde.</string>
     <string name="title_set_owner">Definir proprietário do dispositivo</string>
     <string name="action_freeze_current">Congelar o atual</string>
     <string name="msg_extract_apk">Extraído para: %s</string>

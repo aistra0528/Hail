@@ -11,7 +11,6 @@
     <string name="action_qq">Grup QQ</string>
     <string name="action_translate">Terjemahkan</string>
     <string name="action_donate">Donasi ke pengembang</string>
-    <string name="action_redeem">Tukarkan kode</string>
     <string name="action_github">Github</string>
     <string name="action_licenses">Lisensi</string>
     <string name="action_freeze_all">Bekukan semua</string>
@@ -43,7 +42,6 @@
     <string name="mode_su_disable">Superuser - Matikan</string>
     <string name="mode_shizuku_disable">Shizuku - Matikan</string>
     <string name="mode_shizuku_suspend">Shizuku - Tangguhkan</string>
-    <string name="msg_redeem_invalid">Kode salah</string>
     <string name="activity_not_found">Pintasan peluncur tidak ditemukan</string>
     <string name="tap_to_select">Tandai pilihan</string>
     <string name="title_set_owner">Atur Pemilik Perangkat</string>
@@ -51,7 +49,6 @@
     <string name="filter_user_apps">Pengguna</string>
     <string name="filter_frozen_apps">Dibekukan</string>
     <string name="filter_unfrozen_apps">Diaktifkan</string>
-    <string name="msg_redeem_expired">Kode kadaluwarsa</string>
     <string name="msg_set_owner">Jalankan perintah dari adb:
 \n%s</string>
     <string name="msg_remove_owner">Jika Hail dihapus sebagai pemilik perangkat, mungkin akan ada kesulitan mengatur kembali Aplikasi setelah Hail terhapus.
@@ -61,8 +58,6 @@
     <string name="sort_name">Nama</string>
     <string name="title_donate">Terima kasih!</string>
     <string name="donate_wechat_scan">Pindai</string>
-    <string name="msg_redeem">Terima kasih!</string>
-    <string name="msg_network_error">Tidak dapat terhubung ke server. Silakan coba beberapa saat lagi.</string>
     <string name="permission_denied">Akses ditolak</string>
     <string name="app_not_installed">Aplikasi tidak terpasang</string>
     <string name="msg_text_copied">Disalin: %s</string>

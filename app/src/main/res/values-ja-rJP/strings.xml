@@ -12,7 +12,6 @@
     <string name="action_telegram">Telegram グループ</string>
     <string name="action_qq">QQ グループ</string>
     <string name="action_donate">サポートする</string>
-    <string name="action_redeem">日付コードを変更します</string>
     <string name="action_github">GitHub</string>
     <string name="action_translate">翻訳</string>
     <string name="action_licenses">ライセンス</string>
@@ -70,10 +69,6 @@
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">ありがとうございます！</string>
-    <string name="msg_redeem_invalid">無効なコードです</string>
-    <string name="msg_redeem_expired">コードの有効期限が切れています</string>
-    <string name="msg_network_error">サーバーと通信できません。少し時間を置いてからもう一度やり直してください。</string>
     <string name="permission_denied">権限がありません</string>
     <string name="app_not_installed">アプリがインストールされていません</string>
     <string name="activity_not_found">起動アクティビティが見つかりません</string>

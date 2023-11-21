@@ -55,7 +55,6 @@
     <string name="sort_update">Siste oppgradering</string>
     <string name="title_donate">Takk.</string>
     <string name="donate_wechat_scan">Skann</string>
-    <string name="msg_redeem_invalid">Ugyldig kode</string>
     <string name="app_not_installed">Programmet er ikke installert</string>
     <string name="msg_selected">Valgt: %s</string>
     <string name="msg_text_copied">Kopiert: %s</string>
@@ -67,8 +66,6 @@
     <string name="action_unpin">Løsne</string>
     <string name="action_export_all">Eksporter alle</string>
     <string name="title_shortcuts">Snarveier</string>
-    <string name="msg_redeem">Takk.</string>
-    <string name="msg_redeem_expired">Koden har utløpt</string>
     <string name="msg_exported">Eksportert: %s</string>
     <string name="msg_imported">Importert: %s</string>
     <string name="msg_extract_apk">Utpakket til: %s</string>
@@ -81,7 +78,6 @@
     <string name="app_slogan">Fryseklar-het.</string>
     <string name="msg_uninstall">Avinstaller dette programmet\?</string>
     <string name="mode_owner_hide">Enhetseier — skjul</string>
-    <string name="action_redeem">Innløs kode</string>
     <string name="action_deselect">Fravelg</string>
     <string name="action_unfreeze_remove_home">Tin og fjern fra hjem</string>
     <string name="working_mode">Arbeidsmodus</string>
@@ -108,7 +104,6 @@
     <string name="donate_alipay">Apipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_bilibili_msg">Følg meg på bilibili.</string>
-    <string name="msg_network_error">Kunne ikke kommunisere med tjeneren. Prøv igjen senere.</string>
     <string name="activity_not_found">Finner ikke oppstartsaktivitet</string>
     <string name="shizuku_missing">Shizuku mangler :(</string>
     <string name="msg_freeze">Fryst: %s</string>

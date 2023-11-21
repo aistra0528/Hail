@@ -8,7 +8,6 @@
     <string name="label_version">Sürüm</string>
     <string name="label_time">Kurulma zamanı</string>
     <string name="action_donate">Bağış</string>
-    <string name="action_redeem">Kod kullan</string>
     <string name="action_github">GitHub</string>
     <string name="action_licenses">Lisanslar</string>
     <string name="action_freeze_all">Tümünü dondur</string>
@@ -65,9 +64,6 @@
     <string name="donate_bilibili_space">Benim sayfam</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">Teşekkürler!</string>
-    <string name="msg_redeem_invalid">Geçeriz kod</string>
-    <string name="msg_redeem_expired">Kod süresi dolmuş</string>
     <string name="permission_denied">İzin reddedildi</string>
     <string name="app_not_installed">Uygulama yüklü değil</string>
     <string name="operation_failed">İşlem başarısız oldu: %s</string>
@@ -129,7 +125,6 @@
     <string name="mode_owner_hide">Cihaz Yöneticisi - Gizle</string>
     <string name="msg_remove_owner">Cihaz Yöneticisi kaldırılacak, kaldırdıktan sonra yeniden ayarlamak zor olabilir.
 \n Dondurulmuş uygulamalar, kaldırıldıktan sonra da donuk olarak kalır, önemli uygulamaların çözülmüş olduğundan emin olun.</string>
-    <string name="msg_network_error">Sunucuyla iletişim kurulamıyor. Lütfen daha sonra tekrar deneyiniz.</string>
     <string name="activity_not_found">Başlatma etkinliği bulunamadı</string>
     <string name="shizuku_missing">Shizuku kayıp :(</string>
     <string name="mode_owner_suspend">Cihaz Yöneticisi - Askıya Al</string>

@@ -3,11 +3,9 @@
     <string name="msg_remove_owner">Nếu Hail bị gỡ bỏ khỏi vai trò là chủ sở hữu của thiết bị, có thể gặp khó khăn khi sắp xếp lại các ứng dụng sau khi gỡ bỏ Hail.
 \nCác ứng dụng đã đóng băng sẽ vẫn bị đóng băng sau khi gỡ bỏ, hãy đảm bảo là bạn đã rã băng các ứng dụng quan trọng.</string>
     <string name="msg_freeze">Đóng băng: %s</string>
-    <string name="msg_redeem">Cảm ơn bạn nha!</string>
     <string name="action_whitelist">Thêm vào Danh sách trắng</string>
     <string name="synthesize_adaptive_icons">Tổng hợp các biểu tượng thích ứng</string>
     <string name="title_customize">Tùy chỉnh</string>
-    <string name="msg_redeem_invalid">Mã không hợp lệ</string>
     <string name="action_unpin">Bỏ ghim</string>
     <string name="title_remove_owner">Xóa chủ sở hữu thiết bị</string>
     <string name="action_deselect">Bỏ chọn</string>
@@ -65,7 +63,6 @@
     <string name="title_donate">Cam ơn bạn nha!</string>
     <string name="compact_icon">Biểu tượng nhỏ gọn</string>
     <string name="donate_bilibili">Bilibili</string>
-    <string name="action_redeem">Mã đổi</string>
     <string name="donate_bilibili_cancel">Hủy</string>
     <string name="action_uninstall">Gỡ cài đặt</string>
     <string name="mode_dhizuku_hide">Dhizuku - Ẩn</string>
@@ -93,7 +90,6 @@
     <string name="action_lock">Khóa</string>
     <string name="msg_guide">Trước khi đóng băng ứng dụng, hãy chọn chế độ làm việc trong thiết lập.</string>
     <string name="sort_update">Cập nhật gần nhất</string>
-    <string name="msg_redeem_expired">Mã đã hết hạn</string>
     <string name="action_unfreeze">Rã băng</string>
     <string name="msg_biometric">Đăng nhập bằng thông tin sinh trắc học của bạn</string>
     <string name="permission_denied">Quyền bị từ chối</string>
@@ -114,7 +110,6 @@
     <string name="title_settings">Thiết lập</string>
     <string name="label_version">Phiên bản</string>
     <string name="title_apps">DS ứng dụng</string>
-    <string name="msg_network_error">Không giao tiếp được với máy chủ. Thử lại sau nhé.</string>
     <string name="title_set_owner">Thiết lập Chủ Sở Hữu Thiết Bị</string>
     <string name="action_freeze_current">Đóng băng trang hiện tại</string>
     <string name="msg_extract_apk">Đã trích xuất vào: %s</string>

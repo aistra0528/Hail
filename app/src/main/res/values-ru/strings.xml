@@ -12,7 +12,6 @@
     <string name="action_telegram">Группа в Telegram</string>
     <string name="action_qq">QQ группа</string>
     <string name="action_donate">Пожертвования</string>
-    <string name="action_redeem">Промокод</string>
     <string name="action_github">GitHub</string>
     <string name="action_translate">Перевод</string>
     <string name="action_licenses">Лицензии</string>
@@ -71,10 +70,6 @@
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">Спасибо!</string>
-    <string name="msg_redeem_invalid">Неверный код</string>
-    <string name="msg_redeem_expired">Срок действия кода истек</string>
-    <string name="msg_network_error">Не удается связаться с сервером. Пожалуйста, попробуйте позже.</string>
     <string name="permission_denied">Разрешение отклонено</string>
     <string name="app_not_installed">Приложение не установлено</string>
     <string name="activity_not_found">Активити для запуска не обнаружено</string>

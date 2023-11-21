@@ -15,7 +15,6 @@
     <string name="action_telegram">ٹیلیگرام گروپ</string>
     <string name="action_qq">کیو کیو گروپ</string>
     <string name="action_donate">عطیہ کریں</string>
-    <string name="action_redeem">رڈیم کوڈ</string>
     <string name="action_freeze">منجمد</string>
     <string name="action_unfreeze">انجماد</string>
     <string name="action_deferred_task">موخر کام</string>
@@ -57,9 +56,6 @@
     <string name="donate_bilibili_space">میری جگہ</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">شکریہ!</string>
-    <string name="msg_redeem_invalid">غلط کوڈ</string>
-    <string name="msg_redeem_expired">کوڈ کی میعاد ختم ہو گئی ہے</string>
     <string name="permission_denied">اجازت نہیں دی گئی</string>
     <string name="activity_not_found">لانچ کی سرگرمی نہیں ملی</string>
     <plurals name="deferred_task_entry">
@@ -120,7 +116,6 @@
     <string name="title_donate">شکریہ!</string>
     <string name="donate_bilibili_cancel">\@android:string/کینسل</string>
     <string name="msg_unfreeze">غیر منجمد: %s</string>
-    <string name="msg_network_error">سرور کے ساتھ بات چیت کرنے سے قاصر۔ براہ کرم کچھ دیر بعد کوشش کریں.</string>
     <string name="app_not_installed">ایپ انسٹال نہیں ہے</string>
     <string name="operation_failed">آپریشن ناکام ہو گیا: %s</string>
     <string name="msg_selected">منتخب کردہ: %s</string>

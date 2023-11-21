@@ -4,11 +4,9 @@
     <string name="msg_remove_owner">إذا تمت إزالة Hail كمالك للجهاز، فقد تكون هناك صعوبات في إعادة تنظيم التطبيقات بعد إزالة hail.
 \nستظل التطبيقات المجمدة مجمدة بعد إلغاء التثبيت، يرجى التأكد من إلغاء تجميد التطبيقات المهمة.</string>
     <string name="msg_freeze">مجمد: %s</string>
-    <string name="msg_redeem">شكرا لك!</string>
     <string name="action_whitelist">إضافة إلى القائمة البيضاء</string>
     <string name="synthesize_adaptive_icons">تؤليف الأيقونات التكيفية</string>
     <string name="title_customize">تخصيص</string>
-    <string name="msg_redeem_invalid">رمز غير صالح</string>
     <string name="action_unpin">إزالة التثبيت</string>
     <string name="title_remove_owner">إزالة مالك الجهاز</string>
     <string name="action_deselect">الغاء تحديد</string>
@@ -76,7 +74,6 @@
     <string name="title_donate">شكرا لك!</string>
     <string name="compact_icon">أيقونة مضغوطة</string>
     <string name="donate_bilibili">بيليبيلي-Bilibili</string>
-    <string name="action_redeem">استرداد الرمز</string>
     <string name="donate_bilibili_cancel">إلغاء</string>
     <string name="action_uninstall">إلغاء التثبيت</string>
     <string name="mode_dhizuku_hide">ديزوكو - إخفاء</string>
@@ -112,7 +109,6 @@
     <string name="action_lock">القفل</string>
     <string name="msg_guide">قبل تجميد التطبيقات ، يرجى تحديد وضع العمل في الإعدادات.</string>
     <string name="sort_update">آخر تحديث</string>
-    <string name="msg_redeem_expired">انتهت صلاحية الرمز</string>
     <string name="action_unfreeze">إلغاء التجميد</string>
     <string name="donate_wechat">وي تشات باي</string>
     <string name="msg_biometric">تسجيل الدخول باستخدام بيانات الاعتماد البيومترية الخاصة بك</string>
@@ -134,7 +130,6 @@
     <string name="title_settings">الاعدادات</string>
     <string name="label_version">نسخة</string>
     <string name="title_apps">التطبيقات</string>
-    <string name="msg_network_error">غير قادر على الاتصال بالخادم. يرجى إعادة المحاولة لاحقا.</string>
     <string name="title_set_owner">تحديد مالك الجهاز</string>
     <string name="action_freeze_current">تجميد الحالية</string>
     <string name="msg_extract_apk">مستخرج إلى: %s</string>

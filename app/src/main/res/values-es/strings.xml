@@ -12,7 +12,6 @@
     <string name="action_telegram">Grupo de Telegram</string>
     <string name="action_qq">Grupo en QQ</string>
     <string name="action_donate">Donar</string>
-    <string name="action_redeem">Canjear código</string>
     <string name="action_github">GitHub</string>
     <string name="action_translate">Traducir</string>
     <string name="action_licenses">Licencias</string>
@@ -71,10 +70,6 @@
     <string name="donate_bilibili_cancel">Cancelar</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">¡Gracias!</string>
-    <string name="msg_redeem_invalid">Código inválido</string>
-    <string name="msg_redeem_expired">El código ha expirado</string>
-    <string name="msg_network_error">No se puede comunicar con el servidor. Por favor, inténtelo de nuevo más tarde.</string>
     <string name="permission_denied">Permiso denegado</string>
     <string name="app_not_installed">Aplicación no instalada</string>
     <string name="activity_not_found">Actividad no encontrada</string>

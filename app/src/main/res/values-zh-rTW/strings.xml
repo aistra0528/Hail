@@ -12,7 +12,6 @@
     <string name="action_telegram">Telegram 群組</string>
     <string name="action_qq">QQ 群組</string>
     <string name="action_donate">捐贈</string>
-    <string name="action_redeem">兌換代碼</string>
     <string name="action_github">GitHub</string>
     <string name="action_translate">翻譯</string>
     <string name="action_licenses">授權</string>
@@ -74,10 +73,6 @@
     <string name="donate_bilibili_cancel">下次一定</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="msg_redeem">謝謝你！</string>
-    <string name="msg_redeem_invalid">無效的兌換代碼</string>
-    <string name="msg_redeem_expired">兌換代碼已過期</string>
-    <string name="msg_network_error">無法連線至伺服器，請稍後再試。</string>
     <string name="permission_denied">權限遭拒</string>
     <string name="app_not_installed">應用程式未安裝</string>
     <string name="activity_not_found">找不到可啟動的活動</string>

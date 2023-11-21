@@ -10,7 +10,6 @@
     <string name="title_apps">Applis</string>
     <string name="action_remove_home">Retirer de l\'accueil</string>
     <string name="title_settings">Paramètres</string>
-    <string name="action_redeem">Code d\'échange</string>
     <string name="label_time">Temps d\'installation</string>
     <string name="action_telegram">Groupe Telegram</string>
     <string name="action_qq">Groupe QQ</string>
@@ -68,8 +67,6 @@
     <string name="msg_imported">Importé : %s</string>
     <string name="msg_text_copied">Copié : %s</string>
     <string name="msg_extract_apk">Extrait vers : %s</string>
-    <string name="msg_redeem">Merci !</string>
-    <string name="msg_redeem_invalid">Code invalide</string>
     <string name="msg_remove_owner">Si Hail est supprimé en tant que propriétaire de l\'appareil, il peut y avoir des problèmes d\'organisation des applications après suppression de Hail.
 \nLes applications gelées resteront geler après suppression, merci de vous assurer d\'avoir dégeler les applications importantes.</string>
     <string name="synthesize_adaptive_icons">Synthétiser les icônes adaptatives</string>
@@ -130,14 +127,12 @@
     <string name="action_fdroid">F-Droid</string>
     <string name="msg_guide">Avant de geler des applications, merci de sélectionner un mode de travail dans les paramètres.</string>
     <string name="sort_update">Dernière mise à jour</string>
-    <string name="msg_redeem_expired">Le code a expiré</string>
     <string name="permission_denied">Permission refusée</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="auto_freeze">Gel automatique</string>
     <string name="mode_shizuku_disable">Shizuku - Désactiver</string>
     <string name="donate_bilibili_msg">Suivez-moi sur Bilibili.</string>
     <string name="activity_not_found">Pas d\'activité</string>
-    <string name="msg_network_error">Impossible de communiquer avec le serveur. Merci de réessayer plus tard.</string>
     <string name="title_set_owner">Régler le propriétaire de l\'appareil</string>
     <string name="app_name">Hail</string>
     <string name="dynamic_shortcut_action">Action de raccourci dynamique</string>
