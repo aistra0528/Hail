@@ -35,8 +35,7 @@ object HPackages {
         else app.packageManager.getApplicationInfo(packageName, flags)
     }.getOrNull()
 
-    fun isAppDisabled(packageName: String): Boolean =
-        getApplicationInfoOrNull(packageName)?.enabled?.not() ?: false
+    fun isAppDisabled(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.enabled?.not() ?: false
 
     fun isAppHidden(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
         (ApplicationInfo::class.java.getField("privateFlags").get(it) as Int) and 1 == 1
@@ -44,7 +43,8 @@ object HPackages {
 
     fun isAppSuspended(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
         when {
-            HTarget.Q -> app.packageManager.isPackageSuspended(packageName)
+//            This method will cause NameNotFoundException with uninstalled packages
+//            HTarget.Q -> app.packageManager.isPackageSuspended(packageName)
             HTarget.N -> it.flags and ApplicationInfo.FLAG_SUSPENDED == ApplicationInfo.FLAG_SUSPENDED
             else -> false
         }
