@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.marginBottom
@@ -56,5 +57,37 @@ fun View.applyInsetsMargin(
             )
         }
         windowInsets
+    }
+}
+
+fun View.consumeInsets(
+    start: Boolean = false,
+    end: Boolean = false,
+    top: Boolean = false,
+    bottom: Boolean = false
+) {
+    val left = if (isRtl) end else start
+    val right = if (isRtl) start else end
+    ViewCompat.setOnApplyWindowInsetsListener(this) { _: View, windowInsets: WindowInsetsCompat ->
+        val barsInsets = windowInsets.getInsets(systemBars())
+        val cutoutInsets = windowInsets.getInsets(displayCutout())
+        return@setOnApplyWindowInsetsListener WindowInsetsCompat.Builder()
+            .setInsets(
+                systemBars(), Insets.of(
+                    if (left) 0 else barsInsets.left,
+                    if (top) 0 else barsInsets.top,
+                    if (right) 0 else barsInsets.right,
+                    if (bottom) 0 else barsInsets.bottom
+                )
+            )
+            .setInsets(
+                displayCutout(), Insets.of(
+                    if (left) 0 else cutoutInsets.left,
+                    if (top) 0 else cutoutInsets.top,
+                    if (right) 0 else cutoutInsets.right,
+                    if (bottom) 0 else cutoutInsets.bottom
+                )
+            )
+            .build()
     }
 }

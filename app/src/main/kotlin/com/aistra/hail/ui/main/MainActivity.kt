@@ -20,6 +20,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
 import com.aistra.hail.extensions.applyInsetsMargin
 import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.consumeInsets
 import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         bottomNav?.applyInsetsPadding(start = true, end = true, bottom = true)
         navRail?.applyInsetsPadding(start = true, top = true, bottom = true)
         fab.applyInsetsMargin(end = true, bottom = isLandscape)
+        appBarMain.root.consumeInsets(start = isLandscape, bottom = !isLandscape)
     }
 
     fun ownerRemoveDialog() {
