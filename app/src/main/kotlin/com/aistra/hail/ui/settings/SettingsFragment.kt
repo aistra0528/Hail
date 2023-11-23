@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
 import android.view.*
-import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationManagerCompat
@@ -329,24 +328,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_terminal -> {
-                val input = DialogInputBinding.inflate(
-                    layoutInflater, FrameLayout(requireActivity()), true
-                )
-                input.inputLayout.setHint(R.string.action_terminal)
-                input.editText.run {
-                    setSingleLine()
-                    filters = arrayOf()
-                }
-                MaterialAlertDialogBuilder(requireActivity()).setView(input.root.parent as View)
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        lifecycleScope.launch {
-                            val result = AppManager.execute(input.editText.text.toString())
-                            onTerminalResult(result.first, result.second)
-                        }
-                    }.setNegativeButton(android.R.string.cancel, null).show()
-            }
-
+            R.id.action_terminal -> showTerminalDialog()
             R.id.action_remove_owner -> (requireActivity() as MainActivity).ownerRemoveDialog()
             R.id.action_help -> HUI.openLink(HailData.URL_README)
         }
@@ -364,5 +346,21 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             )
         ) menu.findItem(R.id.action_terminal).isVisible = true
         else if (HPolicy.isDeviceOwnerActive) menu.findItem(R.id.action_remove_owner).isVisible = true
+    }
+
+    private fun showTerminalDialog() {
+        val binding = DialogInputBinding.inflate(layoutInflater)
+        binding.inputLayout.setHint(R.string.command)
+        binding.editText.run {
+            setSingleLine()
+            filters = arrayOf()
+        }
+        MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_terminal).setView(binding.root)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                lifecycleScope.launch {
+                    val result = AppManager.execute(binding.editText.text.toString())
+                    onTerminalResult(result.first, result.second)
+                }
+            }.setNegativeButton(android.R.string.cancel, null).show()
     }
 }

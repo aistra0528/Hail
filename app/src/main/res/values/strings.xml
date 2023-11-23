@@ -136,4 +136,6 @@
     <string name="action_skip">Skip</string>
     <string name="mode_island_hide">Island/Insular - Hide</string>
     <string name="mode_island_suspend">Island/Insular - Suspend</string>
+    <string name="command">Command</string>
+    <string name="tag">Tag</string>
 </resources>
