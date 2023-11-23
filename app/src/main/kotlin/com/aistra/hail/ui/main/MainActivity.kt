@@ -77,16 +77,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         bottomNav?.setupWithNavController(navController)
         navRail?.setupWithNavController(navController)
 
-        appBarMain.appBarLayout.applyInsetsPadding(
-            start = !isLandscape,
-            end = true,
-            top = true
-        )
-        bottomNav?.applyInsetsPadding(
-            start = true,
-            end = true,
-            bottom = true
-        )
+        appBarMain.appBarLayout.applyInsetsPadding(start = !isLandscape, end = true, top = true)
+        bottomNav?.applyInsetsPadding(start = true, end = true, bottom = true)
+        navRail?.applyInsetsPadding(start = true, top = true, bottom = true)
         fab.applyInsetsMargin(end = true, bottom = isLandscape)
     }
 
