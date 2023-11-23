@@ -14,26 +14,30 @@
         android:title="@string/tap_to_select"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
-    <item
-        android:id="@+id/action_freeze_current"
-        android:title="@string/action_freeze_current"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_unfreeze_current"
-        android:title="@string/action_unfreeze_current"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_freeze_all"
-        android:title="@string/action_freeze_all"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_unfreeze_all"
-        android:title="@string/action_unfreeze_all"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_freeze_non_whitelisted"
-        android:title="@string/action_freeze_non_whitelisted"
-        app:showAsAction="never" />
+    <group android:id="@+id/group_freeze_current">
+        <item
+            android:id="@+id/action_freeze_current"
+            android:title="@string/action_freeze_current"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_unfreeze_current"
+            android:title="@string/action_unfreeze_current"
+            app:showAsAction="never" />
+    </group>
+    <group android:id="@+id/group_freeze_all">
+        <item
+            android:id="@+id/action_freeze_all"
+            android:title="@string/action_freeze_all"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_unfreeze_all"
+            android:title="@string/action_unfreeze_all"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_freeze_non_whitelisted"
+            android:title="@string/action_freeze_non_whitelisted"
+            app:showAsAction="never" />
+    </group>
     <item
         android:title="@string/action_import_app"
         app:showAsAction="never">

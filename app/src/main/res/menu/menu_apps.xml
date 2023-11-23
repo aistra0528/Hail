@@ -13,7 +13,9 @@
         android:title="@string/filter_by"
         app:showAsAction="ifRoom">
         <menu>
-            <group android:checkableBehavior="single">
+            <group
+                android:id="@+id/group_filter_apps"
+                android:checkableBehavior="single">
                 <item
                     android:id="@+id/filter_user_apps"
                     android:title="@string/filter_user_apps" />
@@ -21,7 +23,9 @@
                     android:id="@+id/filter_system_apps"
                     android:title="@string/filter_system_apps" />
             </group>
-            <group android:checkableBehavior="all">
+            <group
+                android:id="@+id/group_filter_frozen"
+                android:checkableBehavior="all">
                 <item
                     android:id="@+id/filter_frozen_apps"
                     android:title="@string/filter_frozen_apps" />
