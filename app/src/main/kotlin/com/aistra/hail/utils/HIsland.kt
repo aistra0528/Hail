@@ -1,5 +1,6 @@
 package com.aistra.hail.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
 import android.app.admin.DevicePolicyManager
@@ -8,9 +9,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.UserManager
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import com.aistra.hail.HailApp.Companion.app
@@ -31,11 +34,17 @@ object HIsland {
 	private val thread by lazy { HandlerThread("HIsland").apply { start() } }
 	private val handler by lazy { Handler(thread.looper) }
 	private var ownerApp: Optional<String>? = null
+		@SuppressLint("NewApi") // TODO: Remove when `checkOwnerApp` fixed.
 		get() {
-			field ?: checkOwnerApp()
+			field ?: runCatching { checkOwnerApp() }.getOrNull()
 			return field!!
 		}
 
+	/**
+	 * This method can only be used after Android R, otherwise `um.isManagedProfile` may crash!
+	 * TODO: Support before android R.
+	 * */
+	@RequiresApi(Build.VERSION_CODES.R)
 	fun checkOwnerApp() {
 		val um = app.getSystemService<UserManager>()!!
 		val dpm = app.getSystemService<DevicePolicyManager>()!!
@@ -61,12 +70,14 @@ object HIsland {
 	}
 
 	private fun setAppFrozen(packageName: String, action: String): Boolean {
-		if (ownerApp!!.isEmpty) {
-			return false
+        val ownerApp = ownerApp
+        // TODO: fix target bug.
+        if (ownerApp == null || ownerApp.isEmpty) {
+            return false
 		}
 		val intent = Intent(action).apply {
 			data = Uri.fromParts("package", packageName, null)
-			setPackage(ownerApp!!.get())
+			setPackage(ownerApp.get())
 			addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
 			putExtra(
 				EXTRA_CALLER_ID,
