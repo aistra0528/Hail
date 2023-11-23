@@ -17,7 +17,7 @@
         <item quantity="one">%d ମିନିଟ୍</item>
         <item quantity="other">%d ମିନିଟ୍</item>
     </plurals>
-    <string name="title_about">ଵିଷୟରେ</string>
+    <string name="title_about">ସମ୍ବନ୍ଧରେ</string>
     <string name="label_version">ସଂସ୍କରଣ</string>
     <string name="action_undo">ପୂର୍ଵଵତ୍</string>
     <string name="nothing_here">ଏଠାରେ କିଛି ନାହିଁ</string>
