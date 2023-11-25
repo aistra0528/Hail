@@ -136,4 +136,5 @@
     <string name="action_skip">Skip</string>
     <string name="mode_island_hide">Island/Insular - Hide</string>
     <string name="mode_island_suspend">Island/Insular - Suspend</string>
+    <string name="ninekey_search" >Search With Nine-Key</string>
 </resources>

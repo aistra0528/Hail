@@ -67,6 +67,7 @@ object HailData {
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
     const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
     private const val BIOMETRIC_LOGIN = "biometric_login"
+    private const val NINE_KEY_SEARCH = "ninekey_search"
     const val ICON_PACK = "icon_pack"
     private const val GRAYSCALE_ICON = "grayscale_icon"
     private const val COMPACT_ICON = "compact_icon"
@@ -95,6 +96,8 @@ object HailData {
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val autoFreezeDelay get() = sp.getInt(AUTO_FREEZE_DELAY, 0).toLong()
+
+    val useNineKey get() = sp.getBoolean(NINE_KEY_SEARCH, false)
 
     val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE)!!
     fun setIconPack(packageName: String) = sp.edit().putString(ICON_PACK, packageName).apply()

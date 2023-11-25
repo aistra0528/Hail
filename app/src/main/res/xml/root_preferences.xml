@@ -31,6 +31,11 @@
                 app:key="compact_icon"
                 app:title="@string/compact_icon"/>
         <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_outline_nine_key"
+            app:key="ninekey_search"
+            app:title="@string/ninekey_search" />
+        <SwitchPreferenceCompat
                 app:defaultValue="false"
                 app:icon="@drawable/ic_outline_layers"
                 app:key="synthesize_adaptive_icons"

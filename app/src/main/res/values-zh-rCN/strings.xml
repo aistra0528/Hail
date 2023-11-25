@@ -137,4 +137,5 @@
     <string name="mode_su_hide">超级用户 - 隐藏</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">跳过</string>
+    <string name="ninekey_search">九键搜索</string>
 </resources>

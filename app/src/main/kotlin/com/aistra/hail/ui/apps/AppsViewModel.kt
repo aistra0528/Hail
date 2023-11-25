@@ -11,6 +11,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.FuzzySearch
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.NameComparator
+import com.aistra.hail.utils.NineKeySearch
 import com.aistra.hail.utils.PinyinSearch
 import kotlinx.coroutines.*
 
@@ -101,6 +102,8 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
                         || (HailData.filterUnfrozenApps && !it.isAppFrozen))
                         // Search apps
                         && (FuzzySearch.search(it.packageName, query)
+                        || (HailData.useNineKey
+                        && (NineKeySearch.searchAll(it.packageName, it.loadLabel(pm).toString(), query=query)))
                         || FuzzySearch.search(it.loadLabel(pm).toString(), query)
                         || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
             }.run {
