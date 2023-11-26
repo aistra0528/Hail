@@ -52,7 +52,7 @@
     <string name="mode_shizuku_suspend">Shizuku - Aussetzen (Suspend)</string>
     <string name="title_set_owner">Geräteeigentümer festlegen</string>
     <string name="msg_set_owner">Dieses Kommando per adb ausfüren:\n%s</string>
-    <string name="title_remove_owner">Geräteeigentümer entffernen</string>
+    <string name="title_remove_owner">Geräteeigentümer entfernen</string>
     <string name="msg_remove_owner">Der Geräteeigentümer wird entfernt. Es könnte ggf. nicht mehr funktionieren, ihn nach dem Entfernen wieder zu setzen.
 \nAusgeblendete (hidden) Anwendungen sind nach dem Entfernen weiterhin versteckt. Ausgeblendete Anwendungen unbedingt vorher wieder einblenden.</string>
     <string name="tap_to_select">Antippen für Mehrfachauswahl</string>
