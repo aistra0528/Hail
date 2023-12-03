@@ -1,5 +1,6 @@
 package com.aistra.hail.ui.home
 
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +63,10 @@ class PagerAdapter(private val selectedList: List<AppInfo>) :
                     info.state == AppInfo.STATE_UNKNOWN -> setTextColor(context.getColorStateList(R.color.color_warn))
                     else -> setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodyMedium)
                 }
+                HailData.iconTextSize?.toFloatOrNull()?.let { size->
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
+                }
+                maxLines = if (HailData.iconTextSingleline) 1 else 2
             }
         }
     }

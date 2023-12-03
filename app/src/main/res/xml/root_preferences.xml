@@ -35,6 +35,19 @@
                 app:icon="@drawable/ic_outline_layers"
                 app:key="synthesize_adaptive_icons"
                 app:title="@string/synthesize_adaptive_icons"/>
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/format_line_height"
+            app:key="icon_text_singleline"
+            app:title="@string/icon_text_singleline"/>
+        <rikka.preference.SimpleMenuPreference
+            app:defaultValue="icon_text_size"
+            app:entries="@array/icon_text_size_values"
+            app:entryValues="@array/icon_text_size_values"
+            app:icon="@drawable/baseline_text_fields_24"
+            app:key="icon_text_size"
+            app:title="@string/icon_text_size"
+            app:useSimpleSummaryProvider="true"/>
         <rikka.preference.SimpleMenuPreference
                 app:defaultValue="freeze_all"
                 app:entries="@array/tile_action_entries"

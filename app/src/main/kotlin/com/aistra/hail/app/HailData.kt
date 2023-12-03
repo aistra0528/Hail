@@ -48,6 +48,8 @@ object HailData {
     const val MODE_ISLAND_HIDE = ISLAND + HIDE
     const val MODE_ISLAND_SUSPEND = ISLAND + SUSPEND
     private const val TILE_ACTION = "tile_action"
+    private const val ICON_TEXT_SIZE = "icon_text_size"
+    private const val ICON_TEXT_SINGLELINE = "icon_text_singleline"
     const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
     const val ACTION_NONE = "none"
     const val ACTION_FREEZE_ALL = "freeze_all"
@@ -88,6 +90,8 @@ object HailData {
     val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)
     val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
     val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
+    val iconTextSize get() = sp.getString(ICON_TEXT_SIZE, "")
+    val iconTextSingleline get() = sp.getBoolean(ICON_TEXT_SINGLELINE, false)
     val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
