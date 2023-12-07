@@ -118,7 +118,7 @@ object HShizuku {
                     suspended,
                     null,
                     null,
-                    if (suspended) suspendDialogInfo else null,
+                    null,
                     callerPackage,
                     userId
                 )
