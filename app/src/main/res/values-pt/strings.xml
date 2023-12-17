@@ -135,4 +135,8 @@
     <string name="filter_unfrozen_apps">Descongelados</string>
     <string name="donate_wechat_scan">Escanear</string>
     <string name="action_remove_whitelist">Remover da lista de permissões</string>
+    <string name="action_unpin">Unpin</string>
+    <string name="donate_bilibili_space">Bilibili space</string>
+    <string name="donate_bilibili">Bilibili</string>
+    <string name="donate_wechat">WeChat Pay</string>
 </resources>
