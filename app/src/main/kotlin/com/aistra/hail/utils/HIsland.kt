@@ -72,8 +72,8 @@ object HIsland {
 	private fun setAppFrozen(packageName: String, action: String): Boolean {
         val ownerApp = ownerApp
         // TODO: fix target bug.
-        if (ownerApp == null || ownerApp.isEmpty) {
-            return false
+		if (ownerApp == null || ownerApp.isEmpty) {
+			return false
 		}
 		val intent = Intent(action).apply {
 			data = Uri.fromParts("package", packageName, null)
