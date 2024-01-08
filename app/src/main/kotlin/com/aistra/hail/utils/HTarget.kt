@@ -18,4 +18,7 @@ object HTarget {
 
     @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
     val T = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+
+    @get:ChecksSdkIntAtLeast(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    val U = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 }
