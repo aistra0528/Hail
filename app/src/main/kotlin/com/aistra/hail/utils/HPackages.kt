@@ -1,6 +1,5 @@
 package com.aistra.hail.utils
 
-import android.annotation.SuppressLint
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import com.aistra.hail.HailApp.Companion.app
@@ -10,16 +9,14 @@ object HPackages {
 
     fun packageUri(packageName: String) = "package:$packageName"
 
-    @SuppressLint("InlinedApi")
-    fun getInstalledApplications(flags: Int = PackageManager.MATCH_UNINSTALLED_PACKAGES): List<ApplicationInfo> =
+    fun getInstalledApplications(flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192): List<ApplicationInfo> =
         if (HTarget.T) app.packageManager.getInstalledApplications(
             PackageManager.ApplicationInfoFlags.of(flags.toLong())
         )
         else app.packageManager.getInstalledApplications(flags)
 
-    @SuppressLint("InlinedApi")
     fun getUnhiddenPackageInfoOrNull(
-        packageName: String, flags: Int = PackageManager.MATCH_UNINSTALLED_PACKAGES
+        packageName: String, flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192
     ) = runCatching {
         if (HTarget.T) app.packageManager.getPackageInfo(
             packageName, PackageManager.PackageInfoFlags.of(flags.toLong())
@@ -27,9 +24,8 @@ object HPackages {
         else app.packageManager.getPackageInfo(packageName, flags)
     }.getOrNull()
 
-    @SuppressLint("InlinedApi")
     fun getApplicationInfoOrNull(
-        packageName: String, flags: Int = PackageManager.MATCH_UNINSTALLED_PACKAGES
+        packageName: String, flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192
     ) = runCatching {
         if (HTarget.T) app.packageManager.getApplicationInfo(
             packageName, PackageManager.ApplicationInfoFlags.of(flags.toLong())
