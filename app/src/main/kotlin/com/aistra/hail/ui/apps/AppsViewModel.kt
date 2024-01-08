@@ -38,7 +38,7 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
             if (refreshStateJob == null || refreshStateJob!!.isCompleted)
                 refreshStateJob = viewModelScope.launch {
                     delay(delayTime)
-                    isRefreshing.postValue(state)
+                    isRefreshing.postValue(true)
                 }
         }
     }
