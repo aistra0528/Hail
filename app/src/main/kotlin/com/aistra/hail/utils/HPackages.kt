@@ -9,16 +9,14 @@ object HPackages {
 
     fun packageUri(packageName: String) = "package:$packageName"
 
-    @Suppress("DEPRECATION")
-    fun getInstalledApplications(flags: Int = PackageManager.MATCH_UNINSTALLED_PACKAGES): List<ApplicationInfo> =
+    fun getInstalledApplications(flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192): List<ApplicationInfo> =
         if (HTarget.T) app.packageManager.getInstalledApplications(
             PackageManager.ApplicationInfoFlags.of(flags.toLong())
         )
         else app.packageManager.getInstalledApplications(flags)
 
-    @Suppress("DEPRECATION")
     fun getUnhiddenPackageInfoOrNull(
-        packageName: String, flags: Int = PackageManager.MATCH_UNINSTALLED_PACKAGES
+        packageName: String, flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192
     ) = runCatching {
         if (HTarget.T) app.packageManager.getPackageInfo(
             packageName, PackageManager.PackageInfoFlags.of(flags.toLong())
@@ -27,7 +25,7 @@ object HPackages {
     }.getOrNull()
 
     fun getApplicationInfoOrNull(
-        packageName: String, flags: Int = PackageManager.MATCH_UNINSTALLED_PACKAGES
+        packageName: String, flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192
     ) = runCatching {
         if (HTarget.T) app.packageManager.getApplicationInfo(
             packageName, PackageManager.ApplicationInfoFlags.of(flags.toLong())
