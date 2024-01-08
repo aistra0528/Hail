@@ -127,8 +127,9 @@ class ApiActivity : AppCompatActivity() {
         list: List<AppInfo> = HailData.checkedList,
         skipWhitelisted: Boolean = false
     ) {
-        val list = list.filter { AppManager.isAppFrozen(it.packageName) != frozen && !(skipWhitelisted && it.whitelisted) }
-        when (val result = AppManager.setListFrozen(frozen, *list.toTypedArray())) {
+        val filtered =
+            list.filter { AppManager.isAppFrozen(it.packageName) != frozen && !(skipWhitelisted && it.whitelisted) }
+        when (val result = AppManager.setListFrozen(frozen, *filtered.toTypedArray())) {
             null -> throw IllegalStateException(getString(R.string.permission_denied))
             else -> {
                 HUI.showToast(

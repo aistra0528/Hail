@@ -2,13 +2,7 @@ package com.aistra.hail.app
 
 import android.content.Intent
 import com.aistra.hail.BuildConfig
-import com.aistra.hail.utils.HDhizuku
-import com.aistra.hail.utils.HIsland
-import com.aistra.hail.utils.HPackages
-import com.aistra.hail.utils.HPolicy
-import com.aistra.hail.utils.HShell
-import com.aistra.hail.utils.HShizuku
-import com.aistra.hail.utils.HUI
+import com.aistra.hail.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -32,7 +26,7 @@ object AppManager {
     }
 
     fun setListFrozen(frozen: Boolean, vararg appInfo: AppInfo): String? {
-        val appInfo = appInfo.filter { it.packageName != BuildConfig.APPLICATION_ID }
+        val excludeMe = appInfo.filter { it.packageName != BuildConfig.APPLICATION_ID }
         var i = 0
         var denied = false
         var name = String()
@@ -40,18 +34,19 @@ object AppManager {
             // call setListFrozen for some batch-style working mode here
             // fallback to setAppFrozen otherwise
             else -> {
-                appInfo.forEach {
+                excludeMe.forEach {
                     when {
                         setAppFrozen(it.packageName, frozen) -> {
                             i++
                             name = it.name.toString()
                         }
+
                         it.applicationInfo != null -> denied = true
                     }
                 }
             }
         }
-        return if (denied && i == 0) null else if (i > 1) i.toString() else name
+        return if (denied && i == 0) null else if (i == 1) name else i.toString()
     }
 
     fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =

@@ -350,8 +350,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                 .setPositiveButton(android.R.string.ok, null).show()
             return
         }
-        val list = list.filter { AppManager.isAppFrozen(it.packageName) != frozen }
-        when (val result = AppManager.setListFrozen(frozen, *list.toTypedArray())) {
+        val filtered = list.filter { AppManager.isAppFrozen(it.packageName) != frozen }
+        when (val result = AppManager.setListFrozen(frozen, *filtered.toTypedArray())) {
             null -> HUI.showToast(R.string.permission_denied)
             else -> {
                 if (updateList) updateCurrentList()
