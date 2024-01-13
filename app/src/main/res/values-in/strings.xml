@@ -5,12 +5,12 @@
     <string name="title_apps">Daftar aplikasi</string>
     <string name="title_home">Beranda</string>
     <string name="label_default">Bawaan</string>
-    <string name="label_time">Tanggal pemasangan</string>
+    <string name="label_time">Waktu penginstalan</string>
     <string name="label_version">Versi</string>
     <string name="action_telegram">Grup Telegram</string>
     <string name="action_qq">Grup QQ</string>
     <string name="action_translate">Terjemahkan</string>
-    <string name="action_donate">Donasi ke pengembang</string>
+    <string name="action_donate">Donasi</string>
     <string name="action_github">Github</string>
     <string name="action_licenses">Lisensi</string>
     <string name="action_freeze_all">Bekukan semua</string>
@@ -19,14 +19,14 @@
     <string name="action_freeze_non_whitelisted">Bekukan semua selain daftar putih</string>
     <string name="action_lock">Kunci</string>
     <string name="action_launch">Luncurkan</string>
-    <string name="action_uninstall">Copot</string>
+    <string name="action_uninstall">Hapus</string>
     <string name="mode_shizuku_hide">Shizuku - Sembunyikan</string>
     <string name="action_tag_add">Tambahkan label</string>
     <string name="action_search">Cari</string>
     <string name="action_freeze">Bekukan</string>
     <string name="action_unfreeze">Aktifkan</string>
     <string name="action_tag_remove">Hapus label</string>
-    <string name="action_remove_home">Hapus dari daftar</string>
+    <string name="action_remove_home">Hapus dari Beranda</string>
     <string name="action_unfreeze_remove_home">Aktifkan dan hapus dari daftar</string>
     <string name="action_undo">Batalkan</string>
     <string name="action_details">Info aplikasi</string>
@@ -35,7 +35,7 @@
     <string name="action_lock_freeze">Kunci &amp; Bekukan</string>
     <string name="action_deferred_task">Tangguhkan tugas</string>
     <string name="action_help">Bantuan</string>
-    <string name="msg_uninstall">Copot pemasangan aplikasi ini\?</string>
+    <string name="msg_uninstall">Hapus pemasangan aplikasi ini?</string>
     <string name="working_mode">Mode kerja</string>
     <string name="mode_owner_hide">Pemilik Perangkat - Sembunyikan</string>
     <string name="mode_su_suspend">Superuser - Tangguhkan</string>
@@ -52,14 +52,14 @@
     <string name="msg_set_owner">Jalankan perintah dari adb:
 \n%s</string>
     <string name="msg_remove_owner">Jika Hail dihapus sebagai pemilik perangkat, mungkin akan ada kesulitan mengatur kembali Aplikasi setelah Hail terhapus.
-\nAplikasi yang dibekukan tetap dibekukan setelah penghapusan, pastikan anda telah mengaktifkan aplikasi penting anda.</string>
+\nAplikasi yang dibekukan tetap dibekukan setelah penghapusan, pastikan telah mengaktifkan aplikasi penting anda.</string>
     <string name="title_remove_owner">Hapus Pemilik Perangkat</string>
     <string name="filter_system_apps">Sistem</string>
     <string name="sort_name">Nama</string>
     <string name="title_donate">Terima kasih!</string>
     <string name="donate_wechat_scan">Pindai</string>
     <string name="permission_denied">Akses ditolak</string>
-    <string name="app_not_installed">Aplikasi tidak terpasang</string>
+    <string name="app_not_installed">Aplikasi tidak terinstal</string>
     <string name="msg_text_copied">Disalin: %s</string>
     <string name="auto_freeze">Bekukan otomatis</string>
     <string name="auto_freeze_notification_title">Layanan bekukan otomatis sedang berjalan</string>
@@ -102,13 +102,13 @@
     <string name="dynamic_shortcut_action">Pintasan aksi dinamis</string>
     <string name="action_freeze_tag">Bekukan berdasar label</string>
     <string name="action_unfreeze_tag">Aktifkan berdasar label</string>
-    <string name="action_add_pin_shortcut">Tambahkan pintasan ke Layar Beranda</string>
-    <string name="action_tag_set">Atur label</string>
+    <string name="action_add_pin_shortcut">Tambahkan ke Beranda</string>
+    <string name="action_tag_set">Pasang label</string>
     <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
     <string name="sort_by">Urutkan</string>
     <string name="sort_update">Terakhir diperbarui</string>
-    <string name="sort_install">Pemasangan terlama</string>
+    <string name="sort_install">Penginstalan pertama</string>
     <string name="donate_paypal">Paypal</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="donate_bilibili_msg">Ikuti saya di Bilibili.</string>
