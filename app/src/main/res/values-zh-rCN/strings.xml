@@ -112,7 +112,7 @@
     <string name="action_import_frozen">导入已冻结应用</string>
     <string name="action_import_app">导入应用</string>
     <string name="synthesize_adaptive_icons">合成自适应图标</string>
-    <string name="action_export_current">导出当前</string>
+    <string name="action_export_current">导出可见</string>
     <string name="action_export_all">全部导出</string>
     <string name="skip_notifying_app">保留通知中应用</string>
     <string name="auto_freeze_delay">冻结延时（分钟）</string>
