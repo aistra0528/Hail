@@ -9,7 +9,7 @@
     <string name="action_donate">Пожертвувати</string>
     <string name="action_export_all">Експортувати все</string>
     <string name="action_export_clipboard">Експортувати в буфер обміну</string>
-    <string name="action_export_current">Експортувати поточний</string>
+    <string name="action_export_current">Експортувати видимий</string>
     <string name="action_extract_apk">Експортувати APK</string>
     <string name="action_freeze">Заморозити</string>
     <string name="action_freeze_all">Заморозити все</string>
