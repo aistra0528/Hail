@@ -10,15 +10,15 @@
     <string name="label_version">Версия</string>
     <string name="label_time">Время установки</string>
     <string name="action_telegram">Группа в Telegram</string>
-    <string name="action_qq">QQ группа</string>
+    <string name="action_qq">Группа в QQ</string>
     <string name="action_donate">Пожертвования</string>
     <string name="action_github">GitHub</string>
     <string name="action_translate">Перевод</string>
     <string name="action_licenses">Лицензии</string>
     <string name="action_freeze_all">Заморозить все</string>
     <string name="action_unfreeze_all">Разморозить все</string>
-    <string name="action_freeze_current">Заморозить текущие</string>
-    <string name="action_unfreeze_current">Разморозить текущие</string>
+    <string name="action_freeze_current">Заморозить видимые</string>
+    <string name="action_unfreeze_current">Разморозить видимые</string>
     <string name="action_lock">Блокировка экрана</string>
     <string name="action_lock_freeze">Блокировка и заморозка</string>
     <string name="action_launch">Запуск</string>
@@ -64,10 +64,10 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Сканировать</string>
-    <string name="donate_bilibili">bilibili</string>
-    <string name="donate_bilibili_msg">Follow me on bilibili.</string>
-    <string name="donate_bilibili_space">My space</string>
-    <string name="donate_bilibili_cancel">@android:string/cancel</string>
+    <string name="donate_bilibili">Bilibili</string>
+    <string name="donate_bilibili_msg">Подпишитесь на меня на Bilibili.</string>
+    <string name="donate_bilibili_space">Пространство Bilibili</string>
+    <string name="donate_bilibili_cancel">Отменить</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">Разрешение отклонено</string>
@@ -83,14 +83,16 @@
     <string name="msg_freeze">Заморожено: %s</string>
     <string name="msg_unfreeze">Разморожено: %s</string>
     <plurals name="deferred_task_entry">
-        <item quantity="one">%d мин.</item>
-        <item quantity="few">%d мин.</item>
-        <item quantity="many">%d мин.</item>
+        <item quantity="one">%d минута</item>
+        <item quantity="few">%d минуты</item>
+        <item quantity="many">%d минут</item>
+        <item quantity="other">%d минут</item>
     </plurals>
     <plurals name="msg_deferred_task">
-        <item quantity="one">%2$s через %1$d мин.: %3$s</item>
-        <item quantity="few">%2$s через %1$d мин.: %3$s</item>
-        <item quantity="many">%2$s через %1$d мин.: %3$s</item>
+        <item quantity="one">%2$s через %1$d минуту: %3$s</item>
+        <item quantity="few">%2$s через %1$d минуты: %3$s</item>
+        <item quantity="many">%2$s через %1$d минут: %3$s</item>
+        <item quantity="other">%2$s через %1$d минут: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Очистить все динамические ярлыки</string>
     <string name="tile_action">Действие плитки</string>
@@ -106,7 +108,7 @@
     <string name="msg_biometric">Вход с использованием своих биометрических данных</string>
     <string name="action_pin">Закрепить</string>
     <string name="action_unpin">Открепить</string>
-    <string name="nothing_here">Ничего нет</string>
+    <string name="nothing_here">Пусто</string>
     <string name="action_import_frozen">Импорт замороженых приложений</string>
     <string name="action_import_app">Импорт приложений</string>
     <string name="synthesize_adaptive_icons">Создать адаптивные иконки</string>
@@ -133,4 +135,9 @@
     <string name="action_terminal">Terminal</string>
     <string name="mode_dhizuku_hide">Dhizuku - Скрытие</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Приостановка</string>
+    <string name="action_skip">Пропустить</string>
+    <string name="mode_su_hide">Root - Скрытие</string>
+    <string name="mode_island_hide">Island/Insular - Скрытие</string>
+    <string name="mode_island_suspend">Island/Insular - Отключение</string>
+    <string name="action_fdroid">F-Droid</string>
 </resources>

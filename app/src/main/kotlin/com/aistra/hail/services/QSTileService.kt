@@ -1,5 +1,6 @@
 package com.aistra.hail.services
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.drawable.Icon
 import android.os.Build
@@ -9,6 +10,7 @@ import androidx.annotation.RequiresApi
 import com.aistra.hail.R
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
+import com.aistra.hail.utils.HTarget
 
 @RequiresApi(Build.VERSION_CODES.N)
 class QSTileService : TileService() {
@@ -19,17 +21,21 @@ class QSTileService : TileService() {
 
     override fun onClick() {
         super.onClick()
-        startActivity(
-            Intent(
-                when (HailData.tileAction) {
-                    HailData.ACTION_FREEZE_ALL -> HailApi.ACTION_FREEZE_ALL
-                    HailData.ACTION_FREEZE_NON_WHITELISTED -> HailApi.ACTION_FREEZE_NON_WHITELISTED
-                    HailData.ACTION_LOCK -> HailApi.ACTION_LOCK
-                    HailData.ACTION_LOCK_FREEZE -> HailApi.ACTION_LOCK_FREEZE
-                    else -> HailApi.ACTION_UNFREEZE_ALL
-                }
-            ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val intent = Intent(
+            when (HailData.tileAction) {
+                HailData.ACTION_FREEZE_ALL -> HailApi.ACTION_FREEZE_ALL
+                HailData.ACTION_FREEZE_NON_WHITELISTED -> HailApi.ACTION_FREEZE_NON_WHITELISTED
+                HailData.ACTION_LOCK -> HailApi.ACTION_LOCK
+                HailData.ACTION_LOCK_FREEZE -> HailApi.ACTION_LOCK_FREEZE
+                else -> HailApi.ACTION_UNFREEZE_ALL
+            }
+        ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if (HTarget.U) startActivityAndCollapse(
+            PendingIntent.getActivity(
+                this, 0, intent, PendingIntent.FLAG_IMMUTABLE
+            )
         )
+        else startActivityAndCollapse(intent)
     }
 
     override fun onTileAdded() {
