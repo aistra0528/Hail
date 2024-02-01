@@ -140,4 +140,5 @@
     <string name="mode_island_hide">Island/Insular - Скрытие</string>
     <string name="mode_island_suspend">Island/Insular - Отключение</string>
     <string name="action_fdroid">F-Droid</string>
+    <string name="shizuku_hide_adb">Shizuku работает по adb. Чтобы скрыть приложения, пожалуйста, перезапустите Shizuku с рут правами.</string>
 </resources>
