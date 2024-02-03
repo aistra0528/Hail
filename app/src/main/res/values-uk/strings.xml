@@ -141,4 +141,5 @@
     <string name="mode_island_hide">Island/Insular - Приховування</string>
     <string name="mode_island_suspend">Island/Insular - Вимкнення</string>
     <string name="action_fdroid">F-Droid</string>
+    <string name="shizuku_hide_adb">Shizuku працює по adb. Щоб приховати додатки, будь ласка, перезапустіть Shizuku з рут правами.</string>
 </resources>
