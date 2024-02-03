@@ -103,7 +103,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         }
     }
 
-    @Suppress("DEPRECATION")
     private fun iconPackDialog() {
         val list = Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
             if (HTarget.T) app.packageManager.queryIntentActivities(

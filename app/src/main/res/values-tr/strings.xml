@@ -104,8 +104,8 @@
     <string name="nothing_here">Burada hiçbir şey yok</string>
     <string name="action_import_frozen">Dondurulmuş uygulamayı içe aktar</string>
     <string name="action_import_app">Uygulamayı içe aktar</string>
-    <string name="action_export_current">Seçiliyi dışa aktar</string>
-    <string name="action_export_all">Tümünü dışa aktar</string>
+    <string name="action_export_current">Seçiliyi panoya aktar</string>
+    <string name="action_export_all">Tümünü panoya aktar</string>
     <string name="skip_notifying_app">Bildirim gönderen uygulamaları atla</string>
     <string name="auto_freeze_delay">Dondurma gecikmesi (dakika)</string>
     <string name="title_shortcuts">Kısayollar</string>
@@ -132,4 +132,9 @@
     <string name="action_terminal">Terminal</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Askıya al</string>
     <string name="mode_dhizuku_hide">Dhizuku - Gizle</string>
+    <string name="action_skip">Atla</string>
+    <string name="mode_island_hide">Island/Insular - Gizle</string>
+    <string name="mode_island_suspend">Island/Insular - Askıya al</string>
+    <string name="mode_su_hide">Superuser - Gizle</string>
+    <string name="action_fdroid">F-Droid</string>
 </resources>

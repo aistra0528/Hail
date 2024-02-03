@@ -9,11 +9,11 @@
     <string name="action_donate">Пожертвувати</string>
     <string name="action_export_all">Експортувати все</string>
     <string name="action_export_clipboard">Експортувати в буфер обміну</string>
-    <string name="action_export_current">Експортувати поточний</string>
+    <string name="action_export_current">Експортувати видимий</string>
     <string name="action_extract_apk">Експортувати APK</string>
     <string name="action_freeze">Заморозити</string>
     <string name="action_freeze_all">Заморозити все</string>
-    <string name="action_freeze_current">Заморозити поточний</string>
+    <string name="action_freeze_current">Заморозити видимі</string>
     <string name="action_freeze_non_whitelisted">Заморозити не з білого списку</string>
     <string name="action_github">GitHub</string>
     <string name="action_help">Допомога</string>
@@ -37,7 +37,7 @@
     <string name="action_undo">Скасувати</string>
     <string name="action_unfreeze">Розморозити</string>
     <string name="action_unfreeze_all">Розморозити все</string>
-    <string name="action_unfreeze_current">Розморозити поточний</string>
+    <string name="action_unfreeze_current">Розморозити видимі</string>
     <string name="action_unfreeze_remove_home">Розморозити і видалити з Домашньої</string>
     <string name="action_uninstall">Видалити</string>
     <string name="action_unpin">Відкріпити</string>
@@ -55,7 +55,7 @@
     <string name="donate_bilibili">Bilibili</string>
     <string name="donate_bilibili_cancel">Скасувати</string>
     <string name="donate_bilibili_msg">Підписатись на Bilibili.</string>
-    <string name="donate_bilibili_space">Bilibili space</string>
+    <string name="donate_bilibili_space">Простір Bilibili</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="donate_wechat">WeChat Pay</string>
@@ -75,7 +75,7 @@
     <string name="mode_shizuku_disable">Shizuku - вимкнути</string>
     <string name="mode_shizuku_suspend">Shizuku - призупинити</string>
     <string name="mode_su_disable">Root - вимкнути</string>
-    <string name="mode_su_suspend">Root - призупинити</string>
+    <string name="mode_su_suspend">Root - Призупинити</string>
     <string name="msg_biometric">Вхід за допомогою біометричних даних</string>
     <string name="msg_exported">Експортовано: %s</string>
     <string name="msg_extract_apk">Розпаковано до: %s</string>
@@ -136,4 +136,10 @@
     <string name="action_terminal">Термінал</string>
     <string name="mode_dhizuku_hide">Dhizuku - Приховати</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Призупинити</string>
+    <string name="action_skip">Пропустити</string>
+    <string name="mode_su_hide">Root - Приховування</string>
+    <string name="mode_island_hide">Island/Insular - Приховування</string>
+    <string name="mode_island_suspend">Island/Insular - Вимкнення</string>
+    <string name="action_fdroid">F-Droid</string>
+    <string name="shizuku_hide_adb">Shizuku працює по adb. Щоб приховати додатки, будь ласка, перезапустіть Shizuku з рут правами.</string>
 </resources>
