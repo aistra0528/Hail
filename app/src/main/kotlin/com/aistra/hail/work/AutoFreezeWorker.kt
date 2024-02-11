@@ -21,7 +21,7 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
         return if (result == null) {
             Result.failure()
         } else {
-            app.setAutoFreezeService(false)
+            app.setAutoFreezeService()
             Result.success()
         }
     }
