@@ -137,4 +137,5 @@
     <string name="mode_island_suspend">Island/Insular - Askıya al</string>
     <string name="mode_su_hide">Superuser - Gizle</string>
     <string name="action_fdroid">F-Droid</string>
+    <string name="shizuku_hide_adb">Shizuku adb olarak çalışıyor. Uygulamaları gizlemek için lütfen Shizuku\'yu root ile yeniden başlatın.</string>
 </resources>
