@@ -137,4 +137,6 @@
     <string name="mode_island_hide">Island/Insular - Hide</string>
     <string name="mode_island_suspend">Island/Insular - Suspend</string>
     <string name="shizuku_hide_adb">Shizuku is running as adb. To hide apps, please restart Shizuku with root.</string>
+    <string name="action_hide_noroot">Hail在无root权限下无法解冻被隐藏应用，您可能需要重新安装应用程序以解冻！</string>
+    <string name="title_tip">提示</string>
 </resources>

@@ -138,4 +138,6 @@
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">跳过</string>
     <string name="shizuku_hide_adb">Shizuku 正以 adb 权限运行。如需隐藏应用，请通过 root 重新启动 Shizuku。</string>
+    <string name="action_hide_noroot">Hail在无root权限下无法解冻被隐藏应用，您可能需要重新安装应用程序以解冻！</string>
+    <string name="title_tip">提示</string>
 </resources>

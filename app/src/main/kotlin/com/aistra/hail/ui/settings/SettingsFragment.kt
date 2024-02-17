@@ -214,7 +214,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     .findViewById<MaterialTextView>(android.R.id.message)?.setTextIsSelectable(true)
                 return false
             }
-
+            mode.startsWith(HailData.HIDE) -> if (!HPolicy.isDeviceOwnerActive || Dhizuku.isPermissionGranted()) {
+                MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_tip)
+                    .setMessage(getString(R.string.action_hide_noroot))
+                    .setPositiveButton(android.R.string.ok, null)
+                return true
+            }
             mode.startsWith(HailData.DHIZUKU) -> return runCatching {
                 Dhizuku.init(app)
                 when {
