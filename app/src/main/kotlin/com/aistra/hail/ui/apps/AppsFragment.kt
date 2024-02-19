@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.*
 import android.widget.CompoundButton
+import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
@@ -18,6 +18,7 @@ import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.FragmentAppsBinding
 import com.aistra.hail.extensions.applyInsetsPadding
+import com.aistra.hail.extensions.exportFileName
 import com.aistra.hail.extensions.isLandscape
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HFiles
@@ -26,9 +27,13 @@ import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
 import com.aistra.hail.views.HRecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.FileInputStream
 
-class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapter.OnItemCheckedChangeListener,
+class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
+    AppsAdapter.OnItemCheckedChangeListener,
     MenuProvider {
 
     private val model: AppsViewModel by viewModels()
@@ -43,6 +48,36 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
     private val isAppsChanged get() = model.apps.value.hashCode() != lastAppsHash
     private val isQueryChanged get() = model.query.value != lastQuery
     private var contextMenuInfo: ContextMenu.ContextMenuInfo? = null
+
+
+    private var exportApkPkg: String? = null
+    private val exportApk =
+        registerForActivityResult(CreateDocument("application/vnd.android.package-archive")) { uri ->
+            val exportApkPkg = exportApkPkg
+            this.exportApkPkg = null
+            if (exportApkPkg == null || uri == null) return@registerForActivityResult
+            lifecycleScope.launch {
+                val applicationInfo =
+                    HPackages.getApplicationInfoOrNull(exportApkPkg) ?: return@launch
+                val dialog = MaterialAlertDialogBuilder(activity)
+                    .setView(R.layout.dialog_progress).setCancelable(false).show()
+                runCatching {
+                    withContext(Dispatchers.IO) {
+                        FileInputStream(applicationInfo.sourceDir).use { source ->
+                            activity.contentResolver.openOutputStream(uri, "rwt").use { target ->
+                                if (target == null) return@withContext
+                                HFiles.copy(source, target)
+                            }
+                        }
+                    }
+                }.onSuccess {
+                    HUI.showToast(R.string.msg_extract_apk, uri.toString())
+                }.onFailure {
+                    HUI.showToast(R.string.operation_failed, it.localizedMessage ?: "Unknown", true)
+                }
+                dialog.dismiss()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -119,29 +154,16 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
                 HUI.showToast(R.string.msg_text_copied, pkg)
             }
 
-            R.id.action_extract_apk -> extractApk(name, pkg, info.sourceDir)
+            R.id.action_extract_apk -> extractApk(pkg)
             R.id.action_uninstall -> uninstallApp(name, pkg)
             else -> return super.onContextItemSelected(item)
         }
         return true
     }
 
-    private fun extractApk(name: CharSequence, pkg: String, sourceDir: String) {
-        lifecycleScope.launch {
-            val dialog =
-                MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress).setCancelable(false).create()
-            dialog.show()
-            val target = "${HFiles.DIR_OUTPUT}/$name-${
-                HPackages.getUnhiddenPackageInfoOrNull(pkg)?.versionName ?: "unknown"
-            }-${
-                HPackages.getUnhiddenPackageInfoOrNull(pkg)?.let { PackageInfoCompat.getLongVersionCode(it) } ?: 0
-            }.apk"
-            HUI.showToast(
-                if (HFiles.copy(sourceDir, target)) R.string.msg_extract_apk
-                else R.string.operation_failed, target, true
-            )
-            dialog.dismiss()
-        }
+    private fun extractApk(pkg: String) {
+        exportApkPkg = pkg
+        exportApk.launch(HPackages.getUnhiddenPackageInfoOrNull(pkg)?.exportFileName ?: pkg)
     }
 
     private fun uninstallApp(name: CharSequence, pkg: String) {
