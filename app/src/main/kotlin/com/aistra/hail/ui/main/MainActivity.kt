@@ -106,10 +106,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
-    override fun onStop() {
+    /* override fun onStop() {
         super.onStop()
         if (HailData.biometricLogin) finishAndRemoveTask()
-    }
+    } */
 
     override fun onDestinationChanged(
         controller: NavController,

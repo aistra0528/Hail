@@ -16,7 +16,7 @@ import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
 
 object HShizuku {
-    private val isRoot get() = Shizuku.getUid() == 0
+    val isRoot get() = Shizuku.getUid() == 0
     private val userId get() = if (isRoot) myUserId else 0
     private val callerPackage get() = if (isRoot) BuildConfig.APPLICATION_ID else "com.android.shell"
 
