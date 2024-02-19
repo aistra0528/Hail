@@ -1,14 +1,19 @@
 package com.aistra.hail.utils
 
+import android.os.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.nio.channels.FileChannel
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 import kotlin.io.path.exists
+import kotlin.io.copyTo as ktCopyTo
 
 object HFiles {
     const val DIR_OUTPUT = "/storage/emulated/0/Download"
@@ -37,6 +42,40 @@ object HFiles {
             }
             true
         }.getOrDefault(false)
+    }
+
+    suspend fun copy(source: InputStream, target: OutputStream) {
+        withContext(Dispatchers.IO) {
+            if (HTarget.Q) {
+                FileUtils.copy(source, target)
+            } else if (source is FileInputStream && target is FileOutputStream) {
+                copy(source, target)
+            } else {
+                source.ktCopyTo(target)
+            }
+        }
+    }
+
+    suspend fun copy(source: FileInputStream, target: FileOutputStream) {
+        withContext(Dispatchers.IO) {
+            if (HTarget.Q) {
+                FileUtils.copy(source.fd, target.fd)
+            } else {
+                source.channel.use {
+                    target.channel.use { outputChannel ->
+                        copy(it, outputChannel)
+                    }
+                }
+            }
+        }
+    }
+
+    suspend fun copy(source: FileChannel, out: FileChannel) = withContext(Dispatchers.IO) {
+        val size = source.size()
+        var left = size
+        while (left > 0) {
+            left -= source.transferTo(size - left, left, out)
+        }
     }
 
     /**
