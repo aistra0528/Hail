@@ -15,7 +15,8 @@
 
 ## 冻结
 
-冻结`freeze`是一个营销用语，用于描述使**应用在用户不需要时不可运行**的行为，以此控制设备使用、减少内存占用和节省电量。用户可在需要时解冻`unfreeze`应用。
+冻结`freeze`是一个营销用语，用于描述使**应用在用户不需要时不可运行**
+的行为，以此控制设备使用、减少内存占用和节省电量。用户可在需要时解冻`unfreeze`应用。
 
 在一般情况下，“冻结”是指停用，此外雹也可以通过隐藏和暂停来“冻结”应用。
 
@@ -177,7 +178,8 @@ adb shell am start -a action -e name value
 ## 许可证
 
     Hail - Freeze Android apps
-    Copyright (C) 2021-2023 Aistra
+    Copyright (C) 2021-2024 Aistra
+    Copyright (C) 2022-2024 Hail contributors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

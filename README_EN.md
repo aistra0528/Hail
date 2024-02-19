@@ -9,7 +9,8 @@
 [![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)
 [![License](https://img.shields.io/github/license/aistra0528/Hail)](LICENSE)
 
-Hail is a free-as-in-freedom software to freeze Android apps. [GitHub Releases](https://github.com/aistra0528/Hail/releases)
+Hail is a free-as-in-freedom software to freeze Android
+apps. [GitHub Releases](https://github.com/aistra0528/Hail/releases)
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.aistra.hail/)
 
@@ -17,14 +18,17 @@ Hail is a free-as-in-freedom software to freeze Android apps. [GitHub Releases](
 
 ## Freeze
 
-Freeze is a word that describes the action of **forbid (immediately stop) apps when they are unnecessary (on-demand request)** to use the device
-in a better way, cut down the usage of ram and save power. User can also unfreeze them to revert to their original state.
+Freeze is a word that describes the action of **forbid (immediately stop) apps when they are unnecessary (on-demand
+request)** to use the device
+in a better way, cut down the usage of ram and save power. User can also unfreeze them to revert to their original
+state.
 
 In general, "freeze" means disable, but also Hail can "freeze" apps by hiding and suspending them.
 
 ### Disable
 
-Disabled apps will not be shown in the launcher and will be shown as "Disabled" in the installed apps list. Enable them to revert the action.
+Disabled apps will not be shown in the launcher and will be shown as "Disabled" in the installed apps list. Enable them
+to revert the action.
 
 ### Hide
 
@@ -192,7 +196,8 @@ use [Weblate](https://hosted.weblate.org/engage/hail/).
 ## License
 
     Hail - Freeze Android apps
-    Copyright (C) 2021-2023 Aistra
+    Copyright (C) 2021-2024 Aistra
+    Copyright (C) 2022-2024 Hail contributors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
