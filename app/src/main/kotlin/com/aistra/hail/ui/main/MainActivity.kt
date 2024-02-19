@@ -93,9 +93,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menu?.let { MenuCompat.setGroupDividerEnabled(it,true) }
+        menu?.let { MenuCompat.setGroupDividerEnabled(it, true) }
         return super.onCreateOptionsMenu(menu)
     }
+
     fun ownerRemoveDialog() {
         MaterialAlertDialogBuilder(this).setTitle(R.string.title_remove_owner)
             .setMessage(R.string.msg_remove_owner)
