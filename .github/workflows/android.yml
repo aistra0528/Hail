@@ -21,12 +21,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'aistra0528' }}
+    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Java JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -35,7 +35,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleDebug
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Debug
           path: app/build/outputs/apk/debug
