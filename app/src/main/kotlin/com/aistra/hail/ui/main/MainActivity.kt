@@ -1,12 +1,14 @@
 package com.aistra.hail.ui.main
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -88,6 +90,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             bottom = true
         )
         fab.applyInsetsMargin(end = true, bottom = isLandscape)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menu?.let { MenuCompat.setGroupDividerEnabled(it, true) }
+        return super.onCreateOptionsMenu(menu)
     }
 
     fun ownerRemoveDialog() {
