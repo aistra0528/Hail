@@ -2,13 +2,7 @@ package com.aistra.hail.ui.apps
 
 import android.os.Bundle
 import android.provider.Settings
-import android.view.ContextMenu
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CompoundButton
 import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.appcompat.widget.SearchView
@@ -63,13 +57,13 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             this.exportApkPkg = null
             if (exportApkPkg == null || uri == null) return@registerForActivityResult
             lifecycleScope.launch {
-                val packageInfo =
-                    HPackages.getUnhiddenPackageInfoOrNull(exportApkPkg) ?: return@launch
+                val applicationInfo =
+                    HPackages.getApplicationInfoOrNull(exportApkPkg) ?: return@launch
                 val dialog = MaterialAlertDialogBuilder(activity)
                     .setView(R.layout.dialog_progress).setCancelable(false).show()
                 runCatching {
                     withContext(Dispatchers.IO) {
-                        FileInputStream(packageInfo.applicationInfo.sourceDir).use { source ->
+                        FileInputStream(applicationInfo.sourceDir).use { source ->
                             activity.contentResolver.openOutputStream(uri, "rwt").use { target ->
                                 if (target == null) return@withContext
                                 HFiles.copy(source, target)
@@ -83,7 +77,6 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
                 }
                 dialog.dismiss()
             }
-
         }
 
     override fun onCreateView(
@@ -169,10 +162,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     private fun extractApk(pkg: String) {
-        HPackages.getUnhiddenPackageInfoOrNull(pkg)?.let {
-            exportApkPkg = pkg
-            exportApk.launch(it.exportFileName)
-        }
+        exportApkPkg = pkg
+        exportApk.launch(HPackages.getUnhiddenPackageInfoOrNull(pkg)?.exportFileName ?: pkg)
     }
 
     private fun uninstallApp(name: CharSequence, pkg: String) {
