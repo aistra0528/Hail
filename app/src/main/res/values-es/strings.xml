@@ -139,4 +139,6 @@
     <string name="mode_island_hide">Isla/Insular - Ocultar</string>
     <string name="mode_island_suspend">Isla/Insular - Suspender</string>
     <string name="shizuku_hide_adb">Shizuku se está ejecutando como adb. Para ocultar aplicaciones, reinicia Shizuku con root.</string>
+    <string name="command">Dominio</string>
+    <string name="tag">Etiqueta</string>
 </resources>
