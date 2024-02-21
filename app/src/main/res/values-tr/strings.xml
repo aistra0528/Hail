@@ -138,4 +138,6 @@
     <string name="mode_su_hide">Superuser - Gizle</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="shizuku_hide_adb">Shizuku adb olarak çalışıyor. Uygulamaları gizlemek için lütfen Shizuku\'yu root ile yeniden başlatın.</string>
+    <string name="command">Komut</string>
+    <string name="tag">Etiket</string>
 </resources>
