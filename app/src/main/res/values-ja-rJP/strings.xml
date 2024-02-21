@@ -40,14 +40,14 @@
     <string name="action_extract_apk">APK ファイルを抽出</string>
     <string name="action_uninstall">アンインストール</string>
     <string name="msg_uninstall">このアプリをアンインストールしますか？</string>
-    <string name="working_mode">動作モード</string>
+    <string name="working_mode">作業モード</string>
     <string name="mode_default">アイドル</string>
-    <string name="mode_owner_hide">デバイス管理者 - 非表示にする</string>
+    <string name="mode_owner_hide">デバイス所有者 - 非表示にする</string>
     <string name="mode_su_disable">スーパーユーザー - 凍結</string>
     <string name="mode_shizuku_disable">Shizuku - 凍結</string>
-    <string name="title_set_owner">デバイス管理者に設定</string>
+    <string name="title_set_owner">デバイス所有者に設定</string>
     <string name="msg_set_owner">adb で以下のコマンドを実行してください：\n%s</string>
-    <string name="title_remove_owner">デバイス管理者を削除</string>
+    <string name="title_remove_owner">デバイス所有者を削除</string>
     <string name="msg_remove_owner">「Hail」をデバイス所有者から削除します。削除後、もう一度設定することが困難な場合があります。\n 非表示のアプリは削除後も非表示のままになります。削除する前に重要なアプリは非表示を解除してください。</string>
     <string name="tap_to_select">タップして複数選択</string>
     <string name="filter_by">フィルター</string>
@@ -65,7 +65,7 @@
     <string name="donate_wechat_scan">スキャン</string>
     <string name="donate_bilibili">ビリビリ動画</string>
     <string name="donate_bilibili_msg">bilibiliチャンネルをフォローする</string>
-    <string name="donate_bilibili_space">マイスペース</string>
+    <string name="donate_bilibili_space">ビリビリチャンネル</string>
     <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
@@ -125,4 +125,11 @@
     <string name="action_unfreeze_tag">タグの凍結を解除</string>
     <string name="icon_pack">アイコンパック</string>
     <string name="action_select_all">すべて選択</string>
+    <string name="shizuku_hide_adb">Shizuku は adb を使用して実行中です。アプリを非表示にするには、Root 権限で Shizuku を再起動してください。</string>
+    <string name="mode_island_hide">Island/Insular - 非表示にする</string>
+    <string name="mode_island_suspend">Island/Insular - サスペンド</string>
+    <string name="mode_dhizuku_hide">Dhizuku - 非表示にする</string>
+    <string name="mode_dhizuku_suspend">Dhizuku - サスペンド</string>
+    <string name="mode_su_hide">スーパーユーザー - 非表示にする</string>
+    <string name="action_fdroid">F-Droid</string>
 </resources>
