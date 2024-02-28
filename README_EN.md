@@ -18,9 +18,9 @@ apps. [GitHub Releases](https://github.com/aistra0528/Hail/releases)
 
 ## Freeze
 
-Freeze is a word that describes the action of **forbid (immediately stop) apps when they are unnecessary (on-demand
+Freeze is a word that describes the action of **blocking (immediately stopping) apps when they are unnecessary (on-demand
 request)** to use the device
-in a better way, cut down the usage of ram and save power. User can also unfreeze them to revert to their original
+in a better way, cut down on the usage of RAM and save power. Users can also unfreeze them to revert to their original
 state.
 
 In general, "freeze" means disable, but also Hail can "freeze" apps by hiding and suspending them.
@@ -34,8 +34,8 @@ to revert the action.
 
 Hidden apps will not be shown in the launcher and installed apps list. Unhide them to revert the action.
 
-> While in this state, which is almost like an uninstalled state, makes the package unavailable,
-> but it doesn't remove the data or the actual package file.
+> While in this state, which is almost like an uninstalled state, the package will be unavailable,
+> but the application data and the actual package file will not be removed from the device.
 
 ### Suspend (Android 7.0+)
 
@@ -50,17 +50,17 @@ Suspended apps will have their icons shown in a grayscale in the device's launch
 
 Hail can work with `Device Owner`, `Dhizuku`, `Superuser` (Root) and `Shizuku` (including Sui).
 
-**Frozen app need to be unfrozen by the same working mode.**
+**Any apps that have been frozen on Hail will need to be unfrozen by the same working mode.**
 
-1. For devices support wifi adb or rooted, `Shizuku` is recommend.
+1. For devices supporting wifi adb or rooted devices, `Shizuku` is recommend.
 
-2. For rooted devices, `Superuser` is alternative. **It is slower.**
+2. For rooted devices, `Superuser` is an alternative. **It is slower.**
 
 3. Select `Device Owner` or `Dhizuku` otherwise. **These are a pain to set up.**
 
 ### Device Owner - Hide / Suspend
 
-This mode invoke:
+This mode invokes:
 
 - `DevicePolicyManager.setApplicationHidden` to hide apps.
 
