@@ -135,4 +135,7 @@
     <string name="action_fdroid">F-Droid</string>
     <string name="mode_island_hide">Island/Insular - Sembunyikan</string>
     <string name="mode_island_suspend">Island/Insular - Tangguhkan</string>
+    <string name="shizuku_hide_adb">Shizuku berjalan sebagai adb. Untuk menyembunyikan aplikasi, mulai ulang Shizuku dengan root.</string>
+    <string name="command">Perintah</string>
+    <string name="tag">Label</string>
 </resources>
