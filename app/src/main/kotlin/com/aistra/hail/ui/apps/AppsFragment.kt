@@ -125,7 +125,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
     }
 
     override fun onItemClick(buttonView: CompoundButton) {
-        buttonView.toggle()
+//        buttonView.toggle()
     }
 
     override fun onCreateContextMenu(
