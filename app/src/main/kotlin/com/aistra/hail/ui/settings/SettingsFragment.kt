@@ -78,9 +78,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             } else true
         }
         findPreference<Preference>(HailData.AUTO_FREEZE_AFTER_LOCK)?.setOnPreferenceChangeListener { _, autoFreezeAfterLock ->
-            if (autoFreezeAfterLock == false) {
-                app.setAutoFreezeService(false)
-            }
+            app.setAutoFreezeService(autoFreezeAfterLock as Boolean)
             true
         }
         findPreference<Preference>(HailData.ICON_PACK)?.setOnPreferenceClickListener {

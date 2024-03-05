@@ -19,9 +19,8 @@ class HailApp : Application() {
         if (HailData.workingMode.startsWith(HailData.DHIZUKU)) HDhizuku.init()
     }
 
-    fun setAutoFreezeService(enabled: Boolean? = null) {
-        if (HailData.autoFreezeAfterLock.not()) return
-        val start = enabled ?: HailData.checkedList.any {
+    fun setAutoFreezeService(autoFreezeAfterLock: Boolean = HailData.autoFreezeAfterLock) {
+        val start = autoFreezeAfterLock && HailData.checkedList.any {
             it.packageName != packageName
                     && it.applicationInfo != null
                     && !AppManager.isAppFrozen(it.packageName)
