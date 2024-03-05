@@ -165,6 +165,8 @@ adb shell am start -a action -e name value
 
 - `com.aistra.hail.action.FREEZE_NON_WHITELISTED`：冻结首页全部非白名单应用。无需`extra`。
 
+- `com.aistra.hail.action.FREEZE_AUTO`：自动冻结首页应用。无需`extra`。
+
 - `com.aistra.hail.action.LOCK`：锁定屏幕。无需`extra`。
 
 - `com.aistra.hail.action.LOCK_FREEZE`：冻结首页全部应用并锁定屏幕。无需`extra`。

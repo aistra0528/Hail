@@ -181,6 +181,8 @@ adb shell am start -a action -e name value
 - `com.aistra.hail.action.FREEZE_NON_WHITELISTED`: Freeze all non-whitelisted apps at Home. `extra`
   is not necessary.
 
+- `com.aistra.hail.action.FREEZE_AUTO`: Auto freeze apps at Home. `extra` is not necessary.
+
 - `com.aistra.hail.action.LOCK`: Lock screen. `extra` is not necessary.
 
 - `com.aistra.hail.action.LOCK_FREEZE`: Freeze all apps at Home and lock screen. `extra` is not
