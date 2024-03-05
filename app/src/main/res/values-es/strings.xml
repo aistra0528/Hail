@@ -142,5 +142,5 @@
     <string name="command">Dominio</string>
     <string name="tag">Etiqueta</string>
     <string name="freeze_system_app">Congelar las aplicaciones del sistema puede hacer que el dispositivo arranque en bucle. Asegúrate de que sabes lo que haces y haz una copia de seguridad de tus datos con antelación o utiliza un recuperador compatible con la gestión de archivos.</string>
-    <string name="continue">Continuar</string>
+    <string name="action_continue">Continuar</string>
 </resources>
