@@ -238,7 +238,11 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             R.id.sort_by_install -> changeAppsSort(HailData.SORT_INSTALL, item)
             R.id.sort_by_update -> changeAppsSort(HailData.SORT_UPDATE, item)
             R.id.filter_user_apps -> changeAppsFilter(HailData.FILTER_USER_APPS, item)
-            R.id.filter_system_apps -> changeAppsFilter(HailData.FILTER_SYSTEM_APPS, item)
+            R.id.filter_system_apps -> MaterialAlertDialogBuilder(activity).setMessage(R.string.freeze_system_app)
+                .setPositiveButton(R.string.action_continue) { _, _ ->
+                    changeAppsFilter(HailData.FILTER_SYSTEM_APPS, item)
+                }.setNegativeButton(android.R.string.cancel, null).show()
+
             R.id.filter_frozen_apps -> changeAppsFilter(HailData.FILTER_FROZEN_APPS, item)
             R.id.filter_unfrozen_apps -> changeAppsFilter(HailData.FILTER_UNFROZEN_APPS, item)
         }

@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     fun ownerRemoveDialog() {
         MaterialAlertDialogBuilder(this).setTitle(R.string.title_remove_owner)
             .setMessage(R.string.msg_remove_owner)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.action_continue) { _, _ ->
                 HPolicy.setOrganizationName()
                 HPolicy.clearDeviceOwnerApp()
             }.setNegativeButton(android.R.string.cancel, null).show()
