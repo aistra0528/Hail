@@ -57,7 +57,7 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         when (view) {
             binding.actionLibre -> HUI.openLink(HailData.URL_WHY_FREE_SOFTWARE)
             binding.actionVersion -> HUI.openLink(HailData.URL_RELEASES)
-            binding.actionTime -> HUI.showToast("\uD83E\uDD73")
+            binding.actionTime -> HUI.showToast("\uD83E\uDD76\uD83D\uDCA8\uD83D\uDC09")
             binding.actionTelegram -> HUI.openLink(HailData.URL_TELEGRAM)
             binding.actionQq -> HUI.openLink(HailData.URL_QQ)
             binding.actionFdroid -> HUI.openLink(HailData.URL_FDROID)
