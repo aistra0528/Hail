@@ -142,4 +142,5 @@
     <string name="action_continue">继续</string>
     <string name="command">命令</string>
     <string name="tag">标签</string>
+    <string name="nine_key">九键搜索</string>
 </resources>

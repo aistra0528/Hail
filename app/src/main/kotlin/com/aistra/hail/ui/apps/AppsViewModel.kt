@@ -8,10 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.aistra.hail.HailApp
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
-import com.aistra.hail.utils.FuzzySearch
-import com.aistra.hail.utils.HPackages
-import com.aistra.hail.utils.NameComparator
-import com.aistra.hail.utils.PinyinSearch
+import com.aistra.hail.utils.*
 import kotlinx.coroutines.*
 
 class AppsViewModel(application: Application) : AndroidViewModel(application) {
@@ -99,7 +96,9 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
                         && ((HailData.filterFrozenApps && it.isAppFrozen)
                         || (HailData.filterUnfrozenApps && !it.isAppFrozen))
                         // Search apps
-                        && (FuzzySearch.search(it.packageName, query)
+                        && ((HailData.nineKeySearch
+                        && (NineKeySearch.search(query, it.packageName, it.loadLabel(pm).toString())))
+                        || FuzzySearch.search(it.packageName, query)
                         || FuzzySearch.search(it.loadLabel(pm).toString(), query)
                         || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
             }.run {
