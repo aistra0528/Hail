@@ -142,4 +142,5 @@
     <string name="freeze_system_app">Freezing system applications may cause the device to bootloop. Make sure you know what you are doing and backup your data in advance or use recovery that supports file management.</string>
     <string name="action_continue">Continue</string>
     <string name="nine_key">T9 Search</string>
+    <string name="home_font_size">Home font size</string>
 </resources>

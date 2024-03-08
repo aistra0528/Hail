@@ -35,6 +35,15 @@
                 app:icon="@drawable/ic_outline_layers"
                 app:key="synthesize_adaptive_icons"
                 app:title="@string/synthesize_adaptive_icons"/>
+        <SeekBarPreference
+                android:max="16"
+                app:defaultValue="14"
+                app:icon="@drawable/ic_baseline_text_fields"
+                app:key="home_font_size"
+                app:min="11"
+                app:showSeekBarValue="true"
+                app:singleLineTitle="false"
+                app:title="@string/home_font_size"/>
         <SwitchPreferenceCompat
                 app:defaultValue="false"
                 app:icon="@drawable/ic_baseline_dialpad"
