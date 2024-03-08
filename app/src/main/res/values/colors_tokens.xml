@@ -1,86 +1,125 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file was generated from the material-theme.json that was created on
+    https://material-foundation.github.io/material-theme-builder/. -->
 
-<!--
-  Generated on Wed, 19 Jul 2023 17:35:19 GMT
--->
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="PrivateResource">
-    <color name="m3_ref_palette_primary0">#ff000000</color>
-    <color name="m3_ref_palette_primary10">#ff001f2a</color>
-    <color name="m3_ref_palette_primary20">#ff003546</color>
-    <color name="m3_ref_palette_primary30">#ff004d65</color>
-    <color name="m3_ref_palette_primary40">#ff006685</color>
-    <color name="m3_ref_palette_primary50">#ff0081a6</color>
-    <color name="m3_ref_palette_primary60">#ff0f9cc8</color>
-    <color name="m3_ref_palette_primary70">#ff42b7e4</color>
-    <color name="m3_ref_palette_primary80">#ff6ad3ff</color>
-    <color name="m3_ref_palette_primary90">#ffbee9ff</color>
-    <color name="m3_ref_palette_primary95">#ffe0f4ff</color>
-    <color name="m3_ref_palette_primary99">#fffafcff</color>
-    <color name="m3_ref_palette_primary100">#ffffffff</color>
-    <color name="m3_ref_palette_secondary0">#ff000000</color>
-    <color name="m3_ref_palette_secondary10">#ff081e27</color>
-    <color name="m3_ref_palette_secondary20">#ff1f333d</color>
-    <color name="m3_ref_palette_secondary30">#ff354a54</color>
-    <color name="m3_ref_palette_secondary40">#ff4d616c</color>
-    <color name="m3_ref_palette_secondary50">#ff657a85</color>
-    <color name="m3_ref_palette_secondary60">#ff7f949f</color>
-    <color name="m3_ref_palette_secondary70">#ff99aeba</color>
-    <color name="m3_ref_palette_secondary80">#ffb4cad6</color>
-    <color name="m3_ref_palette_secondary90">#ffd0e6f2</color>
-    <color name="m3_ref_palette_secondary95">#ffe0f4ff</color>
-    <color name="m3_ref_palette_secondary99">#fffafcff</color>
-    <color name="m3_ref_palette_secondary100">#ffffffff</color>
-    <color name="m3_ref_palette_tertiary0">#ff000000</color>
-    <color name="m3_ref_palette_tertiary10">#ff001f2a</color>
-    <color name="m3_ref_palette_tertiary20">#ff003546</color>
-    <color name="m3_ref_palette_tertiary30">#ff004d65</color>
-    <color name="m3_ref_palette_tertiary40">#ff006685</color>
-    <color name="m3_ref_palette_tertiary50">#ff0081a6</color>
-    <color name="m3_ref_palette_tertiary60">#ff0f9cc8</color>
-    <color name="m3_ref_palette_tertiary70">#ff42b7e4</color>
-    <color name="m3_ref_palette_tertiary80">#ff6ad3ff</color>
-    <color name="m3_ref_palette_tertiary90">#ffbee9ff</color>
-    <color name="m3_ref_palette_tertiary95">#ffe0f4ff</color>
-    <color name="m3_ref_palette_tertiary99">#fffafcff</color>
-    <color name="m3_ref_palette_tertiary100">#ffffffff</color>
-    <color name="m3_ref_palette_neutral0">#ff000000</color>
-    <color name="m3_ref_palette_neutral10">#ff191c1e</color>
-    <color name="m3_ref_palette_neutral20">#ff2e3133</color>
-    <color name="m3_ref_palette_neutral30">#ff444749</color>
-    <color name="m3_ref_palette_neutral40">#ff5c5f61</color>
-    <color name="m3_ref_palette_neutral50">#ff757779</color>
-    <color name="m3_ref_palette_neutral60">#ff8f9193</color>
-    <color name="m3_ref_palette_neutral70">#ffa9abad</color>
-    <color name="m3_ref_palette_neutral80">#ffc5c7c9</color>
-    <color name="m3_ref_palette_neutral90">#ffe1e2e5</color>
-    <color name="m3_ref_palette_neutral95">#fff0f1f3</color>
-    <color name="m3_ref_palette_neutral99">#fffbfcfe</color>
-    <color name="m3_ref_palette_neutral100">#ffffffff</color>
-    <color name="m3_ref_palette_neutral_variant0">#ff000000</color>
-    <color name="m3_ref_palette_neutral_variant10">#ff151d21</color>
-    <color name="m3_ref_palette_neutral_variant20">#ff2a3136</color>
-    <color name="m3_ref_palette_neutral_variant30">#ff40484c</color>
-    <color name="m3_ref_palette_neutral_variant40">#ff585f64</color>
-    <color name="m3_ref_palette_neutral_variant50">#ff70787d</color>
-    <color name="m3_ref_palette_neutral_variant60">#ff8a9297</color>
-    <color name="m3_ref_palette_neutral_variant70">#ffa5acb1</color>
-    <color name="m3_ref_palette_neutral_variant80">#ffc0c8cd</color>
-    <color name="m3_ref_palette_neutral_variant90">#ffdce4e9</color>
-    <color name="m3_ref_palette_neutral_variant95">#ffeaf2f7</color>
-    <color name="m3_ref_palette_neutral_variant99">#fffafcff</color>
-    <color name="m3_ref_palette_neutral_variant100">#ffffffff</color>
-    <color name="m3_ref_palette_error0">#ff000000</color>
-    <color name="m3_ref_palette_error10">#ff410002</color>
-    <color name="m3_ref_palette_error20">#ff690005</color>
-    <color name="m3_ref_palette_error30">#ff93000a</color>
-    <color name="m3_ref_palette_error40">#ffba1a1a</color>
-    <color name="m3_ref_palette_error50">#ffde3730</color>
-    <color name="m3_ref_palette_error60">#ffff5449</color>
-    <color name="m3_ref_palette_error70">#ffff897d</color>
-    <color name="m3_ref_palette_error80">#ffffb4ab</color>
-    <color name="m3_ref_palette_error90">#ffffdad6</color>
-    <color name="m3_ref_palette_error95">#ffffedea</color>
-    <color name="m3_ref_palette_error99">#fffffbff</color>
-    <color name="m3_ref_palette_error100">#ffffffff</color>
+<!-- Only rewriting the colors in the theme is not enough.
+    Because some resources directly reference resource colors instead of attr.
+    So we rewrite these resource colors here. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="PrivateResource">
 
+    <color name="m3_ref_palette_primary0">#000000</color>
+    <color name="m3_ref_palette_primary5">#00131C</color>
+    <color name="m3_ref_palette_primary10">#001F2A</color>
+    <color name="m3_ref_palette_primary15">#002A38</color>
+    <color name="m3_ref_palette_primary20">#003546</color>
+    <color name="m3_ref_palette_primary25">#004155</color>
+    <color name="m3_ref_palette_primary30">#004D65</color>
+    <color name="m3_ref_palette_primary35">#005975</color>
+    <color name="m3_ref_palette_primary40">#006685</color>
+    <color name="m3_ref_palette_primary50">#1E80A3</color>
+    <color name="m3_ref_palette_primary60">#439ABE</color>
+    <color name="m3_ref_palette_primary70">#61B5DA</color>
+    <color name="m3_ref_palette_primary80">#7ED1F7</color>
+    <color name="m3_ref_palette_primary90">#BEE9FF</color>
+    <color name="m3_ref_palette_primary95">#E0F4FF</color>
+    <color name="m3_ref_palette_primary98">#F4FAFF</color>
+    <color name="m3_ref_palette_primary99">#FAFCFF</color>
+    <color name="m3_ref_palette_primary100">#FFFFFF</color>
+    <color name="m3_ref_palette_secondary0">#000000</color>
+    <color name="m3_ref_palette_secondary5">#03131A</color>
+    <color name="m3_ref_palette_secondary10">#0D1E25</color>
+    <color name="m3_ref_palette_secondary15">#18282F</color>
+    <color name="m3_ref_palette_secondary20">#23333A</color>
+    <color name="m3_ref_palette_secondary25">#2E3E46</color>
+    <color name="m3_ref_palette_secondary30">#394951</color>
+    <color name="m3_ref_palette_secondary35">#45555D</color>
+    <color name="m3_ref_palette_secondary40">#506169</color>
+    <color name="m3_ref_palette_secondary50">#697983</color>
+    <color name="m3_ref_palette_secondary60">#82939D</color>
+    <color name="m3_ref_palette_secondary70">#9DAEB7</color>
+    <color name="m3_ref_palette_secondary80">#B8C9D3</color>
+    <color name="m3_ref_palette_secondary90">#D4E5EF</color>
+    <color name="m3_ref_palette_secondary95">#E2F3FE</color>
+    <color name="m3_ref_palette_secondary98">#F4FAFF</color>
+    <color name="m3_ref_palette_secondary99">#FAFCFF</color>
+    <color name="m3_ref_palette_secondary100">#FFFFFF</color>
+    <color name="m3_ref_palette_tertiary0">#000000</color>
+    <color name="m3_ref_palette_tertiary5">#100E26</color>
+    <color name="m3_ref_palette_tertiary10">#1A1931</color>
+    <color name="m3_ref_palette_tertiary15">#25233C</color>
+    <color name="m3_ref_palette_tertiary20">#2F2D47</color>
+    <color name="m3_ref_palette_tertiary25">#3B3853</color>
+    <color name="m3_ref_palette_tertiary30">#46445F</color>
+    <color name="m3_ref_palette_tertiary35">#524F6B</color>
+    <color name="m3_ref_palette_tertiary40">#5E5B78</color>
+    <color name="m3_ref_palette_tertiary50">#777492</color>
+    <color name="m3_ref_palette_tertiary60">#918DAC</color>
+    <color name="m3_ref_palette_tertiary70">#ABA8C8</color>
+    <color name="m3_ref_palette_tertiary80">#C7C3E4</color>
+    <color name="m3_ref_palette_tertiary90">#E3DFFF</color>
+    <color name="m3_ref_palette_tertiary95">#F3EEFF</color>
+    <color name="m3_ref_palette_tertiary98">#FCF8FF</color>
+    <color name="m3_ref_palette_tertiary99">#FFFBFF</color>
+    <color name="m3_ref_palette_tertiary100">#FFFFFF</color>
+    <color name="m3_ref_palette_neutral0">#000000</color>
+    <color name="m3_ref_palette_neutral5">#0F1113</color>
+    <color name="m3_ref_palette_neutral10">#1A1C1D</color>
+    <color name="m3_ref_palette_neutral15">#242627</color>
+    <color name="m3_ref_palette_neutral20">#2F3132</color>
+    <color name="m3_ref_palette_neutral25">#3A3C3D</color>
+    <color name="m3_ref_palette_neutral30">#454748</color>
+    <color name="m3_ref_palette_neutral35">#515354</color>
+    <color name="m3_ref_palette_neutral40">#5D5E60</color>
+    <color name="m3_ref_palette_neutral50">#767779</color>
+    <color name="m3_ref_palette_neutral60">#8F9192</color>
+    <color name="m3_ref_palette_neutral70">#AAABAD</color>
+    <color name="m3_ref_palette_neutral80">#C6C6C8</color>
+    <color name="m3_ref_palette_neutral90">#E2E2E4</color>
+    <color name="m3_ref_palette_neutral95">#F0F1F2</color>
+    <color name="m3_ref_palette_neutral98">#F9F9FB</color>
+    <color name="m3_ref_palette_neutral99">#FCFCFE</color>
+    <color name="m3_ref_palette_neutral100">#FFFFFF</color>
+    <color name="m3_ref_palette_neutral_variant0">#000000</color>
+    <color name="m3_ref_palette_neutral_variant5">#0C1215</color>
+    <color name="m3_ref_palette_neutral_variant10">#161C20</color>
+    <color name="m3_ref_palette_neutral_variant15">#21272A</color>
+    <color name="m3_ref_palette_neutral_variant20">#2B3135</color>
+    <color name="m3_ref_palette_neutral_variant25">#363C40</color>
+    <color name="m3_ref_palette_neutral_variant30">#42484B</color>
+    <color name="m3_ref_palette_neutral_variant35">#4D5357</color>
+    <color name="m3_ref_palette_neutral_variant40">#595F63</color>
+    <color name="m3_ref_palette_neutral_variant50">#72787C</color>
+    <color name="m3_ref_palette_neutral_variant60">#8C9196</color>
+    <color name="m3_ref_palette_neutral_variant70">#A6ACB0</color>
+    <color name="m3_ref_palette_neutral_variant80">#C1C7CB</color>
+    <color name="m3_ref_palette_neutral_variant90">#DEE3E8</color>
+    <color name="m3_ref_palette_neutral_variant95">#ECF1F6</color>
+    <color name="m3_ref_palette_neutral_variant98">#F5FAFE</color>
+    <color name="m3_ref_palette_neutral_variant99">#FAFCFF</color>
+    <color name="m3_ref_palette_neutral_variant100">#FFFFFF</color>
+
+    <!-- Here are the palettes that are not in material-theme.json -->
+    <!-- Retrieved from colorOnSurfaceXxx
+        according to https://m3.material.io/styles/color/static/baseline -->
+    <!-- Dark Surface Container Lowest -->
+    <color name="m3_ref_palette_neutral4">#0A0F12</color>
+    <!-- Dark Surface -->
+    <color name="m3_ref_palette_neutral6">#0F1417</color>
+    <!-- Dark Surface Container -->
+    <color name="m3_ref_palette_neutral12">#1B2023</color>
+    <!-- Dark Surface Container High -->
+    <color name="m3_ref_palette_neutral17">#262B2E</color>
+    <!-- Dark Surface Container Highest -->
+    <color name="m3_ref_palette_neutral22">#303538</color>
+    <!-- Dark surface Bright -->
+    <color name="m3_ref_palette_neutral24">#353A3D</color>
+    <!-- Light surface Dim -->
+    <color name="m3_ref_palette_neutral87">#D6DBDE</color>
+    <!-- Light Surface Container High -->
+    <color name="m3_ref_palette_neutral92">#E4E9EC</color>
+    <!-- Light Surface Container -->
+    <color name="m3_ref_palette_neutral94">#EAEEF2</color>
+    <!-- Light Surface Container Low -->
+    <color name="m3_ref_palette_neutral96">#F0F4F8</color>
 </resources>
