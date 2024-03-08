@@ -77,6 +77,7 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("com.belerweb:pinyin4j:2.5.1")
     implementation("com.google.android.material:material:1.11.0")
+    implementation("dev.chrisbanes.insetter:insetter:0.6.1")
     implementation("dev.rikka.rikkax.preference:simplemenu-preference:1.0.3")
     implementation("dev.rikka.shizuku:api:13.1.5")
     implementation("dev.rikka.shizuku:provider:13.1.5")

@@ -20,9 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
-import com.aistra.hail.extensions.applyInsetsMargin
-import com.aistra.hail.extensions.applyInsetsPadding
-import com.aistra.hail.extensions.isLandscape
+import com.aistra.hail.extensions.*
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
 import com.google.android.material.appbar.AppBarLayout
@@ -79,17 +77,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         bottomNav?.setupWithNavController(navController)
         navRail?.setupWithNavController(navController)
 
-        appBarMain.appBarLayout.applyInsetsPadding(
-            start = !isLandscape,
-            end = true,
-            top = true
-        )
-        bottomNav?.applyInsetsPadding(
-            start = true,
-            end = true,
-            bottom = true
-        )
-        fab.applyInsetsMargin(end = true, bottom = isLandscape)
+        val isRtl = isRtl
+        val isLandscape = isLandscape
+        appBarMain.appBarLayout.applyDefaultInsetter {
+            paddingRelative(isRtl, start = !isLandscape, end = true, top = true)
+        }
+        bottomNav?.applyDefaultInsetter { paddingRelative(isRtl, start = true, end = true, bottom = true) }
+        navRail?.applyDefaultInsetter { paddingRelative(isRtl, start = true, top = true, bottom = true) }
+        fab.applyDefaultInsetter { marginRelative(isRtl, end = true, bottom = isLandscape) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
