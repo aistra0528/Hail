@@ -35,6 +35,11 @@
                 app:icon="@drawable/ic_outline_layers"
                 app:key="synthesize_adaptive_icons"
                 app:title="@string/synthesize_adaptive_icons"/>
+        <SwitchPreferenceCompat
+                app:defaultValue="false"
+                app:icon="@drawable/ic_baseline_dialpad"
+                app:key="nine_key"
+                app:title="@string/nine_key"/>
         <rikka.preference.SimpleMenuPreference
                 app:defaultValue="freeze_all"
                 app:entries="@array/tile_action_entries"

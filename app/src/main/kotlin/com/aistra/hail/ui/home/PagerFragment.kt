@@ -2,7 +2,9 @@ package com.aistra.hail.ui.home
 
 import android.os.Bundle
 import android.provider.Settings
+import android.text.InputType
 import android.view.*
+import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -114,7 +116,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
 
     private fun updateCurrentList() = HailData.checkedList.filter {
         if (query.isEmpty()) it.tagId == tag.second
-        else (FuzzySearch.search(it.packageName, query)
+        else ((HailData.nineKeySearch && NineKeySearch.search(query, it.packageName, it.name.toString()))
+                || FuzzySearch.search(it.packageName, query)
                 || FuzzySearch.search(it.name.toString(), query)
                 || PinyinSearch.searchPinyinAll(it.name.toString(), query))
     }.sortedWith(NameComparator).let {
@@ -506,7 +509,12 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
 
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_home, menu)
-        (menu.findItem(R.id.action_search).actionView as SearchView).setOnQueryTextListener(object :
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        if (HailData.nineKeySearch) {
+            val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+            editText.inputType = InputType.TYPE_CLASS_PHONE
+        }
+        searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             private var inited = false
             override fun onQueryTextChange(newText: String): Boolean {
