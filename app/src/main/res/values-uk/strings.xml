@@ -142,4 +142,10 @@
     <string name="mode_island_suspend">Island/Insular - Вимкнення</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="shizuku_hide_adb">Shizuku працює по adb. Щоб приховати додатки, будь ласка, перезапустіть Shizuku з рут правами.</string>
+    <string name="command">Команда</string>
+    <string name="tag">Тег</string>
+    <string name="action_continue">Продовжити</string>
+    <string name="nine_key">Пошук T9</string>
+    <string name="home_font_size">Розмір шрифту на головній сторінці</string>
+    <string name="freeze_system_app">Заморожування системних додатків може призвести до бутлупу. Переконайтеся, що Ви знаєте, що робите, і заздалегідь створіть резервну копію даних або скористайтеся рекавері, яке підтримує управління файлами.</string>
 </resources>
