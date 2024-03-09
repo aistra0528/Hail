@@ -43,7 +43,7 @@
     <string name="working_mode">Modo de trabajo</string>
     <string name="mode_default">Inactivo</string>
     <string name="mode_owner_hide">Administador de dispositivo - Ocultar</string>
-    <string name="mode_su_disable">Superusuario - Deshabilitar</string>
+    <string name="mode_su_disable">Root - Desactivar</string>
     <string name="mode_shizuku_disable">Shizuku - Deshabilitar</string>
     <string name="title_set_owner">Establecer el administrador de dispositivo</string>
     <string name="msg_set_owner">Emitir el comando desde adb:\n%s</string>
@@ -117,7 +117,7 @@
     <string name="action_remove_whitelist">Eliminar de la lista blanca</string>
     <string name="action_whitelist">Añadir a la lista blanca</string>
     <string name="mode_owner_suspend">Administrador de dispositivo - Suspender</string>
-    <string name="mode_su_suspend">Superusuario - Suspender</string>
+    <string name="mode_su_suspend">Root - Suspender</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspender</string>
     <string name="action_unfreeze_remove_home">Descongelar y eliminar del inicio</string>
     <string name="action_freeze_non_whitelisted">Congelar no presentes en la lista blanca</string>
@@ -133,7 +133,7 @@
     <string name="action_terminal">Terminal</string>
     <string name="mode_dhizuku_hide">Dhizuku - Ocultar</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Suspender</string>
-    <string name="mode_su_hide">Superusuario - Ocultar</string>
+    <string name="mode_su_hide">Root - Ocultar</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">Omitir</string>
     <string name="mode_island_hide">Isla/Insular - Ocultar</string>
