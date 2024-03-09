@@ -46,8 +46,8 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         binding.actionLicenses.setOnClickListener(this)
 
         binding.scrollView.applyDefaultInsetter {
-            paddingRelative(isRtl, bottom = activity.isLandscape)
-            marginRelative(isRtl, start = !activity.isLandscape, end = true)
+            paddingRelative(isRtl, bottom = isLandscape)
+            marginRelative(isRtl, start = !isLandscape, end = true)
         }
 
         return binding.root

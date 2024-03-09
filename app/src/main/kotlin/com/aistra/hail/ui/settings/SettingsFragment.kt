@@ -70,8 +70,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
         recyclerView.applyDefaultInsetter {
-            paddingRelative(isRtl, bottom = activity.isLandscape)
-            marginRelative(isRtl, start = !activity.isLandscape, end = true)
+            paddingRelative(isRtl, bottom = isLandscape)
+            marginRelative(isRtl, start = !isLandscape, end = true)
         }
         return view
     }
