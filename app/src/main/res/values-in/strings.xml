@@ -138,4 +138,8 @@
     <string name="shizuku_hide_adb">Shizuku berjalan sebagai adb. Untuk menyembunyikan aplikasi, mulai ulang Shizuku dengan root.</string>
     <string name="command">Perintah</string>
     <string name="tag">Label</string>
+    <string name="action_continue">Lanjutkan</string>
+    <string name="nine_key">Keyboard numerik</string>
+    <string name="home_font_size">Ukuran font beranda</string>
+    <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan perangkat mengalami bootloop. Pastikan anda mengetahui apa yang anda lakukan dan cadangkan data anda terlebih dahulu.</string>
 </resources>
