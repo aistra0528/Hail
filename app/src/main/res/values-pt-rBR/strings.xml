@@ -56,7 +56,7 @@
     <string name="action_biometric">Login biométrico</string>
     <string name="action_export_current">Exportar atual</string>
     <string name="action_freeze">Congelar</string>
-    <string name="mode_su_disable">Superusuário - Desativar</string>
+    <string name="mode_su_disable">Root - Desativar</string>
     <string name="title_shortcuts">Atalhos</string>
     <string name="title_about">Sobre</string>
     <string name="donate_bilibili_space">Bilibili space</string>
@@ -93,7 +93,7 @@
     <string name="sort_install">Primeira instalação</string>
     <string name="action_tag_remove">Remover tag</string>
     <string name="mode_shizuku_suspend">Shizuku – Suspenso</string>
-    <string name="mode_su_suspend">Superusuário - Suspenso</string>
+    <string name="mode_su_suspend">Root - Suspenso</string>
     <plurals name="deferred_task_entry">
         <item quantity="one">%d minuto</item>
         <item quantity="many">%d minutos</item>
