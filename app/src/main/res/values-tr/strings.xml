@@ -36,8 +36,8 @@
     <string name="action_uninstall">Kaldır</string>
     <string name="msg_uninstall">Bu uygulamayı kaldırmak istiyor musunuz\?</string>
     <string name="working_mode">Çalışma yöntemi</string>
-    <string name="mode_su_disable">Superuser - Devre dışı bırak</string>
-    <string name="mode_su_suspend">Superuser - Askıya al</string>
+    <string name="mode_su_disable">Root - Devre dışı bırak</string>
+    <string name="mode_su_suspend">Root - Askıya al</string>
     <string name="mode_shizuku_disable">Shizuku - Devre dışı bırak</string>
     <string name="mode_default">Yok</string>
     <string name="action_translate">Çeviri - croxz900</string>
@@ -135,7 +135,7 @@
     <string name="action_skip">Atla</string>
     <string name="mode_island_hide">Island/Insular - Gizle</string>
     <string name="mode_island_suspend">Island/Insular - Askıya al</string>
-    <string name="mode_su_hide">Superuser - Gizle</string>
+    <string name="mode_su_hide">Root - Gizle</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="shizuku_hide_adb">Shizuku adb olarak çalışıyor. Uygulamaları gizlemek için lütfen Shizuku\'yu root ile yeniden başlatın.</string>
     <string name="command">Komut</string>
