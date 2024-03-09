@@ -46,8 +46,8 @@
     <string name="mode_default">Idle</string>
     <string name="mode_owner_hide">Device Owner - Hide</string>
     <string name="mode_owner_suspend">Device Owner - Suspend</string>
-    <string name="mode_su_disable">Superuser - Disable</string>
-    <string name="mode_su_suspend">Superuser - Suspend</string>
+    <string name="mode_su_disable">Root - Disable</string>
+    <string name="mode_su_suspend">Root - Suspend</string>
     <string name="mode_shizuku_disable">Shizuku - Disable</string>
     <string name="mode_shizuku_hide">Shizuku - Hide</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
@@ -131,7 +131,7 @@
     <string name="action_terminal">Terminal</string>
     <string name="mode_dhizuku_hide">Dhizuku - Hide</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Suspend</string>
-    <string name="mode_su_hide">Superuser - Hide</string>
+    <string name="mode_su_hide">Root - Hide</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">Skip</string>
     <string name="mode_island_hide">Island/Insular - Hide</string>
