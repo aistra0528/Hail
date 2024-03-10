@@ -26,7 +26,7 @@
     <string name="action_freeze">Bekukan</string>
     <string name="action_unfreeze">Aktifkan</string>
     <string name="action_tag_remove">Hapus label</string>
-    <string name="action_remove_home">Hapus dari Beranda</string>
+    <string name="action_remove_home">Hapus dari daftar</string>
     <string name="action_unfreeze_remove_home">Aktifkan dan hapus dari daftar</string>
     <string name="action_undo">Batalkan</string>
     <string name="action_details">Info aplikasi</string>
@@ -38,8 +38,8 @@
     <string name="msg_uninstall">Hapus pemasangan aplikasi ini?</string>
     <string name="working_mode">Mode kerja</string>
     <string name="mode_owner_hide">Pemilik Perangkat - Sembunyikan</string>
-    <string name="mode_su_suspend">Superuser - Tangguhkan</string>
-    <string name="mode_su_disable">Superuser - Matikan</string>
+    <string name="mode_su_suspend">Root - Tangguhkan</string>
+    <string name="mode_su_disable">Root - Matikan</string>
     <string name="mode_shizuku_disable">Shizuku - Matikan</string>
     <string name="mode_shizuku_suspend">Shizuku - Tangguhkan</string>
     <string name="activity_not_found">Pintasan peluncur tidak ditemukan</string>
@@ -102,8 +102,8 @@
     <string name="dynamic_shortcut_action">Pintasan aksi dinamis</string>
     <string name="action_freeze_tag">Bekukan berdasar label</string>
     <string name="action_unfreeze_tag">Aktifkan berdasar label</string>
-    <string name="action_add_pin_shortcut">Tambahkan ke Beranda</string>
-    <string name="action_tag_set">Pasang label</string>
+    <string name="action_add_pin_shortcut">Tambahkan pintasan ke Layar Beranda</string>
+    <string name="action_tag_set">Tambahkan label</string>
     <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
     <string name="sort_by">Urutkan</string>
@@ -131,7 +131,7 @@
     <string name="mode_dhizuku_hide">Dhizuku - Sembunyikan</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Tangguhkan</string>
     <string name="action_skip">Lewati</string>
-    <string name="mode_su_hide">Superuser - Sembunyikan</string>
+    <string name="mode_su_hide">Root - Sembunyikan</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="mode_island_hide">Island/Insular - Sembunyikan</string>
     <string name="mode_island_suspend">Island/Insular - Tangguhkan</string>
