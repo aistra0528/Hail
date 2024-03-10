@@ -59,7 +59,7 @@
     <string name="action_biometric">تسجيل الدخول البيومتري</string>
     <string name="action_export_current">تصدير الحالية</string>
     <string name="action_freeze">تجميد</string>
-    <string name="mode_su_disable">المستخدم الجذر - تعطيل</string>
+    <string name="mode_su_disable">الجذر(روت) - تعطيل</string>
     <string name="title_shortcuts">الاختصارات</string>
     <string name="title_about">لمحة</string>
     <string name="donate_bilibili_space">مساحة بيليبيلي</string>
@@ -69,7 +69,7 @@
     <string name="action_tag_set">تحديد علامة</string>
     <string name="app_not_installed">التطبيق ليس مثبتا</string>
     <string name="sort_by">ترتيب حسب</string>
-    <string name="mode_su_hide">مستخدم الجذر - إخفاء</string>
+    <string name="mode_su_hide">الجذر (روت) - إخفاء</string>
     <string name="action_details">معلومات التطبيق</string>
     <string name="title_donate">شكرا لك!</string>
     <string name="compact_icon">أيقونة مضغوطة</string>
@@ -96,7 +96,7 @@
     <string name="sort_install">أول تثبيت</string>
     <string name="action_tag_remove">إزالة علامة</string>
     <string name="mode_shizuku_suspend">شيزوكو - تعليق</string>
-    <string name="mode_su_suspend">المستخدم الجذر - تعليق</string>
+    <string name="mode_su_suspend">الجذر (روت) - تعليق</string>
     <plurals name="deferred_task_entry">
         <item quantity="zero">أقل من دقيقة</item>
         <item quantity="one">دقيقة واحدة</item>
@@ -145,4 +145,11 @@
     <string name="action_skip">تخطي</string>
     <string name="mode_island_hide">Island - إخفاء</string>
     <string name="mode_island_suspend">Island - تعليق</string>
+    <string name="command">الأمر</string>
+    <string name="tag">النوع</string>
+    <string name="action_continue">متابعة</string>
+    <string name="shizuku_hide_adb">شيزوكو يعمل بالـadb. لإخفاء التطبيقات، يرجى تشغيله مرة أخرى مع الروت.</string>
+    <string name="nine_key">T9 البحث</string>
+    <string name="home_font_size">حجم خط الرئيسية</string>
+    <string name="freeze_system_app">قد يتسبب تجميد تطبيقات النظام في تعليق الجهاز على الشعار. تأكد من أنك تعرف ما تفعله وقم بعمل نسخة احتياطية من بياناتك مسبقا أو استخدم الاسترداد الذي يدعم إدارة الملفات.</string>
 </resources>
