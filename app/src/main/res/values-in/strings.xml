@@ -3,7 +3,7 @@
     <string name="title_settings">Pengaturan</string>
     <string name="title_about">Tentang</string>
     <string name="title_apps">Daftar aplikasi</string>
-    <string name="title_home">Beranda</string>
+    <string name="title_home">Home</string>
     <string name="label_default">Bawaan</string>
     <string name="label_time">Waktu penginstalan</string>
     <string name="label_version">Versi</string>
@@ -35,7 +35,7 @@
     <string name="action_lock_freeze">Kunci &amp; Bekukan</string>
     <string name="action_deferred_task">Tangguhkan tugas</string>
     <string name="action_help">Bantuan</string>
-    <string name="msg_uninstall">Hapus pemasangan aplikasi ini?</string>
+    <string name="msg_uninstall">Hapus aplikasi ini?</string>
     <string name="working_mode">Mode kerja</string>
     <string name="mode_owner_hide">Pemilik Perangkat - Sembunyikan</string>
     <string name="mode_su_suspend">Root - Tangguhkan</string>
@@ -108,7 +108,7 @@
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
     <string name="sort_by">Urutkan</string>
     <string name="sort_update">Terakhir diperbarui</string>
-    <string name="sort_install">Penginstalan pertama</string>
+    <string name="sort_install">terinstal pertama</string>
     <string name="donate_paypal">Paypal</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="donate_bilibili_msg">Ikuti saya di Bilibili.</string>
@@ -140,6 +140,6 @@
     <string name="tag">Label</string>
     <string name="action_continue">Lanjutkan</string>
     <string name="nine_key">Keyboard numerik</string>
-    <string name="home_font_size">Ukuran font beranda</string>
+    <string name="home_font_size">Ukuran font Home</string>
     <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan perangkat mengalami bootloop. Pastikan anda mengetahui apa yang anda lakukan dan cadangkan data anda terlebih dahulu.</string>
 </resources>
