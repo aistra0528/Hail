@@ -51,14 +51,15 @@ object HShortcuts {
     fun addDynamicShortcut(packageName: String) {
         if (HailData.biometricLogin) return
         val applicationInfo = HPackages.getApplicationInfoOrNull(packageName)
-        val shortcut = ShortcutInfoCompat.Builder(app, packageName)
-            .setIcon(IconCompat.createWithBitmap(applicationInfo?.let {
-                IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
-            } ?: getBitmapFromDrawable(
-                app.packageManager.defaultActivityIcon
-            ))).setShortLabel(
-                applicationInfo?.loadLabel(app.packageManager) ?: packageName
-            ).setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName)).build()
+        val shortcut =
+            ShortcutInfoCompat.Builder(app, packageName.hashCode().toString()) // Make id different from pin
+                .setIcon(IconCompat.createWithBitmap(applicationInfo?.let {
+                    IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
+                } ?: getBitmapFromDrawable(
+                    app.packageManager.defaultActivityIcon
+                ))).setShortLabel(
+                    applicationInfo?.loadLabel(app.packageManager) ?: packageName
+                ).setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName)).build()
         ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
         addDynamicShortcutAction(HailData.dynamicShortcutAction)
     }
