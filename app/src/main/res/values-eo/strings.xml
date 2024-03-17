@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_slogan">Liberefrostigi!</string>
+    <string name="title_home">Ĉefpaĝo</string>
+    <string name="title_apps">Aplikaĵoj</string>
+    <string name="title_about">Pri</string>
+    <string name="label_version">Versio</string>
+    <string name="label_time">Instaltempo</string>
+    <string name="action_telegram">Telegram Grupo</string>
+    <string name="action_donate">Donaci</string>
+    <string name="action_github">Github</string>
+    <string name="action_translate">Traduki</string>
+    <string name="action_freeze_all">Frostigi ĉion</string>
+    <string name="action_unfreeze_all">Malfrostigi ĉion</string>
+    <string name="action_freeze_current">Frostigi videbla</string>
+    <string name="action_unfreeze_current">Malfrostigi videbla</string>
+    <string name="action_freeze_non_whitelisted">Frostigi ne-blanklista</string>
+    <string name="app_name">Hail</string>
+    <string name="title_settings">Agordo</string>
+    <string name="label_default">Defaŭlto</string>
+    <string name="action_qq">QQ Grupo</string>
+    <string name="action_licenses">Permesilo</string>
+</resources>
