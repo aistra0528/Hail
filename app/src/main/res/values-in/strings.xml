@@ -3,9 +3,9 @@
     <string name="title_settings">Pengaturan</string>
     <string name="title_about">Tentang</string>
     <string name="title_apps">Daftar aplikasi</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Beranda</string>
     <string name="label_default">Bawaan</string>
-    <string name="label_time">Waktu penginstalan</string>
+    <string name="label_time">Tanggal instalasi Hail</string>
     <string name="label_version">Versi</string>
     <string name="action_telegram">Grup Telegram</string>
     <string name="action_qq">Grup QQ</string>
@@ -108,7 +108,7 @@
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
     <string name="sort_by">Urutkan</string>
     <string name="sort_update">Terakhir diperbarui</string>
-    <string name="sort_install">terinstal pertama</string>
+    <string name="sort_install">Terinstal pertama</string>
     <string name="donate_paypal">Paypal</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="donate_bilibili_msg">Ikuti saya di Bilibili.</string>
