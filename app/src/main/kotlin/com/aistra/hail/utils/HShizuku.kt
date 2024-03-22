@@ -2,6 +2,7 @@ package com.aistra.hail.utils
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.IBinder
 import android.os.ParcelFileDescriptor
 import android.os.SystemClock
@@ -93,10 +94,7 @@ object HShizuku {
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             pm::class.java.getMethod(
-                "setApplicationHiddenSettingAsUser",
-                String::class.java,
-                Boolean::class.java,
-                Int::class.java
+                "setApplicationHiddenSettingAsUser", String::class.java, Boolean::class.java, Int::class.java
             ).invoke(pm, packageName, hidden, userId) as Boolean
         }.getOrElse {
             HLog.e(it)
@@ -110,6 +108,21 @@ object HShizuku {
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             (when {
+                HTarget.U && Build.VERSION.SECURITY_PATCH.replace("-", "").toInt() > 20240300 -> HiddenApiBypass.invoke(
+                    pm::class.java,
+                    pm,
+                    "setPackagesSuspendedAsUser",
+                    arrayOf(packageName),
+                    suspended,
+                    null,
+                    null,
+                    if (suspended) suspendDialogInfo else null,
+                    0,
+                    callerPackage,
+                    userId /*suspendingUserId*/,
+                    userId /*targetUserId*/
+                )
+
                 HTarget.Q -> HiddenApiBypass.invoke(
                     pm::class.java,
                     pm,
@@ -137,10 +150,7 @@ object HShizuku {
                 )
 
                 HTarget.N -> pm::class.java.getMethod(
-                    "setPackagesSuspendedAsUser",
-                    Array<String>::class.java,
-                    Boolean::class.java,
-                    Int::class.java
+                    "setPackagesSuspendedAsUser", Array<String>::class.java, Boolean::class.java, Int::class.java
                 ).invoke(pm, arrayOf(packageName), suspended, userId)
 
                 else -> return false
@@ -165,8 +175,8 @@ object HShizuku {
     ).first == 0
 
     fun execute(command: String, root: Boolean = isRoot): Pair<Int, String?> = runCatching {
-        IShizukuService.Stub.asInterface(Shizuku.getBinder())
-            .newProcess(arrayOf(if (root) "su" else "sh"), null, null).run {
+        IShizukuService.Stub.asInterface(Shizuku.getBinder()).newProcess(arrayOf(if (root) "su" else "sh"), null, null)
+            .run {
                 ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use {
                     it.write(command.toByteArray())
                 }
@@ -175,6 +185,5 @@ object HShizuku {
     }.getOrElse { 0 to it.stackTraceToString() }
 
     private val ParcelFileDescriptor.text
-        get() = ParcelFileDescriptor.AutoCloseInputStream(this)
-            .use { it.bufferedReader().readText() }
+        get() = ParcelFileDescriptor.AutoCloseInputStream(this).use { it.bufferedReader().readText() }
 }
