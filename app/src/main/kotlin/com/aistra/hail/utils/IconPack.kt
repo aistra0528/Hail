@@ -11,10 +11,10 @@ import com.aistra.hail.app.HailData
 object IconPack {
     @SuppressLint("DiscouragedApi")
     fun loadIcon(packageName: String): Bitmap? = runCatching {
-        val componentName = app.packageManager.getLaunchIntentForPackage(packageName)
-            ?.run { resolveActivity(app.packageManager).toString() } ?: return null
+//        val componentName = app.packageManager.getLaunchIntentForPackage(packageName)
+//            ?.run { resolveActivity(app.packageManager).toString() } ?: return null
         val resources = app.packageManager.getResourcesForApplication(HailData.iconPack)
-        getResourceName(resources, HailData.iconPack, componentName)?.let {
+        getResourceName(resources, HailData.iconPack, packageName)?.let {
             return BitmapFactory.decodeResource(
                 resources, resources.getIdentifier(it, "drawable", HailData.iconPack)
             )
@@ -23,14 +23,13 @@ object IconPack {
 
     @SuppressLint("DiscouragedApi")
     private fun getResourceName(
-        resources: Resources, packageName: String, componentName: String
+        resources: Resources, resPackage: String, componentName: String
     ): String? {
-        val parser = resources.getXml(resources.getIdentifier("appfilter", "xml", packageName))
+        val parser = resources.getXml(resources.getIdentifier("appfilter", "xml", resPackage))
         while (parser.eventType != XmlResourceParser.END_DOCUMENT) {
             runCatching {
-                if (parser.eventType == XmlResourceParser.START_TAG && parser.getAttributeValue(
-                        0
-                    ) == componentName
+                if (parser.eventType == XmlResourceParser.START_TAG && parser.getAttributeValue(0)
+                        .contains(componentName)
                 ) {
                     return parser.getAttributeValue(1)
                 }
