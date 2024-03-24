@@ -44,7 +44,7 @@
     <string name="working_mode">工作模式</string>
     <string name="mode_default">空闲</string>
     <string name="mode_owner_hide">设备所有者 - 隐藏</string>
-    <string name="mode_su_disable">超级用户 - 停用</string>
+    <string name="mode_su_disable">Root - 停用</string>
     <string name="mode_shizuku_disable">Shizuku - 停用</string>
     <string name="title_set_owner">设置设备所有者</string>
     <string name="msg_set_owner">通过 adb 发出命令：\n%s</string>
