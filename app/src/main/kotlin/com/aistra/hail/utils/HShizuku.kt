@@ -8,6 +8,7 @@ import android.os.ParcelFileDescriptor
 import android.os.SystemClock
 import android.view.InputEvent
 import android.view.KeyEvent
+import androidx.annotation.RequiresApi
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.utils.HPackages.myUserId
 import moe.shizuku.server.IShizukuService
@@ -108,33 +109,24 @@ object HShizuku {
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             (when {
-                HTarget.U && Build.VERSION.SECURITY_PATCH.replace("-", "").toInt() > 20240300 -> HiddenApiBypass.invoke(
-                    pm::class.java,
-                    pm,
-                    "setPackagesSuspendedAsUser",
-                    arrayOf(packageName),
-                    suspended,
-                    null,
-                    null,
-                    if (suspended) suspendDialogInfo else null,
-                    0,
-                    callerPackage,
-                    userId /*suspendingUserId*/,
-                    userId /*targetUserId*/
-                )
+                HTarget.U -> runCatching {
+                    HiddenApiBypass.invoke(
+                        pm::class.java,
+                        pm,
+                        "setPackagesSuspendedAsUser",
+                        arrayOf(packageName),
+                        suspended,
+                        null,
+                        null,
+                        if (suspended) suspendDialogInfo else null,
+                        0,
+                        callerPackage,
+                        userId /*suspendingUserId*/,
+                        userId /*targetUserId*/
+                    )
+                }.getOrElse { setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended) }
 
-                HTarget.Q -> HiddenApiBypass.invoke(
-                    pm::class.java,
-                    pm,
-                    "setPackagesSuspendedAsUser",
-                    arrayOf(packageName),
-                    suspended,
-                    null,
-                    null,
-                    if (suspended) suspendDialogInfo else null,
-                    callerPackage,
-                    userId
-                )
+                HTarget.Q -> setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
 
                 HTarget.P -> HiddenApiBypass.invoke(
                     pm::class.java,
@@ -161,14 +153,28 @@ object HShizuku {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun setPackagesSuspendedAsUserSinceQ(pm: Any, packageName: String, suspended: Boolean): Any =
+        HiddenApiBypass.invoke(
+            pm::class.java,
+            pm,
+            "setPackagesSuspendedAsUser",
+            arrayOf(packageName),
+            suspended,
+            null,
+            null,
+            if (suspended) suspendDialogInfo else null,
+            callerPackage,
+            userId
+        )
+
     private val suspendDialogInfo: Any
-        @SuppressLint("PrivateApi") get() = HiddenApiBypass.newInstance(Class.forName("android.content.pm.SuspendDialogInfo\$Builder"))
-            .let {
-                HiddenApiBypass.invoke(
-                    it::class.java, it, "setNeutralButtonAction", 1 /*BUTTON_ACTION_UNSUSPEND*/
-                )
-                HiddenApiBypass.invoke(it::class.java, it, "build")
-            }
+        @RequiresApi(Build.VERSION_CODES.P) @SuppressLint("PrivateApi") get() = HiddenApiBypass.newInstance(
+            Class.forName("android.content.pm.SuspendDialogInfo\$Builder")
+        ).let {
+            HiddenApiBypass.invoke(it::class.java, it, "setNeutralButtonAction", 1 /*BUTTON_ACTION_UNSUSPEND*/)
+            HiddenApiBypass.invoke(it::class.java, it, "build")
+        }
 
     fun uninstallApp(packageName: String): Boolean = execute(
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
