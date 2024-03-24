@@ -20,9 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
-import com.aistra.hail.extensions.applyInsetsMargin
-import com.aistra.hail.extensions.applyInsetsPadding
-import com.aistra.hail.extensions.isLandscape
+import com.aistra.hail.extensions.*
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
 import com.google.android.material.appbar.AppBarLayout
@@ -41,7 +39,8 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) != BiometricManager.BIOMETRIC_SUCCESS
         ) return
         binding.root.isVisible = false
-        val biometricPrompt = BiometricPrompt(this,
+        val biometricPrompt = BiometricPrompt(
+            this,
             ContextCompat.getMainExecutor(this),
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -55,10 +54,9 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                     binding.root.isVisible = true
                 }
             })
-        val promptInfo =
-            BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.action_biometric))
-                .setSubtitle(getString(R.string.msg_biometric))
-                .setNegativeButtonText(getString(android.R.string.cancel)).build()
+        val promptInfo = BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.action_biometric))
+            .setSubtitle(getString(R.string.msg_biometric)).setNegativeButtonText(getString(android.R.string.cancel))
+            .build()
         biometricPrompt.authenticate(promptInfo)
     }
 
@@ -68,8 +66,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         fab = appBarMain.fab
         appbar = appBarMain.appBarLayout
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         navController.addOnDestinationChangedListener(this@MainActivity)
         val appBarConfiguration = AppBarConfiguration.Builder(
@@ -79,17 +76,14 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         bottomNav?.setupWithNavController(navController)
         navRail?.setupWithNavController(navController)
 
-        appBarMain.appBarLayout.applyInsetsPadding(
-            start = !isLandscape,
-            end = true,
-            top = true
-        )
-        bottomNav?.applyInsetsPadding(
-            start = true,
-            end = true,
-            bottom = true
-        )
-        fab.applyInsetsMargin(end = true, bottom = isLandscape)
+        val isRtl = isRtl
+        val isLandscape = isLandscape
+        appBarMain.appBarLayout.applyDefaultInsetter {
+            paddingRelative(isRtl, start = !isLandscape, end = true, top = true)
+        }
+        bottomNav?.applyDefaultInsetter { paddingRelative(isRtl, start = true, end = true, bottom = true) }
+        navRail?.applyDefaultInsetter { paddingRelative(isRtl, start = true, top = true, bottom = true) }
+        fab.applyDefaultInsetter { marginRelative(isRtl, end = true, bottom = isLandscape) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -98,8 +92,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     fun ownerRemoveDialog() {
-        MaterialAlertDialogBuilder(this).setTitle(R.string.title_remove_owner)
-            .setMessage(R.string.msg_remove_owner)
+        MaterialAlertDialogBuilder(this).setTitle(R.string.title_remove_owner).setMessage(R.string.msg_remove_owner)
             .setPositiveButton(R.string.action_continue) { _, _ ->
                 HPolicy.setOrganizationName()
                 HPolicy.clearDeviceOwnerApp()
@@ -112,9 +105,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     } */
 
     override fun onDestinationChanged(
-        controller: NavController,
-        destination: NavDestination,
-        arguments: Bundle?
+        controller: NavController, destination: NavDestination, arguments: Bundle?
     ) {
         fab.tag = destination.id == R.id.nav_home
         if (fab.tag == true) fab.show() else fab.hide()

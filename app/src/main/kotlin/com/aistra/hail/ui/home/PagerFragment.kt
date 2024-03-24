@@ -22,8 +22,7 @@ import com.aistra.hail.app.HailApi.addTag
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentPagerBinding
-import com.aistra.hail.extensions.applyInsetsPadding
-import com.aistra.hail.extensions.isLandscape
+import com.aistra.hail.extensions.*
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.*
 import com.aistra.hail.work.HWork
@@ -36,8 +35,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 
-class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
-    PagerAdapter.OnItemLongClickListener, MenuProvider {
+class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAdapter.OnItemLongClickListener,
+    MenuProvider {
     private var query: String = String()
     private var _binding: FragmentPagerBinding? = null
     private val binding get() = _binding!!
@@ -52,9 +51,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
     private val adapter get() = (parentFragment as HomeFragment).binding.pager.adapter as HomeAdapter
     private val tag: Pair<String, Int> get() = HailData.tags[tabs.selectedTabPosition]
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -82,16 +79,16 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                     }
                 }
             })
+            applyDefaultInsetter { paddingRelative(isRtl, bottom = isLandscape) }
 
-            this.applyInsetsPadding(
-                start = !activity.isLandscape,
-                end = true,
-                bottom = activity.isLandscape
-            )
         }
-        binding.refresh.setOnRefreshListener {
-            updateCurrentList()
-            binding.refresh.isRefreshing = false
+
+        binding.refresh.apply {
+            setOnRefreshListener {
+                updateCurrentList()
+                binding.refresh.isRefreshing = false
+            }
+            applyDefaultInsetter { marginRelative(isRtl, start = !isLandscape, end = true) }
         }
         return binding.root
     }
@@ -116,10 +113,11 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
 
     private fun updateCurrentList() = HailData.checkedList.filter {
         if (query.isEmpty()) it.tagId == tag.second
-        else ((HailData.nineKeySearch && NineKeySearch.search(query, it.packageName, it.name.toString()))
-                || FuzzySearch.search(it.packageName, query)
-                || FuzzySearch.search(it.name.toString(), query)
-                || PinyinSearch.searchPinyinAll(it.name.toString(), query))
+        else ((HailData.nineKeySearch && NineKeySearch.search(
+            query, it.packageName, it.name.toString()
+        )) || FuzzySearch.search(it.packageName, query) || FuzzySearch.search(
+            it.name.toString(), query
+        ) || PinyinSearch.searchPinyinAll(it.name.toString(), query))
     }.sortedWith(NameComparator).let {
         binding.empty.isVisible = it.isEmpty()
         pagerAdapter.submitList(it)
@@ -135,8 +133,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
     override fun onItemClick(info: AppInfo) {
         if (info.applicationInfo == null) {
             Snackbar.make(activity.fab, R.string.app_not_installed, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_remove_home) { removeCheckedApp(info.packageName) }
-                .show()
+                .setAction(R.string.action_remove_home) { removeCheckedApp(info.packageName) }.show()
             return
         }
         if (multiselect) {
@@ -174,19 +171,14 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                     val values = resources.getIntArray(R.array.deferred_task_values)
                     val entries = arrayOfNulls<String>(values.size)
                     values.forEachIndexed { i, it ->
-                        entries[i] =
-                            resources.getQuantityString(R.plurals.deferred_task_entry, it, it)
+                        entries[i] = resources.getQuantityString(R.plurals.deferred_task_entry, it, it)
                     }
                     MaterialAlertDialogBuilder(activity).setTitle(R.string.action_deferred_task)
                         .setItems(entries) { _, i ->
                             HWork.setDeferredFrozen(pkg, !frozen, values[i].toLong())
                             Snackbar.make(
                                 activity.fab, resources.getQuantityString(
-                                    R.plurals.msg_deferred_task,
-                                    values[i],
-                                    values[i],
-                                    action,
-                                    info.name
+                                    R.plurals.msg_deferred_task, values[i], values[i], action, info.name
                                 ), Snackbar.LENGTH_INDEFINITE
                             ).setAction(R.string.action_undo) { HWork.cancelWork(pkg) }.show()
                         }.setNegativeButton(android.R.string.cancel, null).show()
@@ -207,19 +199,18 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
 
                 5 -> {
                     val checked = HailData.tags.indexOfFirst { it.second == info.tagId }
-                    MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
-                        .setSingleChoiceItems(
-                            HailData.tags.map { it.first }.toTypedArray(), checked
-                        ) { dialog, index ->
-                            if (info.tagId != HailData.tags[index].second) {
-                                info.tagId = HailData.tags[index].second
-                                HailData.saveApps()
-                                updateCurrentList()
-                            }
-                            dialog.dismiss()
-                        }.setNeutralButton(R.string.action_tag_add) { _, _ ->
-                            showTagDialog(listOf(info))
-                        }.setNegativeButton(android.R.string.cancel, null).show()
+                    MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set).setSingleChoiceItems(
+                        HailData.tags.map { it.first }.toTypedArray(), checked
+                    ) { dialog, index ->
+                        if (info.tagId != HailData.tags[index].second) {
+                            info.tagId = HailData.tags[index].second
+                            HailData.saveApps()
+                            updateCurrentList()
+                        }
+                        dialog.dismiss()
+                    }.setNeutralButton(R.string.action_tag_add) { _, _ ->
+                        showTagDialog(listOf(info))
+                    }.setNegativeButton(android.R.string.cancel, null).show()
                 }
 
                 6 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
@@ -228,15 +219,11 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                             info,
                             pkg,
                             info.name,
-                            HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
-                                .addTag(HailData.tags[index].first)
+                            HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg).addTag(HailData.tags[index].first)
                         )
                     }.setPositiveButton(R.string.action_skip) { _, _ ->
                         HShortcuts.addPinShortcut(
-                            info,
-                            pkg,
-                            info.name,
-                            HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
+                            info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                         )
                     }.setNegativeButton(android.R.string.cancel, null).show()
 
@@ -287,19 +274,18 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                 }
 
                 2 -> {
-                    val checked = if (selectedList.all { it.tagId == selectedList[0].tagId })
-                        HailData.tags.indexOfFirst { it.second == selectedList[0].tagId } else -1
-                    MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
-                        .setSingleChoiceItems(
-                            HailData.tags.map { it.first }.toTypedArray(), checked
-                        ) { dialog, index ->
-                            selectedList.forEach { it.tagId = HailData.tags[index].second }
-                            HailData.saveApps()
-                            deselect()
-                            dialog.dismiss()
-                        }.setNeutralButton(R.string.action_tag_add) { _, _ ->
-                            showTagDialog(selectedList)
-                        }.setNegativeButton(android.R.string.cancel, null).show()
+                    val checked =
+                        if (selectedList.all { it.tagId == selectedList[0].tagId }) HailData.tags.indexOfFirst { it.second == selectedList[0].tagId } else -1
+                    MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set).setSingleChoiceItems(
+                        HailData.tags.map { it.first }.toTypedArray(), checked
+                    ) { dialog, index ->
+                        selectedList.forEach { it.tagId = HailData.tags[index].second }
+                        HailData.saveApps()
+                        deselect()
+                        dialog.dismiss()
+                    }.setNeutralButton(R.string.action_tag_add) { _, _ ->
+                        showTagDialog(selectedList)
+                    }.setNegativeButton(android.R.string.cancel, null).show()
                 }
 
                 3 -> {
@@ -316,8 +302,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                 5 -> {
                     setListFrozen(false, selectedList, false)
                     selectedList.forEach {
-                        if (!AppManager.isAppFrozen(it.packageName))
-                            removeCheckedApp(it.packageName, false)
+                        if (!AppManager.isAppFrozen(it.packageName)) removeCheckedApp(it.packageName, false)
                     }
                     HailData.saveApps()
                     deselect()
@@ -347,15 +332,13 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
         frozen: Boolean, list: List<AppInfo> = HailData.checkedList, updateList: Boolean = true
     ) {
         if (HailData.workingMode == HailData.MODE_DEFAULT) {
-            MaterialAlertDialogBuilder(activity)
-                .setMessage(R.string.msg_guide)
+            MaterialAlertDialogBuilder(activity).setMessage(R.string.msg_guide)
                 .setPositiveButton(android.R.string.ok, null).show()
             return
         } else if (HailData.workingMode == HailData.MODE_SHIZUKU_HIDE) {
             runCatching { HShizuku.isRoot }.onSuccess {
                 if (!it) {
-                    MaterialAlertDialogBuilder(activity)
-                        .setMessage(R.string.shizuku_hide_adb)
+                    MaterialAlertDialogBuilder(activity).setMessage(R.string.shizuku_hide_adb)
                         .setPositiveButton(android.R.string.ok, null).show()
                     return
                 }
@@ -367,8 +350,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
             else -> {
                 if (updateList) updateCurrentList()
                 HUI.showToast(
-                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                    result
+                    if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, result
                 )
             }
         }
@@ -378,10 +360,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
         val binding = DialogInputBinding.inflate(layoutInflater)
         binding.inputLayout.setHint(R.string.tag)
         list ?: binding.editText.setText(tag.first)
-        MaterialAlertDialogBuilder(activity)
-            .setTitle(if (list != null) R.string.action_tag_add else R.string.action_tag_set)
-            .setView(binding.root)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
+        MaterialAlertDialogBuilder(activity).setTitle(if (list != null) R.string.action_tag_add else R.string.action_tag_set)
+            .setView(binding.root).setPositiveButton(android.R.string.ok) { _, _ ->
                 val tagName = binding.editText.text.toString()
                 val tagId = tagName.hashCode()
                 if (HailData.tags.any { it.first == tagName || it.second == tagId }) return@setPositiveButton
@@ -482,14 +462,12 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                 } else deselect()
             }
 
-            R.id.action_freeze_current -> setListFrozen(true,
-                pagerAdapter.currentList.filterNot { it.whitelisted })
+            R.id.action_freeze_current -> setListFrozen(true, pagerAdapter.currentList.filterNot { it.whitelisted })
 
             R.id.action_unfreeze_current -> setListFrozen(false, pagerAdapter.currentList)
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)
-            R.id.action_freeze_non_whitelisted -> setListFrozen(true,
-                HailData.checkedList.filterNot { it.whitelisted })
+            R.id.action_freeze_non_whitelisted -> setListFrozen(true, HailData.checkedList.filterNot { it.whitelisted })
 
             R.id.action_import_clipboard -> importFromClipboard()
             R.id.action_import_frozen -> lifecycleScope.launch {
@@ -514,8 +492,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
             val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
             editText.inputType = InputType.TYPE_CLASS_PHONE
         }
-        searchView.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             private var inited = false
             override fun onQueryTextChange(newText: String): Boolean {
                 if (inited) {

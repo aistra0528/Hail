@@ -10,8 +10,7 @@ import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.FragmentAboutBinding
-import com.aistra.hail.extensions.applyInsetsPadding
-import com.aistra.hail.extensions.isLandscape
+import com.aistra.hail.extensions.*
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -45,11 +44,11 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         binding.actionTranslate.setOnClickListener(this)
         binding.actionLicenses.setOnClickListener(this)
 
-        binding.scrollView.applyInsetsPadding(
-            start = !activity.isLandscape,
-            end = true,
-            bottom = activity.isLandscape
-        )
+        binding.scrollView.applyDefaultInsetter {
+            paddingRelative(isRtl, bottom = isLandscape)
+            marginRelative(isRtl, start = !isLandscape, end = true)
+        }
+
         return binding.root
     }
 
@@ -64,11 +63,9 @@ class AboutFragment : MainFragment(), View.OnClickListener {
             binding.actionDonate -> onDonate()
             binding.actionGithub -> HUI.openLink(HailData.URL_GITHUB)
             binding.actionTranslate -> HUI.openLink(HailData.URL_TRANSLATE)
-            binding.actionLicenses -> MaterialAlertDialogBuilder(activity)
-                .setTitle(R.string.action_licenses)
+            binding.actionLicenses -> MaterialAlertDialogBuilder(activity).setTitle(R.string.action_licenses)
                 .setMessage(resources.openRawResource(R.raw.licenses).bufferedReader().readText())
-                .setPositiveButton(android.R.string.ok, null)
-                .show()
+                .setPositiveButton(android.R.string.ok, null).show()
                 .findViewById<MaterialTextView>(android.R.id.message)?.apply {
                     setTextIsSelectable(true)
                     Linkify.addLinks(this, Linkify.EMAIL_ADDRESSES or Linkify.WEB_URLS)

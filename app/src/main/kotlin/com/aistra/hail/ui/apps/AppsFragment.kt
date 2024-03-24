@@ -19,9 +19,7 @@ import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.FragmentAppsBinding
-import com.aistra.hail.extensions.applyInsetsPadding
-import com.aistra.hail.extensions.exportFileName
-import com.aistra.hail.extensions.isLandscape
+import com.aistra.hail.extensions.*
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HFiles
 import com.aistra.hail.utils.HPackages
@@ -34,8 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.FileInputStream
 
-class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
-    AppsAdapter.OnItemCheckedChangeListener,
+class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapter.OnItemCheckedChangeListener,
     MenuProvider {
 
     private val model: AppsViewModel by viewModels()
@@ -59,10 +56,9 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             this.exportApkPkg = null
             if (exportApkPkg == null || uri == null) return@registerForActivityResult
             lifecycleScope.launch {
-                val applicationInfo =
-                    HPackages.getApplicationInfoOrNull(exportApkPkg) ?: return@launch
-                val dialog = MaterialAlertDialogBuilder(activity)
-                    .setView(R.layout.dialog_progress).setCancelable(false).show()
+                val applicationInfo = HPackages.getApplicationInfoOrNull(exportApkPkg) ?: return@launch
+                val dialog =
+                    MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress).setCancelable(false).show()
                 runCatching {
                     withContext(Dispatchers.IO) {
                         FileInputStream(applicationInfo.sourceDir).use { source ->
@@ -91,14 +87,15 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             onItemClickListener = this@AppsFragment
             onItemCheckedChangeListener = this@AppsFragment
         }
-        binding.refresh.setOnRefreshListener { updateAppList() }
+        binding.refresh.apply {
+            setOnRefreshListener { updateAppList() }
+            applyDefaultInsetter { marginRelative(isRtl, start = !isLandscape, end = true) }
+        }
         binding.recyclerView.apply {
             activity.appbar.setLiftOnScrollTargetView(this)
             layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.apps_span))
             adapter = appsAdapter
-            applyInsetsPadding(
-                start = !activity.isLandscape, end = true, bottom = activity.isLandscape
-            )
+            applyDefaultInsetter { paddingRelative(isRtl, bottom = isLandscape) }
             registerForContextMenu(this)
         }
 
