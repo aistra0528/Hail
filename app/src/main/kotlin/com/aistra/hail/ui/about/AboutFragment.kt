@@ -16,7 +16,6 @@ import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
-import dev.chrisbanes.insetter.applyInsetter
 
 class AboutFragment : MainFragment(), View.OnClickListener {
     private lateinit var aboutViewModel: AboutViewModel
@@ -64,11 +63,9 @@ class AboutFragment : MainFragment(), View.OnClickListener {
             binding.actionDonate -> onDonate()
             binding.actionGithub -> HUI.openLink(HailData.URL_GITHUB)
             binding.actionTranslate -> HUI.openLink(HailData.URL_TRANSLATE)
-            binding.actionLicenses -> MaterialAlertDialogBuilder(activity)
-                .setTitle(R.string.action_licenses)
+            binding.actionLicenses -> MaterialAlertDialogBuilder(activity).setTitle(R.string.action_licenses)
                 .setMessage(resources.openRawResource(R.raw.licenses).bufferedReader().readText())
-                .setPositiveButton(android.R.string.ok, null)
-                .show()
+                .setPositiveButton(android.R.string.ok, null).show()
                 .findViewById<MaterialTextView>(android.R.id.message)?.apply {
                     setTextIsSelectable(true)
                     Linkify.addLinks(this, Linkify.EMAIL_ADDRESSES or Linkify.WEB_URLS)

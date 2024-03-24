@@ -48,8 +48,7 @@ fun InsetterApplyTypeDsl.marginRelative(
     )
 }
 
-fun InsetterDsl.typeDefault(f: InsetterApplyTypeDsl.() -> Unit) =
-    type(INSETS_TYPE_DEFAULT, f = f)
+fun InsetterDsl.typeDefault(f: InsetterApplyTypeDsl.() -> Unit) = type(INSETS_TYPE_DEFAULT, f = f)
 
 fun View.applyDefaultInsetter(f: InsetterApplyTypeDsl.() -> Unit) = applyInsetter {
     typeDefault(f)

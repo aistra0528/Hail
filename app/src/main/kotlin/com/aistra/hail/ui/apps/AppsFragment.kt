@@ -32,8 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.FileInputStream
 
-class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
-    AppsAdapter.OnItemCheckedChangeListener,
+class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapter.OnItemCheckedChangeListener,
     MenuProvider {
 
     private val model: AppsViewModel by viewModels()
@@ -57,10 +56,9 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener,
             this.exportApkPkg = null
             if (exportApkPkg == null || uri == null) return@registerForActivityResult
             lifecycleScope.launch {
-                val applicationInfo =
-                    HPackages.getApplicationInfoOrNull(exportApkPkg) ?: return@launch
-                val dialog = MaterialAlertDialogBuilder(activity)
-                    .setView(R.layout.dialog_progress).setCancelable(false).show()
+                val applicationInfo = HPackages.getApplicationInfoOrNull(exportApkPkg) ?: return@launch
+                val dialog =
+                    MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress).setCancelable(false).show()
                 runCatching {
                     withContext(Dispatchers.IO) {
                         FileInputStream(applicationInfo.sourceDir).use { source ->
