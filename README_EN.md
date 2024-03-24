@@ -18,7 +18,8 @@ apps. [GitHub Releases](https://github.com/aistra0528/Hail/releases)
 
 ## Freeze
 
-Freeze is a word that describes the action of **blocking (immediately stopping) apps when they are unnecessary (on-demand
+Freeze is a word that describes the action of **blocking (immediately stopping) apps when they are unnecessary (
+on-demand
 request)** to use the device
 in a better way, cut down on the usage of RAM and save power. Users can also unfreeze them to revert to their original
 state.
@@ -48,13 +49,13 @@ Suspended apps will have their icons shown in a grayscale in the device's launch
 
 ## Working mode
 
-Hail can work with `Device Owner`, `Dhizuku`, `Superuser` (Root) and `Shizuku` (including Sui).
+Hail can work with `Device Owner`, `Dhizuku`, `Root` and `Shizuku` (including Sui).
 
 **Any apps that have been frozen on Hail will need to be unfrozen by the same working mode.**
 
 1. For devices supporting wifi adb or rooted devices, `Shizuku` is recommend.
 
-2. For rooted devices, `Superuser` is an alternative. **It is slower.**
+2. For rooted devices, `Root` is an alternative. **It is slower.**
 
 3. Select `Device Owner` or `Dhizuku` otherwise. **These are a pain to set up.**
 
@@ -101,7 +102,7 @@ This mode invoke:
 
 - `DevicePolicyManager.setPackagesSuspended` to suspend apps.
 
-### Superuser - Disable / Hide / Suspend
+### Root - Disable / Hide / Suspend
 
 This mode execute:
 

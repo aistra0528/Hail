@@ -39,13 +39,13 @@
 
 ## 工作模式
 
-雹支持以`设备所有者`、`Dhizuku`、`超级用户` (Root) 和`Shizuku` (含 Sui) 模式工作。
+雹支持以`设备所有者`、`Dhizuku`、`Root` 和`Shizuku` (含 Sui) 模式工作。
 
 **冻结的应用需要通过相同工作模式解冻。**
 
 1. 如果您的设备支持无线调试或已 root，推荐选择`Shizuku`。
 
-2. 如果您的设备已 root，可选择`超级用户`。**此模式速度相对较慢。**
+2. 如果您的设备已 root，可选择`Root`。**此模式速度相对较慢。**
 
 3. 如果您的设备不支持无线调试且未 root，可选择`设备所有者`或`Dhizuku`。**这些模式设置较为繁琐。**
 
@@ -92,9 +92,9 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 - `DevicePolicyManager.setPackagesSuspended`方法暂停应用。
 
-### 超级用户 - 停用 / 隐藏 / 暂停
+### Root - 停用 / 隐藏 / 暂停
 
-此模式通过授予雹超级用户 (Superuser) 权限，执行：
+此模式通过授予雹 root 权限，执行：
 
 - `pm disable`命令停用应用。
 
