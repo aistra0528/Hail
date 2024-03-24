@@ -42,7 +42,7 @@
     <string name="msg_uninstall">Вы хотите удалить это приложение?</string>
     <string name="working_mode">Робочий режим</string>
     <string name="mode_default">Отключено</string>
-    <string name="mode_owner_hide">Владелец устройства - Скрытие</string>
+    <string name="mode_owner_hide">Владелец устройства - Скрыть</string>
     <string name="mode_su_disable">Root - Отключить</string>
     <string name="mode_shizuku_disable">Shizuku - Отключить</string>
     <string name="title_set_owner">Установить вадельца устройства</string>
@@ -118,7 +118,7 @@
     <string name="auto_freeze_delay">Задержка заморозки (минуты)</string>
     <string name="action_whitelist">Добавить в белый список</string>
     <string name="action_remove_whitelist">Удалить из белого списка</string>
-    <string name="mode_owner_suspend">Владелец устройства - Приостановка</string>
+    <string name="mode_owner_suspend">Владелец устройства - Приостановить</string>
     <string name="mode_su_suspend">Root - Приостановить</string>
     <string name="mode_shizuku_suspend">Shizuku - Приостановить</string>
     <string name="action_unfreeze_remove_home">Разморозить и удалить с главной страницы</string>
