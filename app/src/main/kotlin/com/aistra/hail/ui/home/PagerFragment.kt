@@ -22,8 +22,7 @@ import com.aistra.hail.app.HailApi.addTag
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentPagerBinding
-import com.aistra.hail.extensions.applyInsetsPadding
-import com.aistra.hail.extensions.isLandscape
+import com.aistra.hail.extensions.*
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.*
 import com.aistra.hail.work.HWork
@@ -82,16 +81,16 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener,
                     }
                 }
             })
+            applyDefaultInsetter { paddingRelative(isRtl, bottom = isLandscape) }
 
-            this.applyInsetsPadding(
-                start = !activity.isLandscape,
-                end = true,
-                bottom = activity.isLandscape
-            )
         }
-        binding.refresh.setOnRefreshListener {
-            updateCurrentList()
-            binding.refresh.isRefreshing = false
+
+        binding.refresh.apply {
+            setOnRefreshListener {
+                updateCurrentList()
+                binding.refresh.isRefreshing = false
+            }
+            applyDefaultInsetter { marginRelative(isRtl, start = !isLandscape, end = true) }
         }
         return binding.root
     }

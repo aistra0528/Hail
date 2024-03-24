@@ -10,13 +10,13 @@ import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.FragmentAboutBinding
-import com.aistra.hail.extensions.applyInsetsPadding
-import com.aistra.hail.extensions.isLandscape
+import com.aistra.hail.extensions.*
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.utils.HUI
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
+import dev.chrisbanes.insetter.applyInsetter
 
 class AboutFragment : MainFragment(), View.OnClickListener {
     private lateinit var aboutViewModel: AboutViewModel
@@ -45,11 +45,11 @@ class AboutFragment : MainFragment(), View.OnClickListener {
         binding.actionTranslate.setOnClickListener(this)
         binding.actionLicenses.setOnClickListener(this)
 
-        binding.scrollView.applyInsetsPadding(
-            start = !activity.isLandscape,
-            end = true,
-            bottom = activity.isLandscape
-        )
+        binding.scrollView.applyDefaultInsetter {
+            paddingRelative(isRtl, bottom = isLandscape)
+            marginRelative(isRtl, start = !isLandscape, end = true)
+        }
+
         return binding.root
     }
 

@@ -6,10 +6,17 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.core.content.getSystemService
+import androidx.core.view.WindowInsetsCompat
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 
 object HUI {
+    /**
+     * The types of edges that the UI will avoid by default,
+     * including the status bar, navigation bar, and camera area.
+     * */
+    val INSETS_TYPE_DEFAULT = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+
     fun showToast(text: CharSequence, isLengthLong: Boolean = false) = Toast.makeText(
         app, text,
         if (isLengthLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
