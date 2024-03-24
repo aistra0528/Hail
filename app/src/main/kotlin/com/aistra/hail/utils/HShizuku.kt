@@ -124,7 +124,10 @@ object HShizuku {
                         userId /*suspendingUserId*/,
                         userId /*targetUserId*/
                     )
-                }.getOrElse { setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended) }
+                }.getOrElse {
+                    if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
+                    else throw it
+                }
 
                 HTarget.Q -> setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
 
