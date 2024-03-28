@@ -35,12 +35,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 
-class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAdapter.OnItemLongClickListener,
+class TagPagerFragment : MainFragment(), TagAppsAdapter.OnItemClickListener, TagAppsAdapter.OnItemLongClickListener,
     MenuProvider {
     private var query: String = String()
     private var _binding: FragmentPagerBinding? = null
     private val binding get() = _binding!!
-    private lateinit var pagerAdapter: PagerAdapter
+    private lateinit var tagAppsAdapter: TagAppsAdapter
     private var multiselect: Boolean
         set(value) {
             (parentFragment as HomeFragment).multiselect = value
@@ -48,7 +48,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         get() = (parentFragment as HomeFragment).multiselect
     private val selectedList get() = (parentFragment as HomeFragment).selectedList
     private val tabs: TabLayout get() = (parentFragment as HomeFragment).binding.tabs
-    private val adapter get() = (parentFragment as HomeFragment).binding.pager.adapter as HomeAdapter
+    private val adapter get() = (parentFragment as HomeFragment).binding.pager.adapter as TagPagerAdapter
     private val tag: Pair<String, Int> get() = HailData.tags[tabs.selectedTabPosition]
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,9 +56,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         _binding = FragmentPagerBinding.inflate(inflater, container, false)
-        pagerAdapter = PagerAdapter(selectedList).apply {
-            onItemClickListener = this@PagerFragment
-            onItemLongClickListener = this@PagerFragment
+        tagAppsAdapter = TagAppsAdapter(selectedList).apply {
+            onItemClickListener = this@TagPagerFragment
+            onItemLongClickListener = this@TagPagerFragment
         }
         binding.recyclerView.run {
             layoutManager = GridLayoutManager(
@@ -66,7 +66,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                     if (HailData.compactIcon) R.integer.home_span_compact else R.integer.home_span
                 )
             )
-            adapter = pagerAdapter
+            adapter = tagAppsAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
@@ -103,7 +103,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
             true
         }
         activity.fab.setOnClickListener {
-            setListFrozen(true, pagerAdapter.currentList.filterNot { it.whitelisted })
+            setListFrozen(true, tagAppsAdapter.currentList.filterNot { it.whitelisted })
         }
         activity.fab.setOnLongClickListener {
             setListFrozen(true)
@@ -120,7 +120,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         ) || PinyinSearch.searchPinyinAll(it.name.toString(), query))
     }.sortedWith(NameComparator).let {
         binding.empty.isVisible = it.isEmpty()
-        pagerAdapter.submitList(it)
+        tagAppsAdapter.submitList(it)
         app.setAutoFreezeService()
     }
 
@@ -311,7 +311,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         }.setNegativeButton(R.string.action_deselect) { _, _ ->
             deselect()
         }.setNeutralButton(R.string.action_select_all) { _, _ ->
-            selectedList.addAll(pagerAdapter.currentList.filterNot { it in selectedList })
+            selectedList.addAll(tagAppsAdapter.currentList.filterNot { it in selectedList })
             updateCurrentList()
             updateBarTitle()
         }.show()
@@ -379,7 +379,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                         removeAt(position)
                         add(position, tagName to if (defaultTab) 0 else tagId)
                     }
-                    if (!defaultTab) pagerAdapter.currentList.forEach { it.tagId = tagId }
+                    if (!defaultTab) tagAppsAdapter.currentList.forEach { it.tagId = tagId }
                     adapter.notifyItemChanged(position)
                 }
                 HailData.saveApps()
@@ -388,7 +388,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 val position = tabs.selectedTabPosition
                 if (list != null || position == 0) return@apply
                 setNeutralButton(R.string.action_tag_remove) { _, _ ->
-                    pagerAdapter.currentList.forEach { it.tagId = 0 }
+                    tagAppsAdapter.currentList.forEach { it.tagId = 0 }
                     tabs.selectTab(tabs.getTabAt(0))
                     HailData.tags.removeAt(position)
                     adapter.notifyItemRemoved(position)
@@ -462,9 +462,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 } else deselect()
             }
 
-            R.id.action_freeze_current -> setListFrozen(true, pagerAdapter.currentList.filterNot { it.whitelisted })
+            R.id.action_freeze_current -> setListFrozen(true, tagAppsAdapter.currentList.filterNot { it.whitelisted })
 
-            R.id.action_unfreeze_current -> setListFrozen(false, pagerAdapter.currentList)
+            R.id.action_unfreeze_current -> setListFrozen(false, tagAppsAdapter.currentList)
             R.id.action_freeze_all -> setListFrozen(true)
             R.id.action_unfreeze_all -> setListFrozen(false)
             R.id.action_freeze_non_whitelisted -> setListFrozen(true, HailData.checkedList.filterNot { it.whitelisted })
@@ -479,7 +479,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 HUI.showToast(getString(R.string.msg_imported, size.toString()))
             }
 
-            R.id.action_export_current -> exportToClipboard(pagerAdapter.currentList)
+            R.id.action_export_current -> exportToClipboard(tagAppsAdapter.currentList)
             R.id.action_export_all -> exportToClipboard(HailData.checkedList)
         }
         return false
@@ -509,7 +509,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     }
 
     override fun onDestroyView() {
-        pagerAdapter.onDestroy()
+        tagAppsAdapter.onDestroy()
         super.onDestroyView()
         _binding = null
     }
