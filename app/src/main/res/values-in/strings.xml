@@ -5,7 +5,7 @@
     <string name="title_apps">Daftar aplikasi</string>
     <string name="title_home">Beranda</string>
     <string name="label_default">Bawaan</string>
-    <string name="label_time">Waktu Instal</string>
+    <string name="label_time">Tanggal instalasi</string>
     <string name="label_version">Versi</string>
     <string name="action_telegram">Grup Telegram</string>
     <string name="action_qq">Grup QQ</string>
@@ -72,7 +72,7 @@
         <item quantity="other">%2$s setelah %1$d menit: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Bersihkan semua pintasan dinamis</string>
-    <string name="action_unpin">Copot</string>
+    <string name="action_unpin">Batal sematkan</string>
     <string name="operation_failed">Operasi gagal : %s</string>
     <string name="msg_guide">Sebelum membekukan aplikasi, silakan pilih mode kerja dulu.</string>
     <string name="msg_imported">Terimpor: %s</string>
@@ -89,7 +89,7 @@
     <string name="action_none">Kosong</string>
     <string name="grayscale_icon">Ikon hitam-putih</string>
     <string name="msg_biometric">Masuk menggunakan kredensial biometrik</string>
-    <string name="action_pin">Semat</string>
+    <string name="action_pin">Sematkan</string>
     <string name="action_remove_whitelist">Hapus dari daftar putih</string>
     <string name="action_import_frozen">Impor aplikasi dibekukan</string>
     <string name="auto_freeze_delay">Tunda bekukan (menit)</string>
@@ -102,8 +102,8 @@
     <string name="dynamic_shortcut_action">Pintasan aksi dinamis</string>
     <string name="action_freeze_tag">Bekukan berdasar label</string>
     <string name="action_unfreeze_tag">Aktifkan berdasar label</string>
-    <string name="action_add_pin_shortcut">Tambah ke Beranda</string>
-    <string name="action_tag_set">Set label</string>
+    <string name="action_add_pin_shortcut">Tambah pintasan ke Beranda</string>
+    <string name="action_tag_set">Pasang label</string>
     <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
     <string name="sort_by">Urutkan</string>
@@ -141,5 +141,5 @@
     <string name="action_continue">Lanjutkan</string>
     <string name="nine_key">Keyboard numerik</string>
     <string name="home_font_size">Ukuran font Home</string>
-    <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan bootloop pada gawai anda. Pastikan anda mengetahui apa yang dilakukan dan telah mencadangkan data sebelumnya.</string>
+    <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan bootloop pada ponsel anda. Pastikan anda mengetahui apa yang dilakukan dan telah mencadangkan data sebelumnya.</string>
 </resources>
