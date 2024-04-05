@@ -16,6 +16,11 @@ android {
         versionName = "1.8.1"
     }
 
+    // Do not compress the dex files, so the apk can be imported as a privileged app
+    androidResources {
+        noCompress += "dex"
+    }
+
     val signing = if (file("../signing.properties").exists()) {
         signingConfigs.create("release") {
             val props = `java.util`.Properties().apply { load(file("../signing.properties").reader()) }

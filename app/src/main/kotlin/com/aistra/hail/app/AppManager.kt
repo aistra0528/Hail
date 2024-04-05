@@ -63,6 +63,7 @@ object AppManager {
             HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.setAppSuspended(packageName, frozen)
             HailData.MODE_ISLAND_HIDE -> HIsland.setAppHidden(packageName, frozen)
             HailData.MODE_ISLAND_SUSPEND -> HIsland.setAppSuspended(packageName, frozen)
+            HailData.MODE_PRIVAPP_DISABLE -> HPackages.setAppDisabled(packageName, frozen)
             else -> false
         }
 

@@ -51,6 +51,7 @@
     <string name="mode_shizuku_disable">Shizuku - Disable</string>
     <string name="mode_shizuku_hide">Shizuku - Hide</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspend</string>
+    <string name="mode_privapp_disable">Privileged System App - Disable</string>
     <string name="title_set_owner">Set Device Owner</string>
     <string name="msg_set_owner">Issue the command from adb:\n%s</string>
     <string name="title_remove_owner">Remove Device Owner</string>
