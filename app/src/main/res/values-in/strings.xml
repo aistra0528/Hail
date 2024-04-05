@@ -84,11 +84,11 @@
     <string name="compact_icon">Ikon kecil</string>
     <string name="action_import_app">Impor aplikasi</string>
     <string name="action_export_all">Ekspor semua</string>
-    <string name="skip_notifying_app">Lewati pemberitahuan aplikasi</string>
+    <string name="skip_notifying_app">Lewati aplikasi bernotifikasi</string>
     <string name="title_shortcuts">Pintasan</string>
     <string name="action_none">Kosong</string>
     <string name="grayscale_icon">Ikon hitam-putih</string>
-    <string name="msg_biometric">Masuk dengan pemindaian biometrik</string>
+    <string name="msg_biometric">Masuk menggunakan kredensial biometrik</string>
     <string name="action_pin">Sematkan</string>
     <string name="action_remove_whitelist">Hapus dari daftar putih</string>
     <string name="action_import_frozen">Impor aplikasi dibekukan</string>
@@ -141,6 +141,6 @@
     <string name="action_continue">Lanjutkan</string>
     <string name="nine_key">Keyboard numerik</string>
     <string name="home_font_size">Ukuran font Home</string>
-    <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan bootloop pada perangkat anda. Pastikan anda mengetahui apa yang dilakukan dan telah mencadangkan data sebelumnya.</string>
+    <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan bootloop pada gawai anda. Pastikan anda mengetahui apa yang dilakukan dan telah mencadangkan data sebelumnya.</string>
     <string name="mode_privapp_disable">Aplikasi Sistem - Matikan</string>
 </resources>
