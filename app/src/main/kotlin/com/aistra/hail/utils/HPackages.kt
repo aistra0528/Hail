@@ -1,8 +1,11 @@
 package com.aistra.hail.utils
 
+import android.app.ActivityManager
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import androidx.core.content.getSystemService
 import com.aistra.hail.HailApp.Companion.app
+import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 object HPackages {
     val myUserId get() = android.os.Process.myUserHandle().hashCode()
@@ -48,6 +51,36 @@ object HPackages {
         }
     } ?: false
 
+    fun isPrivilegedApp(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
+        (ApplicationInfo::class.java.getField("privateFlags").get(it) as Int) and 8 == 8
+    } ?: false
+
     fun canUninstallNormally(packageName: String): Boolean =
         getApplicationInfoOrNull(packageName)?.sourceDir?.startsWith("/data") ?: false
+
+    private fun forceStopApp(packageName: String) = runCatching {
+        app.getSystemService<ActivityManager>()!!.let {
+            if (HTarget.P) HiddenApiBypass.invoke(it::class.java, it, "forceStopPackage", packageName)
+            else it::class.java.getMethod("forceStopPackage", String::class.java).invoke(it, packageName)
+        }
+        true
+    }.getOrElse {
+        HLog.e(it)
+        false
+    }
+
+    fun setAppDisabled(packageName: String, disabled: Boolean): Boolean {
+        getApplicationInfoOrNull(packageName) ?: return false
+        if (disabled) forceStopApp(packageName)
+        runCatching {
+            val newState = when {
+                !disabled -> PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                else -> PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+            }
+            app.packageManager.setApplicationEnabledSetting(packageName, newState, 0)
+        }.onFailure {
+            HLog.e(it)
+        }
+        return isAppDisabled(packageName) == disabled
+    }
 }

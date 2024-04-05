@@ -112,6 +112,52 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 - `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。
 
+### 特权系统应用 - 停用
+
+此模式通过调用接口：
+
+- `ActivityManager.forceStopPackage`强行停止应用。
+- `PackageManager.setApplicationEnabledSetting`停用应用。
+
+需要设置特许权限许可名单：
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <privapp-permissions package="com.aistra.hail">
+        <permission name="android.permission.PACKAGE_USAGE_STATS"/>
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
+        <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+    </privapp-permissions>
+</permissions>
+```
+
+并将雹安装为特权系统应用。
+
+推荐方法是在构建 ROM 时导入雹，`Android.bp`配置示例：
+
+```bp
+android_app_import {
+    name: "Hail",
+    apk: "Hail.apk",
+    privileged: true,
+
+    dex_preopt: {
+        enabled: false,
+    },
+    presigned: true,
+    preprocessed: true,
+
+    required: ["privapp-permissions_com.aistra.hail.xml"]
+}
+
+prebuilt_etc {
+    name: "privapp-permissions_com.aistra.hail.xml",
+    src: "privapp-permissions.xml",
+    sub_dir: "permissions",
+}
+```
+
 ## 恢复
 
 ### 通过 adb

@@ -4,12 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationManagerCompat
@@ -27,22 +22,9 @@ import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
-import com.aistra.hail.extensions.applyDefaultInsetter
-import com.aistra.hail.extensions.isLandscape
-import com.aistra.hail.extensions.isRtl
-import com.aistra.hail.extensions.marginRelative
-import com.aistra.hail.extensions.paddingRelative
+import com.aistra.hail.extensions.*
 import com.aistra.hail.ui.main.MainActivity
-import com.aistra.hail.utils.AppIconCache
-import com.aistra.hail.utils.HDhizuku
-import com.aistra.hail.utils.HIsland
-import com.aistra.hail.utils.HLog
-import com.aistra.hail.utils.HPolicy
-import com.aistra.hail.utils.HShell
-import com.aistra.hail.utils.HShortcuts
-import com.aistra.hail.utils.HSystem
-import com.aistra.hail.utils.HTarget
-import com.aistra.hail.utils.HUI
+import com.aistra.hail.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.rosan.dhizuku.api.Dhizuku
@@ -318,6 +300,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 if (it) {
                     HIsland.checkOwnerApp()
                 }
+            }
+
+            mode.startsWith(HailData.PRIVAPP) -> if (!HPackages.isPrivilegedApp(app.packageName)) {
+                HUI.showToast(R.string.permission_denied)
+                return false
             }
         }
 

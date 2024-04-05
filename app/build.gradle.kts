@@ -16,7 +16,7 @@ android {
         versionName = "1.8.1"
     }
 
-    // Do not compress the dex files, so the apk can be imported as a priviledged app
+    // Do not compress the dex files, so the apk can be imported as a privileged app
     androidResources {
         noCompress += "dex"
     }

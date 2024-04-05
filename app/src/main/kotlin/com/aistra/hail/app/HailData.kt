@@ -33,7 +33,7 @@ object HailData {
     const val SU = "su_"
     const val SHIZUKU = "shizuku_"
     const val ISLAND = "island_"
-    const val SYSTEMAPP = "systemapp_"
+    const val PRIVAPP = "privapp_"
 
     const val DISABLE = "disable"
     const val HIDE = "hide"
@@ -51,9 +51,7 @@ object HailData {
     const val MODE_SHIZUKU_SUSPEND = SHIZUKU + SUSPEND
     const val MODE_ISLAND_HIDE = ISLAND + HIDE
     const val MODE_ISLAND_SUSPEND = ISLAND + SUSPEND
-    const val MODE_SYSTEMAPP_DISABLE = SYSTEMAPP + DISABLE
-    const val MODE_SYSTEMAPP_HIDE = SYSTEMAPP + HIDE
-    const val MODE_SYSTEMAPP_SUSPEND = SYSTEMAPP + SUSPEND
+    const val MODE_PRIVAPP_DISABLE = PRIVAPP + DISABLE
 
     private const val TILE_ACTION = "tile_action"
     private const val HOME_FONT_SIZE = "home_font_size"

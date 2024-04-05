@@ -1,17 +1,14 @@
 package com.aistra.hail.utils
 
-import android.app.ActivityManager
 import android.app.AppOpsManager
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.os.BatteryManager
 import android.os.PowerManager
 import androidx.core.content.getSystemService
 import com.aistra.hail.app.HailData
-import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 object HSystem {
     fun isInteractive(context: Context): Boolean {
@@ -54,36 +51,5 @@ object HSystem {
             it.last()?.packageName
         }
         return foregroundPackageName == packageName
-    }
-
-    private fun forceStopApp(packageName: String, ctx: Context) = runCatching {
-        ctx.getSystemService<ActivityManager>()!!.let {
-            if (HTarget.P) HiddenApiBypass.invoke(
-                it::class.java, it, "forceStopPackage", packageName
-            ) else it::class.java.getMethod(
-                "forceStopPackage", String::class.java
-            ).invoke(
-                it, packageName
-            )
-        }
-        true
-    }.getOrElse {
-        HLog.e(it)
-        false
-    }
-
-    fun setAppDisabled(ctx: Context, packageName: String, disabled: Boolean): Boolean {
-        HPackages.getApplicationInfoOrNull(packageName) ?: return false
-        if (disabled) forceStopApp(packageName, ctx)
-        runCatching {
-            val newState = when {
-                !disabled -> PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                else -> PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-            }
-            ctx.packageManager.setApplicationEnabledSetting(packageName, newState, 0)
-        }.onFailure {
-            HLog.e(it)
-        }
-        return HPackages.isAppDisabled(packageName) == disabled
     }
 }

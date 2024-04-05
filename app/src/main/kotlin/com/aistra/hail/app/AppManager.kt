@@ -1,6 +1,5 @@
 package com.aistra.hail.app
 
-import android.content.Context
 import android.content.Intent
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.utils.*
@@ -26,7 +25,7 @@ object AppManager {
                 || HPackages.isAppSuspended(packageName)
     }
 
-    fun setListFrozen(ctx: Context, frozen: Boolean, vararg appInfo: AppInfo): String? {
+    fun setListFrozen(frozen: Boolean, vararg appInfo: AppInfo): String? {
         val excludeMe = appInfo.filter { it.packageName != BuildConfig.APPLICATION_ID }
         var i = 0
         var denied = false
@@ -37,7 +36,7 @@ object AppManager {
             else -> {
                 excludeMe.forEach {
                     when {
-                        setAppFrozen(ctx, it.packageName, frozen) -> {
+                        setAppFrozen(it.packageName, frozen) -> {
                             i++
                             name = it.name.toString()
                         }
@@ -50,7 +49,7 @@ object AppManager {
         return if (denied && i == 0) null else if (i == 1) name else i.toString()
     }
 
-    fun setAppFrozen(ctx: Context, packageName: String, frozen: Boolean): Boolean =
+    fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =
         packageName != BuildConfig.APPLICATION_ID && when (HailData.workingMode) {
             HailData.MODE_OWNER_HIDE -> HPolicy.setAppHidden(packageName, frozen)
             HailData.MODE_OWNER_SUSPEND -> HPolicy.setAppSuspended(packageName, frozen)
@@ -64,7 +63,7 @@ object AppManager {
             HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.setAppSuspended(packageName, frozen)
             HailData.MODE_ISLAND_HIDE -> HIsland.setAppHidden(packageName, frozen)
             HailData.MODE_ISLAND_SUSPEND -> HIsland.setAppSuspended(packageName, frozen)
-            HailData.MODE_SYSTEMAPP_DISABLE -> HSystem.setAppDisabled(ctx, packageName, frozen)
+            HailData.MODE_PRIVAPP_DISABLE -> HPackages.setAppDisabled(packageName, frozen)
             else -> false
         }
 
