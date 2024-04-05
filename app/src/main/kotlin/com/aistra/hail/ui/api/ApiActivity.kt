@@ -98,7 +98,7 @@ class ApiActivity : AppCompatActivity() {
     private fun launchApp(pkg: String, tagId: Int? = null) {
         if (tagId != null) setListFrozen(false, HailData.checkedList.filter { it.tagId == tagId })
         if (AppManager.isAppFrozen(pkg)) {
-            if (AppManager.setAppFrozen(pkg, false)) app.setAutoFreezeService()
+            if (AppManager.setAppFrozen(this, pkg, false)) app.setAutoFreezeService()
             else throw IllegalStateException(getString(R.string.permission_denied))
         }
         packageManager.getLaunchIntentForPackage(pkg)?.let {
@@ -110,7 +110,7 @@ class ApiActivity : AppCompatActivity() {
     private fun setAppFrozen(pkg: String, frozen: Boolean) = when {
         frozen && !HailData.isChecked(pkg) -> throw SecurityException("package not checked")
         AppManager.isAppFrozen(pkg) != frozen && !AppManager.setAppFrozen(
-            pkg, frozen
+            this, pkg, frozen
         ) -> throw IllegalStateException(getString(R.string.permission_denied))
 
         else -> {
@@ -129,7 +129,8 @@ class ApiActivity : AppCompatActivity() {
     ) {
         val filtered =
             list.filter { AppManager.isAppFrozen(it.packageName) != frozen && !(skipWhitelisted && it.whitelisted) }
-        when (val result = AppManager.setListFrozen(frozen, *filtered.toTypedArray())) {
+        when (val result =
+            AppManager.setListFrozen(applicationContext, frozen, *filtered.toTypedArray())) {
             null -> throw IllegalStateException(getString(R.string.permission_denied))
             else -> {
                 HUI.showToast(

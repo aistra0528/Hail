@@ -17,7 +17,7 @@ class AutoFreezeWorker(context: Context, params: WorkerParameters) : Worker(cont
             || isSkipWhileCharging(applicationContext)
         ) return Result.success() // Not stopping the AutoFreezeService here. The worker will run at some point. Then we'll stop the Service
         val checkedList = HailData.checkedList.filter { !isSkipApp(applicationContext, it) }
-        val result = AppManager.setListFrozen(true, *checkedList.toTypedArray())
+        val result = AppManager.setListFrozen(applicationContext, true, *checkedList.toTypedArray())
         return if (result == null) {
             Result.failure()
         } else {
