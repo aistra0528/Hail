@@ -28,7 +28,7 @@
     <string name="action_tag_add">Добавить тег</string>
     <string name="action_tag_remove">Удалить тег</string>
     <string name="action_tag_set">Установить тег</string>
-    <string name="action_add_pin_shortcut">Добавить на главную страницу</string>
+    <string name="action_add_pin_shortcut">Добавить на главный экран</string>
     <string name="action_export_clipboard">Экспорт в буфер обмена</string>
     <string name="action_import_clipboard">Импорт из буфера обмена</string>
     <string name="action_remove_home">Удалить с главной страницы</string>
