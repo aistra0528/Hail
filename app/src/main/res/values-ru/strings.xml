@@ -147,4 +147,5 @@
     <string name="tag">Тег</string>
     <string name="nine_key">Поиск T9</string>
     <string name="home_font_size">Размер шрифта на главной странице</string>
+    <string name="mode_privapp_disable">Превилигированное системное приложение - Отключить</string>
 </resources>
