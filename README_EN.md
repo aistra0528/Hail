@@ -122,6 +122,52 @@ This mode invoke non-SDK interface:
 
 - `IPackageManager.setPackagesSuspendedAsUser` to suspend apps.
 
+### Privileged System App - Disable
+
+This mode calls the following APIs:
+
+- `ActivityManager.forceStopPackage` to kill apps.
+- `PackageManager.setApplicationEnabledSetting` to disable apps.
+
+The following privapp-permissions is required:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <privapp-permissions package="com.aistra.hail">
+        <permission name="android.permission.PACKAGE_USAGE_STATS"/>
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
+        <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+    </privapp-permissions>
+</permissions>
+```
+
+To use this mode, you should install Hail as a privileged system app.
+
+The recommended approach is to import Hail when building your ROM, here's an example for `Android.bp`:
+
+```bp
+android_app_import {
+    name: "Hail",
+    apk: "Hail.apk",
+    privileged: true,
+
+    dex_preopt: {
+        enabled: false,
+    },
+    presigned: true,
+    preprocessed: true,
+
+    required: ["privapp-permissions_com.aistra.hail.xml"]
+}
+
+prebuilt_etc {
+    name: "privapp-permissions_com.aistra.hail.xml",
+    src: "privapp-permissions.xml",
+    sub_dir: "permissions",
+}
+```
+
 ## Revert
 
 ### By adb

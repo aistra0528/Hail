@@ -43,6 +43,7 @@
         <item>@string/mode_owner_suspend</item>
         <item>@string/mode_island_hide</item>
         <item>@string/mode_island_suspend</item>
+        <item>@string/mode_privapp_disable</item>
     </string-array>
     <string-array name="working_mode_values">
         <item>default</item>
@@ -58,6 +59,7 @@
         <item>owner_suspend</item>
         <item>island_hide</item>
         <item>island_suspend</item>
+        <item>privapp_disable</item>
     </string-array>
     <string-array name="donate_payment_entries">
         <item>@string/donate_alipay</item>

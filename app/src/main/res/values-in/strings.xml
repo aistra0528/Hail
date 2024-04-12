@@ -5,7 +5,7 @@
     <string name="title_apps">Daftar aplikasi</string>
     <string name="title_home">Beranda</string>
     <string name="label_default">Bawaan</string>
-    <string name="label_time">Tanggal instalasi Hail</string>
+    <string name="label_time">Tanggal instalasi</string>
     <string name="label_version">Versi</string>
     <string name="action_telegram">Grup Telegram</string>
     <string name="action_qq">Grup QQ</string>
@@ -21,7 +21,7 @@
     <string name="action_launch">Luncurkan</string>
     <string name="action_uninstall">Hapus</string>
     <string name="mode_shizuku_hide">Shizuku - Sembunyikan</string>
-    <string name="action_tag_add">Tambahkan label</string>
+    <string name="action_tag_add">Tambah label</string>
     <string name="action_search">Cari</string>
     <string name="action_freeze">Bekukan</string>
     <string name="action_unfreeze">Aktifkan</string>
@@ -42,7 +42,7 @@
     <string name="mode_su_disable">Root - Matikan</string>
     <string name="mode_shizuku_disable">Shizuku - Matikan</string>
     <string name="mode_shizuku_suspend">Shizuku - Tangguhkan</string>
-    <string name="activity_not_found">Pintasan peluncur tidak ditemukan</string>
+    <string name="activity_not_found">Peluncur tidak ditemukan</string>
     <string name="tap_to_select">Tandai pilihan</string>
     <string name="title_set_owner">Atur Pemilik Perangkat</string>
     <string name="filter_by">Filter</string>
@@ -51,8 +51,8 @@
     <string name="filter_unfrozen_apps">Diaktifkan</string>
     <string name="msg_set_owner">Jalankan perintah dari adb:
 \n%s</string>
-    <string name="msg_remove_owner">Jika Hail dihapus sebagai pemilik perangkat, mungkin akan ada kesulitan mengatur kembali Aplikasi setelah Hail terhapus.
-\nAplikasi yang dibekukan tetap dibekukan setelah penghapusan, pastikan telah mengaktifkan aplikasi penting anda.</string>
+    <string name="msg_remove_owner">Saat Hail sebagai pemilik perangkat dihapus, akan ada kesulitan mengatur kembali Aplikasi yang dibekukan.
+\nAplikasi yang dibekukan akan tetap beku setelah Hail dihapus, pastikan telah mengaktifkannya terlebih dahulu.</string>
     <string name="title_remove_owner">Hapus Pemilik Perangkat</string>
     <string name="filter_system_apps">Sistem</string>
     <string name="sort_name">Nama</string>
@@ -84,11 +84,11 @@
     <string name="compact_icon">Ikon kecil</string>
     <string name="action_import_app">Impor aplikasi</string>
     <string name="action_export_all">Ekspor semua</string>
-    <string name="skip_notifying_app">Lewati pemberitahuan aplikasi</string>
+    <string name="skip_notifying_app">Lewati aplikasi bernotifikasi</string>
     <string name="title_shortcuts">Pintasan</string>
     <string name="action_none">Kosong</string>
     <string name="grayscale_icon">Ikon hitam-putih</string>
-    <string name="msg_biometric">Masuk dengan indentifikasi biometrik anda</string>
+    <string name="msg_biometric">Masuk dengan pemindaian biometrik</string>
     <string name="action_pin">Sematkan</string>
     <string name="action_remove_whitelist">Hapus dari daftar putih</string>
     <string name="action_import_frozen">Impor aplikasi dibekukan</string>
@@ -96,14 +96,14 @@
     <string name="app_name">Hail</string>
     <string name="action_deselect">Batalkan pilihan</string>
     <string name="nothing_here">Tidak ada apa-apa di sini</string>
-    <string name="action_whitelist">Tambahkan ke daftar putih</string>
+    <string name="action_whitelist">Tambah ke daftar putih</string>
     <string name="synthesize_adaptive_icons">Ikon adaptif</string>
     <string name="action_export_current">Ekspor label ini</string>
     <string name="dynamic_shortcut_action">Pintasan aksi dinamis</string>
     <string name="action_freeze_tag">Bekukan berdasar label</string>
     <string name="action_unfreeze_tag">Aktifkan berdasar label</string>
-    <string name="action_add_pin_shortcut">Tambahkan pintasan ke Beranda</string>
-    <string name="action_tag_set">Tambahkan label</string>
+    <string name="action_add_pin_shortcut">Tambah pintasan ke Beranda</string>
+    <string name="action_tag_set">Pasang label</string>
     <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
     <string name="sort_by">Urutkan</string>
@@ -141,5 +141,6 @@
     <string name="action_continue">Lanjutkan</string>
     <string name="nine_key">Keyboard numerik</string>
     <string name="home_font_size">Ukuran font Home</string>
-    <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan perangkat mengalami bootloop. Pastikan anda mengetahui apa yang anda lakukan dan cadangkan data anda terlebih dahulu.</string>
+    <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan bootloop pada perangkat anda. Pastikan anda mengetahui apa yang dilakukan dan telah mencadangkan data sebelumnya.</string>
+    <string name="mode_privapp_disable">Aplikasi Sistem - Matikan</string>
 </resources>
