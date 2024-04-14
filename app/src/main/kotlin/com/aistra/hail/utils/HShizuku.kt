@@ -49,7 +49,7 @@ object HShizuku {
             false
         }
 
-    private fun forceStopApp(packageName: String) = runCatching {
+    fun forceStopApp(packageName: String): Boolean = runCatching {
         asInterface("android.app.IActivityManager", "activity").let {
             if (HTarget.P) HiddenApiBypass.invoke(
                 it::class.java, it, "forceStopPackage", packageName, userId

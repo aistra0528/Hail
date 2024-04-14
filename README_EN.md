@@ -106,20 +106,18 @@ This mode invoke:
 
 This mode execute:
 
+- `am force-stop` to kill apps.
 - `pm disable` to disable apps.
-
 - `pm hide` to hide apps.
-
 - `pm suspend` to suspend apps.
 
 ### [Shizuku](https://github.com/RikkaApps/Shizuku) - Disable / Hide / Suspend
 
 This mode invoke non-SDK interface:
 
+- `IActivityManager.forceStopPackage` to kill apps.
 - `IPackageManager.setApplicationEnabledSetting` to disable apps.
-
 - `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps. (root required)
-
 - `IPackageManager.setPackagesSuspendedAsUser` to suspend apps.
 
 ### Privileged System App - Disable

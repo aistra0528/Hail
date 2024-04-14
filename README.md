@@ -94,23 +94,21 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 ### Root - 停用 / 隐藏 / 暂停
 
-此模式通过授予雹 root 权限，执行：
+此模式通过授予雹 root 权限，执行命令：
 
-- `pm disable`命令停用应用。
-
-- `pm hide`命令隐藏应用。
-
-- `pm suspend`命令暂停应用。
+- `am force-stop`强行停止应用。
+- `pm disable`停用应用。
+- `pm hide`隐藏应用。
+- `pm suspend`暂停应用。
 
 ### Shizuku - 停用 / 隐藏 / 暂停
 
 此模式通过 [Shizuku](https://github.com/RikkaApps/Shizuku) 调用非 SDK 接口：
 
-- `IPackageManager.setApplicationEnabledSetting`方法停用应用。
-
-- `IPackageManager.setApplicationHiddenSettingAsUser`方法隐藏应用。 (需要 root)
-
-- `IPackageManager.setPackagesSuspendedAsUser`方法暂停应用。
+- `IActivityManager.forceStopPackage`强行停止应用。
+- `IPackageManager.setApplicationEnabledSetting`停用应用。
+- `IPackageManager.setApplicationHiddenSettingAsUser`隐藏应用。 (需要 root)
+- `IPackageManager.setPackagesSuspendedAsUser`暂停应用。
 
 ### 特权系统应用 - 停用
 

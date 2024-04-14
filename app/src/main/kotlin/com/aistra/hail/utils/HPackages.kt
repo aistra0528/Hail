@@ -42,6 +42,10 @@ object HPackages {
         (ApplicationInfo::class.java.getField("privateFlags").get(it) as Int) and 1 == 1
     } ?: false
 
+    fun isAppStopped(packageName: String): Boolean =
+        getApplicationInfoOrNull(packageName)?.run { flags and ApplicationInfo.FLAG_STOPPED == ApplicationInfo.FLAG_STOPPED }
+            ?: false
+
     fun isAppSuspended(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
         when {
 //            This method will cause NameNotFoundException with uninstalled packages
@@ -58,7 +62,7 @@ object HPackages {
     fun canUninstallNormally(packageName: String): Boolean =
         getApplicationInfoOrNull(packageName)?.sourceDir?.startsWith("/data") ?: false
 
-    private fun forceStopApp(packageName: String) = runCatching {
+    fun forceStopApp(packageName: String): Boolean = runCatching {
         app.getSystemService<ActivityManager>()!!.let {
             if (HTarget.P) HiddenApiBypass.invoke(it::class.java, it, "forceStopPackage", packageName)
             else it::class.java.getMethod("forceStopPackage", String::class.java).invoke(it, packageName)

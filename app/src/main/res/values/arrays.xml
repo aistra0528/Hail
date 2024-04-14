@@ -31,9 +31,11 @@
     </string-array>
     <string-array name="working_mode_entries">
         <item>@string/mode_default</item>
+        <item>@string/mode_shizuku_stop</item>
         <item>@string/mode_shizuku_disable</item>
         <item>@string/mode_shizuku_hide</item>
         <item>@string/mode_shizuku_suspend</item>
+        <item>@string/mode_su_stop</item>
         <item>@string/mode_su_disable</item>
         <item>@string/mode_su_hide</item>
         <item>@string/mode_su_suspend</item>
@@ -43,13 +45,16 @@
         <item>@string/mode_owner_suspend</item>
         <item>@string/mode_island_hide</item>
         <item>@string/mode_island_suspend</item>
+        <item>@string/mode_privapp_stop</item>
         <item>@string/mode_privapp_disable</item>
     </string-array>
     <string-array name="working_mode_values">
         <item>default</item>
+        <item>shizuku_stop</item>
         <item>shizuku_disable</item>
         <item>shizuku_hide</item>
         <item>shizuku_suspend</item>
+        <item>su_stop</item>
         <item>su_disable</item>
         <item>su_hide</item>
         <item>su_suspend</item>
@@ -59,6 +64,7 @@
         <item>owner_suspend</item>
         <item>island_hide</item>
         <item>island_suspend</item>
+        <item>privapp_stop</item>
         <item>privapp_disable</item>
     </string-array>
     <string-array name="donate_payment_entries">

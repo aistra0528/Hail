@@ -18,6 +18,8 @@ object HShell {
 
     val lockScreen get() = execSU("input keyevent KEYCODE_POWER").first == 0
 
+    fun forceStopApp(packageName: String): Boolean = execSU("am force-stop $packageName").first == 0
+
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean =
         execSU("pm ${if (disabled) "disable" else "enable"} $packageName").first == 0
 
