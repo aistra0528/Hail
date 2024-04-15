@@ -152,4 +152,8 @@
     <string name="nine_key">T9 البحث</string>
     <string name="home_font_size">حجم خط الرئيسية</string>
     <string name="freeze_system_app">قد يتسبب تجميد تطبيقات النظام في تعليق الجهاز على الشعار. تأكد من أنك تعرف ما تفعله وقم بعمل نسخة احتياطية من بياناتك مسبقا أو استخدم الاسترداد الذي يدعم إدارة الملفات.</string>
+    <string name="mode_privapp_stop">تطبيقات النظام - إيقاف إجباري</string>
+    <string name="mode_shizuku_stop">شيزوكو - إيقاف إجباري</string>
+    <string name="mode_su_stop">الجذر(روت) - إيقاف إجباري</string>
+    <string name="mode_privapp_disable">تطبيقات النظام - تعطيل</string>
 </resources>
