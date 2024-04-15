@@ -145,4 +145,7 @@
     <string name="home_font_size">Ana ekran yazı tipi boyutu</string>
     <string name="freeze_system_app">Sistem uygulamalarının dondurulması aygıtın önyükleme döngüsüne girmesine neden olabilir. Ne yaptığınızı bildiğinizden emin olun ve verilerinizi önceden yedekleyin veya dosya yönetimini destekleyen kurtarma kullanın.</string>
     <string name="mode_privapp_disable">Ayrıcalıklı Sistem Uygulaması - Devre Dışı Bırak</string>
+    <string name="mode_shizuku_stop">Shizuku - Durdurmaya Zorla</string>
+    <string name="mode_privapp_stop">Sistem Uygulaması - Durdurmaya Zorla</string>
+    <string name="mode_su_stop">Root - Durdurmaya Zorla</string>
 </resources>
