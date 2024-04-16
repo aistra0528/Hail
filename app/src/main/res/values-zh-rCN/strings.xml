@@ -144,5 +144,8 @@
     <string name="tag">标签</string>
     <string name="nine_key">九键搜索</string>
     <string name="home_font_size">首页字体大小</string>
-    <string name="mode_privapp_disable">特权系统应用 - 停用</string>
+    <string name="mode_privapp_disable">系统应用 - 停用</string>
+    <string name="mode_shizuku_stop">Shizuku - 强行停止</string>
+    <string name="mode_privapp_stop">系统应用 - 强行停止</string>
+    <string name="mode_su_stop">Root - 强行停止</string>
 </resources>
