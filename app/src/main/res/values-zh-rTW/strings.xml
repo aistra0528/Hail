@@ -17,8 +17,8 @@
     <string name="action_licenses">授權</string>
     <string name="action_freeze_all">全部凍結</string>
     <string name="action_unfreeze_all">全部解凍</string>
-    <string name="action_freeze_current">凍結目前</string>
-    <string name="action_unfreeze_current">解凍目前</string>
+    <string name="action_freeze_current">凍結可見</string>
+    <string name="action_unfreeze_current">解凍可見</string>
     <string name="action_lock">螢幕鎖定</string>
     <string name="action_lock_freeze">螢幕鎖定凍結</string>
     <string name="action_launch">啟動</string>
@@ -43,7 +43,7 @@
     <string name="working_mode">工作模式</string>
     <string name="mode_default">閒置</string>
     <string name="mode_owner_hide">裝置擁有者 - 隱藏</string>
-    <string name="mode_su_disable">超級使用者 - 停用</string>
+    <string name="mode_su_disable">Root - 停用</string>
     <string name="mode_shizuku_disable">Shizuku - 停用</string>
     <string name="title_set_owner">設定裝置擁有者</string>
     <string name="msg_set_owner">透過 adb 發出命令：\n%s</string>
@@ -111,12 +111,12 @@
     <string name="action_import_frozen">匯入已凍結的應用程式</string>
     <string name="action_import_app">匯入應用程式</string>
     <string name="synthesize_adaptive_icons">合成自適性圖示</string>
-    <string name="action_export_current">匯出目前</string>
+    <string name="action_export_current">匯出可見</string>
     <string name="action_export_all">全部匯出</string>
     <string name="skip_notifying_app">跳過通知中的應用程式</string>
     <string name="auto_freeze_delay">凍結延時 (分鐘)</string>
     <string name="mode_owner_suspend">裝置擁有者 - 暫停</string>
-    <string name="mode_su_suspend">超級使用者 - 暫停</string>
+    <string name="mode_su_suspend">Root - 暫停</string>
     <string name="mode_shizuku_suspend">Shizuku - 暫停</string>
     <string name="action_unfreeze_remove_home">解凍並從首頁中移除</string>
     <string name="action_freeze_non_whitelisted">凍結非白名單</string>
@@ -132,7 +132,20 @@
     <string name="mode_dhizuku_hide">Dhizuku - 隱藏</string>
     <string name="mode_dhizuku_suspend">Dhizuku - 暫停</string>
     <string name="action_terminal">終端機</string>
-    <string name="mode_su_hide">超級使用者 - 隱藏</string>
+    <string name="mode_su_hide">Root - 隱藏</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">跳過</string>
+    <string name="command">命令</string>
+    <string name="tag">標籤</string>
+    <string name="home_font_size">首頁字型大小</string>
+    <string name="mode_shizuku_stop">Shizuku - 強制停止</string>
+    <string name="mode_privapp_stop">系統應用程式 - 強制停止</string>
+    <string name="mode_privapp_disable">系統應用程式 - 停用</string>
+    <string name="mode_su_stop">Root - 強制停止</string>
+    <string name="mode_island_hide">Island/Insular - 隱藏</string>
+    <string name="action_continue">繼續</string>
+    <string name="freeze_system_app">凍結系統應用可能導致裝置無法啟動。請確保您已知曉操作後果，並提前備份資料或使用支援檔案管理的恢復模式。</string>
+    <string name="shizuku_hide_adb">Shizuku 正以 adb 許可權執行。如需隱藏應用，請通過 root 重新啟動 Shizuku。</string>
+    <string name="mode_island_suspend">Island/Insular - 暫停</string>
+    <string name="nine_key">九鍵搜尋</string>
 </resources>
