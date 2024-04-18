@@ -148,5 +148,8 @@
     <string name="mode_shizuku_disable">Shizuku - Выключыць</string>
     <string name="mode_shizuku_hide">Shizuku - Схаваць</string>
     <string name="mode_shizuku_suspend">Shizuku - Прыпыніць</string>
-    <string name="mode_privapp_disable">Превилигированное сістэмнае прыкладанне - Адключыць</string>
+    <string name="mode_privapp_disable">Сістэмнае прыкладанне - Адключыць</string>
+    <string name="mode_privapp_stop">Сістэмнае прыкладанне - Прымусова спыніць</string>
+    <string name="mode_shizuku_stop">Shizuku - Прымусова спыніць</string>
+    <string name="mode_su_stop">Root - Прымусова спыніць</string>
 </resources>
