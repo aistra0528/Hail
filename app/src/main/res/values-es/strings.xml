@@ -145,5 +145,8 @@
     <string name="action_continue">Continuar</string>
     <string name="nine_key">Búsqueda T9</string>
     <string name="home_font_size">Tamaño de la fuente de inicio</string>
-    <string name="mode_privapp_disable">Aplicaciones privilegiadas del sistema : deshabilitadas</string>
+    <string name="mode_privapp_disable">Aplicación del sistema - Desactivar</string>
+    <string name="mode_privapp_stop">Aplicación del sistema - Forzar la detención</string>
+    <string name="mode_shizuku_stop">Shizuku - Forzar la detención</string>
+    <string name="mode_su_stop">Root - Forzar la detención</string>
 </resources>
