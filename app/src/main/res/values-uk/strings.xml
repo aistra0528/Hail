@@ -148,5 +148,8 @@
     <string name="nine_key">Пошук T9</string>
     <string name="home_font_size">Розмір шрифту на головній сторінці</string>
     <string name="freeze_system_app">Заморожування системних додатків може призвести до бутлупу. Переконайтеся, що Ви знаєте, що робите, і заздалегідь створіть резервну копію даних або скористайтеся рекавері, яке підтримує управління файлами.</string>
-    <string name="mode_privapp_disable">Превілігований системний додаток - Відключити</string>
+    <string name="mode_privapp_disable">Системний додаток - Відключити</string>
+    <string name="mode_shizuku_stop">Shizuku - Примусово зупинити</string>
+    <string name="mode_su_stop">Root - Примусово зупинити</string>
+    <string name="mode_privapp_stop">Системний додаток - Примусово зупинити</string>
 </resources>
