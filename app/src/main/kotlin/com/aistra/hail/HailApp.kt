@@ -4,10 +4,12 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.services.AutoFreezeService
+import com.aistra.hail.services.AutoUnFreezeService
 import com.aistra.hail.utils.HDhizuku
 
 class HailApp : Application() {
@@ -36,9 +38,29 @@ class HailApp : Application() {
         }
     }
 
+    fun setAutoUnFreezeService(autoUnFreezeAfterUnLock: Boolean = HailData.autoUnFreezeAfterUnLock) {
+        val start = autoUnFreezeAfterUnLock && HailData.checkedList.any()
+        val intent = Intent(app, AutoUnFreezeService::class.java)
+        if (start) {
+            setAutoUnFreezeServiceEnabled(true)
+            ContextCompat.startForegroundService(app, intent)
+        } else {
+            stopService(intent)
+            setAutoUnFreezeServiceEnabled(false)
+        }
+    }
+
     fun setAutoFreezeServiceEnabled(enabled: Boolean) {
         packageManager.setComponentEnabledSetting(
             ComponentName(app, AutoFreezeService::class.java),
+            if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP
+        )
+    }
+
+    fun setAutoUnFreezeServiceEnabled(enabled: Boolean) {
+        packageManager.setComponentEnabledSetting(
+            ComponentName(app, AutoUnFreezeService::class.java),
             if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
             PackageManager.DONT_KILL_APP
         )

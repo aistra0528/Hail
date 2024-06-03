@@ -72,12 +72,17 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 .contains(requireContext().packageName)
             if (value == true && !isGranted) {
                 app.setAutoFreezeServiceEnabled(true)
+                app.setAutoUnFreezeServiceEnabled(true)
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 false
             } else true
         }
         findPreference<Preference>(HailData.AUTO_FREEZE_AFTER_LOCK)?.setOnPreferenceChangeListener { _, autoFreezeAfterLock ->
             app.setAutoFreezeService(autoFreezeAfterLock as Boolean)
+            true
+        }
+        findPreference<Preference>(HailData.AUTO_UNFREEZE_AFTER_UNLOCK)?.setOnPreferenceChangeListener { _, autoUnFreezeAfterUnLock ->
+            app.setAutoUnFreezeService(autoUnFreezeAfterUnLock as Boolean)
             true
         }
         findPreference<Preference>(HailData.ICON_PACK)?.setOnPreferenceClickListener {

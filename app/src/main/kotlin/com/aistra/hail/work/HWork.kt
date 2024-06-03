@@ -1,5 +1,6 @@
 package com.aistra.hail.work
 
+import android.util.Log
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -33,6 +34,16 @@ object HWork {
             OneTimeWorkRequestBuilder<AutoFreezeWorker>().run {
                 if (screenOff) setInitialDelay(HailData.autoFreezeDelay, TimeUnit.MINUTES)
                 setInputData(workDataOf(HailData.ACTION_LOCK to screenOff))
+                build()
+            }
+        )
+    }
+    fun setAutoUnFreeze(screenOn: Boolean) {
+        WorkManager.getInstance(app).enqueueUniqueWork(
+            HailApi.ACTION_UNFREEZE_ALL,
+            ExistingWorkPolicy.REPLACE,  // in case the old task has not been executed...
+            OneTimeWorkRequestBuilder<AutoUnFreezeWorker>().run {
+                setInputData(workDataOf(HailData.ACTION_LOCK to screenOn))
                 build()
             }
         )
