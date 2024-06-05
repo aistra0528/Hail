@@ -129,20 +129,14 @@ object HShizuku {
                     else throw it
                 }
 
-                HTarget.Q -> setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
+                HTarget.Q -> runCatching {
+                    setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
+                }.getOrElse {
+                    if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceP(pm, packageName, suspended)
+                    else throw it
+                }
 
-                HTarget.P -> HiddenApiBypass.invoke(
-                    pm::class.java,
-                    pm,
-                    "setPackagesSuspendedAsUser",
-                    arrayOf(packageName),
-                    suspended,
-                    null,
-                    null,
-                    null /*dialogMessage*/,
-                    callerPackage,
-                    userId
-                )
+                HTarget.P -> setPackagesSuspendedAsUserSinceP(pm, packageName, suspended)
 
                 HTarget.N -> pm::class.java.getMethod(
                     "setPackagesSuspendedAsUser", Array<String>::class.java, Boolean::class.java, Int::class.java
@@ -167,6 +161,21 @@ object HShizuku {
             null,
             null,
             if (suspended) suspendDialogInfo else null,
+            callerPackage,
+            userId
+        )
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    private fun setPackagesSuspendedAsUserSinceP(pm: Any, packageName: String, suspended: Boolean): Any =
+        HiddenApiBypass.invoke(
+            pm::class.java,
+            pm,
+            "setPackagesSuspendedAsUser",
+            arrayOf(packageName),
+            suspended,
+            null,
+            null,
+            null /*dialogMessage*/,
             callerPackage,
             userId
         )
