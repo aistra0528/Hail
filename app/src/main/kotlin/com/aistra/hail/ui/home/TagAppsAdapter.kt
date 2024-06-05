@@ -17,8 +17,8 @@ import com.aistra.hail.utils.HPackages.myUserId
 import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.Job
 
-class PagerAdapter(private val selectedList: List<AppInfo>) :
-    ListAdapter<AppInfo, PagerAdapter.ViewHolder>(HomeDiff(selectedList)) {
+class TagAppsAdapter(private val selectedList: List<AppInfo>) :
+    ListAdapter<AppInfo, TagAppsAdapter.ViewHolder>(HomeDiff(selectedList)) {
     private var loadIconJob: Job? = null
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onItemLongClickListener: OnItemLongClickListener
