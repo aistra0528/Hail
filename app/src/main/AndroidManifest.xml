@@ -65,7 +65,6 @@
                 <action android:name="${applicationId}.action.FREEZE_AUTO"/>
                 <action android:name="${applicationId}.action.LOCK"/>
                 <action android:name="${applicationId}.action.LOCK_FREEZE"/>
-                <action android:name="${applicationId}.action.UNLOCK_UNFREEZE"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -116,21 +115,21 @@
             </intent-filter>
         </service>
         <service
-                android:name=".services.AutoFreezeService"
+                android:name=".services.AutoUnFreezeService"
                 android:foregroundServiceType="specialUse"
                 android:exported="true"
-                android:label="@string/auto_freeze"
+                android:label="@string/auto_unfreeze"
                 android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
         </service>
         <service
-            android:name=".services.AutoUnFreezeService"
-            android:foregroundServiceType="specialUse"
-            android:exported="true"
-            android:label="@string/auto_unfreeze"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+                android:name=".services.AutoFreezeService"
+                android:foregroundServiceType="specialUse"
+                android:exported="true"
+                android:label="@string/auto_freeze"
+                android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>

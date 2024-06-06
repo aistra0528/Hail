@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.core.content.ContextCompat
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData

@@ -1,6 +1,5 @@
 package com.aistra.hail.work
 
-import android.util.Log
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
