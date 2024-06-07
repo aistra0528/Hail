@@ -27,7 +27,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="com.oasisfeng.island.permission.FREEZE_PACKAGE"/>
     <uses-permission android:name="com.oasisfeng.island.permission.SUSPEND_PACKAGE"/>
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <application
             android:name=".HailApp"
             android:allowBackup="true"
