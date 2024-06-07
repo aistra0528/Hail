@@ -82,8 +82,14 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             true
         }
         findPreference<Preference>(HailData.AUTO_UNFREEZE_AFTER_UNLOCK)?.setOnPreferenceChangeListener { _, autoUnFreezeAfterUnLock ->
-            app.setAutoUnFreezeService(autoUnFreezeAfterUnLock as Boolean)
-            true
+            if (autoUnFreezeAfterUnLock == true && !HSystem.checkOpUsageStats(requireContext())) {
+                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                false
+            }
+            else
+                {app.setAutoUnFreezeService(autoUnFreezeAfterUnLock as Boolean)
+                true}
+
         }
         findPreference<Preference>(HailData.ICON_PACK)?.setOnPreferenceClickListener {
             iconPackDialog()
