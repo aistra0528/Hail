@@ -105,7 +105,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         }
         findPreference<Preference>("clear_dynamic_shortcuts")?.setOnPreferenceClickListener {
             HShortcuts.removeAllDynamicShortcuts()
-            HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
+            //HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
             true
         }
     }
