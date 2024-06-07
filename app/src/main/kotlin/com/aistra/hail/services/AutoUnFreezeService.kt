@@ -4,7 +4,6 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
 import android.service.notification.NotificationListenerService
-import android.util.Log
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -33,7 +32,7 @@ class AutoUnFreezeService : NotificationListenerService() {
 
     private fun createNotificationChannel() {
         val name = getString(R.string.auto_unfreeze)
-        val importance = NotificationManagerCompat.IMPORTANCE_HIGH
+        val importance = NotificationManagerCompat.IMPORTANCE_LOW
         val channel = NotificationChannelCompat.Builder(channelID, importance).setName(name).build()
         // Register the channel with the system
         NotificationManagerCompat.from(this).createNotificationChannel(channel)

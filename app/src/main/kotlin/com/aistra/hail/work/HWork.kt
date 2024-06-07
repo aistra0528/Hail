@@ -42,7 +42,7 @@ object HWork {
             HailApi.ACTION_UNFREEZE_ALL,
             ExistingWorkPolicy.REPLACE,  // in case the old task has not been executed...
             OneTimeWorkRequestBuilder<AutoUnFreezeWorker>().run {
-                setInputData(workDataOf(HailData.ACTION_LOCK to screenOn))
+                setInputData(workDataOf(HailData.ACTION_UNLOCK to screenOn))
                 build()
             }
         )
