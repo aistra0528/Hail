@@ -129,7 +129,8 @@
     <string name="auto_freeze_delay">Freeze delay (minutes)</string>
     <string name="title_shortcuts">Shortcuts</string>
     <string name="msg_guide">Before freezing applications, please select a working mode in the settings.</string>
-    <string name="dynamic_shortcut_action">Dynamic shortcut action</string>
+    <string name="dynamic_shortcut_action1">Dynamic shortcut action one</string>
+    <string name="dynamic_shortcut_action2">Dynamic shortcut action two</string>
     <string name="action_none">None</string>
     <string name="action_freeze_tag">Freeze tag</string>
     <string name="action_unfreeze_tag">Unfreeze tag</string>

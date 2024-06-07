@@ -60,6 +60,7 @@ object HailData {
     private const val TILE_ACTION = "tile_action"
     private const val HOME_FONT_SIZE = "home_font_size"
     const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
+    const val DYNAMIC_SHORTCUT_ACTION_TWO = "dynamic_shortcut_action_two"
     const val ACTION_NONE = "none"
     const val ACTION_FREEZE_ALL = "freeze_all"
     const val ACTION_FREEZE_NON_WHITELISTED = "freeze_non_whitelisted"

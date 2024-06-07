@@ -94,7 +94,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             true
         }
         findPreference<Preference>(HailData.DYNAMIC_SHORTCUT_ACTION)?.setOnPreferenceChangeListener { _, action ->
-            HShortcuts.removeAllDynamicShortcuts()
+            //HShortcuts.removeAllDynamicShortcuts()
+            HShortcuts.addDynamicShortcutAction(action as String)
+            true
+        }
+        findPreference<Preference>(HailData.DYNAMIC_SHORTCUT_ACTION_TWO)?.setOnPreferenceChangeListener { _, action ->
+            //HShortcuts.removeAllDynamicShortcuts()
             HShortcuts.addDynamicShortcutAction(action as String)
             true
         }

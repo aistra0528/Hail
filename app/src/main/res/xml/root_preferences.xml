@@ -119,7 +119,15 @@
                 app:entryValues="@array/dynamic_shortcut_action_values"
                 app:icon="@drawable/ic_outline_app_shortcut"
                 app:key="dynamic_shortcut_action"
-                app:title="@string/dynamic_shortcut_action"
+                app:title="@string/dynamic_shortcut_action1"
+                app:useSimpleSummaryProvider="true"/>
+        <rikka.preference.SimpleMenuPreference
+                app:defaultValue="none"
+                app:entries="@array/dynamic_shortcut_action_entries"
+                app:entryValues="@array/dynamic_shortcut_action_values"
+                app:icon="@drawable/ic_outline_app_shortcut"
+                app:key="dynamic_shortcut_action_two"
+                app:title="@string/dynamic_shortcut_action2"
                 app:useSimpleSummaryProvider="true"/>
         <Preference
                 app:icon="@drawable/ic_outline_cleaning"
