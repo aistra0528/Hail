@@ -47,13 +47,16 @@ Suspended apps will have their icons shown in a grayscale in the device's launch
 > to launch a suspended app, the system will, instead, show a dialog to the user informing them that
 > they cannot use this app while it is suspended.
 
+Suspend only prevents the user from interacting with the app, it does **NOT** prevent the app from running in the
+background.
+
 ## Working mode
 
 Hail can work with `Device Owner`, `Dhizuku`, `Root` and `Shizuku` (including Sui).
 
 **Any apps that have been frozen on Hail will need to be unfrozen by the same working mode.**
 
-1. For devices supporting wifi adb or rooted devices, `Shizuku` is recommend.
+1. For devices supporting wireless debugging (Android 11+) or rooted devices, `Shizuku` is recommended.
 
 2. For rooted devices, `Root` is an alternative. **It is slower.**
 
@@ -81,7 +84,7 @@ Issue adb command:
 adb shell dpm set-device-owner com.aistra.hail/.receiver.DeviceAdminReceiver
 ```
 
-A message will shown if it has been successfully set:
+In response, adb prints this message if device owner has been successfully set:
 
 ```
 Success: Device owner set to package com.aistra.hail
