@@ -40,7 +40,7 @@
     <string name="action_extract_apk">Извлечь APK</string>
     <string name="action_uninstall">Удалить</string>
     <string name="msg_uninstall">Вы хотите удалить это приложение?</string>
-    <string name="working_mode">Робочий режим</string>
+    <string name="working_mode">Режим работы</string>
     <string name="mode_default">Отключено</string>
     <string name="mode_owner_hide">Владелец устройства - Скрыть</string>
     <string name="mode_su_disable">Root - Отключить</string>
