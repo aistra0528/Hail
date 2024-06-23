@@ -14,7 +14,7 @@
     <string name="action_deferred_task">Trì hoãn tác vụ</string>
     <string name="action_unfreeze_tag">Rã băng nhãn</string>
     <string name="msg_uninstall">Bạn có chắc là muốn gỡ cài đặt ứng dụng này\?</string>
-    <string name="mode_owner_suspend">Chủ sở hữu thiết bị - Suspend</string>
+    <string name="mode_owner_suspend">Chủ sở hữu thiết bị - Tạm ngừng</string>
     <string name="action_clear_dynamic_shortcuts">Xóa tất cả dynamic shortcuts</string>
     <string name="mode_default">Không hoạt động</string>
     <string name="action_import_app">Nhập ứng dụng</string>
@@ -49,7 +49,7 @@
     <string name="action_biometric">Đăng nhập sinh trắc học</string>
     <string name="action_export_current">Xuất trang hiện tại</string>
     <string name="action_freeze">Đóng băng</string>
-    <string name="mode_su_disable">Superuser - Tắt</string>
+    <string name="mode_su_disable">Root - Tắt</string>
     <string name="title_shortcuts">Phím tắt</string>
     <string name="title_about">Giới thiệu</string>
     <string name="action_export_all">Xuất tất cả</string>
@@ -62,7 +62,7 @@
     <string name="action_details">Thông tin ứng dụng</string>
     <string name="title_donate">Cam ơn bạn nha!</string>
     <string name="compact_icon">Biểu tượng nhỏ gọn</string>
-    <string name="donate_bilibili">Bilibili</string>
+    <string name="donate_bilibili">Ủng hộ qua Bilibili</string>
     <string name="donate_bilibili_cancel">Hủy</string>
     <string name="action_uninstall">Gỡ cài đặt</string>
     <string name="mode_dhizuku_hide">Dhizuku - Ẩn</string>
@@ -78,12 +78,12 @@
     <string name="mode_shizuku_hide">Shizuku - Ẩn</string>
     <string name="action_launch">Mở ứng dụng</string>
     <string name="action_tag_add">Thêm nhãn</string>
-    <string name="donate_alipay">Alipay</string>
+    <string name="donate_alipay">Ủng hộ bằng Alipay</string>
     <string name="action_undo">Hoàn tác</string>
     <string name="filter_system_apps">Hệ thống</string>
     <string name="sort_install">Thời gian cài đặt</string>
     <string name="action_tag_remove">Xóa nhãn</string>
-    <string name="mode_su_suspend">Superuser - Suspend</string>
+    <string name="mode_su_suspend">Root - Tạm ngừng</string>
     <plurals name="deferred_task_entry">
         <item quantity="other">%d phút</item>
     </plurals>
@@ -102,7 +102,7 @@
     <string name="action_licenses">Giấy phép</string>
     <string name="action_translate">Dịch thuật</string>
     <string name="mode_shizuku_disable">Shizuku - Tắt</string>
-    <string name="donate_bilibili_msg">Theo dõi mình trên Bilibili.</string>
+    <string name="donate_bilibili_msg">Theo dõi mình trên Bilibili nhé.</string>
     <string name="action_donate">Ủng hộ</string>
     <string name="label_time">Thời gian cài đặt</string>
     <string name="action_github">Github</string>
@@ -123,4 +123,17 @@
     <string name="filter_unfrozen_apps">Rã băng</string>
     <string name="donate_wechat_scan">Quét</string>
     <string name="action_remove_whitelist">Xóa khỏi danh sách trắng</string>
+    <string name="skip_foreground_app">Bỏ qua cho ứng dụng đang mở</string>
+    <string name="mode_shizuku_stop">Shizuku - Buộc dừng</string>
+    <string name="mode_shizuku_suspend">Shizuku - Tạm ngừng</string>
+    <string name="donate_wechat">Ủng hộ bằng WeChat Pay</string>
+    <string name="donate_paypal">Ủng hộ qua PayPal</string>
+    <string name="mode_island_hide">Island/Insular - Ẩn</string>
+    <string name="mode_island_suspend">Island/Insular - Tạm ngừng</string>
+    <string name="shizuku_hide_adb">Shizuku hiện đang chạy bằng adb. Để ẩn ứng dụng, bạn hãy khởi động lại Shizuku với quyền root nhé.</string>
+    <string name="command">Nhập lệnh của bạn vào đây</string>
+    <string name="freeze_system_app">Đóng băng ứng dụng hệ thống có thể khiến cho máy của bạn bị treo logo. Hãy chắc là bạn biết bạn đang làm cái gì và đừng quên sao lưu dữ liệu của bạn hoặc sử dụng custom recovery có tính năng quản lý tập tin.</string>
+    <string name="action_continue">Tiếp tục</string>
+    <string name="mode_su_stop">Root - Buộc Dừng</string>
+    <string name="donate_liberapay">Ủng hộ qua Liberapay</string>
 </resources>
