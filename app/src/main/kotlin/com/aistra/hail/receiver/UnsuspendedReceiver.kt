@@ -9,6 +9,7 @@ class UnsuspendedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ACTION_PACKAGE_UNSUSPENDED_MANUALLY) runCatching {
             app.setAutoFreezeService()
+            app.setAutoUnFreezeService()
         }
     }
 

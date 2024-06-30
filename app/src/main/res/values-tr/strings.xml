@@ -110,7 +110,7 @@
     <string name="auto_freeze_delay">Dondurma gecikmesi (dakika)</string>
     <string name="title_shortcuts">Kısayollar</string>
     <string name="msg_guide">Uygulamaları dondurmadan önce, lütfen ayarlardan bir çalışma yöntemi seçin.</string>
-    <string name="dynamic_shortcut_action">Dinamik kısayol eylemi</string>
+    <string name="dynamic_shortcut_action1">Dinamik kısayol eylemi</string>
     <string name="action_none">Hiçbiri</string>
     <string name="action_freeze_tag">Etiketlileri dondur</string>
     <string name="action_unfreeze_tag">Etiketlileri çöz</string>

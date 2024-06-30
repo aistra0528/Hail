@@ -123,7 +123,7 @@
     <string name="action_freeze_non_whitelisted">Congelar no presentes en la lista blanca</string>
     <string name="title_shortcuts">Accesos directos</string>
     <string name="msg_guide">Antes de congelar las aplicaciones, seleccione un modo de trabajo en los ajustes.</string>
-    <string name="dynamic_shortcut_action">Acción de acceso directo dinámico</string>
+    <string name="dynamic_shortcut_action1">Acción de acceso directo dinámico</string>
     <string name="action_none">Nada</string>
     <string name="mode_shizuku_hide">Shizuku - Ocultar</string>
     <string name="action_freeze_tag">Etiqueta de congelación</string>

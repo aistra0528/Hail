@@ -116,7 +116,7 @@
     <string name="app_name">Hail</string>
     <string name="action_freeze_non_whitelisted">Đóng băng toàn bộ trừ danh sách trắng</string>
     <string name="action_unfreeze_current">Rã băng trang hiện tại</string>
-    <string name="dynamic_shortcut_action">Hành động cho lối tắt</string>
+    <string name="dynamic_shortcut_action1">Hành động cho lối tắt</string>
     <string name="auto_freeze_delay">Trì hoãn đóng băng (phút)</string>
     <string name="action_freeze_all">Đóng băng tất cả</string>
     <string name="skip_notifying_app">Bỏ qua ứng dụng thông báo</string>

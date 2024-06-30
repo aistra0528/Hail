@@ -20,9 +20,4 @@
         android:name="com.aistra.hail.ui.settings.SettingsFragment"
         android:label="@string/title_settings" />
 
-    <fragment
-        android:id="@+id/nav_about"
-        android:name="com.aistra.hail.ui.about.AboutFragment"
-        android:label="@string/title_about"
-        tools:layout="@layout/fragment_about" />
 </navigation>

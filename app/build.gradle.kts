@@ -13,7 +13,7 @@ android {
         minSdk = 23
         targetSdk = 34
         versionCode = 32
-        versionName = "1.8.1"
+        versionName = "1.8.2"
     }
 
     // Do not compress the dex files, so the apk can be imported as a privileged app
