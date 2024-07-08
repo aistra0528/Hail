@@ -18,16 +18,16 @@ object HShell {
 
     val lockScreen get() = execSU("input keyevent KEYCODE_POWER").first == 0
 
-    fun forceStopApp(packageName: String): Boolean = execSU("am force-stop $packageName").first == 0
+    fun forceStopApp(packageName: String): Boolean = execSU("am force-stop --user current $packageName").first == 0
 
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean =
-        execSU("pm ${if (disabled) "disable" else "enable"} $packageName").first == 0
+        execSU("pm ${if (disabled) "disable" else "enable"} --user current $packageName").first == 0
 
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean =
-        execSU("pm ${if (hidden) "hide" else "unhide"} $packageName").first == 0
+        execSU("pm ${if (hidden) "hide" else "unhide"} --user current $packageName").first == 0
 
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
-        execSU("pm ${if (suspended) "suspend" else "unsuspend"} $packageName").first == 0
+        execSU("pm ${if (suspended) "suspend" else "unsuspend"} --user current $packageName").first == 0
 
     fun uninstallApp(packageName: String) = execSU(
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
