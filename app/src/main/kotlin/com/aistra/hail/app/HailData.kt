@@ -4,6 +4,7 @@ import androidx.preference.PreferenceManager
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
+import com.aistra.hail.services.AutoFreezeQSTileState
 import com.aistra.hail.utils.HFiles
 import org.json.JSONArray
 import org.json.JSONObject
@@ -84,6 +85,7 @@ object HailData {
     private const val COMPACT_ICON = "compact_icon"
     private const val SYNTHESIZE_ADAPTIVE_ICONS = "synthesize_adaptive_icons"
     const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
+    private const val AUTO_FREEZE_DISABLED_UNTIL = "auto_freeze_disabled_until"
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
@@ -103,7 +105,12 @@ object HailData {
     val homeFontSize get() = sp.getInt(HOME_FONT_SIZE, 14)
     val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
-    val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+    var autoFreezeAfterLock
+        get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+        set(value) = sp.edit().putBoolean(AUTO_FREEZE_AFTER_LOCK, value).apply()
+    var autoFreezeDisabledUntil
+        get() = sp.getLong(AUTO_FREEZE_DISABLED_UNTIL, 0L)
+        set(value) = sp.edit().putLong(AUTO_FREEZE_DISABLED_UNTIL, value).apply()
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
