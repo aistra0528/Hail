@@ -1,6 +1,8 @@
 package com.aistra.hail.utils
 
 import android.annotation.SuppressLint
+import android.app.AppOpsManager
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.IBinder
@@ -30,7 +32,7 @@ object HShizuku {
 
     val lockScreen
         get() = runCatching {
-            val input = asInterface("android.hardware.input.IInputManager", "input")
+            val input = asInterface("android.hardware.input.IInputManager", Context.INPUT_SERVICE)
             val inject = input::class.java.getMethod(
                 "injectInputEvent", InputEvent::class.java, Int::class.java
             )
@@ -48,7 +50,7 @@ object HShizuku {
         }
 
     fun forceStopApp(packageName: String): Boolean = runCatching {
-        asInterface("android.app.IActivityManager", "activity").let {
+        asInterface("android.app.IActivityManager", Context.ACTIVITY_SERVICE).let {
             if (HTarget.P) HiddenApiBypass.invoke(
                 it::class.java, it, "forceStopPackage", packageName, HPackages.myUserId
             ) else it::class.java.getMethod(
@@ -103,6 +105,7 @@ object HShizuku {
 
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean {
         HPackages.getApplicationInfoOrNull(packageName) ?: return false
+        if (HTarget.P) setAppRestricted(packageName, suspended)
         if (suspended) forceStopApp(packageName)
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
@@ -179,12 +182,30 @@ object HShizuku {
         )
 
     private val suspendDialogInfo: Any
-        @RequiresApi(Build.VERSION_CODES.P) @SuppressLint("PrivateApi") get() = HiddenApiBypass.newInstance(
+        @RequiresApi(Build.VERSION_CODES.Q) @SuppressLint("PrivateApi") get() = HiddenApiBypass.newInstance(
             Class.forName("android.content.pm.SuspendDialogInfo\$Builder")
         ).let {
             HiddenApiBypass.invoke(it::class.java, it, "setNeutralButtonAction", 1 /*BUTTON_ACTION_UNSUSPEND*/)
             HiddenApiBypass.invoke(it::class.java, it, "build")
         }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun setAppRestricted(packageName: String, restricted: Boolean): Boolean = runCatching {
+        val appops = asInterface("com.android.internal.app.IAppOpsService", Context.APP_OPS_SERVICE)
+        HiddenApiBypass.invoke(
+            appops::class.java,
+            appops,
+            "setMode",
+            HiddenApiBypass.invoke(AppOpsManager::class.java, null, "strOpToOp", "android:run_any_in_background"),
+            HPackages.packageUid(packageName),
+            packageName,
+            if (restricted) AppOpsManager.MODE_IGNORED else AppOpsManager.MODE_ALLOWED
+        )
+        true
+    }.getOrElse {
+        HLog.e(it)
+        false
+    }
 
     fun uninstallApp(packageName: String): Boolean = execute(
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"

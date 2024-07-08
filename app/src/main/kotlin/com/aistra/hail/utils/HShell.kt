@@ -1,5 +1,8 @@
 package com.aistra.hail.utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+
 object HShell {
     fun execute(command: String, root: Boolean): Pair<Int, String?> = runCatching {
         Runtime.getRuntime().exec(if (root) "su" else "sh").run {
@@ -31,5 +34,10 @@ object HShell {
 
     fun uninstallApp(packageName: String) = execSU(
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
+    ).first == 0
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun setAppRestricted(packageName: String, restricted: Boolean) = execSU(
+        "appops set --user current $packageName RUN_ANY_IN_BACKGROUND ${if (restricted) "ignore" else "allow"}"
     ).first == 0
 }
