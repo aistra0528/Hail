@@ -1,4 +1,4 @@
-[简体中文](README.md) | English
+[简体中文](README.md) | English | [日本語](README_JP.md)
 
 **English is not my native language. Help us translate README**
 
