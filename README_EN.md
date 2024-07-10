@@ -1,7 +1,5 @@
 [简体中文](README.md) | English | [日本語](README_JP.md)
 
-**English is not my native language. Help us translate README**
-
 # Hail 雹
 
 [![Android CI status](https://github.com/aistra0528/Hail/workflows/Android%20CI/badge.svg)](https://github.com/aistra0528/Hail/actions)
@@ -139,6 +137,7 @@ The following privapp-permissions is required:
         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.FORCE_STOP_PACKAGES"/>
         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+        <permission name="android.permission.MANAGE_APP_OPS_MODES"/>
     </privapp-permissions>
 </permissions>
 ```

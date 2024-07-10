@@ -1,3 +1,5 @@
+[简体中文](README.md) | [English](README_EN.md) | 日本語
+
 # 雹 Hail
 
 [![Android CI status](https://github.com/aistra0528/Hail/workflows/Android%20CI/badge.svg)](https://github.com/aistra0528/Hail/actions)
@@ -13,13 +15,16 @@
 
 ## 凍結
 
-凍結`freeze`は、**アプリが不要なときに即座に停止する**（オンデマンドリクエスト）動作を指す言葉で、デバイスの使用をより良くし、RAMの使用量を削減し、電力を節約します。ユーザーは、アプリを解凍`unfreeze`して元の状態に戻すこともできます。
+凍結`freeze`は、**アプリが不要なときに即座に停止する**
+（オンデマンドリクエスト）動作を指す言葉で、デバイスの使用をより良くし、RAMの使用量を削減し、電力を節約します。ユーザーは、アプリを解凍`unfreeze`
+して元の状態に戻すこともできます。
 
 一般的に、「凍結」は無効化を意味しますが、雹はアプリを隠したり、一時停止したりすることもできます。
 
 ### 無効化
 
-無効化されたアプリは、ランチャーに表示されず、インストール済みアプリのリストには「無効」と表示されます。アプリを有効化`enable`して元に戻します。
+無効化されたアプリは、ランチャーに表示されず、インストール済みアプリのリストには「無効」と表示されます。アプリを有効化`enable`
+して元に戻します。
 
 ### 隠す
 
@@ -31,7 +36,8 @@
 
 一時停止されたアプリは、デバイスのランチャーでアイコンがグレースケールで表示されます。アプリを再開`unsuspend`して元に戻します。
 
-> この状態では、アプリの通知は非表示になり、開始されたアクティビティは停止され、トースト、ダイアログ、オーディオの再生もできません。ユーザーが一時停止されたアプリを起動しようとすると、システムは代わりにユーザーに対してこのアプリを使用できないことを通知するダイアログを表示します。
+> この状態では、アプリの通知は非表示になり、開始されたアクティビティは停止され、トースト、ダイアログ、オーディオの再生もできません。
+> ユーザーが一時停止されたアプリを起動しようとすると、システムは代わりにユーザーに対してこのアプリを使用できないことを通知するダイアログを表示します。
 
 一時停止は、ユーザーがアプリと対話するのを防ぐだけで、アプリがバックグラウンドで実行されるのを防ぐことは**ありません**。
 
@@ -59,9 +65,9 @@
 
 #### adbでデバイス所有者を設定する
 
-[Android デバッグブリッジ (adb) ガイド](https://developer.android.google.cn/studio/command-line/adb)
+[Android デバッグブリッジ (adb) ガイド](https://developer.android.com/studio/command-line/adb)
 
-[Android SDK プラットフォームツールのダウンロード](https://developer.android.google.cn/studio/releases/platform-tools)
+[Android SDK プラットフォームツールのダウンロード](https://developer.android.com/studio/releases/platform-tools)
 
 adbコマンドを発行します：
 
@@ -124,6 +130,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.FORCE_STOP_PACKAGES"/>
         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+        <permission name="android.permission.MANAGE_APP_OPS_MODES"/>
     </privapp-permissions>
 </permissions>
 ```
@@ -191,13 +198,16 @@ adb shell am start -a action -e name value
 
 `action`は次の定数のいずれかです：
 
-- `com.aistra.hail.action.LAUNCH`：ターゲットアプリを解凍して起動します。解凍されている場合は、直接起動します。`name="package"` `value="com.package.name"`
+- `com.aistra.hail.action.LAUNCH`
+  ：ターゲットアプリを解凍して起動します。解凍されている場合は、直接起動します。`name="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.FREEZE`：ターゲットアプリを凍結します。ホームにチェックされている必要があります。`name="package"` `value="com.package.name"`
+- `com.aistra.hail.action.FREEZE`
+  ：ターゲットアプリを凍結します。ホームにチェックされている必要があります。`name="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.UNFREEZE`：ターゲットアプリを解凍します。`name="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.FREEZE_TAG`：ターゲットタグ内のすべての非ホワイトリストアプリを凍結します。`name="tag"` `value="タグ名"`
+- `com.aistra.hail.action.FREEZE_TAG`
+  ：ターゲットタグ内のすべての非ホワイトリストアプリを凍結します。`name="tag"` `value="タグ名"`
 
 - `com.aistra.hail.action.UNFREEZE_TAG`：ターゲットタグ内のすべてのアプリを解凍します。`name="tag"` `value="タグ名"`
 
@@ -225,11 +235,15 @@ adb shell am start -a action -e name value
     Copyright (C) 2021-2024 Aistra
     Copyright (C) 2022-2024 Hail contributors
 
-    このプログラムはフリーソフトウェアです。あなたはこれを再配布および/または修正することができます。
-    フリーソフトウェア財団によって発行されたGNU一般公衆利用許諾契約書のバージョン3、または（あなたの選択により）それ以降のバージョンに従います。
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-    このプログラムは有用であることを期待して配布されていますが、いかなる保証もありません。
-    商品性や特定の目的への適合性の保証も含まれません。詳細については、GNU一般公衆利用許諾契約書を参照してください。
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-    あなたはこのプログラムと共にGNU一般公衆利用許諾契約書のコピーを受け取ったはずです。
-    受け取っていない場合は、<https://www.gnu.org/licenses/>を参照してください。
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
