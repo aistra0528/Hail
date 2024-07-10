@@ -1,6 +1,4 @@
-[简体中文](README.md) | English
-
-**English is not my native language. Help us translate README**
+[简体中文](README.md) | English | [日本語](README_JP.md)
 
 # Hail 雹
 
@@ -139,6 +137,7 @@ The following privapp-permissions is required:
         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.FORCE_STOP_PACKAGES"/>
         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+        <permission name="android.permission.MANAGE_APP_OPS_MODES"/>
     </privapp-permissions>
 </permissions>
 ```

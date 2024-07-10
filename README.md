@@ -1,4 +1,4 @@
-简体中文 | [English](README_EN.md)
+简体中文 | [English](README_EN.md) | [日本語](README_JP.md)
 
 # 雹 Hail
 
@@ -128,6 +128,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.FORCE_STOP_PACKAGES"/>
         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+        <permission name="android.permission.MANAGE_APP_OPS_MODES"/>
     </privapp-permissions>
 </permissions>
 ```
