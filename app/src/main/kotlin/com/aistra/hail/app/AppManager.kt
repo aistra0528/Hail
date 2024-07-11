@@ -89,6 +89,12 @@ object AppManager {
         return false
     }
 
+    fun reinstallApp(packageName: String): Boolean = when {
+        HailData.workingMode.startsWith(HailData.SU) -> HShell.reinstallApp(packageName)
+        HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.reinstallApp(packageName)
+        else -> false
+    }
+
     suspend fun execute(command: String): Pair<Int, String?> = withContext(Dispatchers.IO) {
         when {
             HailData.workingMode.startsWith(HailData.SU) -> HShell.execute(command, true)

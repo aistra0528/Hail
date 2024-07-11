@@ -2,7 +2,9 @@ package com.aistra.hail.utils
 
 import android.annotation.SuppressLint
 import android.app.AppOpsManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.IBinder
@@ -12,6 +14,7 @@ import android.view.InputEvent
 import android.view.KeyEvent
 import androidx.annotation.RequiresApi
 import com.aistra.hail.BuildConfig
+import com.aistra.hail.HailApp.Companion.app
 import moe.shizuku.server.IShizukuService
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
@@ -22,13 +25,13 @@ object HShizuku {
     val isRoot get() = Shizuku.getUid() == 0
     private val callerPackage get() = if (isRoot) BuildConfig.APPLICATION_ID else "com.android.shell"
 
+    private fun asInterface(className: String, original: IBinder): Any = Class.forName("$className\$Stub").run {
+        if (HTarget.P) HiddenApiBypass.invoke(this, null, "asInterface", ShizukuBinderWrapper(original))
+        else getMethod("asInterface", IBinder::class.java).invoke(null, ShizukuBinderWrapper(original))
+    }
+
     private fun asInterface(className: String, serviceName: String): Any =
-        ShizukuBinderWrapper(SystemServiceHelper.getSystemService(serviceName)).let {
-            Class.forName("$className\$Stub").run {
-                if (HTarget.P) HiddenApiBypass.invoke(this, null, "asInterface", it)
-                else getMethod("asInterface", IBinder::class.java).invoke(null, it)
-            }
-        }
+        asInterface(className, SystemServiceHelper.getSystemService(serviceName))
 
     val lockScreen
         get() = runCatching {
@@ -207,9 +210,45 @@ object HShizuku {
         false
     }
 
-    fun uninstallApp(packageName: String): Boolean = execute(
-        "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
-    ).first == 0
+    fun uninstallApp(packageName: String): Boolean = runCatching {
+        if (HPackages.canUninstallNormally(packageName)) {
+            val installer = app.packageManager.packageInstaller
+            if (HTarget.P) HiddenApiBypass.setHiddenApiExemptions("")
+            val mInstaller = installer::class.java.getDeclaredField("mInstaller")
+            mInstaller.isAccessible = true
+            mInstaller.set(installer, mInstaller.get(installer).let {
+                asInterface(
+                    "android.content.pm.IPackageInstaller", it::class.java.getMethod("asBinder").invoke(it) as IBinder
+                )
+            })
+            installer.uninstall(
+                packageName, PendingIntent.getActivity(
+                    app, 0, Intent(), PendingIntent.FLAG_IMMUTABLE
+                ).intentSender
+            )
+            true
+        } else if (HTarget.Q) {
+            val pm = asInterface("android.content.pm.IPackageManager", "package")
+            HiddenApiBypass.invoke(
+                pm::class.java, pm, "setSystemAppInstallState", packageName, false, HPackages.myUserId
+            ) as Boolean
+        } else execute("pm uninstall --user current $packageName").first == 0
+    }.getOrElse {
+        HLog.e(it)
+        false
+    }
+
+    fun reinstallApp(packageName: String): Boolean = runCatching {
+        if (HTarget.Q && !HPackages.canUninstallNormally(packageName)) {
+            val pm = asInterface("android.content.pm.IPackageManager", "package")
+            HiddenApiBypass.invoke(
+                pm::class.java, pm, "setSystemAppInstallState", packageName, true, HPackages.myUserId
+            ) as Boolean
+        } else execute("pm install-existing --user current $packageName").first == 0
+    }.getOrElse {
+        HLog.e(it)
+        false
+    }
 
     fun execute(command: String, root: Boolean = isRoot): Pair<Int, String?> = runCatching {
         IShizukuService.Stub.asInterface(Shizuku.getBinder()).newProcess(arrayOf(if (root) "su" else "sh"), null, null)

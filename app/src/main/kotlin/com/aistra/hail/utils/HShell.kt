@@ -17,7 +17,7 @@ object HShell {
 
     private fun execSU(command: String) = execute(command, true)
 
-    val checkSU get() = execSU("whoami").first == 0
+    val checkSU get() = execSU("whoami").second?.contains("root") ?: false
 
     val lockScreen get() = execSU("input keyevent KEYCODE_POWER").first == 0
 
@@ -35,6 +35,8 @@ object HShell {
     fun uninstallApp(packageName: String) = execSU(
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
     ).first == 0
+
+    fun reinstallApp(packageName: String) = execSU("pm install-existing --user current $packageName").first == 0
 
     @RequiresApi(Build.VERSION_CODES.P)
     fun setAppRestricted(packageName: String, restricted: Boolean) = execSU(

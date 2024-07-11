@@ -147,4 +147,5 @@
     <string name="action_continue">Continue</string>
     <string name="nine_key">T9 Search</string>
     <string name="home_font_size">Home font size</string>
+    <string name="action_reinstall">Reinstall</string>
 </resources>

@@ -12,4 +12,7 @@
     <item
         android:id="@+id/action_uninstall"
         android:title="@string/action_uninstall" />
+    <item
+        android:id="@+id/action_reinstall"
+        android:title="@string/action_reinstall" />
 </menu>
