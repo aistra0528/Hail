@@ -146,4 +146,5 @@
     <string name="mode_privapp_stop">Aplikasi Sistem - Paksa Berhenti</string>
     <string name="mode_shizuku_stop">Shizuku - Paksa Berhenti</string>
     <string name="mode_su_stop">Root - Paksa Berhenti</string>
+    <string name="action_reinstall">Instal Ulang</string>
 </resources>
