@@ -136,4 +136,8 @@
     <string name="action_continue">Tiếp tục</string>
     <string name="mode_su_stop">Root - Buộc Dừng</string>
     <string name="donate_liberapay">Ủng hộ qua Liberapay</string>
+    <string name="mode_dhizuku_suspend">Dhizuku - Tạm ngưng</string>
+    <string name="mode_privapp_stop">Ứng dụng hệ thống - Buộc dừng</string>
+    <string name="mode_privapp_disable">Ứng dụng hệ thống - Tắt</string>
+    <string name="action_reinstall">Cài đặt lại</string>
 </resources>
