@@ -13,9 +13,9 @@ class AppInfo(
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
     val name get() = applicationInfo?.loadLabel(app.packageManager) ?: packageName
 
-    var state: Int = STATE_UNKNOWN
+    var state: Int = STATE_NOT_FOUND
     fun getCurrentState(): Int = when {
-        applicationInfo == null -> STATE_UNKNOWN
+        applicationInfo == null -> STATE_NOT_FOUND
         AppManager.isAppFrozen(packageName) -> STATE_FROZEN
         else -> STATE_UNFROZEN
     }
@@ -26,7 +26,7 @@ class AppInfo(
     override fun hashCode(): Int = packageName.hashCode()
 
     companion object {
-        const val STATE_UNKNOWN = 0
+        const val STATE_NOT_FOUND = 0
         const val STATE_UNFROZEN = 1
         const val STATE_FROZEN = 2
     }

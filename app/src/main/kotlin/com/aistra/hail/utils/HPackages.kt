@@ -63,6 +63,10 @@ object HPackages {
         }
     } ?: false
 
+    fun isAppUninstalled(packageName: String): Boolean =
+        getApplicationInfoOrNull(packageName)?.run { flags and ApplicationInfo.FLAG_INSTALLED != ApplicationInfo.FLAG_INSTALLED }
+            ?: true
+
     fun isPrivilegedApp(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
         (ApplicationInfo::class.java.getField("privateFlags").get(it) as Int) and 8 == 8
     } ?: false

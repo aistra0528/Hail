@@ -227,11 +227,6 @@ object HShizuku {
                 ).intentSender
             )
             true
-        } else if (HTarget.Q) {
-            val pm = asInterface("android.content.pm.IPackageManager", "package")
-            HiddenApiBypass.invoke(
-                pm::class.java, pm, "setSystemAppInstallState", packageName, false, HPackages.myUserId
-            ) as Boolean
         } else execute("pm uninstall --user current $packageName").first == 0
     }.getOrElse {
         HLog.e(it)
@@ -239,12 +234,7 @@ object HShizuku {
     }
 
     fun reinstallApp(packageName: String): Boolean = runCatching {
-        if (HTarget.Q && !HPackages.canUninstallNormally(packageName)) {
-            val pm = asInterface("android.content.pm.IPackageManager", "package")
-            HiddenApiBypass.invoke(
-                pm::class.java, pm, "setSystemAppInstallState", packageName, true, HPackages.myUserId
-            ) as Boolean
-        } else execute("pm install-existing --user current $packageName").first == 0
+        execute("pm install-existing --user current $packageName").first == 0
     }.getOrElse {
         HLog.e(it)
         false
