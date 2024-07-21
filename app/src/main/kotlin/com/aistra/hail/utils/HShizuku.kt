@@ -2,9 +2,7 @@ package com.aistra.hail.utils
 
 import android.annotation.SuppressLint
 import android.app.AppOpsManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.IBinder
@@ -14,7 +12,6 @@ import android.view.InputEvent
 import android.view.KeyEvent
 import androidx.annotation.RequiresApi
 import com.aistra.hail.BuildConfig
-import com.aistra.hail.HailApp.Companion.app
 import moe.shizuku.server.IShizukuService
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
@@ -210,35 +207,11 @@ object HShizuku {
         false
     }
 
-    fun uninstallApp(packageName: String): Boolean = runCatching {
-        if (HPackages.canUninstallNormally(packageName)) {
-            val installer = app.packageManager.packageInstaller
-            if (HTarget.P) HiddenApiBypass.setHiddenApiExemptions("")
-            val mInstaller = installer::class.java.getDeclaredField("mInstaller")
-            mInstaller.isAccessible = true
-            mInstaller.set(installer, mInstaller.get(installer).let {
-                asInterface(
-                    "android.content.pm.IPackageInstaller", it::class.java.getMethod("asBinder").invoke(it) as IBinder
-                )
-            })
-            installer.uninstall(
-                packageName, PendingIntent.getActivity(
-                    app, 0, Intent(), PendingIntent.FLAG_IMMUTABLE
-                ).intentSender
-            )
-            true
-        } else execute("pm uninstall --user current $packageName").first == 0
-    }.getOrElse {
-        HLog.e(it)
-        false
-    }
+    fun uninstallApp(packageName: String): Boolean =
+        execute("pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName").first == 0
 
-    fun reinstallApp(packageName: String): Boolean = runCatching {
+    fun reinstallApp(packageName: String): Boolean =
         execute("pm install-existing --user current $packageName").first == 0
-    }.getOrElse {
-        HLog.e(it)
-        false
-    }
 
     fun execute(command: String, root: Boolean = isRoot): Pair<Int, String?> = runCatching {
         IShizukuService.Stub.asInterface(Shizuku.getBinder()).newProcess(arrayOf(if (root) "su" else "sh"), null, null)
