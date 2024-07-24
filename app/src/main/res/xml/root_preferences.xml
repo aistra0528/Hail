@@ -46,6 +46,11 @@
                 app:title="@string/home_font_size"/>
         <SwitchPreferenceCompat
                 app:defaultValue="false"
+                app:icon="@drawable/ic_outline_search"
+                app:key="fuzzy_search"
+                app:title="@string/fuzzy_search"/>
+        <SwitchPreferenceCompat
+                app:defaultValue="false"
                 app:icon="@drawable/ic_baseline_dialpad"
                 app:key="nine_key"
                 app:title="@string/nine_key"/>
