@@ -43,23 +43,23 @@
 
 ## 作業モード
 
-雹は、`デバイス所有者`、`Dhizuku`、`Root`、および`Shizuku`（Suiを含む）で動作できます。
-
 **雹で凍結されたアプリは、同じ作業モードで解凍する必要があります。**
 
 1. ワイヤレスデバッグをサポートするデバイス（Android 11+）またはroot化されたデバイスの場合、`Shizuku`を推奨します。
 
 2. root化されたデバイスの場合、`Root`が代替手段です。**速度が遅いです。**
 
-3. それ以外の場合は、`デバイス所有者`または`Dhizuku`を選択します。**設定が面倒です。**
+| Privilege                                                                                         | Force Stop | Disable | Hide | Suspend | Uninstall/Reinstall (System Apps) |
+|---------------------------------------------------------------------------------------------------|------------|---------|------|---------|-----------------------------------|
+| Root                                                                                              | ✓          | ✓       | ✓    | ✓       | ✓                                 |
+| デバイス所有者                                                                                           | ✗          | ✗       | ✓    | ✓       | ✗                                 |
+| 特権システムアプリ                                                                                         | ✓          | ✓       | ✗    | ✗       | ✗                                 |
+| [Shizuku](https://github.com/RikkaApps/Shizuku) (root)/[Sui](https://github.com/RikkaApps/Sui)    | ✓          | ✓       | ✓    | ✓       | ✓                                 |
+| [Shizuku](https://github.com/RikkaApps/Shizuku) (adb)                                             | ✓          | ✓       | ✗    | ✓       | ✓                                 |
+| [Dhizuku](https://github.com/iamr0s/Dhizuku)                                                      | ✗          | ✗       | ✓    | ✓       | ✗                                 |
+| [Island](https://github.com/oasisfeng/island)/[Insular](https://gitlab.com/secure-system/Insular) | ✗          | ✗       | ✓    | ✓       | ✗                                 |
 
-### デバイス所有者 - 隠す / 一時停止
-
-このモードでは、次のメソッドを呼び出します：
-
-- `DevicePolicyManager.setApplicationHidden`を使用してアプリを隠します。
-
-- `DevicePolicyManager.setPackagesSuspended`を使用してアプリを一時停止します。
+### デバイス所有者
 
 **アンインストールする前にデバイス所有者を削除する必要があります**
 
@@ -88,38 +88,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 設定 > デバイス所有者を削除
 
-### [Dhizuku](https://github.com/iamr0s/Dhizuku) - 隠す / 一時停止
-
-このモードでは、次のメソッドを呼び出します：
-
-- `DevicePolicyManager.setApplicationHidden`を使用してアプリを隠します。
-
-- `DevicePolicyManager.setPackagesSuspended`を使用してアプリを一時停止します。
-
-### Root - 無効化 / 隠す / 一時停止
-
-このモードでは、次のコマンドを実行します：
-
-- `am force-stop`を使用してアプリを強制停止します。
-- `pm disable`を使用してアプリを無効化します。
-- `pm hide`を使用してアプリを隠します。
-- `pm suspend`を使用してアプリを一時停止します。
-
-### [Shizuku](https://github.com/RikkaApps/Shizuku) - 無効化 / 隠す / 一時停止
-
-このモードでは、非SDKインターフェースを呼び出します：
-
-- `IActivityManager.forceStopPackage`を使用してアプリを強制停止します。
-- `IPackageManager.setApplicationEnabledSetting`を使用してアプリを無効化します。
-- `IPackageManager.setApplicationHiddenSettingAsUser`を使用してアプリを隠します。（rootが必要）
-- `IPackageManager.setPackagesSuspendedAsUser`を使用してアプリを一時停止します。
-
-### 特権システムアプリ - 無効化
-
-このモードでは、次のAPIを呼び出します：
-
-- `ActivityManager.forceStopPackage`を使用してアプリを強制停止します。
-- `PackageManager.setApplicationEnabledSetting`を使用してアプリを無効化します。
+### 特権システムアプリ
 
 次の特権アプリの権限が必要です：
 

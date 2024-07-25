@@ -50,23 +50,23 @@ background.
 
 ## Working mode
 
-Hail can work with `Device Owner`, `Dhizuku`, `Root` and `Shizuku` (including Sui).
-
 **Any apps that have been frozen on Hail will need to be unfrozen by the same working mode.**
 
 1. For devices supporting wireless debugging (Android 11+) or rooted devices, `Shizuku` is recommended.
 
 2. For rooted devices, `Root` is an alternative. **It is slower.**
 
-3. Select `Device Owner` or `Dhizuku` otherwise. **These are a pain to set up.**
+| Privilege                                                                                         | Force Stop | Disable | Hide | Suspend | Uninstall/Reinstall (System Apps) |
+|---------------------------------------------------------------------------------------------------|------------|---------|------|---------|-----------------------------------|
+| Root                                                                                              | ✓          | ✓       | ✓    | ✓       | ✓                                 |
+| Device Owner                                                                                      | ✗          | ✗       | ✓    | ✓       | ✗                                 |
+| Privileged System App                                                                             | ✓          | ✓       | ✗    | ✗       | ✗                                 |
+| [Shizuku](https://github.com/RikkaApps/Shizuku) (root)/[Sui](https://github.com/RikkaApps/Sui)    | ✓          | ✓       | ✓    | ✓       | ✓                                 |
+| [Shizuku](https://github.com/RikkaApps/Shizuku) (adb)                                             | ✓          | ✓       | ✗    | ✓       | ✓                                 |
+| [Dhizuku](https://github.com/iamr0s/Dhizuku)                                                      | ✗          | ✗       | ✓    | ✓       | ✗                                 |
+| [Island](https://github.com/oasisfeng/island)/[Insular](https://gitlab.com/secure-system/Insular) | ✗          | ✗       | ✓    | ✓       | ✗                                 |
 
-### Device Owner - Hide / Suspend
-
-This mode invokes:
-
-- `DevicePolicyManager.setApplicationHidden` to hide apps.
-
-- `DevicePolicyManager.setPackagesSuspended` to suspend apps.
+### Device Owner
 
 **You must remove device owner before uninstall**
 
@@ -95,38 +95,7 @@ Search the message by search engine otherwise.
 
 Settings > Remove Device Owner
 
-### [Dhizuku](https://github.com/iamr0s/Dhizuku) - Hide / Suspend
-
-This mode invoke:
-
-- `DevicePolicyManager.setApplicationHidden` to hide apps.
-
-- `DevicePolicyManager.setPackagesSuspended` to suspend apps.
-
-### Root - Disable / Hide / Suspend
-
-This mode execute:
-
-- `am force-stop` to kill apps.
-- `pm disable` to disable apps.
-- `pm hide` to hide apps.
-- `pm suspend` to suspend apps.
-
-### [Shizuku](https://github.com/RikkaApps/Shizuku) - Disable / Hide / Suspend
-
-This mode invoke non-SDK interface:
-
-- `IActivityManager.forceStopPackage` to kill apps.
-- `IPackageManager.setApplicationEnabledSetting` to disable apps.
-- `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps. (root required)
-- `IPackageManager.setPackagesSuspendedAsUser` to suspend apps.
-
-### Privileged System App - Disable
-
-This mode calls the following APIs:
-
-- `ActivityManager.forceStopPackage` to kill apps.
-- `PackageManager.setApplicationEnabledSetting` to disable apps.
+### Privileged System App
 
 The following privapp-permissions is required:
 
