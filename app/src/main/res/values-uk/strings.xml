@@ -153,4 +153,5 @@
     <string name="mode_su_stop">Root - Примусово зупинити</string>
     <string name="mode_privapp_stop">Системний додаток - Примусово зупинити</string>
     <string name="action_reinstall">Перевстановити</string>
+    <string name="fuzzy_search">Нечіткий пошук</string>
 </resources>
