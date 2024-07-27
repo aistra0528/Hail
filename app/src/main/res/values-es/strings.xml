@@ -150,4 +150,5 @@
     <string name="mode_shizuku_stop">Shizuku - Forzar la detención</string>
     <string name="mode_su_stop">Root - Forzar la detención</string>
     <string name="action_reinstall">Reinstalar</string>
+    <string name="fuzzy_search">Fuzzy Search (búsqueda difusa)</string>
 </resources>
