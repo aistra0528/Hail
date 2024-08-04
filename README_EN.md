@@ -170,25 +170,25 @@ apps. You can modify, rename or just delete it.
 ## API
 
 ```shell
-adb shell am start -a action -e name value
+adb shell am start -a action -e key value
 ```
 
 `action` can be one of the following constants:
 
 - `com.aistra.hail.action.LAUNCH`: Unfreeze and launch target app. If it is unfrozen, it will launch
-  directly. `name="package"` `value="com.package.name"`
+  directly. `key="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.FREEZE`: Freeze target app. It must be checked at
-  Home. `name="package"` `value="com.package.name"`
+  Home. `key="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.UNFREEZE`: Unfreeze target
-  app. `name="package"` `value="com.package.name"`
+  app. `key="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.FREEZE_TAG`: Freeze all non-whitelisted apps in the target
-  tag. `name="tag"` `value="Tag name"`
+  tag. `key="tag"` `value="Tag name"`
 
 - `com.aistra.hail.action.UNFREEZE_TAG`: Unfreeze all apps in the target
-  tag. `name="tag"` `value="Tag name"`
+  tag. `key="tag"` `value="Tag name"`
 
 - `com.aistra.hail.action.FREEZE_ALL`: Freeze all apps at Home. `extra` is not necessary.
 

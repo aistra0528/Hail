@@ -162,23 +162,23 @@ adb shell pm unsuspend com.package.name
 ## API
 
 ```shell
-adb shell am start -a action -e name value
+adb shell am start -a action -e key value
 ```
 
 `action`は次の定数のいずれかです：
 
 - `com.aistra.hail.action.LAUNCH`
-  ：ターゲットアプリを解凍して起動します。解凍されている場合は、直接起動します。`name="package"` `value="com.package.name"`
+  ：ターゲットアプリを解凍して起動します。解凍されている場合は、直接起動します。`key="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.FREEZE`
-  ：ターゲットアプリを凍結します。ホームにチェックされている必要があります。`name="package"` `value="com.package.name"`
+  ：ターゲットアプリを凍結します。ホームにチェックされている必要があります。`key="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.UNFREEZE`：ターゲットアプリを解凍します。`name="package"` `value="com.package.name"`
+- `com.aistra.hail.action.UNFREEZE`：ターゲットアプリを解凍します。`key="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.FREEZE_TAG`
-  ：ターゲットタグ内のすべての非ホワイトリストアプリを凍結します。`name="tag"` `value="タグ名"`
+  ：ターゲットタグ内のすべての非ホワイトリストアプリを凍結します。`key="tag"` `value="タグ名"`
 
-- `com.aistra.hail.action.UNFREEZE_TAG`：ターゲットタグ内のすべてのアプリを解凍します。`name="tag"` `value="タグ名"`
+- `com.aistra.hail.action.UNFREEZE_TAG`：ターゲットタグ内のすべてのアプリを解凍します。`key="tag"` `value="タグ名"`
 
 - `com.aistra.hail.action.FREEZE_ALL`：ホームのすべてのアプリを凍結します。`extra`は必要ありません。
 
