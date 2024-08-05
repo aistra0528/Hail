@@ -177,11 +177,8 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
             pkg == app.packageName -> {
                 when {
                     HPolicy.isDeviceOwnerActive -> activity.ownerRemoveDialog()
-                    HPolicy.isAdminActive -> {
-                        HPolicy.removeActiveAdmin()
-                        showUninstallDialog(name, pkg)
-                    }
-
+                    HPolicy.isProfileOwner -> HPolicy.removeProfileOwner()
+                    HPolicy.isAdminActive -> HPolicy.removeActiveAdmin()
                     else -> showUninstallDialog(name, pkg)
                 }
             }
