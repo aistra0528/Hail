@@ -151,4 +151,6 @@
     <string name="mode_shizuku_stop">Shizuku - Принудительно остановить</string>
     <string name="mode_privapp_stop">Системное приложение - Принудительно остановить</string>
     <string name="mode_su_stop">Root - Принудительно остановить</string>
+    <string name="fuzzy_search">Нечёткий поиск</string>
+    <string name="action_reinstall">Переустановить</string>
 </resources>
