@@ -141,7 +141,7 @@
     <string name="shizuku_hide_adb">Shizuku se está ejecutando como adb. Para ocultar aplicaciones, reinicia Shizuku con root.</string>
     <string name="command">Dominio</string>
     <string name="tag">Etiqueta</string>
-    <string name="freeze_system_app">Congelar las aplicaciones del sistema puede hacer que el dispositivo arranque en bucle. Asegúrate de que sabes lo que haces y haz una copia de seguridad de tus datos con antelación o utiliza un recuperador compatible con la gestión de archivos.</string>
+    <string name="freeze_system_app">Congelar o desinstalar aplicaciones del sistema puede hacer que el dispositivo arranque en bucle. Asegúrate de que sabes lo que haces y haz una copia de seguridad de tus datos con antelación o utiliza un recuperador compatible con la gestión de archivos.</string>
     <string name="action_continue">Continuar</string>
     <string name="nine_key">Búsqueda T9</string>
     <string name="home_font_size">Tamaño de la fuente de inicio</string>
