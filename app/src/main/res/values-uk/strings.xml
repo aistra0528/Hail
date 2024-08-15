@@ -5,7 +5,7 @@
     <string name="action_clear_dynamic_shortcuts">Очистити всі динамічні ярлики</string>
     <string name="action_deferred_task">Відкласти завдання</string>
     <string name="action_deselect">Зняти виділення</string>
-    <string name="action_details">Про додаток</string>
+    <string name="action_details">Про застосунок</string>
     <string name="action_donate">Задонатити</string>
     <string name="action_export_all">Експорт всіх</string>
     <string name="action_export_clipboard">Експорт в буфер обміну</string>
@@ -17,9 +17,9 @@
     <string name="action_freeze_non_whitelisted">Заморозити не з білого списку</string>
     <string name="action_github">GitHub</string>
     <string name="action_help">Допомога</string>
-    <string name="action_import_app">Імпорт додатків</string>
+    <string name="action_import_app">Імпорт застосунків</string>
     <string name="action_import_clipboard">Імпорт з буфера обміну</string>
-    <string name="action_import_frozen">Імпорт заморожені додатки</string>
+    <string name="action_import_frozen">Імпортувати заморожені застосунки</string>
     <string name="action_launch">Запустити</string>
     <string name="action_licenses">Ліцензії</string>
     <string name="action_lock">Заблокувавши</string>
@@ -44,7 +44,7 @@
     <string name="action_whitelist">Додати до білого списку</string>
     <string name="activity_not_found">Активіті для запуску не знайдено</string>
     <string name="app_name">Hail</string>
-    <string name="app_not_installed">Додаток не встановлено</string>
+    <string name="app_not_installed">Застосунок не встановлено</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="auto_freeze">Автозаморожування</string>
     <string name="auto_freeze_after_lock">Після блокування екрану</string>
@@ -80,22 +80,22 @@
     <string name="msg_exported">Експортовано: %s</string>
     <string name="msg_extract_apk">Розпаковано до: %s</string>
     <string name="msg_freeze">Заморожено: %s</string>
-    <string name="msg_guide">Перед заморожуванням додатків, будь ласка, виберіть робочий режим в налаштуваннях.</string>
+    <string name="msg_guide">Перед заморожуванням застосунків, виберіть робочий режим в налаштуваннях.</string>
     <string name="msg_imported">Імпортовано: %s</string>
-    <string name="msg_remove_owner">Якщо Hail видалено як власника пристрою, після його видалення можуть виникнути труднощі з реорганізацією додатків.
-\nЗаморожені додатки залишаться замороженими після видалення, будь ласка, переконайтеся, що ви розморозили важливі додатки.</string>
+    <string name="msg_remove_owner">Якщо Hail видалено як власника пристрою, після його видалення можуть виникнути труднощі з реорганізацією застосунків.
+\nЗаморожені застосунки залишаться замороженими після видалення, будь ласка, переконайтеся, що ви розморозили важливі застосунки.</string>
     <string name="msg_selected">Вибрано: %s</string>
     <string name="msg_set_owner">Введіть команду з adb:
 \n%s</string>
     <string name="msg_text_copied">Скопійовано: %s</string>
     <string name="msg_unfreeze">Незаморожено: %s</string>
-    <string name="msg_uninstall">Ви хочете видалити цей додаток\?</string>
+    <string name="msg_uninstall">Ви хочете видалити цей застосунок?</string>
     <string name="nothing_here">Тут нічого немає</string>
     <string name="operation_failed">Помилка операції: %s</string>
     <string name="permission_denied">Дозвіл відхилено</string>
     <string name="shizuku_missing">Shizuku відсутній :(</string>
-    <string name="skip_foreground_app">Не заморожувати додатки переднього плану</string>
-    <string name="skip_notifying_app">Пропустити додаток з сповіщенням</string>
+    <string name="skip_foreground_app">Не заморожувати застосунки переднього плану</string>
+    <string name="skip_notifying_app">Пропустити застосунок зі сповіщенням</string>
     <string name="skip_while_charging">Не заморожувати під час зарядки</string>
     <string name="sort_by">Сортувати за</string>
     <string name="sort_install">Дата встановлення</string>
@@ -104,8 +104,8 @@
     <string name="synthesize_adaptive_icons">Створити адаптивні іконки</string>
     <string name="tap_to_select">Натисніть, щоб вибрати кілька</string>
     <string name="tile_action">Дія плитки</string>
-    <string name="title_about">Про додаток</string>
-    <string name="title_apps">Додатки</string>
+    <string name="title_about">Про застосунок</string>
+    <string name="title_apps">Застосунки</string>
     <string name="title_customize">Зовнішній вигляд</string>
     <string name="title_donate">Дякуємо!</string>
     <string name="title_home">Головна</string>
@@ -141,17 +141,17 @@
     <string name="mode_island_hide">Island/Insular - Приховування</string>
     <string name="mode_island_suspend">Island/Insular - Вимкнення</string>
     <string name="action_fdroid">F-Droid</string>
-    <string name="shizuku_hide_adb">Shizuku працює по adb. Щоб приховати додатки, будь ласка, перезапустіть Shizuku з рут правами.</string>
+    <string name="shizuku_hide_adb">Shizuku працює по adb. Щоб приховати застосунки, перезапустіть Shizuku з рут правами.</string>
     <string name="command">Команда</string>
     <string name="tag">Тег</string>
     <string name="action_continue">Продовжити</string>
     <string name="nine_key">Пошук T9</string>
     <string name="home_font_size">Розмір шрифту на головній сторінці</string>
-    <string name="freeze_system_app">Заморожування системних додатків може призвести до бутлупу. Переконайтеся, що Ви знаєте, що робите, і заздалегідь створіть резервну копію даних або скористайтеся рекавері, яке підтримує управління файлами.</string>
-    <string name="mode_privapp_disable">Системний додаток - Відключити</string>
+    <string name="freeze_system_app">Заморожування або видалення системних застосунків може призвести до постійних перезавантажень. Переконайтеся, що ви знаєте, що робите, і заздалегідь створіть резервну копію даних або скористайтеся відновлення, яке підтримує управління файлами.</string>
+    <string name="mode_privapp_disable">Системний застосунок - Вимкнути</string>
     <string name="mode_shizuku_stop">Shizuku - Примусово зупинити</string>
     <string name="mode_su_stop">Root - Примусово зупинити</string>
-    <string name="mode_privapp_stop">Системний додаток - Примусово зупинити</string>
+    <string name="mode_privapp_stop">Системний застосунок - Примусово зупинити</string>
     <string name="action_reinstall">Перевстановити</string>
     <string name="fuzzy_search">Нечіткий пошук</string>
 </resources>
