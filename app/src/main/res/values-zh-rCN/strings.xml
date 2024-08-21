@@ -138,7 +138,7 @@
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">跳过</string>
     <string name="shizuku_hide_adb">Shizuku 正以 adb 权限运行。如需隐藏应用，请通过 root 重新启动 Shizuku。</string>
-    <string name="freeze_system_app">冻结系统应用可能导致设备无法启动。请确保您已知晓操作后果，并提前备份数据或使用支持文件管理的恢复模式。</string>
+    <string name="freeze_system_app">冻结或删除系统应用可能导致设备无法启动。请确保您已知晓操作后果，并提前备份数据或使用支持文件管理的恢复模式。</string>
     <string name="action_continue">继续</string>
     <string name="command">命令</string>
     <string name="tag">标签</string>
@@ -149,4 +149,5 @@
     <string name="mode_privapp_stop">系统应用 - 强行停止</string>
     <string name="mode_su_stop">Root - 强行停止</string>
     <string name="action_reinstall">重新安装</string>
+    <string name="fuzzy_search">模糊搜索</string>
 </resources>
