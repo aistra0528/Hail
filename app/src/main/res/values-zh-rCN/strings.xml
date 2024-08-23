@@ -61,7 +61,7 @@
     <string name="sort_name">名称</string>
     <string name="sort_install">首次安装</string>
     <string name="sort_update">最近更新</string>
-    <string name="title_donate">谢谢你。</string>
+    <string name="title_donate">谢谢你！</string>
     <string name="donate_alipay">支付宝</string>
     <string name="donate_wechat">微信支付</string>
     <string name="donate_wechat_scan">扫一扫</string>
