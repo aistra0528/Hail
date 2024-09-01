@@ -82,8 +82,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             true
         }
         findPreference<Preference>(HailData.AUTO_UNFREEZE_AFTER_UNLOCK)?.setOnPreferenceChangeListener { _, autoUnFreezeAfterUnLock ->
-            if (autoUnFreezeAfterUnLock == true && !HSystem.checkOpUsageStats(requireContext())) {
+            if (autoUnFreezeAfterUnLock == true && !HSystem.checkOpOverlayStats(requireContext())) {
                 startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                false
+            }
+            else if(autoUnFreezeAfterUnLock == true && !HSystem.checkOpUsageStats(requireContext())) {
+                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 false
             }
             else
