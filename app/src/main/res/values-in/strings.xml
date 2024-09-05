@@ -141,7 +141,7 @@
     <string name="action_continue">Lanjutkan</string>
     <string name="nine_key">Keyboard numerik</string>
     <string name="home_font_size">Ukuran font Home</string>
-    <string name="freeze_system_app">Membekukan aplikasi sistem dapat menyebabkan bootloop pada perangkat anda. Pastikan anda mengetahui apa yang dilakukan dan telah mencadangkan data sebelumnya.</string>
+    <string name="freeze_system_app">Membekukan atau menghapus aplikasi sistem dapat menyebabkan bootloop pada perangkat anda. Pastikan anda mengetahui apa yang dilakukan dan telah mencadangkan data sebelumnya.</string>
     <string name="mode_privapp_disable">Aplikasi Sistem - Matikan</string>
     <string name="mode_privapp_stop">Aplikasi Sistem - Paksa Berhenti</string>
     <string name="mode_shizuku_stop">Shizuku - Paksa Berhenti</string>
