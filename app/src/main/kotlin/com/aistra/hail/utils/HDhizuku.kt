@@ -57,8 +57,8 @@ object HDhizuku {
         if (HTarget.P) HiddenApiBypass.setHiddenApiExemptions("")
         val mPackageName = installer::class.java.getDeclaredField("mInstallerPackageName")
         mPackageName.isAccessible = true
-        if (mPackageName.get(installer) != DhizukuVariables.PACKAGE_NAME) {
-            mPackageName.set(installer, DhizukuVariables.PACKAGE_NAME)
+        if (mPackageName.get(installer) != DhizukuVariables.OFFICIAL_PACKAGE_NAME) {
+            mPackageName.set(installer, DhizukuVariables.OFFICIAL_PACKAGE_NAME)
             val mInstaller = installer::class.java.getDeclaredField("mInstaller")
             mInstaller.isAccessible = true
             val origin = mInstaller.get(installer)
