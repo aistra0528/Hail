@@ -1,4 +1,4 @@
-简体中文 | [English](README_EN.md)
+简体中文 | [English](README_EN.md) | [日本語](README_JP.md)
 
 # 雹 Hail
 
@@ -37,25 +37,27 @@
 > 在这种状态下，应用程序的通知将被隐藏，任何启动活动将被停止，不能弹出提示、对话框或播放音频。
 > 当用户试图启动一个暂停的应用程序时，系统将向用户显示一个对话框，告知他们在暂停状态下不能使用这个应用程序。
 
-## 工作模式
+暂停只会阻止用户与应用交互，而**不会**阻止应用在后台运行。
 
-雹支持以`设备所有者`、`Dhizuku`、`Root` 和`Shizuku` (含 Sui) 模式工作。
+## 工作模式
 
 **冻结的应用需要通过相同工作模式解冻。**
 
-1. 如果您的设备支持无线调试或已 root，推荐选择`Shizuku`。
+1. 如果您的设备支持无线调试 (Android 11+) 或已 root，推荐选择`Shizuku`。
 
 2. 如果您的设备已 root，可选择`Root`。**此模式速度相对较慢。**
 
-3. 如果您的设备不支持无线调试且未 root，可选择`设备所有者`或`Dhizuku`。**这些模式设置较为繁琐。**
+| 授权方式                                                                                           | 强行停止 | 停用 | 隐藏 | 暂停 | 卸载/重新安装（系统应用） |
+|------------------------------------------------------------------------------------------------|------|----|----|----|---------------|
+| Root                                                                                           | ✓    | ✓  | ✓  | ✓  | ✓             |
+| 设备所有者                                                                                          | ✗    | ✗  | ✓  | ✓  | ✗             |
+| 特权系统应用                                                                                         | ✓    | ✓  | ✗  | ✗  | ✗             |
+| [Shizuku](https://github.com/RikkaApps/Shizuku) (root)/[Sui](https://github.com/RikkaApps/Sui) | ✓    | ✓  | ✓  | ✓  | ✓             |
+| [Shizuku](https://github.com/RikkaApps/Shizuku) (adb)                                          | ✓    | ✓  | ✗  | ✓  | ✓             |
+| [Dhizuku](https://github.com/iamr0s/Dhizuku)                                                   | ✗    | ✗  | ✓  | ✓  | ✗             |
+| [炼妖壶](https://github.com/oasisfeng/island)/[Insular](https://gitlab.com/secure-system/Insular) | ✗    | ✗  | ✓  | ✓  | ✗             |
 
-### 设备所有者 - 隐藏 / 暂停
-
-此模式通过将雹设置为设备所有者 (Device Owner)，调用：
-
-- `DevicePolicyManager.setApplicationHidden`方法隐藏应用。
-
-- `DevicePolicyManager.setPackagesSuspended`方法暂停应用。
+### 设备所有者
 
 **设置为设备所有者的应用需要移除设备所有者后方可卸载。**
 
@@ -84,38 +86,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
 
 设置 > 移除设备所有者
 
-### Dhizuku - 隐藏 / 暂停
-
-此模式通过将 [Dhizuku](https://github.com/iamr0s/Dhizuku) 设置为设备所有者 (Device Owner)，调用：
-
-- `DevicePolicyManager.setApplicationHidden`方法隐藏应用。
-
-- `DevicePolicyManager.setPackagesSuspended`方法暂停应用。
-
-### Root - 停用 / 隐藏 / 暂停
-
-此模式通过授予雹 root 权限，执行命令：
-
-- `am force-stop`强行停止应用。
-- `pm disable`停用应用。
-- `pm hide`隐藏应用。
-- `pm suspend`暂停应用。
-
-### Shizuku - 停用 / 隐藏 / 暂停
-
-此模式通过 [Shizuku](https://github.com/RikkaApps/Shizuku) 调用非 SDK 接口：
-
-- `IActivityManager.forceStopPackage`强行停止应用。
-- `IPackageManager.setApplicationEnabledSetting`停用应用。
-- `IPackageManager.setApplicationHiddenSettingAsUser`隐藏应用。 (需要 root)
-- `IPackageManager.setPackagesSuspendedAsUser`暂停应用。
-
-### 特权系统应用 - 停用
-
-此模式通过调用接口：
-
-- `ActivityManager.forceStopPackage`强行停止应用。
-- `PackageManager.setApplicationEnabledSetting`停用应用。
+### 特权系统应用
 
 需要设置特许权限许可名单：
 
@@ -126,6 +97,7 @@ Active admin set to component {com.aistra.hail/com.aistra.hail.receiver.DeviceAd
         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.FORCE_STOP_PACKAGES"/>
         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+        <permission name="android.permission.MANAGE_APP_OPS_MODES"/>
     </privapp-permissions>
 </permissions>
 ```
@@ -188,20 +160,20 @@ adb shell pm unsuspend com.package.name
 ## API
 
 ```shell
-adb shell am start -a action -e name value
+adb shell am start -a action -e key value
 ```
 
 `action`可为：
 
-- `com.aistra.hail.action.LAUNCH`：解冻并启动目标应用。应用未冻结时会直接启动。`name="package"` `value="com.package.name"`
+- `com.aistra.hail.action.LAUNCH`：解冻并启动目标应用。应用未冻结时会直接启动。`key="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.FREEZE`：冻结目标应用。应用需处于首页。`name="package"` `value="com.package.name"`
+- `com.aistra.hail.action.FREEZE`：冻结目标应用。应用需处于首页。`key="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.UNFREEZE`：解冻目标应用。`name="package"` `value="com.package.name"`
+- `com.aistra.hail.action.UNFREEZE`：解冻目标应用。`key="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.FREEZE_TAG`：冻结目标标签中的全部非白名单应用。`name="tag"` `value="标签名"`
+- `com.aistra.hail.action.FREEZE_TAG`：冻结目标标签中的全部非白名单应用。`key="tag"` `value="标签名"`
 
-- `com.aistra.hail.action.UNFREEZE_TAG`：解冻目标标签中的全部应用。`name="tag"` `value="标签名"`
+- `com.aistra.hail.action.UNFREEZE_TAG`：解冻目标标签中的全部应用。`key="tag"` `value="标签名"`
 
 - `com.aistra.hail.action.FREEZE_ALL`：冻结首页全部应用。无需`extra`。
 

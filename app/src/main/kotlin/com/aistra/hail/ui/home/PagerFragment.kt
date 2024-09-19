@@ -213,7 +213,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                     }.setNegativeButton(android.R.string.cancel, null).show()
                 }
 
-                6 -> MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
+                6 -> if (tabs.tabCount > 1) MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
                     .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
                         HShortcuts.addPinShortcut(
                             info,
@@ -226,6 +226,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                             info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                         )
                     }.setNegativeButton(android.R.string.cancel, null).show()
+                else HShortcuts.addPinShortcut(
+                    info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
+                )
 
                 7 -> exportToClipboard(listOf(info))
                 8 -> removeCheckedApp(pkg)

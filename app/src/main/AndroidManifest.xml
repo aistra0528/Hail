@@ -24,6 +24,9 @@
     <uses-permission
             android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"
             tools:ignore="ProtectedPermissions"/>
+    <uses-permission
+            android:name="android.permission.MANAGE_APP_OPS_MODES"
+            tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="com.oasisfeng.island.permission.FREEZE_PACKAGE"/>
     <uses-permission android:name="com.oasisfeng.island.permission.SUSPEND_PACKAGE"/>
@@ -45,6 +48,9 @@
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES"/>
             </intent-filter>
         </activity>
         <activity

@@ -15,6 +15,7 @@ object HPolicy {
     val ADB_COMMAND = "adb shell $DPM_COMMAND"
 
     private val isDeviceOwner get() = dpm.isDeviceOwnerApp(app.packageName)
+    val isProfileOwner get() = dpm.isProfileOwnerApp(app.packageName)
     val isAdminActive get() = dpm.isAdminActive(admin)
     val isDeviceOwnerActive get() = isDeviceOwner && isAdminActive
 
@@ -58,7 +59,12 @@ object HPolicy {
     }
 
     @Suppress("DEPRECATION")
-    fun clearDeviceOwnerApp() {
+    fun removeProfileOwner() {
+        if (isProfileOwner) dpm.clearProfileOwner(admin)
+    }
+
+    @Suppress("DEPRECATION")
+    fun removeDeviceOwner() {
         if (isDeviceOwnerActive) dpm.clearDeviceOwnerApp(app.packageName)
     }
 }

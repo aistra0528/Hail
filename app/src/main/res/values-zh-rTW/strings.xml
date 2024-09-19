@@ -144,8 +144,10 @@
     <string name="mode_su_stop">Root - 強制停止</string>
     <string name="mode_island_hide">Island/Insular - 隱藏</string>
     <string name="action_continue">繼續</string>
-    <string name="freeze_system_app">凍結系統應用可能導致裝置無法啟動。請確保您已知曉操作後果，並提前備份資料或使用支援檔案管理的恢復模式。</string>
+    <string name="freeze_system_app">凍結或刪除系統應用可能導致裝置無法啟動。請確保您已知曉操作後果，並提前備份資料或使用支援檔案管理的恢復模式。</string>
     <string name="shizuku_hide_adb">Shizuku 正以 adb 許可權執行。如需隱藏應用，請通過 root 重新啟動 Shizuku。</string>
     <string name="mode_island_suspend">Island/Insular - 暫停</string>
     <string name="nine_key">九鍵搜尋</string>
+    <string name="fuzzy_search">模糊搜索</string>
+    <string name="action_reinstall">重裝</string>
 </resources>

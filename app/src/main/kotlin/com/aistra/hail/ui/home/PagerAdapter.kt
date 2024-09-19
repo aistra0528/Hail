@@ -60,7 +60,7 @@ class PagerAdapter(private val selectedList: List<AppInfo>) :
                         MaterialColors.getColor(this, androidx.appcompat.R.attr.colorPrimary)
                     )
 
-                    info.state == AppInfo.STATE_UNKNOWN -> setTextColor(context.getColorStateList(R.color.color_warn))
+                    info.state == AppInfo.STATE_NOT_FOUND -> setTextColor(context.getColorStateList(R.color.color_warn))
                     else -> setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodyMedium)
                 }
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, HailData.homeFontSize.toFloat())

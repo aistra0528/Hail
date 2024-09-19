@@ -1,6 +1,4 @@
-[简体中文](README.md) | English
-
-**English is not my native language. Help us translate README**
+[简体中文](README.md) | English | [日本語](README_JP.md)
 
 # Hail 雹
 
@@ -47,25 +45,28 @@ Suspended apps will have their icons shown in a grayscale in the device's launch
 > to launch a suspended app, the system will, instead, show a dialog to the user informing them that
 > they cannot use this app while it is suspended.
 
-## Working mode
+Suspend only prevents the user from interacting with the app, it does **NOT** prevent the app from running in the
+background.
 
-Hail can work with `Device Owner`, `Dhizuku`, `Root` and `Shizuku` (including Sui).
+## Working mode
 
 **Any apps that have been frozen on Hail will need to be unfrozen by the same working mode.**
 
-1. For devices supporting wifi adb or rooted devices, `Shizuku` is recommend.
+1. For devices supporting wireless debugging (Android 11+) or rooted devices, `Shizuku` is recommended.
 
 2. For rooted devices, `Root` is an alternative. **It is slower.**
 
-3. Select `Device Owner` or `Dhizuku` otherwise. **These are a pain to set up.**
+| Privilege                                                                                         | Force Stop | Disable | Hide | Suspend | Uninstall/Reinstall (System Apps) |
+|---------------------------------------------------------------------------------------------------|------------|---------|------|---------|-----------------------------------|
+| Root                                                                                              | ✓          | ✓       | ✓    | ✓       | ✓                                 |
+| Device Owner                                                                                      | ✗          | ✗       | ✓    | ✓       | ✗                                 |
+| Privileged System App                                                                             | ✓          | ✓       | ✗    | ✗       | ✗                                 |
+| [Shizuku](https://github.com/RikkaApps/Shizuku) (root)/[Sui](https://github.com/RikkaApps/Sui)    | ✓          | ✓       | ✓    | ✓       | ✓                                 |
+| [Shizuku](https://github.com/RikkaApps/Shizuku) (adb)                                             | ✓          | ✓       | ✗    | ✓       | ✓                                 |
+| [Dhizuku](https://github.com/iamr0s/Dhizuku)                                                      | ✗          | ✗       | ✓    | ✓       | ✗                                 |
+| [Island](https://github.com/oasisfeng/island)/[Insular](https://gitlab.com/secure-system/Insular) | ✗          | ✗       | ✓    | ✓       | ✗                                 |
 
-### Device Owner - Hide / Suspend
-
-This mode invokes:
-
-- `DevicePolicyManager.setApplicationHidden` to hide apps.
-
-- `DevicePolicyManager.setPackagesSuspended` to suspend apps.
+### Device Owner
 
 **You must remove device owner before uninstall**
 
@@ -81,7 +82,7 @@ Issue adb command:
 adb shell dpm set-device-owner com.aistra.hail/.receiver.DeviceAdminReceiver
 ```
 
-A message will shown if it has been successfully set:
+In response, adb prints this message if device owner has been successfully set:
 
 ```
 Success: Device owner set to package com.aistra.hail
@@ -94,38 +95,7 @@ Search the message by search engine otherwise.
 
 Settings > Remove Device Owner
 
-### [Dhizuku](https://github.com/iamr0s/Dhizuku) - Hide / Suspend
-
-This mode invoke:
-
-- `DevicePolicyManager.setApplicationHidden` to hide apps.
-
-- `DevicePolicyManager.setPackagesSuspended` to suspend apps.
-
-### Root - Disable / Hide / Suspend
-
-This mode execute:
-
-- `am force-stop` to kill apps.
-- `pm disable` to disable apps.
-- `pm hide` to hide apps.
-- `pm suspend` to suspend apps.
-
-### [Shizuku](https://github.com/RikkaApps/Shizuku) - Disable / Hide / Suspend
-
-This mode invoke non-SDK interface:
-
-- `IActivityManager.forceStopPackage` to kill apps.
-- `IPackageManager.setApplicationEnabledSetting` to disable apps.
-- `IPackageManager.setApplicationHiddenSettingAsUser` to hide apps. (root required)
-- `IPackageManager.setPackagesSuspendedAsUser` to suspend apps.
-
-### Privileged System App - Disable
-
-This mode calls the following APIs:
-
-- `ActivityManager.forceStopPackage` to kill apps.
-- `PackageManager.setApplicationEnabledSetting` to disable apps.
+### Privileged System App
 
 The following privapp-permissions is required:
 
@@ -136,6 +106,7 @@ The following privapp-permissions is required:
         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.FORCE_STOP_PACKAGES"/>
         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+        <permission name="android.permission.MANAGE_APP_OPS_MODES"/>
     </privapp-permissions>
 </permissions>
 ```
@@ -199,25 +170,25 @@ apps. You can modify, rename or just delete it.
 ## API
 
 ```shell
-adb shell am start -a action -e name value
+adb shell am start -a action -e key value
 ```
 
 `action` can be one of the following constants:
 
 - `com.aistra.hail.action.LAUNCH`: Unfreeze and launch target app. If it is unfrozen, it will launch
-  directly. `name="package"` `value="com.package.name"`
+  directly. `key="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.FREEZE`: Freeze target app. It must be checked at
-  Home. `name="package"` `value="com.package.name"`
+  Home. `key="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.UNFREEZE`: Unfreeze target
-  app. `name="package"` `value="com.package.name"`
+  app. `key="package"` `value="com.package.name"`
 
 - `com.aistra.hail.action.FREEZE_TAG`: Freeze all non-whitelisted apps in the target
-  tag. `name="tag"` `value="Tag name"`
+  tag. `key="tag"` `value="Tag name"`
 
 - `com.aistra.hail.action.UNFREEZE_TAG`: Unfreeze all apps in the target
-  tag. `name="tag"` `value="Tag name"`
+  tag. `key="tag"` `value="Tag name"`
 
 - `com.aistra.hail.action.FREEZE_ALL`: Freeze all apps at Home. `extra` is not necessary.
 

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Hail</string>
     <string name="app_slogan">Freezedom!</string>
-    <string name="title_home">Starten</string>
+    <string name="title_home">Startseite</string>
     <string name="title_apps">Apps</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_about">Über</string>
@@ -17,8 +17,8 @@
     <string name="action_licenses">Lizenzen</string>
     <string name="action_freeze_all">Alle einfrieren</string>
     <string name="action_unfreeze_all">Alle auftauen</string>
-    <string name="action_freeze_current">Aktuelle einfrieren</string>
-    <string name="action_unfreeze_current">Aktuelle auftauen</string>
+    <string name="action_freeze_current">Sichtbare einfrieren</string>
+    <string name="action_unfreeze_current">Sichtbare auftauen</string>
     <string name="action_freeze_non_whitelisted">Nicht auf der Whitelist stehende einfrieren</string>
     <string name="action_lock">Sperren</string>
     <string name="action_lock_freeze">Sperren und einfrieren</string>
@@ -33,7 +33,7 @@
     <string name="action_export_clipboard">In die Zwischenablage exportieren</string>
     <string name="action_import_clipboard">Aus der Zwischenablage importieren</string>
     <string name="action_remove_home">Aus Start löschen</string>
-    <string name="action_unfreeze_remove_home">Auftauen und aus Start löchen</string>
+    <string name="action_unfreeze_remove_home">Auftauen und von Startseite löchen</string>
     <string name="action_deselect">Deselektieren</string>
     <string name="action_undo">Rückgängig machen</string>
     <string name="action_help">Hilfe</string>
@@ -46,8 +46,8 @@
     <string name="mode_default">Leerlauf</string>
     <string name="mode_owner_hide">Geräteeigentümer - Ausblenden (Hide)</string>
     <string name="mode_owner_suspend">Geräteeigentümer - Aussetzen (Suspend)</string>
-    <string name="mode_su_disable">Superuser - Deaktivieren</string>
-    <string name="mode_su_suspend">Superuser - Aussetzen (Suspend)</string>
+    <string name="mode_su_disable">Root - Deaktivieren</string>
+    <string name="mode_su_suspend">Root - Aussetzen (Suspend)</string>
     <string name="mode_shizuku_disable">Shizuku - Deaktivieren</string>
     <string name="mode_shizuku_suspend">Shizuku - Aussetzen (Suspend)</string>
     <string name="title_set_owner">Geräteeigentümer festlegen</string>
@@ -115,7 +115,7 @@
     <string name="action_import_frozen">Eingefrorene App importieren</string>
     <string name="action_import_app">App importieren</string>
     <string name="synthesize_adaptive_icons">Adaptive Icons synthetisieren</string>
-    <string name="action_export_current">Aktuelles exportieren</string>
+    <string name="action_export_current">Sichtbare exportieren</string>
     <string name="action_export_all">Alle exportieren</string>
     <string name="skip_notifying_app">Apps die Benachrichtigungen senden ignorieren</string>
     <string name="auto_freeze_delay">Einfrierverzögerung in Minuten</string>
@@ -131,4 +131,20 @@
     <string name="action_terminal">Terminal</string>
     <string name="mode_dhizuku_suspend">Dhizuku – Aussetzen</string>
     <string name="mode_dhizuku_hide">Dhizuku – Verstecken</string>
+    <string name="command">Befehl</string>
+    <string name="tag">Tag</string>
+    <string name="action_continue">Fortsetzen</string>
+    <string name="mode_shizuku_stop">Shizuku - Beenden erzwingen</string>
+    <string name="mode_privapp_disable">System-App - Deaktivieren</string>
+    <string name="mode_su_hide">Root - Verstecken (Hide)</string>
+    <string name="action_fdroid">F-Droid</string>
+    <string name="action_skip">Überspringen</string>
+    <string name="shizuku_hide_adb">Shizuku wird mit adb ausgeführt. Um Apps zu verstecken, bitte Shizuku als Root neu starten.</string>
+    <string name="mode_island_hide">Island/Insular - Verstecken (Hide)</string>
+    <string name="mode_island_suspend">Island/Insular - Aussetzen (Suspend)</string>
+    <string name="freeze_system_app">System-Apps einzufrieren kann einen Bootloop verursachen. Vergewissern Sie sich, dass Sie wissen was Sie tun und machen Sie vorher ein Backup Ihrer Daten, oder verwenden Sie ein Recovery-Werkzeug welches Dateimanagement unterstützt.</string>
+    <string name="mode_privapp_stop">System-App - Beenden erzwingen</string>
+    <string name="mode_su_stop">Root - Beenden erzwingen</string>
+    <string name="nine_key">T9-Suche</string>
+    <string name="home_font_size">Schriftgröße der Startseite</string>
 </resources>

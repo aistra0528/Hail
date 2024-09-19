@@ -1,8 +1,11 @@
 package com.aistra.hail.utils
 
 import android.app.ActivityManager
+import android.app.AppOpsManager
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import com.aistra.hail.HailApp.Companion.app
 import org.lsposed.hiddenapibypass.HiddenApiBypass
@@ -11,6 +14,11 @@ object HPackages {
     val myUserId get() = android.os.Process.myUserHandle().hashCode()
 
     fun packageUri(packageName: String) = "package:$packageName"
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun packageUid(packageName: String) = if (HTarget.T) app.packageManager.getPackageUid(
+        packageName, PackageManager.PackageInfoFlags.of(PackageManager.MATCH_UNINSTALLED_PACKAGES.toLong())
+    ) else app.packageManager.getPackageUid(packageName, PackageManager.MATCH_UNINSTALLED_PACKAGES)
 
     fun getInstalledApplications(flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192): List<ApplicationInfo> =
         if (HTarget.T) app.packageManager.getInstalledApplications(
@@ -55,6 +63,10 @@ object HPackages {
         }
     } ?: false
 
+    fun isAppUninstalled(packageName: String): Boolean =
+        getApplicationInfoOrNull(packageName)?.run { flags and ApplicationInfo.FLAG_INSTALLED != ApplicationInfo.FLAG_INSTALLED }
+            ?: true
+
     fun isPrivilegedApp(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
         (ApplicationInfo::class.java.getField("privateFlags").get(it) as Int) and 8 == 8
     } ?: false
@@ -86,5 +98,24 @@ object HPackages {
             HLog.e(it)
         }
         return isAppDisabled(packageName) == disabled
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun setAppRestricted(packageName: String, restricted: Boolean): Boolean = runCatching {
+        app.getSystemService<AppOpsManager>()!!.let {
+            HiddenApiBypass.invoke(
+                it::class.java,
+                it,
+                "setMode",
+                "android:run_any_in_background",
+                packageUid(packageName),
+                packageName,
+                if (restricted) AppOpsManager.MODE_IGNORED else AppOpsManager.MODE_ALLOWED
+            )
+        }
+        true
+    }.getOrElse {
+        HLog.e(it)
+        false
     }
 }

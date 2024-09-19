@@ -7,6 +7,7 @@ import android.widget.CompoundButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ItemAppsBinding
@@ -22,9 +23,8 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
                 oldItem: ApplicationInfo, newItem: ApplicationInfo
             ): Boolean = oldItem.packageName == newItem.packageName
 
-            override fun areContentsTheSame(
-                oldItem: ApplicationInfo, newItem: ApplicationInfo
-            ): Boolean = areItemsTheSame(oldItem, newItem)
+            override fun areContentsTheSame(oldItem: ApplicationInfo, newItem: ApplicationInfo): Boolean =
+                oldItem.flags and ApplicationInfo.FLAG_INSTALLED == newItem.flags and ApplicationInfo.FLAG_INSTALLED
         }
     }
 
@@ -78,6 +78,8 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
                 val name = info.loadLabel(context.packageManager)
                 text = if (!HailData.grayscaleIcon && frozen) "❄️$name" else name
                 isEnabled = !HailData.grayscaleIcon || !frozen
+                if (HPackages.isAppUninstalled(pkg)) setTextColor(context.getColorStateList(R.color.color_warn))
+                else setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodyMedium)
             }
             binding.appDesc.apply {
                 text = pkg

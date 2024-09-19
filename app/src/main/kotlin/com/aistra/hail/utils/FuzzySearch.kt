@@ -1,5 +1,6 @@
 package com.aistra.hail.utils
 
+import com.aistra.hail.app.HailData
 import org.apache.commons.text.similarity.LevenshteinDistance
 
 /** 使用莱文斯坦距离 (Levenshtein distance) 实现模糊搜索 */
@@ -15,6 +16,7 @@ object FuzzySearch {
         if (query.isNullOrEmpty()) return true
         if (raw.isNullOrEmpty()) return false
         if (raw.contains(query, true)) return true
+        if (!HailData.fuzzySearch) return false
         val rawUpp = raw.uppercase()
         val queryUpp = query.uppercase()
         val diff = levenshteinDistance.apply(rawUpp, queryUpp)

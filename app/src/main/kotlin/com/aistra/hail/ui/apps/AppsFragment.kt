@@ -155,6 +155,11 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
 
             R.id.action_extract_apk -> extractApk(pkg)
             R.id.action_uninstall -> uninstallApp(name, pkg)
+            R.id.action_reinstall -> {
+                if (AppManager.reinstallApp(pkg)) updateAppList()
+                else HUI.showToast(R.string.operation_failed, name)
+            }
+
             else -> return super.onContextItemSelected(item)
         }
         return true
@@ -167,14 +172,13 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
 
     private fun uninstallApp(name: CharSequence, pkg: String) {
         when {
+            HPackages.isAppUninstalled(pkg) -> HUI.showToast(R.string.app_not_installed)
+
             pkg == app.packageName -> {
                 when {
                     HPolicy.isDeviceOwnerActive -> activity.ownerRemoveDialog()
-                    HPolicy.isAdminActive -> {
-                        HPolicy.removeActiveAdmin()
-                        showUninstallDialog(name, pkg)
-                    }
-
+                    HPolicy.isProfileOwner -> HPolicy.removeProfileOwner()
+                    HPolicy.isAdminActive -> HPolicy.removeActiveAdmin()
                     else -> showUninstallDialog(name, pkg)
                 }
             }
