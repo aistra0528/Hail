@@ -42,7 +42,7 @@
     <string name="working_mode">حالت کاری</string>
     <string name="mode_default">بی‌کار</string>
     <string name="mode_owner_hide">مالک افزاره - نهفتن</string>
-    <string name="mode_su_suspend">ابرکاربر - تعلیق</string>
+    <string name="mode_su_suspend">ریشه - تعلیق</string>
     <string name="mode_shizuku_disable">شیزوکو - از کار انداختن</string>
     <string name="mode_shizuku_hide">شیوزوکو - نهفتن</string>
     <string name="mode_shizuku_suspend">شیزوکو - تعلیق</string>
@@ -88,7 +88,7 @@
     <string name="title_shortcuts">میان‌برها</string>
     <string name="action_none">هیچ‌کدام</string>
     <string name="action_extract_apk">استخراج APK</string>
-    <string name="mode_su_disable">ابرکاربر - از کار انداختن</string>
+    <string name="mode_su_disable">ریشه - غیر فعال کردن</string>
     <string name="action_uninstall">حذف نصب</string>
     <string name="mode_owner_suspend">مالک افزاره - تعلیق</string>
     <string name="msg_imported">درون ریخته: %s</string>
@@ -96,4 +96,58 @@
 \n%s</string>
     <string name="donate_alipay">علی‌پی</string>
     <string name="donate_bilibili_cancel">\@android:string/cancel</string>
+    <string name="synthesize_adaptive_icons">نمادهای تطبیقی را ترکیب کنید</string>
+    <string name="skip_notifying_app">رد شدن از برنامه اطلاع رسانی</string>
+    <string name="action_terminal">ترمینال</string>
+    <string name="tile_action">اقدام کاشی</string>
+    <string name="auto_freeze_notification_title">سرویس انجماد خودکار در حال اجرا است</string>
+    <string name="auto_freeze_after_lock">بعد از قفل شدن صفحه</string>
+    <string name="skip_foreground_app">رد شدن از برنامه پیش زمینه</string>
+    <string name="action_export_all">صادر کردن همه</string>
+    <string name="action_import_app">وارد کردن برنامه</string>
+    <string name="action_export_current">صادرات قابل مشاهده</string>
+    <plurals name="deferred_task_entry">
+        <item quantity="one">%d دقیقه</item>
+        <item quantity="other">%d دقایق</item>
+    </plurals>
+    <string name="mode_island_suspend">جزیره / جزیره ای - تعلیق</string>
+    <string name="command">فرمان</string>
+    <string name="tag">برچسب</string>
+    <string name="action_continue">ادامه</string>
+    <string name="mode_island_hide">جزیره / جزیره ای - پنهان کردن</string>
+    <string name="action_deferred_task">کار معوق</string>
+    <string name="mode_dhizuku_hide">دیزوکو - پنهان کردن</string>
+    <string name="mode_privapp_disable">برنامه سیستم - غیرفعال کنید</string>
+    <string name="action_clear_dynamic_shortcuts">تمام میانبرهای پویا را پاک کنید</string>
+    <string name="dynamic_shortcut_action">اقدام میانبر پویا</string>
+    <string name="action_freeze_tag">برچسب فریز</string>
+    <string name="icon_pack">بسته آیکون</string>
+    <string name="action_select_all">انتخاب همه</string>
+    <string name="mode_su_hide">ریشه - پنهان کردن</string>
+    <string name="action_fdroid">F-Droid</string>
+    <string name="action_skip">پرش کنید</string>
+    <string name="msg_remove_owner">اگر Hail به عنوان مالک دستگاه حذف شود، ممکن است پس از حذف Hail در سازماندهی مجدد برنامه‌ها مشکلاتی وجود داشته باشد.
+\n برنامه‌های Frozen پس از حذف ثابت می‌مانند، لطفاً مطمئن شوید که برنامه‌های مهم را از حالت فریز خارج کرده‌اید.</string>
+    <string name="permission_denied">اجازه رد شد</string>
+    <string name="activity_not_found">فعالیت راه اندازی یافت نشد</string>
+    <string name="skip_while_charging">هنگام شارژ شدن از آن بگذرید</string>
+    <string name="msg_biometric">با استفاده از اعتبار بیومتریک خود وارد شوید</string>
+    <string name="action_import_frozen">وارد کردن برنامه منجمد شده</string>
+    <string name="auto_freeze_delay">تاخیر فریز (دقیقه)</string>
+    <string name="mode_dhizuku_suspend">دیزوکو - تعلیق</string>
+    <string name="msg_guide">قبل از انجماد برنامه‌ها، لطفاً یک حالت کار را در تنظیمات انتخاب کنید.</string>
+    <string name="action_unfreeze_tag">باز کردن برچسب</string>
+    <string name="freeze_system_app">مسدود کردن یا حذف برنامه های سیستمی ممکن است باعث بوت لوپ شدن دستگاه شود. مطمئن شوید که می دانید چه کاری انجام می دهید و از اطلاعات خود نسخه پشتیبان تهیه کنید یا از بازیابی استفاده کنید که از مدیریت فایل پشتیبانی می کند.</string>
+    <string name="fuzzy_search">جستجوی فازی</string>
+    <string name="mode_privapp_stop">برنامه سیستم - توقف اجباری</string>
+    <string name="mode_shizuku_stop">شیزوکو - توقف اجباری</string>
+    <string name="mode_su_stop">ریشه - توقف اجباری</string>
+    <string name="shizuku_hide_adb">شیزوکو به عنوان adb اجرا می‌شود برای مخفی کردن برنامه ها،لطفا شیزوکو را مجدد با دسترسی روت راه اندازی کنید.</string>
+    <string name="action_reinstall">دوباره نصب کنید</string>
+    <string name="nine_key">جستجوی T9</string>
+    <plurals name="msg_deferred_task">
+        <item quantity="one">%2$s بعد از %1$d دقیقه: %3$s</item>
+        <item quantity="other">%2$s بعد از %1$d دقیقه: %3$s</item>
+    </plurals>
+    <string name="home_font_size">اندازه فونت خانه</string>
 </resources>
