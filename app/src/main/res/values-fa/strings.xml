@@ -17,8 +17,8 @@
     <string name="action_licenses">پروانه‌ها</string>
     <string name="action_freeze_all">انجماد همه</string>
     <string name="action_unfreeze_all">یخ‌زدایی از همه</string>
-    <string name="action_freeze_current">انجماد کنونی</string>
-    <string name="action_unfreeze_current">یخ‌زدایی از کنونی</string>
+    <string name="action_freeze_current">فریز کردن قابل مشاهده</string>
+    <string name="action_unfreeze_current">یخ زدایی قابل مشاهده</string>
     <string name="action_freeze_non_whitelisted">انجماد سفید نشده</string>
     <string name="action_lock">قفل</string>
     <string name="action_lock_freeze">قفل و انجماد</string>
