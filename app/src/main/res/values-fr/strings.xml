@@ -135,7 +135,7 @@
     <string name="activity_not_found">Pas d\'activité</string>
     <string name="title_set_owner">Régler le propriétaire de l\'appareil</string>
     <string name="app_name">Hail</string>
-    <string name="dynamic_shortcut_action">Action de raccourci dynamique</string>
+    <string name="dynamic_shortcut_action1">Action de raccourci dynamique</string>
     <string name="auto_freeze_delay">Délai gel (minutes)</string>
     <string name="skip_notifying_app">Passer les notifications d\'application</string>
     <string name="filter_unfrozen_apps">Dégelé</string>

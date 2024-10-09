@@ -134,8 +134,10 @@
     <string name="action_freeze_current">تجميد مرئي</string>
     <string name="msg_extract_apk">مستخرج إلى: %s</string>
     <string name="action_freeze_non_whitelisted">تجميد باستشناء القائمة البيضاء</string>
-    <string name="action_unfreeze_current">إلغاء تجميد مرئي</string>
-    <string name="dynamic_shortcut_action">إجراء اختصار ديناميكي</string>
+
+    <string name="action_unfreeze_current">إلغاء تجميد الحالية</string>
+    <string name="dynamic_shortcut_action1">عمل الإختصار الديناميكي</string>
+
     <string name="auto_freeze_delay">تأخير التجميد (بالدقائق)</string>
     <string name="action_freeze_all">تجميد الكل</string>
     <string name="skip_notifying_app">تخطي تطبيق الإخطار</string>

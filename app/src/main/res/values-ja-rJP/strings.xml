@@ -118,7 +118,7 @@
     <string name="action_freeze_non_whitelisted">ホワイトリスト以外を凍結</string>
     <string name="title_shortcuts">ショートカット</string>
     <string name="msg_guide">アプリを凍結する前に、設定から動作モードを選択してください。</string>
-    <string name="dynamic_shortcut_action">動的ショートカット動作</string>
+    <string name="dynamic_shortcut_action1">動的ショートカット動作</string>
     <string name="action_none">なし</string>
     <string name="mode_shizuku_hide">Shizuku - 非表示にする</string>
     <string name="action_freeze_tag">タグを凍結</string>

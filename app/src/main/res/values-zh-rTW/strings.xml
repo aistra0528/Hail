@@ -122,7 +122,7 @@
     <string name="action_freeze_non_whitelisted">凍結非白名單</string>
     <string name="title_shortcuts">捷徑</string>
     <string name="msg_guide">在凍結應用程式前，請先在設定中選取一個工作模式。</string>
-    <string name="dynamic_shortcut_action">動態捷徑動作</string>
+    <string name="dynamic_shortcut_action1">動態捷徑動作</string>
     <string name="action_none">無</string>
     <string name="mode_shizuku_hide">Shizuku - 隱藏</string>
     <string name="action_freeze_tag">標籤凍結</string>

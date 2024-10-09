@@ -92,7 +92,7 @@
     <string name="action_clear_dynamic_shortcuts">Ачысціць ўсе дынамічныя цэтлікі</string>
     <string name="tile_action">Дзеянне пліткі</string>
     <string name="auto_freeze_after_lock">Пасля блакіроўкі экрана</string>
-    <string name="dynamic_shortcut_action">Дзеянне дынамічнага цэтліка</string>
+    <string name="dynamic_shortcut_action1">Дзеянне дынамічнага цэтліка</string>
     <string name="action_freeze_tag">Замарозіць тэг</string>
     <string name="action_biometric">Біяметрычны ўваход</string>
     <string name="msg_biometric">Уваход з дапамогай біяметрычных дадзеных</string>

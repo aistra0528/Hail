@@ -114,7 +114,7 @@
     <string name="title_settings">Налаштування</string>
     <string name="title_shortcuts">Ярлики</string>
     <string name="working_mode">Робочий режим</string>
-    <string name="dynamic_shortcut_action">Дія динамічного ярлика</string>
+    <string name="dynamic_shortcut_action1">Дія динамічного ярлика</string>
     <string name="action_none">Немає</string>
     <string name="mode_shizuku_hide">Shizuku - Приховати</string>
     <plurals name="deferred_task_entry">

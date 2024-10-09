@@ -72,6 +72,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 .contains(requireContext().packageName)
             if (value == true && !isGranted) {
                 app.setAutoFreezeServiceEnabled(true)
+                app.setAutoUnFreezeServiceEnabled(true)
                 startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 false
             } else true
@@ -79,6 +80,20 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         findPreference<Preference>(HailData.AUTO_FREEZE_AFTER_LOCK)?.setOnPreferenceChangeListener { _, autoFreezeAfterLock ->
             app.setAutoFreezeService(autoFreezeAfterLock as Boolean)
             true
+        }
+        findPreference<Preference>(HailData.AUTO_UNFREEZE_AFTER_UNLOCK)?.setOnPreferenceChangeListener { _, autoUnFreezeAfterUnLock ->
+            if (autoUnFreezeAfterUnLock == true && !HSystem.checkOpOverlayStats(requireContext())) {
+                startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                false
+            }
+            else if(autoUnFreezeAfterUnLock == true && !HSystem.checkOpUsageStats(requireContext())) {
+                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                false
+            }
+            else
+                {app.setAutoUnFreezeService(autoUnFreezeAfterUnLock as Boolean)
+                true}
+
         }
         findPreference<Preference>(HailData.ICON_PACK)?.setOnPreferenceClickListener {
             iconPackDialog()
@@ -89,13 +104,18 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             true
         }
         findPreference<Preference>(HailData.DYNAMIC_SHORTCUT_ACTION)?.setOnPreferenceChangeListener { _, action ->
-            HShortcuts.removeAllDynamicShortcuts()
+            //HShortcuts.removeAllDynamicShortcuts()
+            HShortcuts.addDynamicShortcutAction(action as String)
+            true
+        }
+        findPreference<Preference>(HailData.DYNAMIC_SHORTCUT_ACTION_TWO)?.setOnPreferenceChangeListener { _, action ->
+            //HShortcuts.removeAllDynamicShortcuts()
             HShortcuts.addDynamicShortcutAction(action as String)
             true
         }
         findPreference<Preference>("clear_dynamic_shortcuts")?.setOnPreferenceClickListener {
             HShortcuts.removeAllDynamicShortcuts()
-            HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
+            //HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
             true
         }
     }
