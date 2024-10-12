@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="action_unfreeze">동결 해제하기</string>
+    <string name="label_default">기본</string>
+    <string name="label_version">버전</string>
+    <string name="action_translate">번역 참여하기</string>
+    <string name="app_name">Hail</string>
+    <string name="app_slogan">Freezedom!</string>
+    <string name="title_home">홈</string>
+    <string name="title_apps">앱</string>
+    <string name="title_settings">설정</string>
+    <string name="title_about">앱 정보</string>
+    <string name="label_time">설치일자</string>
+    <string name="action_telegram">텔레그램 그룹</string>
+    <string name="action_qq">QQ 그룹</string>
+    <string name="action_donate">기부하기</string>
+    <string name="action_github">GitHub</string>
+    <string name="action_licenses">오픈소스 라이선스</string>
+    <string name="action_freeze_all">모든 앱 동결</string>
+    <string name="action_unfreeze_all">모든 앱 동결 해제</string>
+    <string name="action_freeze_current">현 태그 동결</string>
+    <string name="action_unfreeze_current">현 태그 동결 해제</string>
+    <string name="action_freeze_non_whitelisted">모든 앱 동결(화이트리스트 제외)</string>
+    <string name="action_lock">화면 잠금</string>
+    <string name="action_lock_freeze">화면 잠금 &amp; 모든 앱 동결</string>
+    <string name="action_launch">실행하기</string>
+    <string name="action_freeze">동결하기</string>
+</resources>
