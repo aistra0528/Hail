@@ -60,11 +60,14 @@ object HailData {
     private const val TILE_ACTION = "tile_action"
     private const val HOME_FONT_SIZE = "home_font_size"
     const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
+    const val DYNAMIC_SHORTCUT_ACTION_TWO = "dynamic_shortcut_action_two"
     const val ACTION_NONE = "none"
     const val ACTION_FREEZE_ALL = "freeze_all"
     const val ACTION_FREEZE_NON_WHITELISTED = "freeze_non_whitelisted"
     const val ACTION_LOCK = "lock"
     const val ACTION_LOCK_FREEZE = "lock_freeze"
+    const val ACTION_UNLOCK = "unlock"
+    const val ACTION_UNLOCK_UNFREEZE = "unlock_unfreeze"
     private const val SORT_BY = "sort_by"
     const val SORT_NAME = "name"
     const val SORT_INSTALL = "install"
@@ -85,6 +88,7 @@ object HailData {
     private const val COMPACT_ICON = "compact_icon"
     private const val SYNTHESIZE_ADAPTIVE_ICONS = "synthesize_adaptive_icons"
     const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
+    const val AUTO_UNFREEZE_AFTER_UNLOCK = "auto_unfreeze_after_unlock"
     private const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
@@ -105,6 +109,7 @@ object HailData {
     val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+    val autoUnFreezeAfterUnLock get() = sp.getBoolean(AUTO_UNFREEZE_AFTER_UNLOCK, false)
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)

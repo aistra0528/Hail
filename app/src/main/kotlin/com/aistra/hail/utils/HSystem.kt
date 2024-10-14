@@ -39,6 +39,9 @@ object HSystem {
     fun checkOpUsageStats(context: Context): Boolean =
         checkOp(context, AppOpsManager.OPSTR_GET_USAGE_STATS)
 
+    fun checkOpOverlayStats(context: Context): Boolean =
+        checkOp(context, AppOpsManager.OPSTR_SYSTEM_ALERT_WINDOW)
+
     fun isForegroundApp(context: Context, packageName: String): Boolean {
         val usageStatsManager = context.getSystemService<UsageStatsManager>()!!
         val now = System.currentTimeMillis()

@@ -32,6 +32,11 @@ object HDhizuku {
             dpm.lockNow()
             true
         }.getOrDefault(false)
+    val unlockScreen: Boolean
+        get() = runCatching {
+            dpm.lockNow()
+            true
+        }.getOrDefault(false)
 
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean = runCatching {
         HTarget.O && dpm::class.java.getMethod(

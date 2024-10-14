@@ -104,6 +104,14 @@
                 app:title="@string/skip_notifying_app"/>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/auto_unfreeze">
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:icon="@drawable/ic_baseline_screen_lock"
+        app:key="auto_unfreeze_after_unlock"
+        app:singleLineTitle="false"
+        app:title="@string/auto_unfreeze_after_unlock"/>
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/title_shortcuts">
         <Preference
@@ -116,7 +124,15 @@
                 app:entryValues="@array/dynamic_shortcut_action_values"
                 app:icon="@drawable/ic_outline_app_shortcut"
                 app:key="dynamic_shortcut_action"
-                app:title="@string/dynamic_shortcut_action"
+                app:title="@string/dynamic_shortcut_action1"
+                app:useSimpleSummaryProvider="true"/>
+        <rikka.preference.SimpleMenuPreference
+                app:defaultValue="none"
+                app:entries="@array/dynamic_shortcut_action_entries"
+                app:entryValues="@array/dynamic_shortcut_action_values"
+                app:icon="@drawable/ic_outline_app_shortcut"
+                app:key="dynamic_shortcut_action_two"
+                app:title="@string/dynamic_shortcut_action2"
                 app:useSimpleSummaryProvider="true"/>
         <Preference
                 app:icon="@drawable/ic_outline_cleaning"

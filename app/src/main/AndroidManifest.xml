@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission
             android:name="android.permission.PACKAGE_USAGE_STATS"
             tools:ignore="ProtectedPermissions"/>
@@ -29,7 +30,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="com.oasisfeng.island.permission.FREEZE_PACKAGE"/>
     <uses-permission android:name="com.oasisfeng.island.permission.SUSPEND_PACKAGE"/>
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <application
             android:name=".HailApp"
             android:allowBackup="true"
@@ -99,6 +100,9 @@
                 android:name=".receiver.ScreenOffReceiver"
                 android:exported="false"/>
         <receiver
+                android:name=".receiver.ScreenOnReceiver"
+                android:exported="false"/>
+        <receiver
                 android:name=".receiver.UnsuspendedReceiver"
                 android:exported="false">
             <intent-filter>
@@ -115,6 +119,16 @@
                 android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+        <service
+                android:name=".services.AutoUnFreezeService"
+                android:foregroundServiceType="specialUse"
+                android:exported="true"
+                android:label="@string/auto_unfreeze"
+                android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
         </service>
         <service

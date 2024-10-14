@@ -81,7 +81,7 @@
     <string name="auto_freeze_delay">منجمد تاخیر (منٹ)</string>
     <string name="title_shortcuts">شارٹ کٹس</string>
     <string name="msg_guide">ایپلیکیشنز کو منجمد کرنے سے پہلے، براہ کرم سیٹنگز میں ایک ورکنگ موڈ منتخب کریں۔</string>
-    <string name="dynamic_shortcut_action">متحرک شارٹ کٹ ایکشن</string>
+    <string name="dynamic_shortcut_action1">متحرک شارٹ کٹ ایکشن</string>
     <string name="action_none">کوئی نہیں</string>
     <string name="action_freeze_tag">منجمد ٹیگ</string>
     <string name="action_unfreeze_tag">ٹیگ کو غیر منجمد کریں</string>

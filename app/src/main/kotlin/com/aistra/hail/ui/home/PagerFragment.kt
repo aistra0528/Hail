@@ -103,10 +103,10 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
             true
         }
         activity.fab.setOnClickListener {
-            setListFrozen(true, pagerAdapter.currentList.filterNot { it.whitelisted })
+            setListFrozen(true)
         }
         activity.fab.setOnLongClickListener {
-            setListFrozen(true)
+            setListFrozen(false)
             true
         }
     }

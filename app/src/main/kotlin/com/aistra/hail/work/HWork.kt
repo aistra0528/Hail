@@ -37,4 +37,14 @@ object HWork {
             }
         )
     }
+    fun setAutoUnFreeze(screenOn: Boolean) {
+        WorkManager.getInstance(app).enqueueUniqueWork(
+            HailApi.ACTION_UNFREEZE_ALL,
+            ExistingWorkPolicy.REPLACE,  // in case the old task has not been executed...
+            OneTimeWorkRequestBuilder<AutoUnFreezeWorker>().run {
+                setInputData(workDataOf(HailData.ACTION_UNLOCK to screenOn))
+                build()
+            }
+        )
+    }
 }
