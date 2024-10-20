@@ -66,7 +66,7 @@
     <string name="action_tag_set">Definir tag</string>
     <string name="app_not_installed">Aplicativo não instalado</string>
     <string name="sort_by">Ordenar por</string>
-    <string name="mode_su_hide">Superusuário - Oculto</string>
+    <string name="mode_su_hide">Root - Ocultar</string>
     <string name="action_details">Informações do App</string>
     <string name="title_donate">Obrigado!</string>
     <string name="compact_icon">Ícone compacto</string>
@@ -139,4 +139,17 @@
     <string name="action_skip">Pular</string>
     <string name="mode_island_hide">Island/Insular - Ocultar</string>
     <string name="mode_island_suspend">Island/Insular - Suspender</string>
+    <string name="tag">Tag</string>
+    <string name="mode_privapp_disable">Apps do Sistema - Desabilitar</string>
+    <string name="freeze_system_app">Congelar ou desinstalar aplicativos do sistema pode fazer com que o dispositivo entre em bootloop. Certifique-se de saber o que está fazendo e faça backup dos seus dados com antecedência ou use recuperação que suporte gerenciamento de arquivos.</string>
+    <string name="fuzzy_search">Pesquisa Fuzzy</string>
+    <string name="shizuku_hide_adb">Shizuku está rodando como adb. Para ocultar apps, reinicie Shizuku com root.</string>
+    <string name="command">Comando</string>
+    <string name="action_continue">Continuar</string>
+    <string name="home_font_size">Tamanho da fonte inicial</string>
+    <string name="mode_shizuku_stop">Shizuku - Forçar Parada</string>
+    <string name="mode_privapp_stop">Apps do Sistema - Forçar Parada</string>
+    <string name="mode_su_stop">Root - Forçar Parada</string>
+    <string name="action_reinstall">Reinstalar</string>
+    <string name="nine_key">Pesquisa T9</string>
 </resources>
