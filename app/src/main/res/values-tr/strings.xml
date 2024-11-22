@@ -6,7 +6,7 @@
     <string name="title_about">Hakkında</string>
     <string name="label_default">Varsayılan</string>
     <string name="label_version">Sürüm</string>
-    <string name="label_time">Kurulma zamanı</string>
+    <string name="label_time">Kurulum süresi</string>
     <string name="action_donate">Bağış</string>
     <string name="action_github">GitHub</string>
     <string name="action_licenses">Lisanslar</string>
@@ -40,7 +40,7 @@
     <string name="mode_su_suspend">Root - Askıya al</string>
     <string name="mode_shizuku_disable">Shizuku - Devre dışı bırak</string>
     <string name="mode_default">Yok</string>
-    <string name="action_translate">Çeviri - croxz900</string>
+    <string name="action_translate">Çeviri</string>
     <string name="mode_shizuku_hide">Shizuku - Gizle</string>
     <string name="mode_shizuku_suspend">Shizuku - Askıya al</string>
     <string name="title_set_owner">Cihaz yöneticisi ayarla</string>
@@ -143,9 +143,11 @@
     <string name="action_continue">Devam et</string>
     <string name="nine_key">T9 Arama</string>
     <string name="home_font_size">Ana ekran yazı tipi boyutu</string>
-    <string name="freeze_system_app">Sistem uygulamalarının dondurulması aygıtın önyükleme döngüsüne girmesine neden olabilir. Ne yaptığınızı bildiğinizden emin olun ve verilerinizi önceden yedekleyin veya dosya yönetimini destekleyen kurtarma kullanın.</string>
+    <string name="freeze_system_app">Sistem uygulamalarının dondurulması veya kaldırılması önyükleme döngüsüne girmesine neden olabilir. Ne yaptığınızı bildiğinizden emin olun, verilerinizi önceden yedekleyin veya dosya yönetimini destekleyen kurtarma kullanın.</string>
     <string name="mode_privapp_disable">Sistem Uygulaması - Devre Dışı Bırak</string>
     <string name="mode_shizuku_stop">Shizuku - Durdurmaya Zorla</string>
     <string name="mode_privapp_stop">Sistem Uygulaması - Durdurmaya Zorla</string>
     <string name="mode_su_stop">Root - Durdurmaya Zorla</string>
+    <string name="action_reinstall">Yeniden yükle</string>
+    <string name="fuzzy_search">Yaklaşık Arama</string>
 </resources>
