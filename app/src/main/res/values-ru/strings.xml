@@ -141,7 +141,7 @@
     <string name="mode_island_suspend">Island/Insular - Отключить</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="shizuku_hide_adb">Shizuku работает по adb. Чтобы скрыть приложения, пожалуйста, перезапустите Shizuku с рут правами.</string>
-    <string name="freeze_system_app">Заморозка системных приложений может привести к бутлупу. Убедитесь, что вы знаете, что делаете, и заранее сделайте резервную копию своих данных или используйте рекавери, поддерживающее управление файлами.</string>
+    <string name="freeze_system_app">Заморозка или удаление системных приложений может привести к бутлупу. Убедитесь, что вы знаете, что делаете, и заранее сделайте резервную копию своих данных или используйте рекавери, поддерживающее управление файлами.</string>
     <string name="action_continue">Продолжить</string>
     <string name="command">Команда</string>
     <string name="tag">Тег</string>

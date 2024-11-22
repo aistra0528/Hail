@@ -39,8 +39,8 @@
     <string name="working_mode">Mode kerja</string>
     <string name="mode_owner_hide">Pemilik Perangkat - Sembunyikan</string>
     <string name="mode_su_suspend">Root - Tangguhkan</string>
-    <string name="mode_su_disable">Root - Matikan</string>
-    <string name="mode_shizuku_disable">Shizuku - Matikan</string>
+    <string name="mode_su_disable">Root - Nonaktifkan</string>
+    <string name="mode_shizuku_disable">Shizuku - Nonaktifkan</string>
     <string name="mode_shizuku_suspend">Shizuku - Tangguhkan</string>
     <string name="activity_not_found">Peluncur tidak ditemukan</string>
     <string name="tap_to_select">Tandai pilihan</string>
@@ -142,7 +142,7 @@
     <string name="nine_key">Keyboard numerik</string>
     <string name="home_font_size">Ukuran font Home</string>
     <string name="freeze_system_app">Membekukan atau menghapus aplikasi sistem dapat menyebabkan bootloop pada perangkat anda. Pastikan anda mengetahui apa yang dilakukan dan telah mencadangkan data sebelumnya.</string>
-    <string name="mode_privapp_disable">Aplikasi Sistem - Matikan</string>
+    <string name="mode_privapp_disable">Aplikasi Sistem - Nonaktifkan</string>
     <string name="mode_privapp_stop">Aplikasi Sistem - Paksa Berhenti</string>
     <string name="mode_shizuku_stop">Shizuku - Paksa Berhenti</string>
     <string name="mode_su_stop">Root - Paksa Berhenti</string>
