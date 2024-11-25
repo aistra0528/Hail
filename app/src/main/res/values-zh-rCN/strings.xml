@@ -142,7 +142,7 @@
     <string name="action_continue">继续</string>
     <string name="command">命令</string>
     <string name="tag">标签</string>
-    <string name="nine_key">九键搜索</string>
+    <string name="nine_key">T9 搜索</string>
     <string name="home_font_size">首页字体大小</string>
     <string name="mode_privapp_disable">系统应用 - 停用</string>
     <string name="mode_shizuku_stop">Shizuku - 强行停止</string>
