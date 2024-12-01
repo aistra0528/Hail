@@ -38,7 +38,8 @@ class ApiActivity : AppCompatActivity() {
                     true, HailData.checkedList.filter { it.tagId == requireTagId }, true
                 )
 
-                HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(false,
+                HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(
+                    false,
                     HailData.checkedList.filter { it.tagId == requireTagId })
 
                 HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
@@ -97,9 +98,8 @@ class ApiActivity : AppCompatActivity() {
 
     private fun launchApp(pkg: String, tagId: Int? = null) {
         if (tagId != null) setListFrozen(false, HailData.checkedList.filter { it.tagId == tagId })
-        if (AppManager.isAppFrozen(pkg)) {
-            if (AppManager.setAppFrozen(pkg, false)) app.setAutoFreezeService()
-            else throw IllegalStateException(getString(R.string.permission_denied))
+        if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false)) {
+            app.setAutoFreezeService()
         }
         packageManager.getLaunchIntentForPackage(pkg)?.let {
             HShortcuts.addDynamicShortcut(pkg)
