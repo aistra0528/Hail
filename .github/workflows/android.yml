@@ -28,15 +28,14 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+          distribution: 'temurin'
+          java-version: '21'
       - name: Build with Gradle
-        run: ./gradlew assembleDebug
+        run: |
+          echo "commit=$(echo ${{ github.sha }} | cut -c-7)" >> $GITHUB_ENV
+          ./gradlew assembleDebug
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Debug
-          path: app/build/outputs/apk/debug
-          retention-days: 7
+          name: Hail@${{ env.commit }}
+          path: app/build/outputs/apk/debug/*.apk

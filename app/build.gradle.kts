@@ -4,6 +4,12 @@ plugins {
 }
 
 android {
+    val signingProps = file("../signing.properties")
+    val commitShort = providers.exec {
+        workingDir = rootDir
+        commandLine = "git rev-parse --short HEAD".split(" ")
+    }.standardOutput.asText.get().trim()
+
     namespace = "com.aistra.hail"
     buildToolsVersion = "35.0.0"
     compileSdk = 35
@@ -16,28 +22,23 @@ android {
         versionName = "1.9.0"
     }
 
-    // Do not compress the dex files, so the apk can be imported as a privileged app
-    androidResources {
-        noCompress += "dex"
-    }
-
-    val signing = if (file("../signing.properties").exists()) {
-        signingConfigs.create("release") {
-            val props = `java.util`.Properties().apply { load(file("../signing.properties").reader()) }
-            storeFile = file(props.getProperty("storeFile"))
-            storePassword = props.getProperty("storePassword")
-            keyAlias = props.getProperty("keyAlias")
-            keyPassword = props.getProperty("keyPassword")
-        }
-    } else signingConfigs.getByName("debug")
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
+            versionNameSuffix = ".$commitShort"
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signing
+            signingConfig = if (signingProps.exists()) {
+                val props = `java.util`.Properties().apply { load(signingProps.reader()) }
+                signingConfigs.create("release") {
+                    storeFile = file(props.getProperty("storeFile"))
+                    storePassword = props.getProperty("storePassword")
+                    keyAlias = props.getProperty("keyAlias")
+                    keyPassword = props.getProperty("keyPassword")
+                }
+            } else signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
@@ -49,15 +50,18 @@ android {
                 "Hail-v$versionName.apk"
         }
     }
-    compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_17)
-        targetCompatibility(JavaVersion.VERSION_17)
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
     }
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        jvmToolchain(21)
     }
     androidResources {
         generateLocaleConfig = true
+        // Do not compress the dex files, so the apk can be imported as a privileged app
+        noCompress += "dex"
     }
     buildFeatures {
         viewBinding = true
@@ -89,6 +93,6 @@ dependencies {
     implementation("io.github.iamr0s:Dhizuku-API:2.5.3")
     implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
     implementation("org.apache.commons:commons-text:1.12.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
 }
