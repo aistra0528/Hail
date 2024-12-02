@@ -16,6 +16,14 @@
             app:title="@string/action_biometric"/>
 
     <PreferenceCategory android:title="@string/title_customize">
+        <rikka.preference.SimpleMenuPreference
+                app:defaultValue="follow_system"
+                app:entries="@array/app_theme_entries"
+                app:entryValues="@array/app_theme_values"
+                app:icon="@drawable/ic_baseline_dark_mode"
+                app:key="app_theme"
+                app:title="@string/app_theme"
+                app:useSimpleSummaryProvider="true"/>
         <Preference
                 app:icon="@drawable/ic_outline_palette"
                 app:key="icon_pack"

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
@@ -14,17 +15,14 @@ class HailApp : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
-        // DynamicColors.applyToActivitiesIfAvailable(app)
         // DirtyDataUpdater.update(app)
+        setAppTheme(HailData.appTheme)
         if (HailData.workingMode.startsWith(HailData.DHIZUKU)) HDhizuku.init()
     }
 
     fun setAutoFreezeService(autoFreezeAfterLock: Boolean = HailData.autoFreezeAfterLock) {
         val start = autoFreezeAfterLock && HailData.checkedList.any {
-            it.packageName != packageName
-                    && it.applicationInfo != null
-                    && !AppManager.isAppFrozen(it.packageName)
-                    && !it.whitelisted
+            it.packageName != packageName && it.applicationInfo != null && !AppManager.isAppFrozen(it.packageName) && !it.whitelisted
         }
         val intent = Intent(app, AutoFreezeService::class.java)
         if (start) {
@@ -43,6 +41,14 @@ class HailApp : Application() {
             PackageManager.DONT_KILL_APP
         )
     }
+
+    fun setAppTheme(theme: String) = AppCompatDelegate.setDefaultNightMode(
+        when (theme) {
+            HailData.THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            HailData.THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
+    )
 
     companion object {
         lateinit var app: HailApp private set

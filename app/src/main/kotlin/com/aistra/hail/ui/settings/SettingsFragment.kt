@@ -80,6 +80,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             app.setAutoFreezeService(autoFreezeAfterLock as Boolean)
             true
         }
+        findPreference<Preference>(HailData.APP_THEME)?.setOnPreferenceChangeListener { _, value ->
+            app.setAppTheme(value as String)
+            true
+        }
         findPreference<Preference>(HailData.ICON_PACK)?.setOnPreferenceClickListener {
             iconPackDialog()
             true

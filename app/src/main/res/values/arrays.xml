@@ -67,6 +67,16 @@
         <item>privapp_stop</item>
         <item>privapp_disable</item>
     </string-array>
+    <string-array name="app_theme_entries">
+        <item>@string/follow_system</item>
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+    </string-array>
+    <string-array name="app_theme_values">
+        <item>follow_system</item>
+        <item>theme_light</item>
+        <item>theme_dark</item>
+    </string-array>
     <string-array name="donate_payment_entries">
         <item>@string/donate_alipay</item>
         <item>@string/donate_wechat</item>

@@ -80,6 +80,10 @@ object HailData {
     private const val BIOMETRIC_LOGIN = "biometric_login"
     private const val FUZZY_SEARCH = "fuzzy_search"
     private const val NINE_KEY_SEARCH = "nine_key"
+    const val APP_THEME = "app_theme"
+    private const val FOLLOW_SYSTEM = "follow_system"
+    const val THEME_LIGHT = "theme_light"
+    const val THEME_DARK = "theme_dark"
     const val ICON_PACK = "icon_pack"
     private const val GRAYSCALE_ICON = "grayscale_icon"
     private const val COMPACT_ICON = "compact_icon"
@@ -113,6 +117,7 @@ object HailData {
     val fuzzySearch get() = sp.getBoolean(FUZZY_SEARCH, false)
     val nineKeySearch get() = sp.getBoolean(NINE_KEY_SEARCH, false)
 
+    val appTheme get() = sp.getString(APP_THEME, FOLLOW_SYSTEM)!!
     val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE)!!
     fun setIconPack(packageName: String) = sp.edit().putString(ICON_PACK, packageName).apply()
 
