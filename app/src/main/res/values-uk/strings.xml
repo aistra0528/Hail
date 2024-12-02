@@ -154,4 +154,8 @@
     <string name="mode_privapp_stop">Системний застосунок - Примусово зупинити</string>
     <string name="action_reinstall">Перевстановити</string>
     <string name="fuzzy_search">Нечіткий пошук</string>
+    <string name="app_theme">Тема застосунку</string>
+    <string name="follow_system">Як в системі</string>
+    <string name="theme_light">Світла</string>
+    <string name="theme_dark">Темна</string>
 </resources>
