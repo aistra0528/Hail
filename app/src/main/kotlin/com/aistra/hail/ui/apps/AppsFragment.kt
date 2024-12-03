@@ -207,7 +207,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
         inflater.inflate(R.menu.menu_apps, menu)
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         if (HailData.nineKeySearch) {
-            val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+            val editText = searchView.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
             editText.inputType = InputType.TYPE_CLASS_PHONE
         }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

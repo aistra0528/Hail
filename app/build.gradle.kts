@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -30,6 +31,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            versionNameSuffix = ".$commitShort"
             signingConfig = if (signingProps.exists()) {
                 val props = `java.util`.Properties().apply { load(signingProps.reader()) }
                 signingConfigs.create("release") {
@@ -66,6 +68,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
     dependenciesInfo {
         includeInApk = false
@@ -74,6 +77,12 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.biometric.ktx)
     implementation(libs.androidx.constraintlayout)
@@ -87,11 +96,11 @@ dependencies {
     implementation(libs.pinyin4j)
     implementation(libs.material)
     implementation(libs.insetter)
-    implementation(libs.simplemenu.preference)
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
     implementation(libs.dhizuku.api)
     implementation(libs.appiconloader)
+    implementation(libs.compose.preference)
     implementation(libs.commons.text)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hiddenapibypass)

@@ -1,23 +1,12 @@
 Android Jetpack (Apache 2.0): https://developer.android.com/jetpack
-
 Chinese to Pinyin (BSD): https://github.com/belerweb/pinyin4j
-
 Material Components for Android (Apache 2.0): https://github.com/material-components/material-components-android
-
 Insetter (Apache 2.0): https://github.com/chrisbanes/insetter
-
-RikkaX (MIT): https://github.com/RikkaApps/RikkaX
-
 Shizuku (Apache 2.0): https://github.com/RikkaApps/Shizuku
-
 Shizuku-API (MIT): https://github.com/RikkaApps/Shizuku-API
-
 Dhizuku-API (MIT): https://github.com/iamr0s/Dhizuku-API
-
 AppIconLoader (Apache 2.0): https://github.com/zhanghai/AppIconLoader
-
+Compose Preference (Apache 2.0): https://github.com/zhanghai/ComposePreference
 Apache Commons Text (Apache 2.0): https://github.com/apache/commons-text
-
 Kotlin (Apache 2.0): https://kotlinlang.org
-
 AndroidHiddenApiBypass (Apache 2.0): https://github.com/LSPosed/AndroidHiddenApiBypass

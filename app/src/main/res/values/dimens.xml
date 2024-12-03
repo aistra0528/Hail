@@ -1,9 +1,9 @@
 <resources>
     <dimen name="header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="container_margin">16dp</dimen>
-    <dimen name="control_margin">4dp</dimen>
-    <dimen name="control_padding">8dp</dimen>
-    <dimen name="dialog_padding">24dp</dimen>
     <dimen name="app_icon_size">64dp</dimen>
+    <dimen name="padding_extra_small">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
 </resources>

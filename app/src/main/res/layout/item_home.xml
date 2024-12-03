@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="@dimen/control_margin"
+              android:layout_margin="@dimen/padding_extra_small"
               android:background="?selectableItemBackgroundBorderless"
               android:gravity="center_horizontal"
               android:orientation="vertical"
@@ -14,7 +14,7 @@
             android:layout_width="@dimen/app_icon_size"
             android:layout_height="@dimen/app_icon_size"
             android:contentDescription="@null"
-            android:padding="@dimen/control_padding"/>
+            android:padding="@dimen/padding_small"/>
 
     <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_name"
