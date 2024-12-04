@@ -151,4 +151,8 @@
     <string name="mode_su_stop">Root - Forzar la detención</string>
     <string name="action_reinstall">Reinstalar</string>
     <string name="fuzzy_search">Fuzzy Search (búsqueda difusa)</string>
+    <string name="app_theme">Tema de la aplicación</string>
+    <string name="follow_system">Sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
 </resources>
