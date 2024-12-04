@@ -5,16 +5,20 @@ import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -47,8 +51,16 @@ class AboutFragment : MainFragment() {
             }
         }
 
+    @Preview
     @Composable
-    fun AboutScreen() {
+    private fun PreviewAboutScreen() {
+        AppTheme {
+            AboutScreen()
+        }
+    }
+
+    @Composable
+    private fun AboutScreen() {
         Column(
             modifier = Modifier.fillMaxWidth().padding(horizontal = dimensionResource(R.dimen.container_margin))
                 .verticalScroll(state = rememberScrollState())
@@ -88,13 +100,13 @@ class AboutFragment : MainFragment() {
             ) {
                 ClickableItem(
                     onClick = { HUI.openLink(HailData.URL_RELEASES) },
-                    icon = R.drawable.ic_outline_update,
+                    icon = Icons.Outlined.Update,
                     title = R.string.label_version,
                     desc = HailData.VERSION
                 )
                 ClickableItem(
                     onClick = { HUI.showToast("\uD83E\uDD76\uD83D\uDCA8\uD83D\uDC09") },
-                    icon = R.drawable.ic_outline_download,
+                    icon = Icons.Outlined.Download,
                     title = R.string.label_time,
                     desc = SimpleDateFormat.getDateInstance()
                         .format(HPackages.getUnhiddenPackageInfoOrNull(app.packageName)!!.firstInstallTime)
@@ -108,21 +120,19 @@ class AboutFragment : MainFragment() {
             ) {
                 ClickableItem(
                     onClick = { HUI.openLink(HailData.URL_TELEGRAM) },
-                    icon = R.drawable.ic_baseline_send,
+                    icon = Icons.AutoMirrored.Filled.Send,
                     title = R.string.action_telegram
                 )
                 ClickableItem(
-                    onClick = { HUI.openLink(HailData.URL_QQ) },
-                    icon = R.drawable.ic_outline_group,
-                    title = R.string.action_qq
+                    onClick = { HUI.openLink(HailData.URL_QQ) }, icon = Icons.Outlined.Group, title = R.string.action_qq
                 )
                 ClickableItem(
                     onClick = { HUI.openLink(HailData.URL_FDROID) },
-                    icon = R.drawable.ic_outline_local_mall,
+                    icon = Icons.Outlined.LocalMall,
                     title = R.string.action_fdroid
                 )
                 ClickableItem(
-                    onClick = ::DonateDialog, icon = R.drawable.ic_outline_giftcard, title = R.string.action_donate
+                    onClick = ::DonateDialog, icon = Icons.Outlined.CardGiftcard, title = R.string.action_donate
                 )
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.container_margin)))
@@ -133,18 +143,16 @@ class AboutFragment : MainFragment() {
             ) {
                 ClickableItem(
                     onClick = { HUI.openLink(HailData.URL_GITHUB) },
-                    icon = R.drawable.ic_outline_code,
+                    icon = Icons.Outlined.Code,
                     title = R.string.action_github
                 )
                 ClickableItem(
                     onClick = { HUI.openLink(HailData.URL_TRANSLATE) },
-                    icon = R.drawable.ic_outline_translate,
+                    icon = Icons.Outlined.Translate,
                     title = R.string.action_translate
                 )
                 ClickableItem(
-                    onClick = ::LicenseDialog,
-                    icon = R.drawable.ic_outline_description,
-                    title = R.string.action_licenses
+                    onClick = ::LicenseDialog, icon = Icons.Outlined.Description, title = R.string.action_licenses
                 )
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.container_margin)))
@@ -152,16 +160,19 @@ class AboutFragment : MainFragment() {
     }
 
     @Composable
-    fun ClickableItem(onClick: () -> Unit, @DrawableRes icon: Int, @StringRes title: Int, desc: String? = null) {
+    private fun ClickableItem(
+        onClick: () -> Unit, icon: ImageVector, @StringRes title: Int, desc: String? = null
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(icon),
+                imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier.width(60.dp).height((if (desc == null) 60 else 72).dp),
-                contentScale = ContentScale.None
+                contentScale = ContentScale.None,
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
             )
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(text = stringResource(title), style = MaterialTheme.typography.bodyLarge)
@@ -169,14 +180,6 @@ class AboutFragment : MainFragment() {
                     Text(text = it, style = MaterialTheme.typography.bodyMedium)
                 }
             }
-        }
-    }
-
-    @Preview
-    @Composable
-    fun PreviewAboutScreen() {
-        AppTheme {
-            AboutScreen()
         }
     }
 
