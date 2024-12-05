@@ -13,14 +13,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
@@ -29,7 +25,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.*
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
@@ -54,149 +49,10 @@ class AboutFragment : MainFragment() {
             }
         }
 
-    @Preview
-    @Composable
-    private fun PreviewAboutScreen() {
-        AppTheme {
-            AboutScreen()
-        }
-    }
-
     @Composable
     private fun AboutScreen() {
-        val openDonateDialog = remember { mutableStateOf(false) }
-        val openLicenseDialog = remember { mutableStateOf(false) }
-        when {
-            openDonateDialog.value -> TODO()
-            openLicenseDialog.value -> LicenseDialog(openLicenseDialog)
-        }
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = dimensionResource(R.dimen.container_margin))
-                .verticalScroll(state = rememberScrollState())
-        ) {
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.container_margin)))
-            Card(
-                onClick = { HUI.openLink(HailData.URL_WHY_FREE_SOFTWARE) },
-                modifier = Modifier.fillMaxWidth().height(dimensionResource(R.dimen.header_height)),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_launcher_foreground),
-                        contentDescription = null,
-                        modifier = Modifier.size(72.dp).background(Color.White, CircleShape),
-                        contentScale = ContentScale.None
-                    )
-                    Text(
-                        text = stringResource(R.string.app_name),
-                        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.control_margin)),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Text(
-                        text = stringResource(R.string.app_slogan), style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.container_margin)))
-            OutlinedCard(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-            ) {
-                ClickableItem(
-                    onClick = { HUI.openLink(HailData.URL_RELEASES) },
-                    icon = Icons.Outlined.Update,
-                    title = R.string.label_version,
-                    desc = HailData.VERSION
-                )
-                ClickableItem(
-                    onClick = { HUI.showToast("\uD83E\uDD76\uD83D\uDCA8\uD83D\uDC09") },
-                    icon = Icons.Outlined.Download,
-                    title = R.string.label_time,
-                    desc = SimpleDateFormat.getDateInstance()
-                        .format(HPackages.getUnhiddenPackageInfoOrNull(app.packageName)!!.firstInstallTime)
-                )
-            }
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.container_margin)))
-            OutlinedCard(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-            ) {
-                ClickableItem(
-                    onClick = { HUI.openLink(HailData.URL_TELEGRAM) },
-                    icon = Icons.AutoMirrored.Filled.Send,
-                    title = R.string.action_telegram
-                )
-                ClickableItem(
-                    onClick = { HUI.openLink(HailData.URL_QQ) }, icon = Icons.Outlined.Group, title = R.string.action_qq
-                )
-                ClickableItem(
-                    onClick = { HUI.openLink(HailData.URL_FDROID) },
-                    icon = Icons.Outlined.LocalMall,
-                    title = R.string.action_fdroid
-                )
-                ClickableItem(
-                    onClick = ::DonateDialog, icon = Icons.Outlined.CardGiftcard, title = R.string.action_donate
-                )
-            }
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.container_margin)))
-            OutlinedCard(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-            ) {
-                ClickableItem(
-                    onClick = { HUI.openLink(HailData.URL_GITHUB) },
-                    icon = Icons.Outlined.Code,
-                    title = R.string.action_github
-                )
-                ClickableItem(
-                    onClick = { HUI.openLink(HailData.URL_TRANSLATE) },
-                    icon = Icons.Outlined.Translate,
-                    title = R.string.action_translate
-                )
-                ClickableItem(
-                    onClick = { openLicenseDialog.value = true },
-                    icon = Icons.Outlined.Description,
-                    title = R.string.action_licenses
-                )
-            }
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.container_margin)))
-        }
-    }
-
-    @Composable
-    private fun ClickableItem(
-        onClick: () -> Unit, icon: ImageVector, @StringRes title: Int, desc: String? = null
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.width(60.dp).height((if (desc == null) 60 else 72).dp),
-                contentScale = ContentScale.None,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
-            )
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = stringResource(title), style = MaterialTheme.typography.bodyLarge)
-                desc?.let {
-                    Text(text = it, style = MaterialTheme.typography.bodyMedium)
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun LicenseDialog(openState: MutableState<Boolean>) {
-        AlertDialog(title = {
+        var openLicenseDialog by remember { mutableStateOf(false) }
+        if (openLicenseDialog) AlertDialog(title = {
             Text(text = stringResource(R.string.action_licenses))
         }, text = {
             SelectionContainer {
@@ -218,18 +74,108 @@ class AboutFragment : MainFragment() {
                 )
             }
         }, onDismissRequest = {
-            openState.value = false
+            openLicenseDialog = false
         }, confirmButton = {
             TextButton(
                 onClick = {
-                    openState.value = false
+                    openLicenseDialog = false
                 }) {
                 Text(text = stringResource(android.R.string.ok))
             }
         })
+        Column(
+            modifier = Modifier.verticalScroll(state = rememberScrollState())
+        ) {
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
+            Card(
+                onClick = { HUI.openLink(HailData.URL_WHY_FREE_SOFTWARE) },
+                modifier = Modifier.height(dimensionResource(R.dimen.header_height))
+                    .padding(horizontal = dimensionResource(R.dimen.padding_medium))
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(
+                        dimensionResource(R.dimen.padding_extra_small), Alignment.CenterVertically
+                    ), horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_launcher_foreground),
+                        contentDescription = null,
+                        modifier = Modifier.size(72.dp).background(Color.White, CircleShape),
+                        contentScale = ContentScale.None
+                    )
+                    Text(
+                        text = stringResource(R.string.app_name), style = MaterialTheme.typography.bodyLarge
+                    )
+                    Text(
+                        text = stringResource(R.string.app_slogan), style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
+            OutlinedCard(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_medium))) {
+                ClickableItem(
+                    icon = Icons.Outlined.Update, title = R.string.label_version, desc = HailData.VERSION
+                ) { HUI.openLink(HailData.URL_RELEASES) }
+                ClickableItem(
+                    icon = Icons.Outlined.InstallMobile,
+                    title = R.string.label_time,
+                    desc = SimpleDateFormat.getDateInstance()
+                        .format(HPackages.getUnhiddenPackageInfoOrNull(app.packageName)!!.firstInstallTime)
+                ) { HUI.showToast("\uD83E\uDD76\uD83D\uDCA8\uD83D\uDC09") }
+            }
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
+            OutlinedCard(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_medium))) {
+                ClickableItem(
+                    icon = Icons.AutoMirrored.Filled.Send, title = R.string.action_telegram
+                ) { HUI.openLink(HailData.URL_TELEGRAM) }
+                ClickableItem(
+                    icon = Icons.Outlined.Group, title = R.string.action_qq
+                ) { HUI.openLink(HailData.URL_QQ) }
+                ClickableItem(
+                    icon = Icons.Outlined.LocalMall, title = R.string.action_fdroid
+                ) { HUI.openLink(HailData.URL_FDROID) }
+                ClickableItem(
+                    icon = Icons.Outlined.CardGiftcard, title = R.string.action_donate, onClick = ::openDonateDialog
+                )
+            }
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
+            OutlinedCard(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_medium))) {
+                ClickableItem(
+                    icon = Icons.Outlined.Code, title = R.string.action_github
+                ) { HUI.openLink(HailData.URL_GITHUB) }
+                ClickableItem(
+                    icon = Icons.Outlined.Translate, title = R.string.action_translate
+                ) { HUI.openLink(HailData.URL_TRANSLATE) }
+                ClickableItem(
+                    icon = Icons.Outlined.Description, title = R.string.action_licenses
+                ) { openLicenseDialog = true }
+            }
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
+        }
     }
 
-    private fun DonateDialog() {
+    @Composable
+    private fun ClickableItem(
+        icon: ImageVector, @StringRes title: Int, desc: String? = null, onClick: () -> Unit
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon, contentDescription = null, modifier = Modifier.padding(
+                    horizontal = dimensionResource(R.dimen.padding_medium),
+                    vertical = dimensionResource(if (desc == null) R.dimen.padding_medium else R.dimen.padding_large)
+                )
+            )
+            Column {
+                Text(text = stringResource(title), style = MaterialTheme.typography.bodyLarge)
+                if (desc != null) Text(text = desc, style = MaterialTheme.typography.bodyMedium)
+            }
+        }
+    }
+
+    private fun openDonateDialog() {
         MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
             .setSingleChoiceItems(R.array.donate_payment_entries, 0) { dialog, which ->
                 dialog.dismiss()
@@ -240,7 +186,7 @@ class AboutFragment : MainFragment() {
 
                     1 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
                         .setView(ShapeableImageView(activity).apply {
-                            val padding = resources.getDimensionPixelOffset(R.dimen.dialog_padding)
+                            val padding = resources.getDimensionPixelOffset(R.dimen.padding_large)
                             setPadding(0, padding, 0, padding)
                             setImageResource(R.mipmap.qr_wechat)
                         }).setPositiveButton(R.string.donate_wechat_scan) { _, _ ->
