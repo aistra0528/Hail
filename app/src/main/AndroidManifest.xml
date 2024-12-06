@@ -57,7 +57,7 @@
                 android:excludeFromRecents="true"
                 android:exported="true"
                 android:launchMode="singleInstance"
-                android:theme="@style/Theme.Hail.Dialog">
+                android:theme="@style/Theme.Hail.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.SHOW_APP_INFO"/>
                 <action android:name="${applicationId}.action.LAUNCH"/>

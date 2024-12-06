@@ -84,9 +84,4 @@
         <item>@string/action_lock</item>
         <item>@string/action_lock_freeze</item>
     </string-array>
-    <string-array name="api_redirect_action_entries">
-        <item>@string/action_launch</item>
-        <item>@string/action_freeze</item>
-        <item>@string/action_unfreeze</item>
-    </string-array>
 </resources>
