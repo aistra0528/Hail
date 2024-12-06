@@ -21,6 +21,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
@@ -76,7 +78,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
 
     @Composable
     private fun SettingsScreen() {
-        val autoFreezeAfterLock = rememberPreferenceState(HailData.AUTO_FREEZE_AFTER_LOCK, false)
+        var autoFreezeAfterLock by rememberPreferenceState(HailData.AUTO_FREEZE_AFTER_LOCK, false)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             listPreference(
                 key = HailData.WORKING_MODE,
@@ -107,11 +109,24 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 titleId = R.string.app_theme,
                 icon = Icons.Outlined.DarkMode
             )
-            preference(
+            listPreference(
                 key = HailData.ICON_PACK,
-                title = { Text(text = stringResource(R.string.icon_pack)) },
-                icon = { Icon(imageVector = Icons.Outlined.Palette, contentDescription = null) },
-                onClick = ::iconPackDialog
+                defaultValue = HailData.ACTION_NONE,
+                onValueChange = { _, value ->
+                    AppIconCache.clear()
+                    true
+                },
+                values = mutableListOf(HailData.ACTION_NONE).apply {
+                    addAll(Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
+                        if (HTarget.T) app.packageManager.queryIntentActivities(
+                            it, PackageManager.ResolveInfoFlags.of(0)
+                        ) else app.packageManager.queryIntentActivities(it, 0)
+                    }.map { it.activityInfo.packageName })
+                },
+                titleId = R.string.icon_pack,
+                icon = Icons.Outlined.Palette,
+                summary = { iconPackName(it) },
+                valueToText = ::iconPackName
             )
             switchPreference(
                 key = HailData.GRAYSCALE_ICON,
@@ -170,7 +185,6 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     true
                 },
                 titleId = R.string.auto_freeze_after_lock,
-                rememberState = { autoFreezeAfterLock },
                 icon = Icons.Outlined.ScreenLockPortrait
             )
             sliderPreference(
@@ -179,7 +193,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 title = { Text(text = stringResource(R.string.auto_freeze_delay)) },
                 valueRange = 0f..30f,
                 valueSteps = 29,
-                enabled = { autoFreezeAfterLock.value },
+                enabled = { autoFreezeAfterLock },
                 icon = { Icon(imageVector = Icons.Outlined.LockClock, contentDescription = null) },
                 valueText = { Text(text = "%.0f".format(it)) },
             )
@@ -187,7 +201,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 key = HailData.SKIP_WHILE_CHARGING,
                 defaultValue = false,
                 titleId = R.string.skip_while_charging,
-                enabled = autoFreezeAfterLock.value,
+                enabled = autoFreezeAfterLock,
                 icon = Icons.Outlined.BatteryChargingFull
             )
             switchPreference(
@@ -200,7 +214,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     } else true
                 },
                 titleId = R.string.skip_foreground_app,
-                enabled = autoFreezeAfterLock.value,
+                enabled = autoFreezeAfterLock,
                 icon = Icons.Outlined.Android
             )
             switchPreference(
@@ -216,7 +230,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     } else true
                 },
                 titleId = R.string.skip_notifying_app,
-                enabled = autoFreezeAfterLock.value,
+                enabled = autoFreezeAfterLock,
                 icon = Icons.Outlined.NotificationsActive
             )
             horizontalDivider()
@@ -275,53 +289,52 @@ class SettingsFragment : MainFragment(), MenuProvider {
         defaultValue: String,
         onValueChange: (MutableState<String>, String) -> Boolean = { rememberState, value -> true },
         values: List<String>,
-        @ArrayRes entriesId: Int,
         @StringRes titleId: Int,
+        rememberState: @Composable () -> MutableState<String> = { rememberPreferenceState(key, defaultValue) },
         icon: ImageVector,
-        type: ListPreferenceType = ListPreferenceType.DROPDOWN_MENU
+        summary: @Composable (String) -> String,
+        type: ListPreferenceType = ListPreferenceType.DROPDOWN_MENU,
+        valueToText: (String) -> String
     ) = item(key = key, contentType = "ListPreference") {
-        val state = rememberPreferenceState(key, defaultValue)
+        val state = rememberState()
         ListPreference(
             value = state.value,
             onValueChange = { if (onValueChange(state, it)) state.value = it },
             values = values,
             title = { Text(text = stringResource(titleId)) },
             icon = { Icon(imageVector = icon, contentDescription = null) },
-            summary = {
-                Text(
-                    text = state.value.toEntry(values, entriesId)
-                )
-            },
+            summary = { Text(text = summary(state.value)) },
             type = type,
-            valueToText = {
-                AnnotatedString(it.toEntry(values, entriesId))
-            })
+            valueToText = { AnnotatedString(valueToText(it)) })
     }
+
+    private fun LazyListScope.listPreference(
+        key: String,
+        defaultValue: String,
+        onValueChange: (MutableState<String>, String) -> Boolean = { rememberState, value -> true },
+        values: List<String>,
+        @ArrayRes entriesId: Int,
+        @StringRes titleId: Int,
+        rememberState: @Composable () -> MutableState<String> = { rememberPreferenceState(key, defaultValue) },
+        icon: ImageVector,
+        type: ListPreferenceType = ListPreferenceType.DROPDOWN_MENU
+    ) = listPreference(
+        key = key,
+        defaultValue = defaultValue,
+        onValueChange = onValueChange,
+        values = values,
+        titleId = titleId,
+        rememberState = rememberState,
+        icon = icon,
+        summary = { rememberState().value.toEntry(values, entriesId) },
+        type = type,
+        valueToText = { it.toEntry(values, entriesId) })
 
     private fun String.toEntry(values: List<String>, @ArrayRes entriesId: Int): String =
         resources.getStringArray(entriesId)[values.indexOf(this)]
 
-    private fun iconPackDialog() {
-        val list = Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
-            if (HTarget.T) app.packageManager.queryIntentActivities(
-                it, PackageManager.ResolveInfoFlags.of(0)
-            ) else app.packageManager.queryIntentActivities(it, 0)
-        }.map { it.activityInfo }
-        if (list.isEmpty()) {
-            HUI.showToast(R.string.app_not_installed)
-            return
-        }
-        MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.icon_pack)
-            .setItems(list.map { it.loadLabel(app.packageManager) }.toTypedArray()) { _, which ->
-                if (HailData.iconPack == list[which].packageName) return@setItems
-                HailData.setIconPack(list[which].packageName)
-                AppIconCache.clear()
-            }.setNeutralButton(R.string.label_default) { _, _ ->
-                if (HailData.iconPack == HailData.ACTION_NONE) return@setNeutralButton
-                HailData.setIconPack(HailData.ACTION_NONE)
-                AppIconCache.clear()
-            }.setNegativeButton(android.R.string.cancel, null).show()
-    }
+    private fun iconPackName(pack: String): String = if (pack == HailData.ACTION_NONE) getString(R.string.action_none)
+    else HPackages.getApplicationInfoOrNull(pack)?.loadLabel(app.packageManager)?.toString() ?: pack
 
     private fun addPinShortcut() {
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_add_pin_shortcut)

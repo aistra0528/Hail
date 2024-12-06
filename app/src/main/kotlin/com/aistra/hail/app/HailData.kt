@@ -145,8 +145,6 @@ object HailData {
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
 
-    fun setIconPack(packageName: String) = sp.edit().putString(ICON_PACK, packageName).apply()
-
     private val dir = "${app.filesDir.path}/v1"
     private val appsPath = "$dir/apps.json"
     private val tagsPath = "$dir/tags.json"
