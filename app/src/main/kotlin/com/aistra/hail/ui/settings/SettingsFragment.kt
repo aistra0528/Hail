@@ -21,8 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
@@ -78,7 +76,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
 
     @Composable
     private fun SettingsScreen() {
-        var autoFreezeAfterLock by rememberPreferenceState(HailData.AUTO_FREEZE_AFTER_LOCK, false)
+        val autoFreezeAfterLock = rememberPreferenceState(HailData.AUTO_FREEZE_AFTER_LOCK, false)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             listPreference(
                 key = HailData.WORKING_MODE,
@@ -178,8 +176,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
             horizontalDivider()
             preferenceCategory(key = "auto_freeze", title = { Text(text = stringResource(R.string.auto_freeze)) })
             switchPreference(
-                key = HailData.AUTO_FREEZE_AFTER_LOCK,
-                defaultValue = false,
+                rememberState = { autoFreezeAfterLock },
                 onValueChange = { _, value ->
                     app.setAutoFreezeService(value)
                     true
@@ -193,7 +190,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 title = { Text(text = stringResource(R.string.auto_freeze_delay)) },
                 valueRange = 0f..30f,
                 valueSteps = 29,
-                enabled = { autoFreezeAfterLock },
+                enabled = { autoFreezeAfterLock.value },
                 icon = { Icon(imageVector = Icons.Outlined.LockClock, contentDescription = null) },
                 valueText = { Text(text = "%.0f".format(it)) },
             )
@@ -201,7 +198,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 key = HailData.SKIP_WHILE_CHARGING,
                 defaultValue = false,
                 titleId = R.string.skip_while_charging,
-                enabled = autoFreezeAfterLock,
+                enabled = autoFreezeAfterLock.value,
                 icon = Icons.Outlined.BatteryChargingFull
             )
             switchPreference(
@@ -214,7 +211,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     } else true
                 },
                 titleId = R.string.skip_foreground_app,
-                enabled = autoFreezeAfterLock,
+                enabled = autoFreezeAfterLock.value,
                 icon = Icons.Outlined.Android
             )
             switchPreference(
@@ -230,7 +227,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     } else true
                 },
                 titleId = R.string.skip_notifying_app,
-                enabled = autoFreezeAfterLock,
+                enabled = autoFreezeAfterLock.value,
                 icon = Icons.Outlined.NotificationsActive
             )
             horizontalDivider()
@@ -267,14 +264,12 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.horizontalDivider() = item { HorizontalDivider() }
 
     private fun LazyListScope.switchPreference(
-        key: String,
-        defaultValue: Boolean,
+        rememberState: @Composable () -> MutableState<Boolean>,
         onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { rememberState, value -> true },
         @StringRes titleId: Int,
-        rememberState: @Composable () -> MutableState<Boolean> = { rememberPreferenceState(key, defaultValue) },
         enabled: Boolean = true,
         icon: ImageVector,
-    ) = item(key = key, contentType = "SwitchPreference") {
+    ) = item(key = titleId, contentType = "SwitchPreference") {
         val state = rememberState()
         SwitchPreference(
             value = state.value,
@@ -284,19 +279,33 @@ class SettingsFragment : MainFragment(), MenuProvider {
             icon = { Icon(imageVector = icon, contentDescription = null) })
     }
 
+    private fun LazyListScope.switchPreference(
+        key: String,
+        defaultValue: Boolean,
+        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { rememberState, value -> true },
+        @StringRes titleId: Int,
+        enabled: Boolean = true,
+        icon: ImageVector,
+    ) = switchPreference(
+        rememberState = { rememberPreferenceState(key, defaultValue) },
+        onValueChange = onValueChange,
+        titleId = titleId,
+        enabled = enabled,
+        icon = icon
+    )
+
     private fun LazyListScope.listPreference(
         key: String,
         defaultValue: String,
         onValueChange: (MutableState<String>, String) -> Boolean = { rememberState, value -> true },
         values: List<String>,
         @StringRes titleId: Int,
-        rememberState: @Composable () -> MutableState<String> = { rememberPreferenceState(key, defaultValue) },
         icon: ImageVector,
         summary: @Composable (String) -> String,
         type: ListPreferenceType = ListPreferenceType.DROPDOWN_MENU,
         valueToText: (String) -> String
     ) = item(key = key, contentType = "ListPreference") {
-        val state = rememberState()
+        val state = rememberPreferenceState(key, defaultValue)
         ListPreference(
             value = state.value,
             onValueChange = { if (onValueChange(state, it)) state.value = it },
@@ -315,7 +324,6 @@ class SettingsFragment : MainFragment(), MenuProvider {
         values: List<String>,
         @ArrayRes entriesId: Int,
         @StringRes titleId: Int,
-        rememberState: @Composable () -> MutableState<String> = { rememberPreferenceState(key, defaultValue) },
         icon: ImageVector,
         type: ListPreferenceType = ListPreferenceType.DROPDOWN_MENU
     ) = listPreference(
@@ -324,9 +332,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
         onValueChange = onValueChange,
         values = values,
         titleId = titleId,
-        rememberState = rememberState,
         icon = icon,
-        summary = { rememberState().value.toEntry(values, entriesId) },
+        summary = { it.toEntry(values, entriesId) },
         type = type,
         valueToText = { it.toEntry(values, entriesId) })
 

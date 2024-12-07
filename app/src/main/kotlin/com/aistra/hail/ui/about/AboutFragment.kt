@@ -25,6 +25,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.*
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
@@ -44,45 +45,19 @@ class AboutFragment : MainFragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 AppTheme {
-                    AboutScreen()
+                    AboutScreen(HPackages.getUnhiddenPackageInfoOrNull(app.packageName)!!.firstInstallTime)
                 }
             }
         }
 
+    @Preview(showBackground = true)
     @Composable
-    private fun AboutScreen() {
+    fun PreviewAboutScreen() = AppTheme { AboutScreen(System.currentTimeMillis()) }
+
+    @Composable
+    private fun AboutScreen(installTime: Long) {
         var openLicenseDialog by remember { mutableStateOf(false) }
-        if (openLicenseDialog) AlertDialog(title = {
-            Text(text = stringResource(R.string.action_licenses))
-        }, text = {
-            SelectionContainer {
-                Text(
-                    text = buildAnnotatedString {
-                        val lines = resources.openRawResource(R.raw.licenses).bufferedReader().readLines()
-                        lines.forEach {
-                            if (it.isNotBlank()) withLink(
-                                LinkAnnotation.Url(
-                                    it.substringAfter(": "),
-                                    TextLinkStyles(style = SpanStyle(color = MaterialTheme.colorScheme.primary))
-                                )
-                            ) {
-                                append(it.substringBefore(": "))
-                            }
-                            if (it != lines.last()) append("\n\n")
-                        }
-                    }, modifier = Modifier.verticalScroll(state = rememberScrollState())
-                )
-            }
-        }, onDismissRequest = {
-            openLicenseDialog = false
-        }, confirmButton = {
-            TextButton(
-                onClick = {
-                    openLicenseDialog = false
-                }) {
-                Text(text = stringResource(android.R.string.ok))
-            }
-        })
+        if (openLicenseDialog) LicenseDialog { openLicenseDialog = false }
         Column(
             modifier = Modifier.verticalScroll(state = rememberScrollState())
         ) {
@@ -119,8 +94,7 @@ class AboutFragment : MainFragment() {
                 ClickableItem(
                     icon = Icons.Outlined.InstallMobile,
                     title = R.string.label_time,
-                    desc = SimpleDateFormat.getDateInstance()
-                        .format(HPackages.getUnhiddenPackageInfoOrNull(app.packageName)!!.firstInstallTime)
+                    desc = SimpleDateFormat.getDateInstance().format(installTime)
                 ) { HUI.showToast("\uD83E\uDD76\uD83D\uDCA8\uD83D\uDC09") }
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
@@ -157,23 +131,47 @@ class AboutFragment : MainFragment() {
     @Composable
     private fun ClickableItem(
         icon: ImageVector, @StringRes title: Int, desc: String? = null, onClick: () -> Unit
+    ) = Row(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = icon, contentDescription = null, modifier = Modifier.padding(
-                    horizontal = dimensionResource(R.dimen.padding_medium),
-                    vertical = dimensionResource(if (desc == null) R.dimen.padding_medium else R.dimen.padding_large)
-                )
+        Icon(
+            imageVector = icon, contentDescription = null, modifier = Modifier.padding(
+                horizontal = dimensionResource(R.dimen.padding_medium),
+                vertical = dimensionResource(if (desc == null) R.dimen.padding_medium else R.dimen.padding_large)
             )
-            Column {
-                Text(text = stringResource(title), style = MaterialTheme.typography.bodyLarge)
-                if (desc != null) Text(text = desc, style = MaterialTheme.typography.bodyMedium)
-            }
+        )
+        Column {
+            Text(text = stringResource(title), style = MaterialTheme.typography.bodyLarge)
+            if (desc != null) Text(text = desc, style = MaterialTheme.typography.bodyMedium)
         }
     }
+
+    @Composable
+    private fun LicenseDialog(onDismiss: () -> Unit) = AlertDialog(
+        title = { Text(text = stringResource(R.string.action_licenses)) },
+        text = {
+            SelectionContainer {
+                Text(
+                    text = buildAnnotatedString {
+                        val lines = resources.openRawResource(R.raw.licenses).bufferedReader().readLines()
+                        lines.forEach {
+                            if (it.isNotBlank()) withLink(
+                                LinkAnnotation.Url(
+                                    it.substringAfter(": "),
+                                    TextLinkStyles(style = SpanStyle(color = MaterialTheme.colorScheme.primary))
+                                )
+                            ) {
+                                append(it.substringBefore(": "))
+                            }
+                            if (it != lines.last()) append("\n\n")
+                        }
+                    }, modifier = Modifier.verticalScroll(state = rememberScrollState())
+                )
+            }
+        },
+        onDismissRequest = onDismiss,
+        confirmButton = { TextButton(onClick = onDismiss) { Text(text = stringResource(android.R.string.ok)) } })
 
     private fun openDonateDialog() {
         MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)

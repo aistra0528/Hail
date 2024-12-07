@@ -71,58 +71,52 @@ class ApiActivity : ComponentActivity() {
         }.onFailure(::setErrorDialog)
     }
 
-    private fun setErrorDialog(t: Throwable) {
-        setContent { AppTheme { ErrorDialog(t) } }
-    }
+    private fun setErrorDialog(t: Throwable) = setContent { AppTheme { ErrorDialog(t) } }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun RedirectBottomSheet(pkg: String) {
-        ModalBottomSheet(
-            onDismissRequest = ::finish, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-        ) {
-            Column {
-                Text(
-                    text = HPackages.getApplicationInfoOrNull(pkg)?.loadLabel(packageManager)?.toString() ?: pkg,
-                    modifier = Modifier.padding(
-                        horizontal = dimensionResource(R.dimen.padding_medium),
-                        vertical = dimensionResource(R.dimen.padding_small)
-                    ),
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                ClickableItem(
-                    icon = Icons.AutoMirrored.Outlined.Launch, title = R.string.action_launch
-                ) { launchApp(pkg) }
-                ClickableItem(
-                    icon = Icons.Rounded.AcUnit, title = R.string.action_freeze
-                ) {
-                    if (!HailData.isChecked(pkg)) HailData.addCheckedApp(pkg)
-                    setAppFrozen(pkg, true)
-                }
-                ClickableItem(
-                    icon = Icons.Rounded.BrightnessLow, title = R.string.action_unfreeze
-                ) { setAppFrozen(pkg, false) }
+    private fun RedirectBottomSheet(pkg: String) = ModalBottomSheet(
+        onDismissRequest = ::finish, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    ) {
+        Column {
+            Text(
+                text = HPackages.getApplicationInfoOrNull(pkg)?.loadLabel(packageManager)?.toString() ?: pkg,
+                modifier = Modifier.padding(
+                    horizontal = dimensionResource(R.dimen.padding_medium),
+                    vertical = dimensionResource(R.dimen.padding_small)
+                ),
+                style = MaterialTheme.typography.headlineSmall
+            )
+            ClickableItem(
+                icon = Icons.AutoMirrored.Outlined.Launch, title = R.string.action_launch
+            ) { launchApp(pkg) }
+            ClickableItem(
+                icon = Icons.Rounded.AcUnit, title = R.string.action_freeze
+            ) {
+                if (!HailData.isChecked(pkg)) HailData.addCheckedApp(pkg)
+                setAppFrozen(pkg, true)
             }
+            ClickableItem(
+                icon = Icons.Rounded.BrightnessLow, title = R.string.action_unfreeze
+            ) { setAppFrozen(pkg, false) }
         }
     }
 
     @Composable
-    private fun ClickableItem(icon: ImageVector, @StringRes title: Int, onClick: () -> Unit) {
-        Row(
-            modifier = Modifier.fillMaxWidth().clickable(onClick = {
-                runCatching {
-                    onClick()
-                    finish()
-                }.onFailure(::setErrorDialog)
-            }), verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
-            )
-            Text(text = stringResource(title), style = MaterialTheme.typography.bodyLarge)
-        }
+    private fun ClickableItem(icon: ImageVector, @StringRes title: Int, onClick: () -> Unit) = Row(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = {
+            runCatching {
+                onClick()
+                finish()
+            }.onFailure(::setErrorDialog)
+        }), verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
+        )
+        Text(text = stringResource(title), style = MaterialTheme.typography.bodyLarge)
     }
 
     @Composable
