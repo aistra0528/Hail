@@ -152,4 +152,8 @@
     <string name="mode_su_stop">Root - Forçar Parada</string>
     <string name="action_reinstall">Reinstalar</string>
     <string name="nine_key">Pesquisa T9</string>
+    <string name="app_theme">Tema do App</string>
+    <string name="follow_system">Siga o sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Escuro</string>
 </resources>
