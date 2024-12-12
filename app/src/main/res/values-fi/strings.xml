@@ -44,7 +44,7 @@
     <string name="title_customize">Mukauta</string>
     <string name="compact_icon">Kompakti kuvake</string>
     <string name="action_biometric">Biometrinen kirjautuminen</string>
-    <string name="action_whitelist">Lisää Valkoiselle Listalle</string>
+    <string name="action_whitelist">Lisää Valkolistalle</string>
     <string name="action_remove_whitelist">Poista Valkoisesta Listasta</string>
     <string name="nothing_here">Täällä ei ole mitään</string>
     <string name="title_shortcuts">Pikanäppäimet</string>
@@ -133,5 +133,25 @@
     <string name="action_continue">Jatka</string>
     <string name="action_export_all">Vie kaikki</string>
     <string name="auto_freeze_delay">Jäädytysviive (minuutteja)</string>
-    <string name="freeze_system_app">"Järjestelmäsovellusten jäädyttäminen tai asennuksen poistaminen voi aiheuttaa laitteen käynnistyssilmukan.  Varmista, että tiedät mitä olet tekemässä ja varmuuskopioi tiedot etukäteen tai käytä palautusta, joka tukee tiedostonhallintaa."</string>
+    <string name="freeze_system_app">Järjestelmäsovellusten jäädyttäminen tai asennuksen poistaminen voi aiheuttaa laitteen käynnistyssilmukan. Varmista, että tiedät mitä olet tekemässä ja varmuuskopioi tiedot etukäteen tai käytä palautusta, joka tukee tiedostonhallintaa.</string>
+    <string name="action_freeze_non_whitelisted">Jäädyttää ei sallittujen luettelossa olevat</string>
+    <string name="action_deselect">Peruuta valinta</string>
+    <string name="mode_default">Tyhjäkäynti</string>
+    <string name="filter_unfrozen_apps">Ei jäädytetty</string>
+    <string name="sort_by">Lajitteluperuste</string>
+    <plurals name="msg_deferred_task">
+        <item quantity="one">%2$s %1$d minuutin kuluttua: %3$s</item>
+        <item quantity="other">%2$s %1$d minuutin kuluttua: %3$s</item>
+    </plurals>
+    <string name="action_export_current">Vie näkyvä</string>
+    <string name="action_freeze_tag">Jäädytä tunnus</string>
+    <string name="action_unfreeze_tag">Poista jäädytys tunnuksesta</string>
+    <string name="icon_pack">Kuvakepaketti</string>
+    <string name="mode_island_hide">Saari/Saaristo - Piilota</string>
+    <string name="mode_island_suspend">Saari/Saaristo - Keskeytä</string>
+    <string name="tag">Tunnus</string>
+    <string name="app_theme">Sovelluksen teema</string>
+    <string name="follow_system">Seuraa järjestelmää</string>
+    <string name="theme_light">Vaalea</string>
+    <string name="theme_dark">Tumma</string>
 </resources>
