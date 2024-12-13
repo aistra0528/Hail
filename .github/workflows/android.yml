@@ -9,19 +9,11 @@ on:
       - 'fastlane/**'
       - '.github/**'
       - '!.github/workflows/android.yml'
-  pull_request:
-    branches:
-      - master
-    paths-ignore:
-      - '**.md'
-      - 'fastlane/**'
-      - '.github/**'
-      - '!.github/workflows/android.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') }}
+    if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'aistra0528' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,9 +25,15 @@ jobs:
       - name: Build with Gradle
         run: |
           echo "commit=$(echo ${{ github.sha }} | cut -c-7)" >> $GITHUB_ENV
-          ./gradlew assembleDebug
+          touch signing.properties
+          echo storeFile=../keystore.jks >> signing.properties
+          echo storePassword=${{ secrets.KEYSTORE_PASSWORD }} >> signing.properties
+          echo keyAlias=${{ secrets.KEYSTORE_ALIAS }} >> signing.properties
+          echo keyPassword=${{ secrets.KEYSTORE_ALIAS_PASSWORD }} >> signing.properties
+          echo ${{ secrets.KEYSTORE }} | base64 --decode > keystore.jks
+          ./gradlew assembleRelease
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Hail@${{ env.commit }}
-          path: app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/release/*.apk
