@@ -48,34 +48,10 @@
         <item>@string/mode_privapp_stop</item>
         <item>@string/mode_privapp_disable</item>
     </string-array>
-    <string-array name="working_mode_values">
-        <item>default</item>
-        <item>shizuku_stop</item>
-        <item>shizuku_disable</item>
-        <item>shizuku_hide</item>
-        <item>shizuku_suspend</item>
-        <item>su_stop</item>
-        <item>su_disable</item>
-        <item>su_hide</item>
-        <item>su_suspend</item>
-        <item>dhizuku_hide</item>
-        <item>dhizuku_suspend</item>
-        <item>owner_hide</item>
-        <item>owner_suspend</item>
-        <item>island_hide</item>
-        <item>island_suspend</item>
-        <item>privapp_stop</item>
-        <item>privapp_disable</item>
-    </string-array>
     <string-array name="app_theme_entries">
         <item>@string/follow_system</item>
         <item>@string/theme_light</item>
         <item>@string/theme_dark</item>
-    </string-array>
-    <string-array name="app_theme_values">
-        <item>follow_system</item>
-        <item>theme_light</item>
-        <item>theme_dark</item>
     </string-array>
     <string-array name="donate_payment_entries">
         <item>@string/donate_alipay</item>
@@ -100,32 +76,12 @@
         <item>@string/action_lock</item>
         <item>@string/action_lock_freeze</item>
     </string-array>
-    <string-array name="tile_action_values">
-        <item>freeze_all</item>
-        <item>unfreeze_all</item>
-        <item>freeze_non_whitelisted</item>
-        <item>lock</item>
-        <item>lock_freeze</item>
-    </string-array>
-    <string-array name="dynamic_shortcut_action_entries">
+    <string-array name="dynamic_shortcut_entries">
         <item>@string/action_none</item>
         <item>@string/action_freeze_all</item>
         <item>@string/action_unfreeze_all</item>
         <item>@string/action_freeze_non_whitelisted</item>
         <item>@string/action_lock</item>
         <item>@string/action_lock_freeze</item>
-    </string-array>
-    <string-array name="dynamic_shortcut_action_values">
-        <item>none</item>
-        <item>freeze_all</item>
-        <item>unfreeze_all</item>
-        <item>freeze_non_whitelisted</item>
-        <item>lock</item>
-        <item>lock_freeze</item>
-    </string-array>
-    <string-array name="api_redirect_action_entries">
-        <item>@string/action_launch</item>
-        <item>@string/action_freeze</item>
-        <item>@string/action_unfreeze</item>
     </string-array>
 </resources>
