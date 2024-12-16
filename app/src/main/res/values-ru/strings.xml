@@ -153,4 +153,8 @@
     <string name="mode_su_stop">Root - Принудительно остановить</string>
     <string name="fuzzy_search">Нечёткий поиск</string>
     <string name="action_reinstall">Переустановить</string>
+    <string name="app_theme">Тема приложения</string>
+    <string name="follow_system">Как в системе</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
 </resources>
