@@ -148,4 +148,8 @@
     <string name="mode_su_stop">Root - Paksa Berhenti</string>
     <string name="action_reinstall">Instal Ulang</string>
     <string name="fuzzy_search">Pencarian Fuzzy</string>
+    <string name="follow_system">Mengikuti sistem</string>
+    <string name="theme_light">Terang</string>
+    <string name="app_theme">Tema aplikasi</string>
+    <string name="theme_dark">Gelap</string>
 </resources>
