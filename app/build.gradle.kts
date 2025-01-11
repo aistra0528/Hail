@@ -26,12 +26,12 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
-            versionNameSuffix = ".$commitShort"
+            versionNameSuffix = "-g$commitShort"
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            versionNameSuffix = ".$commitShort"
+            versionNameSuffix = "-g$commitShort"
             signingConfig = if (signingProps.exists()) {
                 val props = `java.util`.Properties().apply { load(signingProps.reader()) }
                 signingConfigs.create("release") {
