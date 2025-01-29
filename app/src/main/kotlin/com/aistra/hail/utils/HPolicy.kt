@@ -20,6 +20,7 @@ object HPolicy {
     val isDeviceOwnerActive get() = isDeviceOwner && isAdminActive
 
     val lockScreen get() = isAdminActive.also { if (it) dpm.lockNow() }
+    val unlockScreen get() = isAdminActive.also { if (it) dpm.lockNow() }
 
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean =
         isDeviceOwnerActive && dpm.setApplicationHidden(admin, packageName, hidden)

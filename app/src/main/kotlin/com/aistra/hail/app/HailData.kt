@@ -104,21 +104,25 @@ object HailData {
     const val ACTION_FREEZE_NON_WHITELISTED = "freeze_non_whitelisted"
     const val ACTION_LOCK = "lock"
     const val ACTION_LOCK_FREEZE = "lock_freeze"
+    const val ACTION_UNLOCK = "unlock"
+    const val ACTION_UNLOCK_UNFREEZE = "unlock_unfreeze"
     val TILE_ACTION_VALUES =
         listOf(ACTION_FREEZE_ALL, ACTION_UNFREEZE_ALL, ACTION_FREEZE_NON_WHITELISTED, ACTION_LOCK, ACTION_LOCK_FREEZE)
     const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
+    const val AUTO_UNFREEZE_AFTER_UNLOCK = "auto_unfreeze_after_unlock"
     const val AUTO_FREEZE_DELAY = "auto_freeze_delay_f"
     const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
     const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
+    const val DYNAMIC_SHORTCUT_ACTION_TWO = "dynamic_shortcut_action_two"
     val DYNAMIC_SHORTCUT_ACTIONS = listOf(
         ACTION_NONE,
         ACTION_FREEZE_ALL,
         ACTION_UNFREEZE_ALL,
         ACTION_FREEZE_NON_WHITELISTED,
         ACTION_LOCK,
-        ACTION_LOCK_FREEZE
+        ACTION_LOCK_FREEZE,
     )
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(app)
@@ -139,6 +143,7 @@ object HailData {
     val nineKeySearch get() = sp.getBoolean(NINE_KEY_SEARCH, false)
     val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
     val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+    val autoUnFreezeAfterUnLock get() = sp.getBoolean(AUTO_UNFREEZE_AFTER_UNLOCK, false)
     val autoFreezeDelay get() = sp.getFloat(AUTO_FREEZE_DELAY, 0f).toLong()
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)

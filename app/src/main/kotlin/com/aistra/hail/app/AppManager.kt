@@ -16,6 +16,16 @@ object AppManager {
             else -> false
         }
 
+    val unlockScreen: Boolean
+        get() = when {
+            HailData.workingMode.startsWith(HailData.OWNER) -> HPolicy.unlockScreen
+            HailData.workingMode.startsWith(HailData.DHIZUKU) -> HDhizuku.unlockScreen
+            HailData.workingMode.startsWith(HailData.SU) -> HShell.unlockScreen
+            HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.unlockScreen
+            else -> false
+        }
+
+
     fun isAppFrozen(packageName: String): Boolean = when {
         HailData.workingMode.endsWith(HailData.STOP) -> HPackages.isAppStopped(packageName)
         HailData.workingMode.endsWith(HailData.DISABLE) -> HPackages.isAppDisabled(packageName)

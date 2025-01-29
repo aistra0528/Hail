@@ -65,6 +65,8 @@ class ApiActivity : ComponentActivity() {
                 HailApi.ACTION_FREEZE_AUTO -> setAutoFreeze(false)
                 HailApi.ACTION_LOCK -> lockScreen(false)
                 HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
+                HailApi.ACTION_UNLOCK -> unlockScreen(false)
+                HailApi.ACTION_UNLOCK_UNFREEZE -> unlockScreen(true)
                 else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
             }
             finish()
@@ -185,5 +187,10 @@ class ApiActivity : ComponentActivity() {
     private fun lockScreen(freezeAll: Boolean) {
         if (freezeAll) setListFrozen(true)
         if (AppManager.lockScreen.not()) throw IllegalStateException(getString(R.string.permission_denied))
+    }
+
+    private fun unlockScreen(freezeAll: Boolean) {
+        if (freezeAll) setListFrozen(false)
+        if (AppManager.unlockScreen.not()) throw IllegalStateException(getString(R.string.permission_denied))
     }
 }

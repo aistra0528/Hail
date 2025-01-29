@@ -20,6 +20,7 @@ object HShell {
     val checkSU get() = execSU("whoami").second?.contains("root") ?: false
 
     val lockScreen get() = execSU("input keyevent KEYCODE_POWER").first == 0
+    val unlockScreen get() = execSU("input keyevent KEYCODE_POWER").first == 0
 
     fun forceStopApp(packageName: String): Boolean = execSU("am force-stop --user current $packageName").first == 0
 

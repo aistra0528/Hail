@@ -48,7 +48,24 @@ object HShizuku {
             HLog.e(it)
             false
         }
-
+    val unlockScreen
+        get() = runCatching {
+            val input = asInterface("android.hardware.input.IInputManager", "input")
+            val inject = input::class.java.getMethod(
+                "injectInputEvent", InputEvent::class.java, Int::class.java
+            )
+            val now = SystemClock.uptimeMillis()
+            inject.invoke(
+                input, KeyEvent(now, now, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_POWER, 0), 0
+            )
+            inject.invoke(
+                input, KeyEvent(now, now, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_POWER, 0), 0
+            )
+            true
+        }.getOrElse {
+            HLog.e(it)
+            false
+        }
     fun forceStopApp(packageName: String): Boolean = runCatching {
         asInterface("android.app.IActivityManager", Context.ACTIVITY_SERVICE).let {
             if (HTarget.P) HiddenApiBypass.invoke(

@@ -57,9 +57,14 @@ import me.zhanghai.compose.preference.*
 import rikka.shizuku.Shizuku
 
 class SettingsFragment : MainFragment(), MenuProvider {
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return ComposeView(requireContext()).apply {
@@ -77,6 +82,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
     @Composable
     private fun SettingsScreen() {
         val autoFreezeAfterLock = rememberPreferenceState(HailData.AUTO_FREEZE_AFTER_LOCK, false)
+        val autoUnFreezeAfterUnLock =
+            rememberPreferenceState(HailData.AUTO_UNFREEZE_AFTER_UNLOCK, false)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             listPreference(
                 key = HailData.WORKING_MODE,
@@ -94,7 +101,9 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 icon = Icons.Outlined.Fingerprint
             )
             horizontalDivider()
-            preferenceCategory(key = "customize", title = { Text(text = stringResource(R.string.title_customize)) })
+            preferenceCategory(
+                key = "customize",
+                title = { Text(text = stringResource(R.string.title_customize)) })
             listPreference(
                 key = HailData.APP_THEME,
                 defaultValue = HailData.FOLLOW_SYSTEM,
@@ -115,11 +124,12 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     true
                 },
                 values = mutableListOf(HailData.ACTION_NONE).apply {
-                    addAll(Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
-                        if (HTarget.T) app.packageManager.queryIntentActivities(
-                            it, PackageManager.ResolveInfoFlags.of(0)
-                        ) else app.packageManager.queryIntentActivities(it, 0)
-                    }.map { it.activityInfo.packageName })
+                    addAll(
+                        Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
+                            if (HTarget.T) app.packageManager.queryIntentActivities(
+                                it, PackageManager.ResolveInfoFlags.of(0)
+                            ) else app.packageManager.queryIntentActivities(it, 0)
+                        }.map { it.activityInfo.packageName })
                 },
                 titleId = R.string.icon_pack,
                 icon = Icons.Outlined.Palette,
@@ -174,7 +184,9 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 icon = Icons.Outlined.DashboardCustomize
             )
             horizontalDivider()
-            preferenceCategory(key = "auto_freeze", title = { Text(text = stringResource(R.string.auto_freeze)) })
+            preferenceCategory(
+                key = "auto_freeze",
+                title = { Text(text = stringResource(R.string.auto_freeze)) })
             switchPreference(
                 rememberState = { autoFreezeAfterLock },
                 onValueChange = { _, value ->
@@ -218,11 +230,17 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 key = HailData.SKIP_NOTIFYING_APP,
                 defaultValue = false,
                 onValueChange = { _, value ->
-                    val isGranted = NotificationManagerCompat.getEnabledListenerPackages(requireContext())
-                        .contains(requireContext().packageName)
+                    val isGranted =
+                        NotificationManagerCompat.getEnabledListenerPackages(requireContext())
+                            .contains(requireContext().packageName)
                     if (value && !isGranted) {
                         app.setAutoFreezeServiceEnabled(true)
-                        startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        app.setAutoUnFreezeServiceEnabled(true)
+                        startActivity(
+                            Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).setFlags(
+                                Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
+                        )
                         false
                     } else true
                 },
@@ -231,32 +249,76 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 icon = Icons.Outlined.NotificationsActive
             )
             horizontalDivider()
-            preferenceCategory(key = "shortcuts", title = { Text(text = stringResource(R.string.title_shortcuts)) })
+            preferenceCategory(
+                key = "auto_unfreeze",
+                title = { Text(text = stringResource(R.string.auto_unfreeze)) })
+            switchPreference(
+                rememberState = { autoUnFreezeAfterUnLock },
+                onValueChange = { _, value ->
+                    if (value && !HSystem.checkOpUsageStats(requireContext())) {
+                        startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        false
+                    } else {
+                        app.setAutoUnFreezeService(value)
+                        true
+                    }
+
+                },
+                titleId = R.string.auto_unfreeze_after_unlock,
+                icon = Icons.Outlined.ScreenLockPortrait
+            )
+            horizontalDivider()
+            preferenceCategory(
+                key = "shortcuts",
+                title = { Text(text = stringResource(R.string.title_shortcuts)) })
             preference(
                 key = "add_pin_shortcut",
                 title = { Text(text = stringResource(R.string.action_add_pin_shortcut)) },
-                icon = { Icon(imageVector = Icons.AutoMirrored.Outlined.Shortcut, contentDescription = null) },
+                icon = {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.Shortcut,
+                        contentDescription = null
+                    )
+                },
                 onClick = ::addPinShortcut
             )
             listPreference(
                 key = HailData.DYNAMIC_SHORTCUT_ACTION,
                 defaultValue = HailData.ACTION_NONE,
                 onValueChange = { _, action ->
-                    HShortcuts.removeAllDynamicShortcuts()
+                    //HShortcuts.removeAllDynamicShortcuts()
                     HShortcuts.addDynamicShortcutAction(action)
                     true
                 },
                 values = HailData.DYNAMIC_SHORTCUT_ACTIONS,
                 entriesId = R.array.dynamic_shortcut_entries,
-                titleId = R.string.dynamic_shortcut_action,
+                titleId = R.string.dynamic_shortcut_action1,
+                icon = Icons.Outlined.AppShortcut
+            )
+            listPreference(
+                key = HailData.DYNAMIC_SHORTCUT_ACTION_TWO,
+                defaultValue = HailData.ACTION_NONE,
+                onValueChange = { _, action ->
+                    //HShortcuts.removeAllDynamicShortcuts()
+                    HShortcuts.addDynamicShortcutAction(action)
+                    true
+                },
+                values = HailData.DYNAMIC_SHORTCUT_ACTIONS,
+                entriesId = R.array.dynamic_shortcut_entries,
+                titleId = R.string.dynamic_shortcut_action2,
                 icon = Icons.Outlined.AppShortcut
             )
             preference(
                 key = "clear_dynamic_shortcuts",
                 title = { Text(text = stringResource(R.string.action_clear_dynamic_shortcuts)) },
-                icon = { Icon(imageVector = Icons.Outlined.CleaningServices, contentDescription = null) }) {
+                icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.CleaningServices,
+                        contentDescription = null
+                    )
+                }) {
                 HShortcuts.removeAllDynamicShortcuts()
-                HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
+                //HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
             }
         }
     }
@@ -340,8 +402,10 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun String.toEntry(values: List<String>, @ArrayRes entriesId: Int): String =
         resources.getStringArray(entriesId)[values.indexOf(this)]
 
-    private fun iconPackName(pack: String): String = if (pack == HailData.ACTION_NONE) getString(R.string.action_none)
-    else HPackages.getApplicationInfoOrNull(pack)?.loadLabel(app.packageManager)?.toString() ?: pack
+    private fun iconPackName(pack: String): String =
+        if (pack == HailData.ACTION_NONE) getString(R.string.action_none)
+        else HPackages.getApplicationInfoOrNull(pack)?.loadLabel(app.packageManager)?.toString()
+            ?: pack
 
     private fun addPinShortcut() {
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_add_pin_shortcut)
@@ -403,7 +467,10 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     5 -> HShortcuts.addPinShortcut(
                         AppCompatResources.getDrawable(
                             requireContext(), R.drawable.ic_outline_lock_shortcut
-                        )!!, HailApi.ACTION_LOCK, getString(R.string.action_lock), Intent(HailApi.ACTION_LOCK)
+                        )!!,
+                        HailApi.ACTION_LOCK,
+                        getString(R.string.action_lock),
+                        Intent(HailApi.ACTION_LOCK)
                     )
 
                     6 -> HShortcuts.addPinShortcut(
@@ -426,7 +493,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_owner)
                     .setMessage(getString(R.string.msg_set_owner, HPolicy.ADB_COMMAND))
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(HPolicy.ADB_COMMAND) }.show()
+                    .setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(HPolicy.ADB_COMMAND) }
+                    .show()
                     .findViewById<MaterialTextView>(android.R.id.message)?.setTextIsSelectable(true)
                 return false
             }
@@ -438,7 +506,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     else -> {
                         lifecycleScope.launch {
                             val result = callbackFlow {
-                                Dhizuku.requestPermission(object : DhizukuRequestPermissionListener() {
+                                Dhizuku.requestPermission(object :
+                                    DhizukuRequestPermissionListener() {
                                     override fun onRequestPermission(grantResult: Int) {
                                         trySendBlocking(grantResult == PackageManager.PERMISSION_GRANTED)
                                     }
@@ -477,10 +546,11 @@ class SettingsFragment : MainFragment(), MenuProvider {
                         lifecycleScope.launch {
                             val result = callbackFlow {
                                 val shizukuRequestCode = 0
-                                val listener = Shizuku.OnRequestPermissionResultListener { requestCode, grantResult ->
-                                    if (requestCode != shizukuRequestCode) return@OnRequestPermissionResultListener
-                                    trySendBlocking(grantResult == PackageManager.PERMISSION_GRANTED)
-                                }
+                                val listener =
+                                    Shizuku.OnRequestPermissionResultListener { requestCode, grantResult ->
+                                        if (requestCode != shizukuRequestCode) return@OnRequestPermissionResultListener
+                                        trySendBlocking(grantResult == PackageManager.PERMISSION_GRANTED)
+                                    }
                                 Shizuku.addRequestPermissionResultListener(listener)
                                 Shizuku.requestPermission(shizukuRequestCode)
                                 awaitClose {
@@ -531,21 +601,23 @@ class SettingsFragment : MainFragment(), MenuProvider {
         return true
     }
 
-    private suspend fun onTerminalResult(exitValue: Int, msg: String?) = withContext(Dispatchers.Main) {
-        if (exitValue == 0 && msg.isNullOrBlank()) return@withContext
-        MaterialAlertDialogBuilder(requireActivity()).apply {
-            if (!msg.isNullOrBlank()) {
-                if (exitValue != 0) {
-                    setTitle(getString(R.string.operation_failed, exitValue.toString()))
+    private suspend fun onTerminalResult(exitValue: Int, msg: String?) =
+        withContext(Dispatchers.Main) {
+            if (exitValue == 0 && msg.isNullOrBlank()) return@withContext
+            MaterialAlertDialogBuilder(requireActivity()).apply {
+                if (!msg.isNullOrBlank()) {
+                    if (exitValue != 0) {
+                        setTitle(getString(R.string.operation_failed, exitValue.toString()))
+                    }
+                    setMessage(msg)
+                    setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(msg) }
+                } else if (exitValue != 0) {
+                    setMessage(getString(R.string.operation_failed, exitValue.toString()))
                 }
-                setMessage(msg)
-                setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(msg) }
-            } else if (exitValue != 0) {
-                setMessage(getString(R.string.operation_failed, exitValue.toString()))
-            }
-        }.setPositiveButton(android.R.string.ok, null).show().findViewById<MaterialTextView>(android.R.id.message)
-            ?.setTextIsSelectable(true)
-    }
+            }.setPositiveButton(android.R.string.ok, null).show()
+                .findViewById<MaterialTextView>(android.R.id.message)
+                ?.setTextIsSelectable(true)
+        }
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -566,7 +638,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 HailData.SHIZUKU
             )
         ) menu.findItem(R.id.action_terminal).isVisible = true
-        else if (HPolicy.isDeviceOwnerActive) menu.findItem(R.id.action_remove_owner).isVisible = true
+        else if (HPolicy.isDeviceOwnerActive) menu.findItem(R.id.action_remove_owner).isVisible =
+            true
     }
 
     private fun showTerminalDialog() {
@@ -576,7 +649,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
             setSingleLine()
             filters = arrayOf()
         }
-        MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_terminal).setView(binding.root)
+        MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_terminal)
+            .setView(binding.root)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 lifecycleScope.launch {
                     val result = AppManager.execute(binding.editText.text.toString())
