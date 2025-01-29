@@ -119,7 +119,7 @@
     <string name="mode_dhizuku_hide">دیزوکو - پنهان کردن</string>
     <string name="mode_privapp_disable">برنامه سیستم - غیرفعال کنید</string>
     <string name="action_clear_dynamic_shortcuts">تمام میانبرهای پویا را پاک کنید</string>
-    <string name="dynamic_shortcut_action">اقدام میانبر پویا</string>
+    <string name="dynamic_shortcut_action1">اقدام میانبر پویا</string>
     <string name="action_freeze_tag">برچسب فریز</string>
     <string name="icon_pack">بسته آیکون</string>
     <string name="action_select_all">انتخاب همه</string>

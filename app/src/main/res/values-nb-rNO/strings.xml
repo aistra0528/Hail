@@ -70,7 +70,7 @@
     <string name="msg_imported">Importert: %s</string>
     <string name="msg_extract_apk">Utpakket til: %s</string>
     <string name="nothing_here">Ingenting her</string>
-    <string name="dynamic_shortcut_action">Dynamisk snarveishandling</string>
+    <string name="dynamic_shortcut_action1">Dynamisk snarveishandling</string>
     <string name="mode_owner_suspend">Enhetseier — hvilemodus</string>
     <string name="mode_su_suspend">Superbruker — hvilemodus</string>
     <string name="mode_shizuku_disable">Shizuku — skru av</string>

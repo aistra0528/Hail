@@ -124,7 +124,7 @@
     <string name="mode_su_hide">Root - Piilota</string>
     <string name="home_font_size">Etusivu fontin koko</string>
     <string name="action_import_app">Tuo sovellus</string>
-    <string name="dynamic_shortcut_action">Dynaaminen pikanäppäintoiminto</string>
+    <string name="dynamic_shortcut_action1">Dynaaminen pikanäppäintoiminto</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="shizuku_hide_adb">Shizuku toimii adb:nä. Jos haluat piilottaa sovellukset, käynnistä Shizuku uudelleen rootilla.</string>
     <string name="synthesize_adaptive_icons">Syntetisoi mukautuvia kuvakkeita</string>

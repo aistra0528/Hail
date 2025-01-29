@@ -146,6 +146,7 @@ class ApiActivity : ComponentActivity() {
         if (tagId != null) setListFrozen(false, HailData.checkedList.filter { it.tagId == tagId })
         if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false)) {
             app.setAutoFreezeService()
+            app.setAutoUnFreezeService()
         }
         packageManager.getLaunchIntentForPackage(pkg)?.let {
             HShortcuts.addDynamicShortcut(pkg)

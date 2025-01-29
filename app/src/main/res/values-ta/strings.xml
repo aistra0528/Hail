@@ -14,7 +14,7 @@
     <string name="auto_freeze_delay">முடக்கம் நேரந்தவறுகை (நிமிடங்கள்)</string>
     <string name="title_shortcuts">குறுக்குவழிகள்</string>
     <string name="msg_guide">பயன்பாடுகளை முடக்குவதற்கு முன், அமைப்புகளில் பணி பயன்முறையைத் தேர்ந்தெடுக்கவும்.</string>
-    <string name="dynamic_shortcut_action">மாறும் குறுக்குவழி நடவடிக்கை</string>
+    <string name="dynamic_shortcut_action1">மாறும் குறுக்குவழி நடவடிக்கை</string>
     <string name="action_none">எதுவுமில்லை</string>
     <string name="action_freeze_tag">முடக்கம் குறிச்சொல்</string>
     <string name="icon_pack">படவுரு பேக்</string>
