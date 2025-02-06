@@ -152,4 +152,8 @@
     <string name="action_continue">Continuar</string>
     <string name="action_reinstall">Reinstalar</string>
     <string name="nine_key">Procura T9</string>
+    <string name="app_theme">Tema da aplicação</string>
+    <string name="follow_system">Usar definição do sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Escuro</string>
 </resources>
