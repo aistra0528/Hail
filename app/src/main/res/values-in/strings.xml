@@ -49,8 +49,7 @@
     <string name="filter_user_apps">Pengguna</string>
     <string name="filter_frozen_apps">Dibekukan</string>
     <string name="filter_unfrozen_apps">Diaktifkan</string>
-    <string name="msg_set_owner">Jalankan perintah dari adb:
-\n%s</string>
+    <string name="msg_set_owner">Jalankan perintah dari adb: \n%s</string>
     <string name="msg_remove_owner">Saat Hail sebagai pemilik perangkat dihapus, akan ada kesulitan mengatur kembali Aplikasi yang dibekukan.
 \nAplikasi yang dibekukan akan tetap beku setelah Hail dihapus, pastikan telah mengaktifkannya terlebih dahulu.</string>
     <string name="title_remove_owner">Hapus Pemilik Perangkat</string>
