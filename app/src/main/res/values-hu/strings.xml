@@ -5,7 +5,7 @@
     <string name="title_about">Névjegy</string>
     <string name="app_name">Hail</string>
     <string name="app_slogan">Fagyasszunk!</string>
-    <string name="title_home">Főképernyő</string>
+    <string name="title_home">Kezdőlap</string>
     <string name="action_telegram">Telegram csoport</string>
     <string name="action_github">GitHub</string>
     <string name="action_licenses">Licencek</string>
@@ -32,9 +32,9 @@
     <string name="action_details">App Infó</string>
     <string name="action_uninstall">Eltávolítás</string>
     <string name="msg_uninstall">Biztos eltávolítja az alkalmazást?</string>
-    <string name="working_mode">Működő mód</string>
+    <string name="working_mode">Működési mód</string>
     <string name="mode_default">Tétlen</string>
-    <string name="mode_su_stop">Root - Készerített leállítás</string>
+    <string name="mode_su_stop">Root - Kényszerített leállítás</string>
     <string name="mode_su_disable">Root - Letiltás</string>
     <string name="mode_su_suspend">Root - Felfüggesztés</string>
     <string name="mode_shizuku_suspend">Shizuku - Felfüggesztés</string>
@@ -42,7 +42,7 @@
     <string name="mode_privapp_disable">Rendszer App - Letiltás</string>
     <string name="title_set_owner">Eszköztulajdonos beállítása</string>
     <string name="tap_to_select">Klikk a többszörös kiválasztáshoz</string>
-    <string name="filter_system_apps">Rendszerrendszer</string>
+    <string name="filter_system_apps">Rendszer</string>
     <string name="filter_unfrozen_apps">Kiolvasztva</string>
     <string name="sort_by">Rendezés eszerint</string>
     <string name="sort_install">Korábban telepítettek</string>
@@ -106,7 +106,7 @@
     <string name="tag">Címke</string>
     <string name="action_continue">Folytatás</string>
     <string name="nine_key">T9 keresés</string>
-    <string name="home_font_size">Főképernyő betűméret</string>
+    <string name="home_font_size">Betűméret a kezdőlapon</string>
     <string name="action_reinstall">Újratelepítés</string>
     <string name="fuzzy_search">Fuzzy keresés</string>
     <string name="app_theme">Alkalmazástéma</string>
@@ -129,7 +129,7 @@
     <string name="mode_owner_hide">Eszköztulajdonos - Elrejtés</string>
     <string name="action_undo">Visszavonás</string>
     <string name="mode_owner_suspend">Eszköztulajdonos - Felfüggesztés</string>
-    <string name="mode_shizuku_stop">Shizuku - Készrerített leállítás</string>
+    <string name="mode_shizuku_stop">Shizuku - Kényszerített leállítás</string>
     <string name="filter_frozen_apps">Fagyasztva</string>
     <string name="msg_text_copied">Másolva: %s</string>
     <string name="auto_freeze">Automatikus fagyasztás</string>
