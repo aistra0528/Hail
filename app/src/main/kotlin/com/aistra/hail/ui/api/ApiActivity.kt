@@ -3,6 +3,7 @@ package com.aistra.hail.ui.api
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -65,10 +66,65 @@ class ApiActivity : ComponentActivity() {
                 HailApi.ACTION_FREEZE_AUTO -> setAutoFreeze(false)
                 HailApi.ACTION_LOCK -> lockScreen(false)
                 HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
+                Intent.ACTION_VIEW -> handleSchema(intent.data)
                 else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
             }
             finish()
         }.onFailure(::setErrorDialog)
+    }
+
+    private fun requirePackageFromUri(uri: Uri): String{
+       return uri.getQueryParameter(HailData.KEY_PACKAGE)?.also {
+            HPackages.getApplicationInfoOrNull(it) ?: throw NameNotFoundException(getString(R.string.app_not_installed))
+        } ?: throw IllegalArgumentException("package must not be null")
+    }
+
+    private fun requireTagIdFromUri(uri: Uri): Int{
+        return uri.getQueryParameter(HailData.KEY_TAG)?.let {
+            HailData.tags.find { tag -> tag.first == it }?.second
+                ?: throw IllegalStateException("tag unavailable:\n$it")
+        } ?: throw IllegalArgumentException("tag must not be null")
+    }
+
+    /**
+     * Handle schema actions
+     *
+     * hail://launch?package=xxx
+     * hail://freeze?package=xxx
+     * hail://unfreeze?package=xxx
+     * hail://freeze_all
+     * hail://unfreeze_all
+     * hail://freeze_tag?tag=xxx
+     * hail://unfreeze_tag?tag=xxx
+     * hail://freeze_non_whitelisted
+     * hail://freeze_auto
+     * hail://lock
+     * hail://lock_freeze
+     */
+    private fun handleSchema(uri: Uri?) {
+        if (uri?.scheme != "hail"){
+            return
+        }
+        val action = uri.host
+        when (action) {
+            "show_app_info" -> {
+                val pkg = requirePackageFromUri(uri)
+                setContent { AppTheme { RedirectBottomSheet(pkg) } }
+                return
+            }
+
+            "launch" -> launchApp(requirePackageFromUri(uri), runCatching { requireTagIdFromUri(uri) }.getOrNull())
+            "freeze" -> setAppFrozen(requirePackageFromUri(uri), true)
+            "unfreeze" -> setAppFrozen(requirePackageFromUri(uri), false)
+            "freeze_tag" -> setListFrozen(true, HailData.checkedList.filter { it.tagId == requireTagIdFromUri(uri) }, true)
+            "unfreeze_tag" -> setListFrozen(false, HailData.checkedList.filter { it.tagId == requireTagIdFromUri(uri) })
+            "freeze_all" -> setListFrozen(true)
+            "unfreeze_all" -> setListFrozen(false)
+            "freeze_non_whitelisted" -> setListFrozen(true, skipWhitelisted = true)
+            "freeze_auto" -> setAutoFreeze(false)
+            "lock" -> lockScreen(false)
+            "lock_freeze" -> lockScreen(true)
+        }
     }
 
     private fun setErrorDialog(t: Throwable) = setContent { AppTheme { ErrorDialog(t) } }
