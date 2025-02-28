@@ -158,4 +158,8 @@
     <string name="mode_privapp_disable">تطبيقات النظام - تعطيل</string>
     <string name="fuzzy_search">بحث غامض</string>
     <string name="action_reinstall">إعادة تثبيت</string>
+    <string name="app_theme">مظهر التطبيق</string>
+    <string name="follow_system">اتباع النظام</string>
+    <string name="theme_light">ساطع</string>
+    <string name="theme_dark">داكن</string>
 </resources>
