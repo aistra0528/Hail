@@ -25,15 +25,19 @@ class HailApp : Application() {
 
     fun setAutoFreezeService(autoFreezeAfterLock: Boolean = HailData.autoFreezeAfterLock) {
         val start = autoFreezeAfterLock && HailData.checkedList.any {
-            it.packageName != packageName && it.applicationInfo != null && !AppManager.isAppFrozen(it.packageName) && !it.whitelisted
+            it.packageName != packageName && it.applicationInfo != null && !AppManager.isAppFrozen(
+                it.packageName
+            ) && !it.whitelisted
         }
         val intent = Intent(app, AutoFreezeService::class.java)
         if (start) {
             setAutoFreezeServiceEnabled(true)
             ContextCompat.startForegroundService(app, intent)
         } else {
-            stopService(intent)
-            setAutoFreezeServiceEnabled(false)
+            if (!SERVICE_KEEPALIVE_WORKING_MODES.contains(HailData.workingMode)) {
+                stopService(intent)
+                setAutoFreezeServiceEnabled(false)
+            }
         }
     }
 
@@ -65,5 +69,11 @@ class HailApp : Application() {
 
     companion object {
         lateinit var app: HailApp private set
+
+        val SERVICE_KEEPALIVE_WORKING_MODES = setOf(
+            HailData.MODE_SHIZUKU_HIDE,
+            HailData.MODE_SHIZUKU_SUSPEND,
+            HailData.MODE_SHIZUKU_STOP
+        )
     }
 }
