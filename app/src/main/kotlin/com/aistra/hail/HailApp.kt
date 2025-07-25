@@ -34,7 +34,7 @@ class HailApp : Application() {
             setAutoFreezeServiceEnabled(true)
             ContextCompat.startForegroundService(app, intent)
         } else {
-            if (!SERVICE_KEEPALIVE_WORKING_MODES.contains(HailData.workingMode)) {
+            if (!HailData.SERVICE_KEEPALIVE_WORKING_MODES.contains(HailData.workingMode)) {
                 stopService(intent)
                 setAutoFreezeServiceEnabled(false)
             }
@@ -69,11 +69,5 @@ class HailApp : Application() {
 
     companion object {
         lateinit var app: HailApp private set
-
-        val SERVICE_KEEPALIVE_WORKING_MODES = setOf(
-            HailData.MODE_SHIZUKU_HIDE,
-            HailData.MODE_SHIZUKU_SUSPEND,
-            HailData.MODE_SHIZUKU_STOP
-        )
     }
 }
