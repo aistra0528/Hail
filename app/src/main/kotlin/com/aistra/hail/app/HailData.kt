@@ -207,6 +207,8 @@ object HailData {
         }
     }
 
+    fun shouldStopAutoFreezeService(): Boolean = !SERVICE_KEEPALIVE_WORKING_MODES.contains(workingMode)
+
     fun saveTags() {
         if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
         HFiles.write(tagsPath, JSONArray().run {

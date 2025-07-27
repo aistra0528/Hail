@@ -34,7 +34,7 @@ class HailApp : Application() {
             setAutoFreezeServiceEnabled(true)
             ContextCompat.startForegroundService(app, intent)
         } else {
-            if (!HailData.SERVICE_KEEPALIVE_WORKING_MODES.contains(HailData.workingMode)) {
+            if (HailData.shouldStopAutoFreezeService()) {
                 stopService(intent)
                 setAutoFreezeServiceEnabled(false)
             }
