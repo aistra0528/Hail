@@ -150,4 +150,8 @@
         <item quantity="other">%2$s بعد از %1$d دقیقه: %3$s</item>
     </plurals>
     <string name="home_font_size">اندازه فونت خانه</string>
+    <string name="app_theme">زمینه کارهٔ</string>
+    <string name="follow_system">پی‌گرفتن سامانه</string>
+    <string name="theme_light">نور</string>
+    <string name="theme_dark">تیره</string>
 </resources>
