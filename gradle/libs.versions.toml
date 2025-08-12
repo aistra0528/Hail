@@ -21,6 +21,7 @@ preferenceKtx = "1.2.1"
 shizuku = "13.1.5"
 swiperefreshlayout = "1.1.0"
 workRuntimeKtx = "2.9.1"
+xposed = "82"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose" }
@@ -50,6 +51,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 pinyin4j = { module = "com.belerweb:pinyin4j", version.ref = "pinyin4j" }
 shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
 shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
+xposed = { module = "de.robv.android.xposed:api", version.ref = "xposed" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
