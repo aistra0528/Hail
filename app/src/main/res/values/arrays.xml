@@ -8,6 +8,9 @@
         <item>90</item>
         <item>120</item>
     </integer-array>
+    <string-array name="xposed_scope">
+        <item>com.android.launcher</item>
+    </string-array>
     <string-array name="home_action_entries">
         <item>@string/action_launch</item>
         <item>@string/action_freeze</item>
