@@ -187,6 +187,22 @@ adb shell am start -a action -e key value
 
 - `com.aistra.hail.action.LOCK_FREEZE`：冻结首页全部应用并锁定屏幕。无需`extra`。
 
+
+或者通过 schema 执行API
+```
+hail://launch?package=xxx
+hail://freeze?package=xxx
+hail://unfreeze?package=xxx
+hail://freeze_all
+hail://unfreeze_all
+hail://freeze_tag?tag=xxx
+hail://unfreeze_tag?tag=xxx
+hail://freeze_non_whitelisted
+hail://freeze_auto
+hail://lock
+hail://lock_freeze
+```
+
 ## 协助翻译
 
 要将雹翻译成您的语言，或完善现有的翻译，请使用 [Weblate](https://hosted.weblate.org/engage/hail/)。
