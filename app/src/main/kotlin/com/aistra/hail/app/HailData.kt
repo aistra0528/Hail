@@ -84,6 +84,11 @@ object HailData {
         MODE_PRIVAPP_STOP,
         MODE_PRIVAPP_DISABLE
     )
+    val SERVICE_KEEPALIVE_WORKING_MODES = setOf(
+        MODE_SHIZUKU_HIDE,
+        MODE_SHIZUKU_SUSPEND,
+        MODE_SHIZUKU_STOP
+    )
     const val BIOMETRIC_LOGIN = "biometric_login"
     const val APP_THEME = "app_theme"
     const val FOLLOW_SYSTEM = "follow_system"
@@ -201,6 +206,8 @@ object HailData {
             }
         }
     }
+
+    fun shouldStopAutoFreezeService(): Boolean = !SERVICE_KEEPALIVE_WORKING_MODES.contains(workingMode)
 
     fun saveTags() {
         if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
