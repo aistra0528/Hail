@@ -76,6 +76,19 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="@string/xposed_description" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="53" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/xposed_scope" />
+
         <provider
                 android:name="rikka.shizuku.ShizukuProvider"
                 android:authorities="${applicationId}.shizuku"
