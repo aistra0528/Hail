@@ -31,7 +31,7 @@
     <string name="action_help">Pomoc</string>
     <string name="action_details">Informacje o aplikacji</string>
     <string name="action_uninstall">Odinstaluj</string>
-    <string name="msg_uninstall">Czy na pewno chcesz odinstalować aplikacje?</string>
+    <string name="msg_uninstall">Czy na pewno chcesz odinstalować aplikację?</string>
     <string name="working_mode">Tryb działania</string>
     <string name="title_set_owner">Ustaw właściciela urządzenia</string>
     <string name="title_remove_owner">Usuń właściciela urządzenia</string>
