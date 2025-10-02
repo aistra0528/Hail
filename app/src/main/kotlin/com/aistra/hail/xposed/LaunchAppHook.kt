@@ -4,16 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.service.quicksettings.TileService
-import com.aistra.hail.app.HailApi.ACTION_UNFREEZE
-import com.aistra.hail.app.HailData
+import com.aistra.hail.app.HailApi
 import com.aistra.hail.ui.api.ApiActivity
+import com.aistra.hail.utils.HTarget
 import com.aistra.hail.xposed.XposedInterface.BaseHook
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import java.lang.reflect.Method
 
 class LaunchAppHook(classLoader: ClassLoader) : BaseHook(classLoader) {
@@ -22,7 +20,7 @@ class LaunchAppHook(classLoader: ClassLoader) : BaseHook(classLoader) {
     }
 
     private fun appFreezeInject(classLoader: ClassLoader) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        if (HTarget.P) {
             val hook = object : XC_MethodHook() {
                 @Throws(Throwable::class)
                 override fun beforeHookedMethod(param: MethodHookParam) {
@@ -81,9 +79,7 @@ class LaunchAppHook(classLoader: ClassLoader) : BaseHook(classLoader) {
             String::class.java
         )
         if (method.invoke(packageManager, packageName) as Boolean) {
-            val intent = Intent(ACTION_UNFREEZE)
-            intent.putExtra(HailData.KEY_PACKAGE, packageName)
-            context.startActivity(intent)
+            context.startActivity(HailApi.getIntentForPackage(HailApi.ACTION_UNFREEZE, packageName))
 
             /**
              * It took about 500 milliseconds from [Context.startActivity]

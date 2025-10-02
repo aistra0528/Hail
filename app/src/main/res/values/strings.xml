@@ -138,7 +138,7 @@
     <string name="mode_su_hide">Root - Hide</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">Skip</string>
-    <string name="xposed_description">Automatically unfreeze when a scoped app attempts to open a suspended app</string>
+    <string name="xposed_description">Automatically unfreeze suspended app for scoped apps</string>
     <string name="mode_island_hide">Island/Insular - Hide</string>
     <string name="mode_island_suspend">Island/Insular - Suspend</string>
     <string name="shizuku_hide_adb">Shizuku is running as adb. To hide apps, please restart Shizuku with root.</string>
