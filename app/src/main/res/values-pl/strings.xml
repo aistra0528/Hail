@@ -11,7 +11,7 @@
     <string name="action_translate">Przetłumacz</string>
     <string name="action_licenses">Licencje</string>
     <string name="action_freeze_current">Zamroź widoczne</string>
-    <string name="action_unfreeze_current">Odmroż widoczne</string>
+    <string name="action_unfreeze_current">Odmróź widoczne</string>
     <string name="action_freeze_non_whitelisted">Zamroź aplikacje spoza białej listy</string>
     <string name="action_github">GitHub</string>
     <string name="action_lock_freeze">Zablokuj i zamroź</string>
@@ -68,7 +68,7 @@
     <string name="title_home">Ekran główny</string>
     <string name="title_apps">Aplikacje</string>
     <string name="action_freeze_all">Zamroź wszystkie</string>
-    <string name="action_unfreeze_all">Odmroż wszystko</string>
+    <string name="action_unfreeze_all">Odmróź wszystko</string>
     <string name="action_lock">Zablokuj</string>
     <string name="action_undo">Cofnij</string>
     <string name="action_search">Szukaj</string>
@@ -156,4 +156,5 @@
     <string name="compact_icon">Kompaktowe ikony</string>
     <string name="action_biometric">Odblokowywanie biometryczne</string>
     <string name="msg_biometric">Zaloguj używając twoich danych biometrycznych</string>
+    <string name="xposed_description">Automatycznie odmróź aplikacje w określonym zakresie</string>
 </resources>
