@@ -3,6 +3,7 @@ package com.aistra.hail.ui.api
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -40,35 +41,73 @@ class ApiActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         runCatching {
-            when (intent.action) {
-                Intent.ACTION_SHOW_APP_INFO -> {
-                    val pkg =
-                        requirePackage(if (HTarget.N) Intent.EXTRA_PACKAGE_NAME else "android.intent.extra.PACKAGE_NAME")
-                    setContent { AppTheme { RedirectBottomSheet(pkg) } }
-                    return
-                }
-
-                HailApi.ACTION_LAUNCH -> launchApp(requirePackage(), runCatching { requireTagId }.getOrNull())
-
-                HailApi.ACTION_FREEZE -> setAppFrozen(requirePackage(), true)
-                HailApi.ACTION_UNFREEZE -> setAppFrozen(requirePackage(), false)
-                HailApi.ACTION_FREEZE_TAG -> setListFrozen(
-                    true, HailData.checkedList.filter { it.tagId == requireTagId }, true
-                )
-
-                HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(
-                    false, HailData.checkedList.filter { it.tagId == requireTagId })
-
-                HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
-                HailApi.ACTION_UNFREEZE_ALL -> setListFrozen(false)
-                HailApi.ACTION_FREEZE_NON_WHITELISTED -> setListFrozen(true, skipWhitelisted = true)
-                HailApi.ACTION_FREEZE_AUTO -> setAutoFreeze(false)
-                HailApi.ACTION_LOCK -> lockScreen(false)
-                HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
-                else -> throw IllegalArgumentException("unknown action:\n${intent.action}")
-            }
-            finish()
+            if (handleAction(intent.action)) finish()
         }.onFailure(::setErrorDialog)
+    }
+
+    private fun handleAction(action: String?): Boolean {
+        when (action) {
+            Intent.ACTION_SHOW_APP_INFO -> {
+                setContent { AppTheme { RedirectBottomSheet(requirePackage) } }
+                return false
+            }
+
+            Intent.ACTION_VIEW -> return handleSchema(intent.data)
+
+            HailApi.ACTION_LAUNCH -> launchApp(requirePackage, runCatching { requireTagId }.getOrNull())
+            HailApi.ACTION_FREEZE -> setAppFrozen(requirePackage, true)
+            HailApi.ACTION_UNFREEZE -> setAppFrozen(requirePackage, false)
+            HailApi.ACTION_FREEZE_TAG -> setListFrozen(
+                true, HailData.checkedList.filter { it.tagId == requireTagId }, true
+            )
+
+            HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(
+                false, HailData.checkedList.filter { it.tagId == requireTagId })
+
+            HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
+            HailApi.ACTION_UNFREEZE_ALL -> setListFrozen(false)
+            HailApi.ACTION_FREEZE_NON_WHITELISTED -> setListFrozen(true, skipWhitelisted = true)
+            HailApi.ACTION_FREEZE_AUTO -> setAutoFreeze(false)
+            HailApi.ACTION_LOCK -> lockScreen(false)
+            HailApi.ACTION_LOCK_FREEZE -> lockScreen(true)
+            else -> throw IllegalArgumentException("Unknown action:\n$action")
+        }
+        return true
+    }
+
+    /**
+     * Handle schema actions
+     *
+     * hail://launch?package=xxx
+     * hail://freeze?package=xxx
+     * hail://unfreeze?package=xxx
+     * hail://freeze_tag?tag=xxx
+     * hail://unfreeze_tag?tag=xxx
+     * hail://freeze_all
+     * hail://unfreeze_all
+     * hail://freeze_non_whitelisted
+     * hail://freeze_auto
+     * hail://lock
+     * hail://lock_freeze
+     */
+    private fun handleSchema(uri: Uri?): Boolean {
+        if (uri?.scheme != "hail") throw IllegalArgumentException("Unknown scheme:\n${uri?.scheme}")
+        return handleAction(
+            when (uri.host) {
+                "launch" -> HailApi.ACTION_LAUNCH
+                "freeze" -> HailApi.ACTION_FREEZE
+                "unfreeze" -> HailApi.ACTION_UNFREEZE
+                "freeze_tag" -> HailApi.ACTION_FREEZE_TAG
+                "unfreeze_tag" -> HailApi.ACTION_UNFREEZE_TAG
+                "freeze_all" -> HailApi.ACTION_FREEZE_ALL
+                "unfreeze_all" -> HailApi.ACTION_UNFREEZE_ALL
+                "freeze_non_whitelisted" -> HailApi.ACTION_FREEZE_NON_WHITELISTED
+                "freeze_auto" -> HailApi.ACTION_FREEZE_AUTO
+                "lock" -> HailApi.ACTION_LOCK
+                "lock_freeze" -> HailApi.ACTION_LOCK_FREEZE
+                else -> throw IllegalArgumentException("Unknown host:\n${uri.host}")
+            }
+        )
     }
 
     private fun setErrorDialog(t: Throwable) = setContent { AppTheme { ErrorDialog(t) } }
@@ -129,16 +168,26 @@ class ApiActivity : ComponentActivity() {
             }
         })
 
-    private fun requirePackage(extraName: String = HailData.KEY_PACKAGE): String =
-        intent?.getStringExtra(extraName)?.also {
+    private val requirePackage: String
+        get() = intent.run {
+            if (action == Intent.ACTION_VIEW) data?.getQueryParameter(HailData.KEY_PACKAGE)
+            else getStringExtra(
+                if (action != Intent.ACTION_SHOW_APP_INFO) HailData.KEY_PACKAGE
+                else if (HTarget.N) Intent.EXTRA_PACKAGE_NAME
+                else "android.intent.extra.PACKAGE_NAME"
+            )
+        }?.also {
             HPackages.getApplicationInfoOrNull(it) ?: throw NameNotFoundException(getString(R.string.app_not_installed))
-        } ?: throw IllegalArgumentException("package must not be null")
+        } ?: throw IllegalArgumentException("Package must not be null")
 
     private val requireTagId: Int
-        get() = intent?.getStringExtra(HailData.KEY_TAG)?.let {
+        get() = intent.run {
+            if (action == Intent.ACTION_VIEW) data?.getQueryParameter(HailData.KEY_TAG)
+            else getStringExtra(HailData.KEY_TAG)
+        }?.let {
             HailData.tags.find { tag -> tag.first == it }?.second
-                ?: throw IllegalStateException("tag unavailable:\n$it")
-        } ?: throw IllegalArgumentException("tag must not be null")
+                ?: throw IllegalStateException("Tag unavailable:\n$it")
+        } ?: throw IllegalArgumentException("Tag must not be null")
 
     private fun launchApp(pkg: String, tagId: Int? = null) {
         if (tagId != null) setListFrozen(false, HailData.checkedList.filter { it.tagId == tagId })
@@ -152,7 +201,7 @@ class ApiActivity : ComponentActivity() {
     }
 
     private fun setAppFrozen(pkg: String, frozen: Boolean) = when {
-        frozen && !HailData.isChecked(pkg) -> throw SecurityException("package not checked")
+        frozen && !HailData.isChecked(pkg) -> throw SecurityException("Package not checked")
         AppManager.isAppFrozen(pkg) != frozen && !AppManager.setAppFrozen(
             pkg, frozen
         ) -> throw IllegalStateException(getString(R.string.permission_denied))

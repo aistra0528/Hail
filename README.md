@@ -187,6 +187,30 @@ adb shell am start -a action -e key value
 
 - `com.aistra.hail.action.LOCK_FREEZE`：冻结首页全部应用并锁定屏幕。无需`extra`。
 
+或使用以下`schema`:
+
+- `hail://launch?package=xxx`
+
+- `hail://freeze?package=xxx`
+
+- `hail://unfreeze?package=xxx`
+
+- `hail://freeze_tag?tag=xxx`
+
+- `hail://unfreeze_tag?tag=xxx`
+
+- `hail://freeze_all`
+
+- `hail://unfreeze_all`
+
+- `hail://freeze_non_whitelisted`
+
+- `hail://freeze_auto`
+
+- `hail://lock`
+
+- `hail://lock_freeze`
+
 ## 协助翻译
 
 要将雹翻译成您的语言，或完善现有的翻译，请使用 [Weblate](https://hosted.weblate.org/engage/hail/)。
@@ -196,8 +220,8 @@ adb shell am start -a action -e key value
 ## 许可证
 
     Hail - Freeze Android apps
-    Copyright (C) 2021-2024 Aistra
-    Copyright (C) 2022-2024 Hail contributors
+    Copyright (C) 2021-2025 Aistra
+    Copyright (C) 2022-2025 Hail contributors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

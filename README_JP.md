@@ -16,14 +16,16 @@
 ## 凍結
 
 凍結`freeze`は、**アプリが不要なときに即座に停止する**
-（オンデマンドリクエスト）動作を指す言葉で、デバイスの使用をより良くし、RAMの使用量を削減し、電力を節約します。ユーザーは、アプリを解凍`unfreeze`
+（オンデマンドリクエスト）動作を指す言葉で、デバイスの使用をより良くし、RAMの使用量を削減し、電力を節約します。ユーザーは、アプリを解凍
+`unfreeze`
 して元の状態に戻すこともできます。
 
 一般的に、「凍結」は無効化を意味しますが、雹はアプリを隠したり、一時停止したりすることもできます。
 
 ### 無効化
 
-無効化されたアプリは、ランチャーに表示されず、インストール済みアプリのリストには「無効」と表示されます。アプリを有効化`enable`
+無効化されたアプリは、ランチャーに表示されず、インストール済みアプリのリストには「無効」と表示されます。アプリを有効化
+`enable`
 して元に戻します。
 
 ### 隠す
@@ -192,6 +194,30 @@ adb shell am start -a action -e key value
 
 - `com.aistra.hail.action.LOCK_FREEZE`：ホームのすべてのアプリを凍結し、画面をロックします。`extra`は必要ありません。
 
+or use following `schema`:
+
+- `hail://launch?package=xxx`
+
+- `hail://freeze?package=xxx`
+
+- `hail://unfreeze?package=xxx`
+
+- `hail://freeze_tag?tag=xxx`
+
+- `hail://unfreeze_tag?tag=xxx`
+
+- `hail://freeze_all`
+
+- `hail://unfreeze_all`
+
+- `hail://freeze_non_whitelisted`
+
+- `hail://freeze_auto`
+
+- `hail://lock`
+
+- `hail://lock_freeze`
+
 ## 翻訳を手伝う
 
 雹をあなたの言語に翻訳するか、既存の翻訳を改善するには、[Weblate](https://hosted.weblate.org/engage/hail/)を使用してください。
@@ -201,8 +227,8 @@ adb shell am start -a action -e key value
 ## ライセンス
 
     Hail - Freeze Android apps
-    Copyright (C) 2021-2024 Aistra
-    Copyright (C) 2022-2024 Hail contributors
+    Copyright (C) 2021-2025 Aistra
+    Copyright (C) 2022-2025 Hail contributors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
