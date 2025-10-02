@@ -7,7 +7,8 @@
 [![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)
 [![License](https://img.shields.io/github/license/aistra0528/Hail)](LICENSE)
 
-Hail is a free-as-in-freedom software to freeze Android apps. [GitHub Releases](https://github.com/aistra0528/Hail/releases)
+Hail is a free-as-in-freedom software to freeze Android
+apps. [GitHub Releases](https://github.com/aistra0528/Hail/releases)
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.aistra.hail/)
 
@@ -15,27 +16,35 @@ Hail is a free-as-in-freedom software to freeze Android apps. [GitHub Releases](
 
 ## Freeze
 
-Freeze is a word that describes the action of **blocking (immediately stopping) apps when they are not needed/in-use (on-demand request)** which in turn helps the device to cut down on the usage of RAM and save power. Users can also unfreeze them to revert to their original state.
+Freeze is a word that describes the action of **blocking (immediately stopping) apps when they are not needed/in-use (
+on-demand request)** which in turn helps the device to cut down on the usage of RAM and save power. Users can also
+unfreeze them to revert to their original state.
 
 In general, "freeze" means disable, but also Hail can "freeze" apps by hiding and suspending them.
 
 ### Disable
 
-Disabled apps will not be shown in the launcher and will be shown as "Disabled" in the installed apps list. Enable them to revert the action.
+Disabled apps will not be shown in the launcher and will be shown as "Disabled" in the installed apps list. Enable them
+to revert the action.
 
 ### Hide
 
 Hidden apps will not be shown in the launcher and in the installed apps list. Unhide them to revert the action.
 
-> While in this state, which is almost like an uninstalled state, the package will be unavailable, however, the application data and the actual package file will not be removed from the device.
+> While in this state, which is almost like an uninstalled state, the package will be unavailable, however, the
+> application data and the actual package file will not be removed from the device.
 
 ### Suspend (Android 7.0+)
 
-Suspended apps will have their icons shown in grayscale within the device's launcher. Unsuspend them to revert the action.
+Suspended apps will have their icons shown in grayscale within the device's launcher. Unsuspend them to revert the
+action.
 
-> While in this state, the application's notifications will be hidden, any of its started activities will be stopped and it will not be able to show toasts, dialogs or even play audio. When the user tries to launch a suspended app, the system will, instead, show a dialog to the user informing them that they cannot use this app while it is suspended.
+> While in this state, the application's notifications will be hidden, any of its started activities will be stopped and
+> it will not be able to show toasts, dialogs or even play audio. When the user tries to launch a suspended app, the
+> system will, instead, show a dialog to the user informing them that they cannot use this app while it is suspended.
 
-Suspend only prevents the user from interacting with the app, it does **NOT** prevent the app from running in the background.
+Suspend only prevents the user from interacting with the app, it does **NOT** prevent the app from running in the
+background.
 
 ## Working mode
 
@@ -142,7 +151,8 @@ adb shell pm unsuspend com.package.name
 
 ### Modify file
 
-Access `/data/system/users/0/package-restrictions.xml`, this file stores the restrictions about apps. You can modify, rename or just delete it.
+Access `/data/system/users/0/package-restrictions.xml`, this file stores the restrictions about apps. You can modify,
+rename or just delete it.
 
 - Enable app: Modify the value of `enabled` from 2 (DISABLED) or 3 (DISABLED_USER) to 1 (ENABLED)
 
@@ -162,9 +172,11 @@ adb shell am start -a action -e key value
 
 `action` can be one of the following constants:
 
-- `com.aistra.hail.action.LAUNCH`: Unfreeze and launch target app. If it is unfrozen, it will launch directly. `key="package"` `value="com.package.name"`
+- `com.aistra.hail.action.LAUNCH`: Unfreeze and launch target app. If it is unfrozen, it will launch directly.
+  `key="package"` `value="com.package.name"`
 
-- `com.aistra.hail.action.FREEZE`: Freeze target app. It must be checked at Home. `key="package"` `value="com.package.name"`
+- `com.aistra.hail.action.FREEZE`: Freeze target app. It must be checked at Home. `key="package"`
+  `value="com.package.name"`
 
 - `com.aistra.hail.action.UNFREEZE`: Unfreeze target app. `key="package"` `value="com.package.name"`
 
@@ -184,17 +196,42 @@ adb shell am start -a action -e key value
 
 - `com.aistra.hail.action.LOCK_FREEZE`: Freeze all apps at Home and lock screen. `extra` is not necessary.
 
+or use following `schema`:
+
+- `hail://launch?package=xxx`
+
+- `hail://freeze?package=xxx`
+
+- `hail://unfreeze?package=xxx`
+
+- `hail://freeze_tag?tag=xxx`
+
+- `hail://unfreeze_tag?tag=xxx`
+
+- `hail://freeze_all`
+
+- `hail://unfreeze_all`
+
+- `hail://freeze_non_whitelisted`
+
+- `hail://freeze_auto`
+
+- `hail://lock`
+
+- `hail://lock_freeze`
+
 ## Help Translate
 
-To translate Hail into your language, or to improve an existing translation, use [Weblate](https://hosted.weblate.org/engage/hail/).
+To translate Hail into your language, or to improve an existing translation,
+use [Weblate](https://hosted.weblate.org/engage/hail/).
 
 [![Translation status](https://hosted.weblate.org/widgets/hail/-/multi-auto.svg)](https://hosted.weblate.org/engage/hail/)
 
 ## License
 
     Hail - Freeze Android apps
-    Copyright (C) 2021-2024 Aistra
-    Copyright (C) 2022-2024 Hail contributors
+    Copyright (C) 2021-2025 Aistra
+    Copyright (C) 2022-2025 Hail contributors
 
     This program is a free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
