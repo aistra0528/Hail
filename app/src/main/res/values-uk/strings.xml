@@ -22,7 +22,7 @@
     <string name="action_import_frozen">Імпортувати заморожені застосунки</string>
     <string name="action_launch">Запустити</string>
     <string name="action_licenses">Ліцензії</string>
-    <string name="action_lock">Заблокувавши</string>
+    <string name="action_lock">Заблокувати</string>
     <string name="action_lock_freeze">Заблокувати та заморозити</string>
     <string name="action_pin">Закріпити</string>
     <string name="action_qq">Група в QQ</string>
@@ -33,7 +33,7 @@
     <string name="action_tag_remove">Видалити тег</string>
     <string name="action_tag_set">Встановити тег</string>
     <string name="action_telegram">Група в Телеграм</string>
-    <string name="action_translate">Пераклад</string>
+    <string name="action_translate">Переклад</string>
     <string name="action_undo">Скасувати</string>
     <string name="action_unfreeze">Розморозити</string>
     <string name="action_unfreeze_all">Розморозити все</string>
@@ -158,4 +158,5 @@
     <string name="follow_system">Як в системі</string>
     <string name="theme_light">Світла</string>
     <string name="theme_dark">Темна</string>
+    <string name="xposed_description">Автоматично розморожувати призупинені застосунки для застосунків з обмеженою областю дії</string>
 </resources>
