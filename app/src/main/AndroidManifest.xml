@@ -45,11 +45,13 @@
                 android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
+                <action android:name="android.intent.action.ASSIST"/>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
@@ -76,24 +78,24 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="hail"/>
             </intent-filter>
         </activity>
 
         <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
+                android:name="xposedmodule"
+                android:value="true"/>
         <meta-data
-            android:name="xposeddescription"
-            android:value="@string/xposed_description" />
+                android:name="xposeddescription"
+                android:value="@string/xposed_description"/>
         <meta-data
-            android:name="xposedminversion"
-            android:value="53" />
+                android:name="xposedminversion"
+                android:value="53"/>
         <meta-data
-            android:name="xposedscope"
-            android:resource="@array/xposed_scope" />
+                android:name="xposedscope"
+                android:resource="@array/xposed_scope"/>
 
         <provider
                 android:name="rikka.shizuku.ShizukuProvider"
