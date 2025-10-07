@@ -1,6 +1,6 @@
 [versions]
-androidGradlePlugin = "8.7.0"
-kotlin = "2.0.20"
+androidGradlePlugin = "8.12.0"
+kotlin = "2.0.21"
 appcompat = "1.7.0"
 appiconloader = "1.5.0"
 biometricKtx = "1.2.0-alpha05"

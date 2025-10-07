@@ -12,7 +12,6 @@ android {
     }.standardOutput.asText.get().trim()
 
     namespace = "com.aistra.hail"
-    buildToolsVersion = "35.0.0"
     compileSdk = 35
 
     defaultConfig {
