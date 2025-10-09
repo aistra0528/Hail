@@ -6,6 +6,25 @@ import android.text.InputType
 import android.view.*
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TriStateCheckbox
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.unit.dp
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
@@ -24,6 +43,7 @@ import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentPagerBinding
 import com.aistra.hail.extensions.*
 import com.aistra.hail.ui.main.MainFragment
+import com.aistra.hail.ui.theme.AppTheme
 import com.aistra.hail.utils.*
 import com.aistra.hail.work.HWork
 import com.google.android.material.color.MaterialColors
@@ -112,7 +132,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     }
 
     private fun updateCurrentList() = HailData.checkedList.filter {
-        if (query.isEmpty()) it.tagId == tag.second
+        if (query.isEmpty()) tag.second in it.tagIdList
         else ((HailData.nineKeySearch && NineKeySearch.search(
             query, it.packageName, it.name.toString()
         )) || FuzzySearch.search(it.packageName, query) || FuzzySearch.search(
@@ -198,16 +218,21 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 }
 
                 5 -> {
-                    val checked = HailData.tags.indexOfFirst { it.second == info.tagId }
-                    MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set).setSingleChoiceItems(
-                        HailData.tags.map { it.first }.toTypedArray(), checked
-                    ) { dialog, index ->
-                        if (info.tagId != HailData.tags[index].second) {
-                            info.tagId = HailData.tags[index].second
+                    val checkedItems = BooleanArray(HailData.tags.size) { index ->
+                        HailData.tags[index].second in info.tagIdList
+                    }
+                    MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set)
+                        .setMultiChoiceItems(
+                            HailData.tags.map { it.first }.toTypedArray(), checkedItems
+                        ) { _, index, isChecked ->
+                            checkedItems[index] = isChecked
+                        }.setPositiveButton(android.R.string.ok) { _, _ ->
+                            info.tagIdList.clear()
+                            checkedItems.forEachIndexed { index, checked ->
+                                if (checked) info.tagIdList.add(HailData.tags[index].second)
+                            }
                             HailData.saveApps()
                             updateCurrentList()
-                        }
-                        dialog.dismiss()
                     }.setNeutralButton(R.string.action_tag_add) { _, _ ->
                         showTagDialog(listOf(info))
                     }.setNegativeButton(android.R.string.cancel, null).show()
@@ -277,18 +302,91 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 }
 
                 2 -> {
-                    val checked =
-                        if (selectedList.all { it.tagId == selectedList[0].tagId }) HailData.tags.indexOfFirst { it.second == selectedList[0].tagId } else -1
-                    MaterialAlertDialogBuilder(activity).setTitle(R.string.action_tag_set).setSingleChoiceItems(
-                        HailData.tags.map { it.first }.toTypedArray(), checked
-                    ) { dialog, index ->
-                        selectedList.forEach { it.tagId = HailData.tags[index].second }
-                        HailData.saveApps()
-                        deselect()
-                        dialog.dismiss()
-                    }.setNeutralButton(R.string.action_tag_add) { _, _ ->
-                        showTagDialog(selectedList)
-                    }.setNegativeButton(android.R.string.cancel, null).show()
+                    // 0: unchecked, 1: indeterminate, 2: checked
+                    val initialStates = IntArray(HailData.tags.size) { index ->
+                        val tagId = HailData.tags[index].second
+                        val count = selectedList.count { tagId in it.tagIdList }
+                        when (count) {
+                            0 -> 0
+                            selectedList.size -> 2
+                            else -> 1
+                        }
+                    }
+
+                    val states =
+                        mutableStateListOf(*initialStates.toTypedArray())
+
+                    val composeView = ComposeView(activity).apply {
+                        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                        setContent {
+                            AppTheme {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .verticalScroll(rememberScrollState())
+                                ) {
+                                    HailData.tags.forEachIndexed { index, tag ->
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clickable {
+                                                    val newState = if (initialStates[index] == 1) {
+                                                        when (states[index]) {
+                                                            0 -> 1
+                                                            1 -> 2
+                                                            else -> 0
+                                                        }
+                                                    } else {
+                                                        if (states[index] == 0) 2 else 0
+                                                    }
+                                                    states[index] = newState
+                                                }
+                                                .padding(horizontal = 24.dp, vertical = 12.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            TriStateCheckbox(
+                                                state = when (states[index]) {
+                                                    0 -> ToggleableState.Off
+                                                    1 -> ToggleableState.Indeterminate
+                                                    else -> ToggleableState.On
+                                                },
+                                                onClick = null
+                                            )
+                                            Spacer(modifier = Modifier.width(16.dp))
+                                            Text(
+                                                text = tag.first,
+                                                color = MaterialTheme.colorScheme.onSurface,
+                                                style = MaterialTheme.typography.bodyLarge
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    MaterialAlertDialogBuilder(activity)
+                        .setTitle(R.string.action_tag_set)
+                        .setView(composeView)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            selectedList.forEach { app ->
+                                states.forEachIndexed { index, state ->
+                                    val tagId = HailData.tags[index].second
+                                    when (state) {
+                                        0 -> app.tagIdList.remove(tagId)
+                                        1 -> {}
+                                        2 -> if (tagId !in app.tagIdList) app.tagIdList.add(tagId)
+                                    }
+                                }
+                            }
+                            HailData.saveApps()
+                            deselect()
+                        }
+                        .setNeutralButton(R.string.action_tag_add) { _, _ ->
+                            showTagDialog(selectedList)
+                        }
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show()
                 }
 
                 3 -> {
@@ -370,7 +468,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 if (HailData.tags.any { it.first == tagName || it.second == tagId }) return@setPositiveButton
                 if (list != null) { // Add tag
                     HailData.tags.add(tagName to tagId)
-                    list.forEach { it.tagId = tagId }
+                    list.forEach {
+                        if (tagId !in it.tagIdList) it.tagIdList.add(tagId)
+                    }
                     adapter.notifyItemInserted(adapter.itemCount - 1)
                     if (query.isEmpty() && tabs.tabCount == 2) tabs.isVisible = true
                     if (list == selectedList) deselect(false)
@@ -378,11 +478,17 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 } else { // Rename tag
                     val position = tabs.selectedTabPosition
                     val defaultTab = position == 0
+                    val oldTagId = HailData.tags[position].second
                     HailData.tags.run {
                         removeAt(position)
                         add(position, tagName to if (defaultTab) 0 else tagId)
                     }
-                    if (!defaultTab) pagerAdapter.currentList.forEach { it.tagId = tagId }
+                    if (!defaultTab) {
+                        pagerAdapter.currentList.forEach {
+                            val index = it.tagIdList.indexOf(oldTagId)
+                            if (index != -1) it.tagIdList[index] = tagId
+                        }
+                    }
                     adapter.notifyItemChanged(position)
                 }
                 HailData.saveApps()
@@ -391,7 +497,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 val position = tabs.selectedTabPosition
                 if (list != null || position == 0) return@apply
                 setNeutralButton(R.string.action_tag_remove) { _, _ ->
-                    pagerAdapter.currentList.forEach { it.tagId = 0 }
+                    val tagIdToRemove = HailData.tags[position].second
+                    pagerAdapter.currentList.forEach { it.tagIdList.remove(tagIdToRemove) }
                     tabs.selectTab(tabs.getTabAt(0))
                     HailData.tags.removeAt(position)
                     adapter.notifyItemRemoved(position)
@@ -425,7 +532,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         for (index in 0 until json.length()) {
             val pkg = json.getString(index)
             if (HPackages.getApplicationInfoOrNull(pkg) != null && !HailData.isChecked(pkg)) {
-                HailData.addCheckedApp(pkg, false, tag.second)
+                HailData.addCheckedApp(pkg, false, mutableListOf(tag.second))
                 i++
             }
         }
@@ -439,7 +546,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     private suspend fun importFrozenApp() = withContext(Dispatchers.IO) {
         HPackages.getInstalledApplications().map { it.packageName }
             .filter { AppManager.isAppFrozen(it) && !HailData.isChecked(it) }
-            .onEach { HailData.addCheckedApp(it, false, tag.second) }.size
+            .onEach { HailData.addCheckedApp(it, false, mutableListOf(tag.second)) }.size
     }
 
     private fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
