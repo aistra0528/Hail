@@ -4,27 +4,10 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.InputType
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.ListView
 import androidx.appcompat.widget.SearchView
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TriStateCheckbox
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.state.ToggleableState
-import androidx.compose.ui.unit.dp
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
@@ -43,9 +26,9 @@ import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentPagerBinding
 import com.aistra.hail.extensions.*
 import com.aistra.hail.ui.main.MainFragment
-import com.aistra.hail.ui.theme.AppTheme
 import com.aistra.hail.utils.*
 import com.aistra.hail.work.HWork
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -233,9 +216,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                             }
                             HailData.saveApps()
                             updateCurrentList()
-                    }.setNeutralButton(R.string.action_tag_add) { _, _ ->
-                        showTagDialog(listOf(info))
-                    }.setNegativeButton(android.R.string.cancel, null).show()
+                        }.setNeutralButton(R.string.action_tag_add) { _, _ ->
+                            showTagDialog(listOf(info))
+                        }.setNegativeButton(android.R.string.cancel, null).show()
                 }
 
                 6 -> if (tabs.tabCount > 1) MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
@@ -302,7 +285,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                 }
 
                 2 -> {
-                    // 0: unchecked, 1: indeterminate, 2: checked
+                    // 0: none, 1: some, 2: all
                     val initialStates = IntArray(HailData.tags.size) { index ->
                         val tagId = HailData.tags[index].second
                         val count = selectedList.count { tagId in it.tagIdList }
@@ -312,65 +295,58 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                             else -> 1
                         }
                     }
-
-                    val states =
-                        mutableStateListOf(*initialStates.toTypedArray())
-
-                    val composeView = ComposeView(activity).apply {
-                        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                        setContent {
-                            AppTheme {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .verticalScroll(rememberScrollState())
-                                ) {
-                                    HailData.tags.forEachIndexed { index, tag ->
-                                        Row(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clickable {
-                                                    val newState = if (initialStates[index] == 1) {
-                                                        when (states[index]) {
-                                                            0 -> 1
-                                                            1 -> 2
-                                                            else -> 0
-                                                        }
-                                                    } else {
-                                                        if (states[index] == 0) 2 else 0
-                                                    }
-                                                    states[index] = newState
-                                                }
-                                                .padding(horizontal = 24.dp, vertical = 12.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            TriStateCheckbox(
-                                                state = when (states[index]) {
-                                                    0 -> ToggleableState.Off
-                                                    1 -> ToggleableState.Indeterminate
-                                                    else -> ToggleableState.On
-                                                },
-                                                onClick = null
-                                            )
-                                            Spacer(modifier = Modifier.width(16.dp))
-                                            Text(
-                                                text = tag.first,
-                                                color = MaterialTheme.colorScheme.onSurface,
-                                                style = MaterialTheme.typography.bodyLarge
-                                            )
+                    val currentStates = initialStates.clone()
+                    val listView = ListView(activity).apply {
+                        divider = null
+                        adapter = object : ArrayAdapter<String>(
+                            activity,
+                            R.layout.item_checkbox,
+                            R.id.checkbox_label,
+                            HailData.tags.map { it.first }
+                        ) {
+                            override fun getView(
+                                position: Int,
+                                convertView: View?,
+                                parent: ViewGroup
+                            ): View {
+                                val view = super.getView(position, convertView, parent)
+                                val checkbox = view.findViewById<MaterialCheckBox>(R.id.checkbox)
+                                view.setOnClickListener {
+                                    currentStates[position] =
+                                        if (initialStates[position] == 1) when (currentStates[position]) {
+                                            0 -> 1
+                                            1 -> 2
+                                            2 -> 0
+                                            else -> 0
+                                        } else when (currentStates[position]) {
+                                            0 -> 2
+                                            2 -> 0
+                                            else -> 0
                                         }
+                                    checkbox?.checkedState = when (currentStates[position]) {
+                                        0 -> MaterialCheckBox.STATE_UNCHECKED
+                                        1 -> MaterialCheckBox.STATE_INDETERMINATE
+                                        2 -> MaterialCheckBox.STATE_CHECKED
+                                        else -> MaterialCheckBox.STATE_UNCHECKED
                                     }
                                 }
+                                checkbox?.checkedState = when (initialStates[position]) {
+                                    0 -> MaterialCheckBox.STATE_UNCHECKED
+                                    1 -> MaterialCheckBox.STATE_INDETERMINATE
+                                    2 -> MaterialCheckBox.STATE_CHECKED
+                                    else -> MaterialCheckBox.STATE_UNCHECKED
+                                }
+                                return view
                             }
                         }
                     }
 
                     MaterialAlertDialogBuilder(activity)
                         .setTitle(R.string.action_tag_set)
-                        .setView(composeView)
+                        .setView(listView)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             selectedList.forEach { app ->
-                                states.forEachIndexed { index, state ->
+                                currentStates.forEachIndexed { index, state ->
                                     val tagId = HailData.tags[index].second
                                     when (state) {
                                         0 -> app.tagIdList.remove(tagId)
