@@ -214,6 +214,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                             checkedItems.forEachIndexed { index, checked ->
                                 if (checked) info.tagIdList.add(HailData.tags[index].second)
                             }
+                            if (info.tagIdList.isEmpty()) {
+                                removeCheckedApp(info.packageName, false)
+                            }
                             HailData.saveApps()
                             updateCurrentList()
                         }.setNeutralButton(R.string.action_tag_add) { _, _ ->
@@ -353,6 +356,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                                         1 -> {}
                                         2 -> if (tagId !in app.tagIdList) app.tagIdList.add(tagId)
                                     }
+                                }
+                                if (app.tagIdList.isEmpty()) {
+                                    removeCheckedApp(app.packageName, false)
                                 }
                             }
                             HailData.saveApps()
