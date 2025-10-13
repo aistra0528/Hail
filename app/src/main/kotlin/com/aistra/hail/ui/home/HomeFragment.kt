@@ -27,6 +27,7 @@ class HomeFragment : MainFragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         if (tags.size == 1) binding.tabs.isVisible = false
         binding.pager.adapter = HomeAdapter(this)
+        binding.pager.isUserInputEnabled = false
         TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = tags[position].first
         }.attach()
