@@ -151,4 +151,5 @@
     <string name="theme_light">Terang</string>
     <string name="app_theme">Tema aplikasi</string>
     <string name="theme_dark">Gelap</string>
+    <string name="xposed_description">Otomatis aktifkan aplikasi tertentu yang ditangguhkan</string>
 </resources>
