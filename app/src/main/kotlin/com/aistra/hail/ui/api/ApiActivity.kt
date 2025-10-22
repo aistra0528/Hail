@@ -58,11 +58,11 @@ class ApiActivity : ComponentActivity() {
             HailApi.ACTION_FREEZE -> setAppFrozen(requirePackage, true)
             HailApi.ACTION_UNFREEZE -> setAppFrozen(requirePackage, false)
             HailApi.ACTION_FREEZE_TAG -> setListFrozen(
-                true, HailData.checkedList.filter { it.tagId == requireTagId }, true
+                true, HailData.checkedList.filter { requireTagId in it.tagIdList }, true
             )
 
             HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(
-                false, HailData.checkedList.filter { it.tagId == requireTagId })
+                false, HailData.checkedList.filter { requireTagId in it.tagIdList })
 
             HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
             HailApi.ACTION_UNFREEZE_ALL -> setListFrozen(false)
@@ -190,7 +190,7 @@ class ApiActivity : ComponentActivity() {
         } ?: throw IllegalArgumentException("Tag must not be null")
 
     private fun launchApp(pkg: String, tagId: Int? = null) {
-        if (tagId != null) setListFrozen(false, HailData.checkedList.filter { it.tagId == tagId })
+        if (tagId != null) setListFrozen(false, HailData.checkedList.filter { tagId in it.tagIdList })
         if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false)) {
             app.setAutoFreezeService()
         }
