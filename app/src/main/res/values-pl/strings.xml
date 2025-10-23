@@ -124,7 +124,7 @@
     <string name="shizuku_hide_adb">Shizuku jest uruchomione jako ADB. Aby ukryć aplikacje, uruchom ponownie Shizuku w trybie Root.</string>
     <string name="command">Polecenie</string>
     <string name="tag">Etykieta</string>
-    <string name="freeze_system_app">Zamrożenie lub usunięcie systemowych aplikacji może powodować zawieszenie systemu po ponownym uruchomieniu. Upewnij się, że wiesz co robisz i utwórz wcześniej kopie zapasowe, lub użyj trybu Recovery które pozwala zarządzać plikami.</string>
+    <string name="freeze_system_app">Zamrożenie lub usunięcie systemowych aplikacji może powodować zawieszenie systemu po ponownym uruchomieniu. Upewnij się, że wiesz co robisz i utwórz wcześniej kopie zapasowe, lub użyj trybu odzyskiwania który pozwala zarządzać plikami.</string>
     <string name="action_continue">Kontynuuj</string>
     <string name="nine_key">Wyszukiwanie T9</string>
     <string name="home_font_size">Rozmiar czcionki na ekranie głównym</string>
