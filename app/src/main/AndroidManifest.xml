@@ -34,7 +34,7 @@
             android:name=".HailApp"
             android:allowBackup="true"
             android:enableOnBackInvokedCallback="true"
-            android:icon="@mipmap/ic_new"
+            android:icon="@drawable/ic_new"
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/Theme.Hail"
