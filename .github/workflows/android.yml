@@ -37,3 +37,18 @@ jobs:
         with:
           name: Hail@${{ env.commit }}
           path: app/build/outputs/apk/release/*.apk
+      - name: Send to Telegram
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_HASH: ${{ secrets.APP_HASH }}
+          COMMIT_ID: ${{ github.event.head_commit.id }}
+          COMMIT_URL: ${{ github.event.head_commit.url }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          BUILD_TIMESTAMP: ${{ needs.build.outputs.build_timestamp }}
+          AI_SUMMARY: ${{ steps.prepare.outputs.ai_summary }}
+        run: |
+          # send apk via telegram bot api
+          export mini64=$(find artifacts -name "*arm64-v8a.apk")
+          echo $mini64
+          python -m pip install -r Tools/scripts/requirements.txt
+          python Tools/scripts/upload.py ${{ secrets.HELPER_BOT_TOKEN }} ${{ secrets.HELPER_BOT_TARGET }} test ${{ secrets.HELPER_BOT_CANARY_TARGET }}
