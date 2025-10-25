@@ -12,14 +12,11 @@ class DeviceAdminReceiver : DeviceAdminReceiver() {
         HPolicy.enableBackupService()
         HPolicy.setOrganizationName(context.getString(R.string.app_name))
     }
-    
-  // 转移完成后重新启用必要的服务
+
+    override fun onTransferOwnershipComplete(context: Context, intent: Intent) {
+        super.onTransferOwnershipComplete(context, intent)
         HPolicy.enableBackupService()
         HPolicy.setOrganizationName(context.getString(R.string.app_name))
-        
-        // 可以发送广播通知应用其他组件
-        val transferComplete = Intent("com.aistra.hail.action.OWNERSHIP_TRANSFER_COMPLETE")
-        context.sendBroadcast(transferComplete)
     }
 
     override fun onDisableRequested(context: Context, intent: Intent): CharSequence {

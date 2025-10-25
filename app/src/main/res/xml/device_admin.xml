@@ -1,6 +1,11 @@
 <device-admin>
     <uses-policies>
         <force-lock />
+        <limit-password />
+        <watch-login />
+        <reset-password />
+        <wipe-data />
+        <expire-password />
     </uses-policies>
-  <support-transfer-ownership />
+    <support-transfer-ownership />
 </device-admin>
