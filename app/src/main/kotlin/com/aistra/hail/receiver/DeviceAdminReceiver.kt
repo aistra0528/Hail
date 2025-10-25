@@ -13,14 +13,8 @@ class DeviceAdminReceiver : DeviceAdminReceiver() {
         HPolicy.setOrganizationName(context.getString(R.string.app_name))
     }
 
-    override fun onTransferOwnershipComplete(context: Context, intent: Intent) {
-        super.onTransferOwnershipComplete(context, intent)
-        HPolicy.enableBackupService()
-        HPolicy.setOrganizationName(context.getString(R.string.app_name))
-    }
-
     override fun onDisableRequested(context: Context, intent: Intent): CharSequence {
-        return context.getString(R.string.msg_disable_admin)
+        return "禁用设备管理员将影响应用功能"
     }
 
     override fun onDisabled(context: Context, intent: Intent) {
