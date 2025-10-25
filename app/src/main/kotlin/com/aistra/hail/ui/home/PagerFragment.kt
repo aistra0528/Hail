@@ -322,13 +322,15 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     }
 
     private fun launchApp(packageName: String) {
-        if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false)) {
-            updateCurrentList()
-        }
-        app.packageManager.getLaunchIntentForPackage(packageName)?.let {
-            HShortcuts.addDynamicShortcut(packageName)
-            startActivity(it)
-        } ?: HUI.showToast(R.string.activity_not_found)
+    if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false)) {
+        updateCurrentList()
+     }
+    app.packageManager.getLaunchIntentForPackage(packageName)?.let { intent ->
+        // 添加标志，避免出现在最近任务列表中
+        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+        HShortcuts.addDynamicShortcut(packageName)
+        startActivity(intent)
+     } ?: HUI.showToast(R.string.activity_not_found)
     }
 
     private fun setListFrozen(
