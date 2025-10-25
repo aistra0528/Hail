@@ -28,6 +28,5 @@ class DeviceAdminReceiver : DeviceAdminReceiver() {
 
     override fun onDisabled(context: Context, intent: Intent) {
         super.onDisabled(context, intent)
-        Log.d("Hail", "Device admin disabled")
     }
 }
