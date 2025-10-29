@@ -12,11 +12,11 @@ android {
     }.standardOutput.asText.get().trim()
 
     namespace = "com.aistra.hail"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.aistra.hail"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 35
         versionCode = 33
         versionName = "1.9.0"
@@ -40,9 +40,8 @@ android {
                     keyPassword = props.getProperty("keyPassword")
                 }
             } else signingConfigs.getByName("debug")
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            )
+            applicationIdSuffix = ".zero"
+            versionNameSuffix = "-zero"
         }
     }
     applicationVariants.configureEach {

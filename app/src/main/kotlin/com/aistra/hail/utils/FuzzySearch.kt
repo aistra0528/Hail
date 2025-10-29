@@ -5,7 +5,7 @@ import org.apache.commons.text.similarity.LevenshteinDistance
 
 /** 使用莱文斯坦距离 (Levenshtein distance) 实现模糊搜索 */
 object FuzzySearch {
-    private val levenshteinDistance = LevenshteinDistance()
+    private val levenshteinDistance = LevenshteinDistance.getDefaultInstance()
 
     /**
      * 两个字符串差异小于原始字符串长度 且 原始字符串依次包含输入字符串的每个字符 则显示在搜索结果中
