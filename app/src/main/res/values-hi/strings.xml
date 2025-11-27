@@ -1,3 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Hail</string>
+    <string name="app_slogan">जमाव-मुक्ति!</string>
+    <string name="title_home">मुख्य पृष्ठ</string>
+    <string name="title_apps">ऐप्स</string>
+    <string name="title_settings">सेटिंग्स</string>
+    <string name="title_about">परिचय</string>
+    <string name="label_default">डिफ़ॉल्ट</string>
+    <string name="label_version">संस्करण</string>
+    <string name="label_time">इंस्टॉल का समय</string>
+    <string name="action_telegram">टेलीग्राम ग्रुप</string>
+    <string name="action_qq">QQ ग्रुप</string>
+    <string name="action_donate">दान करें</string>
+    <string name="action_github">गिटहब</string>
+    <string name="action_translate">अनुवाद</string>
+    <string name="action_licenses">लाइसेंस</string>
+    <string name="action_freeze_all">सभी को फ्रीज करें</string>
+    <string name="action_unfreeze_all">सभी को अनफ़्रीज़ करें</string>
+    <string name="action_freeze_current">दिखने वालों को फ्रीज़ करें</string>
+    <string name="action_unfreeze_current">दिखने वालों को अनफ़्रीज़ करें</string>
+    <string name="action_freeze_non_whitelisted">गैर- श्वेत सूची वालों को फ्रीज़ करें</string>
+    <string name="action_lock">इसे लॉक करें</string>
 </resources>
