@@ -44,7 +44,7 @@
     <string name="mode_default">アイドル</string>
     <string name="mode_owner_hide">デバイス所有者 - 非表示にする</string>
     <string name="mode_su_disable">Root - 無効化</string>
-    <string name="mode_shizuku_disable">Shizuku - 凍結</string>
+    <string name="mode_shizuku_disable">Shizuku - 無効化</string>
     <string name="title_set_owner">デバイス所有者に設定</string>
     <string name="msg_set_owner">adb で以下のコマンドを実行してください：\n%s</string>
     <string name="title_remove_owner">デバイス所有者を削除</string>
