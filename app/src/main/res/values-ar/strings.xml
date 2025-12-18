@@ -162,4 +162,5 @@
     <string name="follow_system">اتباع النظام</string>
     <string name="theme_light">ساطع</string>
     <string name="theme_dark">داكن</string>
+    <string name="xposed_description">فك تجميد التطبيق المعلق تلقائيا للتطبيقات ذات النطاق المحدد</string>
 </resources>
