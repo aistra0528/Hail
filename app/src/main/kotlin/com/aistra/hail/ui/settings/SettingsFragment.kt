@@ -85,7 +85,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 values = HailData.WORKING_MODE_VALUES,
                 entriesId = R.array.working_mode_entries,
                 titleId = R.string.working_mode,
-                icon = Icons.Outlined.Adb
+                icon = Icons.Outlined.Adb,
+                type = ListPreferenceType.ALERT_DIALOG
             )
             switchPreference(
                 key = HailData.BIOMETRIC_LOGIN,
@@ -110,7 +111,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
             listPreference(
                 key = HailData.ICON_PACK,
                 defaultValue = HailData.ACTION_NONE,
-                onValueChange = { _, value ->
+                onValueChange = { _, _ ->
                     AppIconCache.clear()
                     true
                 },
@@ -265,7 +266,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
 
     private fun LazyListScope.switchPreference(
         rememberState: @Composable () -> MutableState<Boolean>,
-        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { rememberState, value -> true },
+        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { _, _ -> true },
         @StringRes titleId: Int,
         enabled: Boolean = true,
         icon: ImageVector,
@@ -282,7 +283,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.switchPreference(
         key: String,
         defaultValue: Boolean,
-        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { rememberState, value -> true },
+        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { _, _ -> true },
         @StringRes titleId: Int,
         enabled: Boolean = true,
         icon: ImageVector,
@@ -297,7 +298,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.listPreference(
         key: String,
         defaultValue: String,
-        onValueChange: (MutableState<String>, String) -> Boolean = { rememberState, value -> true },
+        onValueChange: (MutableState<String>, String) -> Boolean = { _, _ -> true },
         values: List<String>,
         @StringRes titleId: Int,
         icon: ImageVector,
@@ -320,7 +321,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.listPreference(
         key: String,
         defaultValue: String,
-        onValueChange: (MutableState<String>, String) -> Boolean = { rememberState, value -> true },
+        onValueChange: (MutableState<String>, String) -> Boolean = { _, _ -> true },
         values: List<String>,
         @ArrayRes entriesId: Int,
         @StringRes titleId: Int,
