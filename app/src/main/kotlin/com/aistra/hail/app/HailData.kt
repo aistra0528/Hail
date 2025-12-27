@@ -106,7 +106,14 @@ object HailData {
     const val ACTION_LOCK = "lock"
     const val ACTION_LOCK_FREEZE = "lock_freeze"
     val TILE_ACTION_VALUES =
-        listOf(ACTION_FREEZE_ALL, ACTION_UNFREEZE_ALL, ACTION_FREEZE_NON_WHITELISTED, ACTION_LOCK, ACTION_LOCK_FREEZE)
+        listOf(
+            AUTO_FREEZE_AFTER_LOCK,
+            ACTION_FREEZE_ALL,
+            ACTION_UNFREEZE_ALL,
+            ACTION_FREEZE_NON_WHITELISTED,
+            ACTION_LOCK,
+            ACTION_LOCK_FREEZE
+        )
     const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     const val AUTO_FREEZE_DELAY = "auto_freeze_delay_f"
     const val SKIP_WHILE_CHARGING = "skip_while_charging"
@@ -138,8 +145,10 @@ object HailData {
     val homeFontSize get() = sp.getFloat(HOME_FONT_SIZE, 14f)
     val fuzzySearch get() = sp.getBoolean(FUZZY_SEARCH, false)
     val nineKeySearch get() = sp.getBoolean(NINE_KEY_SEARCH, false)
-    val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
-    val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+    val tileAction get() = sp.getString(TILE_ACTION, AUTO_FREEZE_AFTER_LOCK)!!
+    var autoFreezeAfterLock
+        get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+        set(value) = sp.edit { putBoolean(AUTO_FREEZE_AFTER_LOCK, value) }
     val autoFreezeDelay get() = sp.getFloat(AUTO_FREEZE_DELAY, 0f).toLong()
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)

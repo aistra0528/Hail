@@ -3,6 +3,7 @@ package com.aistra.hail
 import android.app.Application
 import android.app.UiModeManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatDelegate
@@ -23,14 +24,14 @@ class HailApp : Application() {
         if (HailData.workingMode.startsWith(HailData.DHIZUKU)) HDhizuku.init()
     }
 
-    fun setAutoFreezeService(autoFreezeAfterLock: Boolean = HailData.autoFreezeAfterLock) {
+    fun setAutoFreezeService(autoFreezeAfterLock: Boolean = HailData.autoFreezeAfterLock, context: Context = app) {
         val start = autoFreezeAfterLock && HailData.checkedList.any {
             it.packageName != packageName && it.applicationInfo != null && !AppManager.isAppFrozen(it.packageName) && !it.whitelisted
         }
         val intent = Intent(app, AutoFreezeService::class.java)
         if (start) {
             setAutoFreezeServiceEnabled(true)
-            ContextCompat.startForegroundService(app, intent)
+            ContextCompat.startForegroundService(context, intent)
         } else {
             stopService(intent)
             setAutoFreezeServiceEnabled(false)

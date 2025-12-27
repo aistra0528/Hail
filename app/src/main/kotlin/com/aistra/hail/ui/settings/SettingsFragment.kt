@@ -168,7 +168,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
             )
             listPreference(
                 key = HailData.TILE_ACTION,
-                defaultValue = HailData.ACTION_FREEZE_ALL,
+                defaultValue = HailData.tileAction,
                 values = HailData.TILE_ACTION_VALUES,
                 entriesId = R.array.tile_action_entries,
                 titleId = R.string.tile_action,
