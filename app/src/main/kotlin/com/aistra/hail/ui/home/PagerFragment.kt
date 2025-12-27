@@ -131,11 +131,6 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     }
 
     override fun onItemClick(info: AppInfo) {
-        if (info.applicationInfo == null) {
-            Snackbar.make(activity.fab, R.string.app_not_installed, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_remove_home) { removeCheckedApp(info.packageName) }.show()
-            return
-        }
         if (multiselect) {
             if (info in selectedList) selectedList.remove(info)
             else selectedList.add(info)
@@ -143,11 +138,19 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
             updateBarTitle()
             return
         }
+        if (info.applicationInfo == null) {
+            Snackbar.make(activity.fab, R.string.app_not_installed, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_remove_home) { removeCheckedApp(info.packageName) }.show()
+            return
+        }
         launchApp(info.packageName)
     }
 
     override fun onItemLongClick(info: AppInfo): Boolean {
-        info.applicationInfo ?: return false
+        if (info.applicationInfo == null && (!multiselect || info !in selectedList)) {
+            exportToClipboard(listOf(info))
+            return true
+        }
         val actions = resources.getStringArray(R.array.home_action_entries)
         if (onMultiSelect(info, actions)) return true
         val pkg = info.packageName
