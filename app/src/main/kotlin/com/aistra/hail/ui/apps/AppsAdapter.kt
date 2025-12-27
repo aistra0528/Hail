@@ -80,7 +80,7 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
                 isEnabled = !HailData.grayscaleIcon || !frozen
                 if (HPackages.isAppUninstalled(pkg)) setTextColor(
                     MaterialColors.getColor(
-                        this, com.google.android.material.R.attr.colorError
+                        this, androidx.appcompat.R.attr.colorError
                     )
                 )
                 else setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodyMedium)

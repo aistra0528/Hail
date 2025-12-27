@@ -450,7 +450,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     private fun MenuItem.updateIcon() = icon?.setTint(
         MaterialColors.getColor(
             activity.findViewById(R.id.toolbar),
-            if (multiselect) com.google.android.material.R.attr.colorPrimary else com.google.android.material.R.attr.colorOnSurface
+            if (multiselect) androidx.appcompat.R.attr.colorPrimary else com.google.android.material.R.attr.colorOnSurface
         )
     )
 
@@ -492,7 +492,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         inflater.inflate(R.menu.menu_home, menu)
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         if (HailData.nineKeySearch) {
-            val editText = searchView.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
+            val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
             editText.inputType = InputType.TYPE_CLASS_PHONE
         }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

@@ -26,8 +26,8 @@ object AppIconCache : CoroutineScope {
     private class AppIconLruCache constructor(maxSize: Int) :
         LruCache<Triple<String, Int, Int>, Bitmap>(maxSize) {
 
-        override fun sizeOf(key: Triple<String, Int, Int>, bitmap: Bitmap): Int {
-            return bitmap.byteCount / 1024
+        override fun sizeOf(key: Triple<String, Int, Int>, value: Bitmap): Int {
+            return value.byteCount / 1024
         }
     }
 

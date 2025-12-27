@@ -57,13 +57,13 @@ class PagerAdapter(private val selectedList: List<AppInfo>) :
                 isEnabled = !HailData.grayscaleIcon || info.state != AppInfo.STATE_FROZEN
                 when {
                     info.selected -> setTextColor(
-                        MaterialColors.getColor(this, com.google.android.material.R.attr.colorPrimary)
+                        MaterialColors.getColor(this, androidx.appcompat.R.attr.colorPrimary)
                     )
 
                     info.state == AppInfo.STATE_NOT_FOUND -> setTextColor(
                         MaterialColors.getColor(
                             this,
-                            com.google.android.material.R.attr.colorError
+                            androidx.appcompat.R.attr.colorError
                         )
                     )
 

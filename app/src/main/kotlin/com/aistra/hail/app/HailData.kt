@@ -1,5 +1,6 @@
 package com.aistra.hail.app
 
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.HailApp.Companion.app
@@ -212,7 +213,7 @@ object HailData {
         })
     }
 
-    fun changeAppsSort(sort: String) = sp.edit().putString(SORT_BY, sort).apply()
+    fun changeAppsSort(sort: String) = sp.edit { putString(SORT_BY, sort) }
 
-    fun changeAppsFilter(filter: String, enabled: Boolean) = sp.edit().putBoolean(filter, enabled).apply()
+    fun changeAppsFilter(filter: String, enabled: Boolean) = sp.edit { putBoolean(filter, enabled) }
 }
