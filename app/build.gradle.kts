@@ -6,9 +6,13 @@ plugins {
 
 android {
     val signingProps = file("../signing.properties")
-    val commitShort = providers.exec {
+    val commitHash = providers.exec {
         workingDir = rootDir
         commandLine = "git rev-parse --short HEAD".split(" ")
+    }.standardOutput.asText.get().trim()
+    val commitSubject = providers.exec {
+        workingDir = rootDir
+        commandLine = "git log -1 --pretty=%s".split(" ")
     }.standardOutput.asText.get().trim()
 
     namespace = "com.aistra.hail"
@@ -25,12 +29,12 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
-            versionNameSuffix = "-g$commitShort"
+            versionNameSuffix = "-g$commitHash"
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            versionNameSuffix = "-g$commitShort"
+            if (!commitSubject.startsWith("[release]")) versionNameSuffix = "-g$commitHash"
             signingConfig = if (signingProps.exists()) {
                 val props = `java.util`.Properties().apply { load(signingProps.reader()) }
                 signingConfigs.create("release") {
