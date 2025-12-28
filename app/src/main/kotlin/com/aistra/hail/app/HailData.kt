@@ -166,13 +166,13 @@ object HailData {
                 val json = JSONArray(HFiles.read(appsPath))
                 for (i in 0 until json.length()) {
                     add(with(json.getJSONObject(i)) {
-                        val tagIdList = optJSONArray(KEY_TAGS)?.let {
-                            MutableList(it.length()) { index ->
-                                    it.getInt(index)
-                            }
-                        } ?: mutableListOf(optInt(KEY_TAG))
                         AppInfo(
-                            getString(KEY_PACKAGE), optBoolean(KEY_PINNED), tagIdList, optBoolean(KEY_WHITELISTED)
+                            packageName = getString(KEY_PACKAGE),
+                            pinned = optBoolean(KEY_PINNED),
+                            whitelisted = optBoolean(KEY_WHITELISTED),
+                            tagIdList = optJSONArray(KEY_TAGS)?.let {
+                                MutableList(it.length()) { index -> it.getInt(index) }
+                            } ?: mutableListOf(optInt(KEY_TAG))
                         )
                     })
                 }
@@ -182,8 +182,8 @@ object HailData {
 
     fun isChecked(packageName: String): Boolean = checkedList.any { it.packageName == packageName }
 
-    fun addCheckedApp(packageName: String, saveApps: Boolean = true, tagIdList: MutableList<Int> = mutableListOf(0)) {
-        checkedList.add(AppInfo(packageName, false, tagIdList, false))
+    fun addCheckedApp(packageName: String, tagId: Int = 0, saveApps: Boolean = true) {
+        checkedList.add(AppInfo(packageName, tagIdList = mutableListOf(tagId)))
         if (saveApps) saveApps()
     }
 
@@ -197,8 +197,11 @@ object HailData {
         HFiles.write(appsPath, JSONArray().run {
             checkedList.forEach {
                 put(
-                    JSONObject().put(KEY_PACKAGE, it.packageName).put(KEY_PINNED, it.pinned).put(KEY_TAG, it.tagIdList.firstOrNull() ?: 0)
-                        .put(KEY_WHITELISTED, it.whitelisted).put(KEY_TAGS, JSONArray(it.tagIdList))
+                    JSONObject()
+                        .put(KEY_PACKAGE, it.packageName)
+                        .put(KEY_PINNED, it.pinned)
+                        .put(KEY_WHITELISTED, it.whitelisted)
+                        .put(KEY_TAGS, JSONArray(it.tagIdList))
                 )
             }
             toString()

@@ -6,28 +6,21 @@ import com.aistra.hail.utils.HPackages
 
 class AppInfo(
     val packageName: String,
-    var pinned: Boolean,
-    val tagIdList: MutableList<Int>,
-    var whitelisted: Boolean
+    var pinned: Boolean = false,
+    var whitelisted: Boolean = false,
+    val tagIdList: MutableList<Int> = mutableListOf(0)
 ) {
+    enum class State { NOT_FOUND, UNFROZEN, FROZEN }
+
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
     val name get() = applicationInfo?.loadLabel(app.packageManager) ?: packageName
-
-    var state: Int = STATE_NOT_FOUND
-    fun getCurrentState(): Int = when {
-        applicationInfo == null -> STATE_NOT_FOUND
-        AppManager.isAppFrozen(packageName) -> STATE_FROZEN
-        else -> STATE_UNFROZEN
-    }
-
-    var selected: Boolean = false
+    val state
+        get() = when {
+            applicationInfo == null -> State.NOT_FOUND
+            AppManager.isAppFrozen(packageName) -> State.FROZEN
+            else -> State.UNFROZEN
+        }
 
     override fun equals(other: Any?): Boolean = other is AppInfo && other.packageName == packageName
     override fun hashCode(): Int = packageName.hashCode()
-
-    companion object {
-        const val STATE_NOT_FOUND = 0
-        const val STATE_UNFROZEN = 1
-        const val STATE_FROZEN = 2
-    }
 }
