@@ -7,7 +7,7 @@ import com.aistra.hail.utils.HPackages
 class AppInfo(
     val packageName: String,
     var pinned: Boolean,
-    var tagId: Int,
+    val tagIdList: MutableList<Int>,
     var whitelisted: Boolean
 ) {
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
