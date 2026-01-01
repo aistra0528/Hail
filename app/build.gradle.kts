@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    val signingProps = file("../signing.properties")
+    // val signingProps = file("../signing.properties")
     val commitHash = providers.exec {
         workingDir = rootDir
         commandLine = "git rev-parse --short HEAD".split(" ")
