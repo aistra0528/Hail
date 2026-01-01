@@ -116,7 +116,7 @@
     <string name="msg_selected">Terpilih : %s</string>
     <string name="msg_freeze">Dibekukan: %s</string>
     <string name="msg_unfreeze">Diaktifkan: %s</string>
-    <string name="tile_action">Tombol mengambang</string>
+    <string name="tile_action">Pintasan pengaturan cepat</string>
     <string name="skip_while_charging">Lewati ketika mengisi daya</string>
     <string name="icon_pack">Paket ikon</string>
     <string name="donate_bilibili_space">Bilibili space</string>
