@@ -35,15 +35,16 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             if (!commitSubject.startsWith("[release]")) versionNameSuffix = "-g$commitHash"
-            signingConfig = if (signingProps.exists()) {
-                val props = `java.util`.Properties().apply { load(signingProps.reader()) }
-                signingConfigs.create("release") {
-                    storeFile = file(props.getProperty("storeFile"))
-                    storePassword = props.getProperty("storePassword")
-                    keyAlias = props.getProperty("keyAlias")
-                    keyPassword = props.getProperty("keyPassword")
-                }
-            } else signingConfigs.getByName("debug")
+            signingConfig signingConfigs.debug
+            // signingConfig = if (signingProps.exists()) {
+            //    val props = `java.util`.Properties().apply { load(signingProps.reader()) }
+            //    signingConfigs.create("release") {
+            //        storeFile = file(props.getProperty("storeFile"))
+            //        storePassword = props.getProperty("storePassword")
+            //        keyAlias = props.getProperty("keyAlias")
+            //        keyPassword = props.getProperty("keyPassword")
+            //    }
+            // } else signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
