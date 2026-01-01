@@ -164,6 +164,115 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     }
 
     override fun onItemLongClick(info: AppInfo): Boolean {
+    if (info.applicationInfo == null && (!multiselect || info !in selectedList)) {
+        exportToClipboard(listOf(info))
+        return true
+    }
+    if (info in selectedList) {
+        onMultiSelect()
+        return true
+    }
+    val pkg = info.packageName
+    val frozen = AppManager.isAppFrozen(pkg)
+    val action = getString(if (frozen) R.string.action_unfreeze else R.string.action_freeze)
+
+    // 1. Create a mutable list of options based on the existing filter logic
+    val optionsList = resources.getStringArray(R.array.home_action_entries).filter {
+        (it != getString(R.string.action_freeze) || !frozen) && 
+        (it != getString(R.string.action_unfreeze) || frozen) && 
+        (it != getString(R.string.action_pin) || !info.pinned) && 
+        (it != getString(R.string.action_unpin) || info.pinned) && 
+        (it != getString(R.string.action_whitelist) || !info.whitelisted) && 
+        (it != getString(R.string.action_remove_whitelist) || info.whitelisted) && 
+        (it != getString(R.string.action_unfreeze_remove_home) || frozen)
+    }.toMutableList()
+
+    // 2. Add the Play Store option to the end of the list
+    val playStoreLabel = "Open in Play Store"
+    optionsList.add(playStoreLabel)
+
+    MaterialAlertDialogBuilder(activity).setTitle(info.name).setItems(
+        optionsList.toTypedArray()
+    ) { _, which ->
+        // 3. Check if the clicked item is our new Play Store option
+        if (which == optionsList.lastIndex) {
+            try {
+                startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("market://details?id=$pkg")))
+            } catch (e: android.content.ActivityNotFoundException) {
+                startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://play.google.com/store/apps/details?id=$pkg")))
+            }
+            return@setItems
+        }
+
+        // 4. Fallback to the existing logic for standard items
+        when (which) {
+            0 -> launchApp(pkg)
+            1 -> setListFrozen(!frozen, listOf(info))
+            2 -> {
+                val values = resources.getIntArray(R.array.deferred_task_values)
+                val entries = arrayOfNulls<String>(values.size)
+                values.forEachIndexed { i, it ->
+                    entries[i] = resources.getQuantityString(R.plurals.deferred_task_entry, it, it)
+                }
+                MaterialAlertDialogBuilder(activity).setTitle(R.string.action_deferred_task)
+                    .setItems(entries) { _, i ->
+                        HWork.setDeferredFrozen(pkg, !frozen, values[i].toLong())
+                        Snackbar.make(
+                            activity.fab, resources.getQuantityString(
+                                R.plurals.msg_deferred_task, values[i], values[i], action, info.name
+                            ), Snackbar.LENGTH_INDEFINITE
+                        ).setAction(R.string.action_undo) { HWork.cancelWork(pkg) }.show()
+                    }.setNegativeButton(android.R.string.cancel, null).show()
+            }
+
+            3 -> {
+                info.pinned = !info.pinned
+                HailData.saveApps()
+                updateCurrentList()
+            }
+
+            4 -> {
+                info.whitelisted = !info.whitelisted
+                HailData.saveApps()
+                updateCurrentList()
+            }
+
+            5 -> tagDialog(info)
+
+            6 -> if (tabs.tabCount > 1) MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
+                .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
+                    HShortcuts.addPinShortcut(
+                        info,
+                        pkg,
+                        info.name,
+                        HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg).addTag(HailData.tags[index].first)
+                    )
+                }.setPositiveButton(R.string.action_skip) { _, _ ->
+                    HShortcuts.addPinShortcut(
+                        info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
+                    )
+                }.setNegativeButton(android.R.string.cancel, null).show()
+            else HShortcuts.addPinShortcut(
+                info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
+            )
+
+            7 -> exportToClipboard(listOf(info))
+            8 -> removeCheckedApp(pkg)
+            9 -> {
+                setListFrozen(false, listOf(info), false)
+                if (!AppManager.isAppFrozen(pkg)) removeCheckedApp(pkg)
+            }
+        }
+    }.setNeutralButton(R.string.action_details) { _, _ ->
+        HUI.startActivity(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS, HPackages.packageUri(pkg)
+        )
+    }.setNegativeButton(android.R.string.cancel, null).show()
+    return true
+    }
+    
+    /*
+    override fun onItemLongClick(info: AppInfo): Boolean {
         if (info.applicationInfo == null && (!multiselect || info !in selectedList)) {
             exportToClipboard(listOf(info))
             return true
@@ -251,6 +360,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         }.setNegativeButton(android.R.string.cancel, null).show()
         return true
     }
+*/
 
     private fun tagDialog(info: AppInfo) {
         val checkedItems = BooleanArray(HailData.tags.size) { index ->
