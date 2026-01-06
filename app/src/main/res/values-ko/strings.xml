@@ -109,7 +109,7 @@
     <string name="msg_extract_apk">추출:%s</string>
     <string name="msg_freeze">동결됨: %s</string>
     <string name="msg_unfreeze">동결해제됨:%s</string>
-    <string name="action_clear_dynamic_shortcuts">모두 지우기 단축키</string>
+    <string name="action_clear_dynamic_shortcuts">모든 바로가기 지우기</string>
     <string name="tile_action">타일 동작</string>
     <string name="auto_freeze">자동 동결</string>
     <string name="auto_freeze_notification_title">자동 동결 서비스 실행중</string>
@@ -132,4 +132,22 @@
     <string name="action_export_current">내보낸 표시</string>
     <string name="action_export_all">모두 내보내기</string>
     <string name="skip_notifying_app">앱 알림 건너뛰기</string>
+    <plurals name="deferred_task_entry">
+        <item quantity="other">%d 분</item>
+    </plurals>
+    <plurals name="msg_deferred_task">
+        <item quantity="other">%2$s 후 %1$d 분: %3$s</item>
+    </plurals>
+    <string name="auto_freeze_delay">동결 지연 (분)</string>
+    <string name="title_shortcuts">바로가기</string>
+    <string name="msg_guide">애플리케이션을 동결하기 전에 설정에서 작업 모드를 선택하세요.</string>
+    <string name="dynamic_shortcut_action">바로가기</string>
+    <string name="action_none">없음</string>
+    <string name="action_freeze_tag">동결 태그</string>
+    <string name="action_unfreeze_tag">동결 해제 태그</string>
+    <string name="icon_pack">아이콘 팩</string>
+    <string name="action_select_all">모두 선택</string>
+    <string name="action_terminal">터미널</string>
+    <string name="action_skip">건너뛰기</string>
+    <string name="xposed_description">범위가 지정된 앱의 경우 일시 중단된 앱을 자동으로 다시 활성화합니다.</string>
 </resources>
