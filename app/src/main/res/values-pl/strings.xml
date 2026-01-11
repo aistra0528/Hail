@@ -145,7 +145,7 @@
     <string name="donate_liberapay">Liberapay</string>
     <string name="activity_not_found">Nie znaleziono aktywności związanej z uruchamianiem</string>
     <string name="action_clear_dynamic_shortcuts">Wyczyść wszystkie dynamiczne skróty</string>
-    <string name="tile_action">Akcja kafelka</string>
+    <string name="tile_action">Akcja kafelka szybkich ustawień</string>
     <string name="auto_freeze">Automatyczne zamrożenie</string>
     <string name="auto_freeze_notification_title">Usługa automatycznego zamrażania jest uruchomiona</string>
     <string name="auto_freeze_after_lock">Po zablokowaniu ekranu</string>
