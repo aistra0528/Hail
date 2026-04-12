@@ -13,11 +13,11 @@ object HShell {
                 it.bufferedReader().readText()
             }.also { destroy() }
         }
-    }.getOrElse { 0 to it.stackTraceToString() }
+    }.getOrElse { 1 to it.stackTraceToString() }
 
     private fun execSU(command: String) = execute(command, true)
 
-    val checkSU get() = execSU("whoami").second?.contains("root") ?: false
+    val checkSU get() = execSU("whoami").first == 0
 
     val lockScreen get() = execSU("input keyevent KEYCODE_POWER").first == 0
 

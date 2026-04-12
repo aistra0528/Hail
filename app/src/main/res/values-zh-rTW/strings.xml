@@ -154,4 +154,5 @@
     <string name="follow_system">遵循系統</string>
     <string name="theme_light">淺色模式</string>
     <string name="theme_dark">深色模式</string>
+    <string name="xposed_description">為作用域内的程式自動解凍被暫停的應用程式</string>
 </resources>

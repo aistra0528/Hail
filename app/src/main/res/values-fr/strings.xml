@@ -67,7 +67,7 @@
     <string name="msg_imported">Importée : %s</string>
     <string name="msg_text_copied">Copiée : %s</string>
     <string name="msg_extract_apk">Extraite vers : %s</string>
-    <string name="msg_remove_owner">Si Hail est supprimé en tant que propriétaire de l\'appareil, il peut y avoir des problèmes d\'organisation des applications après la désinstallation de Hail.\nLes applications gelées resteront gelées après la désinstallation, merci de vous assurer d\'avoir dégelé les applications importantes.</string>
+    <string name="msg_remove_owner">Si Hail est supprimé en tant que propriétaire de l\'appareil, il peut y avoir des problèmes d\'organisation des applications après la désinstallation de Hail. \nLes applications gelées resteront gelées après la désinstallation, merci de vous assurer d\'avoir dégelé les applications importantes.</string>
     <string name="synthesize_adaptive_icons">Synthétiser les icônes adaptatives</string>
     <string name="title_remove_owner">Retirer le propriétaire de l\'appareil</string>
     <string name="msg_unfreeze">Dégelée : %s</string>
@@ -151,4 +151,8 @@
     <string name="action_reinstall">Réinstaller</string>
     <string name="nine_key">Recherche avec le clavier numérique</string>
     <string name="home_font_size">Taille de la police d\'écriture de l\'accueil</string>
+    <string name="app_theme">Thème de l\'application</string>
+    <string name="follow_system">Suivre le système</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
 </resources>

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-sdk tools:overrideLibrary="rikka.shizuku.api"/>
+    <uses-sdk tools:overrideLibrary="rikka.shizuku.api, com.rosan.dhizuku.api"/>
 
     <uses-permission
             android:name="com.android.launcher.permission.INSTALL_SHORTCUT"
@@ -45,11 +45,13 @@
                 android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
+                <action android:name="android.intent.action.ASSIST"/>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
@@ -74,7 +76,26 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="hail"/>
+            </intent-filter>
         </activity>
+
+        <meta-data
+                android:name="xposedmodule"
+                android:value="true"/>
+        <meta-data
+                android:name="xposeddescription"
+                android:value="@string/xposed_description"/>
+        <meta-data
+                android:name="xposedminversion"
+                android:value="53"/>
+        <meta-data
+                android:name="xposedscope"
+                android:resource="@array/xposed_scope"/>
 
         <provider
                 android:name="rikka.shizuku.ShizukuProvider"

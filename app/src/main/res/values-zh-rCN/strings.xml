@@ -137,6 +137,7 @@
     <string name="mode_su_hide">Root - 隐藏</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">跳过</string>
+    <string name="xposed_description">为作用域内的应用自动解冻被暂停的应用</string>
     <string name="shizuku_hide_adb">Shizuku 正以 adb 权限运行。如需隐藏应用，请通过 root 重新启动 Shizuku。</string>
     <string name="freeze_system_app">冻结或卸载系统应用可能导致设备无法启动。请确保您已知晓操作后果，并提前备份数据或使用支持文件管理的恢复模式。</string>
     <string name="action_continue">继续</string>

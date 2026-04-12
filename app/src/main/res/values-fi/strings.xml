@@ -154,4 +154,5 @@
     <string name="follow_system">Seuraa järjestelmää</string>
     <string name="theme_light">Vaalea</string>
     <string name="theme_dark">Tumma</string>
+    <string name="xposed_description">Automaattisesti poista jäädytys keskeytetyistä- sekä rajatuista sovelluksista</string>
 </resources>

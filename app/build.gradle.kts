@@ -6,32 +6,35 @@ plugins {
 
 android {
     val signingProps = file("../signing.properties")
-    val commitShort = providers.exec {
+    val commitHash = providers.exec {
         workingDir = rootDir
         commandLine = "git rev-parse --short HEAD".split(" ")
     }.standardOutput.asText.get().trim()
+    val commitSubject = providers.exec {
+        workingDir = rootDir
+        commandLine = "git log -1 --pretty=%s".split(" ")
+    }.standardOutput.asText.get().trim()
 
     namespace = "com.aistra.hail"
-    buildToolsVersion = "35.0.0"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.aistra.hail"
         minSdk = 23
-        targetSdk = 35
-        versionCode = 33
-        versionName = "1.9.0"
+        targetSdk = 36
+        versionCode = 34
+        versionName = "1.10.0"
     }
 
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
-            versionNameSuffix = "-g$commitShort"
+            versionNameSuffix = "-g$commitHash"
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            versionNameSuffix = "-g$commitShort"
+            if (!commitSubject.startsWith("[release]")) versionNameSuffix = "-g$commitHash"
             signingConfig = if (signingProps.exists()) {
                 val props = `java.util`.Properties().apply { load(signingProps.reader()) }
                 signingConfigs.create("release") {
@@ -104,4 +107,5 @@ dependencies {
     implementation(libs.commons.text)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hiddenapibypass)
+    compileOnly(libs.xposed)
 }
