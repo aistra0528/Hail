@@ -124,7 +124,6 @@
     <string name="action_export_all">Export all</string>
     <string name="skip_notifying_app">Skip notifying app</string>
     <string name="keep_service_alive">Keep service alive</string>
-    <string name="keep_service_alive_summary">Prevent the auto freeze service from stopping when not needed</string>
     <string name="auto_freeze_delay">Freeze delay (minutes)</string>
     <string name="title_shortcuts">Shortcuts</string>
     <string name="msg_guide">Before freezing applications, please select a working mode in the settings.</string>
