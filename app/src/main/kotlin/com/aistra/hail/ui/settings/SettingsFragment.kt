@@ -28,10 +28,12 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.edit
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
@@ -230,6 +232,20 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 titleId = R.string.skip_notifying_app,
                 enabled = autoFreezeAfterLock.value,
                 icon = Icons.Outlined.NotificationsActive
+            )
+            switchPreference(
+                key = HailData.KEEP_SERVICE_ALIVE,
+                defaultValue = false,
+                onValueChange = { _, value ->
+                        // Manually save the preference immediately to avoid timing issues
+                    PreferenceManager.getDefaultSharedPreferences(requireContext())
+                        .edit { putBoolean(HailData.KEEP_SERVICE_ALIVE, value) }
+                    // Now start the autofreeze service
+                    app.setAutoFreezeService()
+                    true
+                },
+                titleId = R.string.keep_service_alive,
+                icon = Icons.Outlined.SettingsApplications
             )
             horizontalDivider()
             preferenceCategory(key = "shortcuts", title = { Text(text = stringResource(R.string.title_shortcuts)) })

@@ -86,11 +86,6 @@ object HailData {
         MODE_PRIVAPP_STOP,
         MODE_PRIVAPP_DISABLE
     )
-    val SERVICE_KEEPALIVE_WORKING_MODES = setOf(
-        MODE_SHIZUKU_HIDE,
-        MODE_SHIZUKU_SUSPEND,
-        MODE_SHIZUKU_STOP
-    )
     const val BIOMETRIC_LOGIN = "biometric_login"
     const val APP_THEME = "app_theme"
     const val FOLLOW_SYSTEM = "follow_system"
@@ -125,6 +120,7 @@ object HailData {
     const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
+    const val KEEP_SERVICE_ALIVE = "keep_service_alive"
     const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
     val DYNAMIC_SHORTCUT_ACTIONS = listOf(
         ACTION_NONE,
@@ -159,6 +155,7 @@ object HailData {
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
+    val keepServiceAlive get() = sp.getBoolean(KEEP_SERVICE_ALIVE, false)
     val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
 
     private val dir = "${app.filesDir.path}/v1"
@@ -226,7 +223,7 @@ object HailData {
         }
     }
 
-    fun shouldStopAutoFreezeService(): Boolean = !SERVICE_KEEPALIVE_WORKING_MODES.contains(workingMode)
+    fun shouldStopAutoFreezeService(): Boolean = !keepServiceAlive
 
     fun saveTags() {
         if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
