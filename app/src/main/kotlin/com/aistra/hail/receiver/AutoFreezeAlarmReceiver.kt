@@ -6,8 +6,9 @@ import android.content.Intent
 import com.aistra.hail.work.AutoFreezeWorker
 import kotlin.concurrent.thread
 
-// Fired by AlarmManager.setAndAllowWhileIdle from HWork.setAutoFreeze, which survives Doze/App
-// Standby deferral in a way a delayed WorkManager job does not.
+// Fired by AlarmManager.setAndAllowWhileIdle from HWork.setAutoFreeze (delayed case), or directly
+// by HWork.setAutoFreeze itself (zero-delay case), which survives Doze/App Standby deferral in a
+// way a delayed WorkManager job does not.
 class AutoFreezeAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val pendingResult = goAsync()

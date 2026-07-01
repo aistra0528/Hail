@@ -36,15 +36,29 @@ object HWork {
     // WorkManager: a delayed WorkManager job can be deferred well past its due time once the
     // device settles into Doze/App Standby with the screen off, which is exactly when this
     // fires. The immediate (manual, screen-on) case keeps using WorkManager as before.
+    //
+    // A zero-minute delay is handled separately (below) rather than as a 0ms AlarmManager
+    // trigger: the platform enforces a minimum ~5s futurity on every scheduled alarm, including
+    // setAndAllowWhileIdle. Measured on-device, that floor delays a "0" alarm by 5000-5014ms
+    // regardless of the requested trigger time. Since AutoFreezeWorker skips freezing when the
+    // screen is interactive again by the time it runs, that forced 5s wait raced against a quick
+    // unlock and silently no-op'd the "instant" case entirely. There's nothing to wait for here
+    // anyway -- the screen is confirmed off at the moment this is called -- so fire the same
+    // receiver AlarmManager would have, directly.
     fun setAutoFreeze(screenOff: Boolean) {
         val alarmManager = app.getSystemService<AlarmManager>()!!
         val pendingIntent = autoFreezeAlarmIntent()
         if (screenOff) {
-            alarmManager.setAndAllowWhileIdle(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + TimeUnit.MINUTES.toMillis(HailData.autoFreezeDelay),
-                pendingIntent
-            )
+            alarmManager.cancel(pendingIntent)
+            if (HailData.autoFreezeDelay <= 0L) {
+                app.sendBroadcast(Intent(app, AutoFreezeAlarmReceiver::class.java))
+            } else {
+                alarmManager.setAndAllowWhileIdle(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + TimeUnit.MINUTES.toMillis(HailData.autoFreezeDelay),
+                    pendingIntent
+                )
+            }
         } else {
             alarmManager.cancel(pendingIntent)
             WorkManager.getInstance(app).enqueueUniqueWork(
