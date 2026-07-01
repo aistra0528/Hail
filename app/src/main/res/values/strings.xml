@@ -34,6 +34,7 @@
     <string name="action_import_clipboard">Import from Clipboard</string>
     <string name="action_remove_home">Remove from Home</string>
     <string name="action_unfreeze_remove_home">Unfreeze and Remove from Home</string>
+    <string name="action_keep_awake">Keep screen awake</string>
     <string name="action_deselect">Deselect</string>
     <string name="action_undo">Undo</string>
     <string name="action_help">Help</string>
@@ -102,6 +103,18 @@
         <item quantity="one">%2$s after %1$d minute: %3$s</item>
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
+    <plurals name="keep_awake_entry">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <string name="keep_awake_none">None</string>
+    <string name="keep_awake_until_stopped">Until stopped</string>
+    <string name="keep_awake">Keep awake</string>
+    <string name="keep_awake_notification_title">Hail - App Active</string>
+    <string name="keep_awake_notification_text">Time remaining %s</string>
+    <string name="keep_awake_notification_text_infinite">Active until manually stopped</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_extend">Extend</string>
     <string name="action_clear_dynamic_shortcuts">Clear all dynamic shortcuts</string>
     <string name="tile_action">Quick setting tile action</string>
     <string name="auto_freeze">Auto freeze</string>

@@ -5,15 +5,18 @@ import android.app.UiModeManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
+import com.aistra.hail.receiver.ScreenOffReceiver
 import com.aistra.hail.services.AutoFreezeService
 import com.aistra.hail.utils.HDhizuku
 import com.aistra.hail.utils.HTarget
+import com.aistra.hail.work.HWork
 
 class HailApp : Application() {
     override fun onCreate() {
@@ -22,6 +25,16 @@ class HailApp : Application() {
         // DirtyDataUpdater.update(app)
         if (!HTarget.S) setAppTheme(HailData.appTheme)
         if (HailData.workingMode.startsWith(HailData.DHIZUKU)) HDhizuku.init()
+        registerScreenOffReceiver()
+    }
+
+    // Registered here (process lifetime) rather than in AutoFreezeService, so screen-off
+    // detection for the freeze-after-lock delay doesn't depend on the notification-listener
+    // component's enabled/bound state.
+    private fun registerScreenOffReceiver() {
+        val filter = IntentFilter(Intent.ACTION_SCREEN_OFF)
+        if (HTarget.T) registerReceiver(ScreenOffReceiver(), filter, RECEIVER_NOT_EXPORTED)
+        else registerReceiver(ScreenOffReceiver(), filter)
     }
 
     fun setAutoFreezeService(autoFreezeAfterLock: Boolean = HailData.autoFreezeAfterLock, context: Context = app) {
@@ -35,6 +48,7 @@ class HailApp : Application() {
         } else {
             stopService(intent)
             setAutoFreezeServiceEnabled(false)
+            if (!autoFreezeAfterLock) HWork.cancelAutoFreeze()
         }
     }
 

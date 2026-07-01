@@ -39,6 +39,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentPagerBinding
 import com.aistra.hail.extensions.*
+import com.aistra.hail.services.KeepAwakeService
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.ui.theme.AppTheme
 import com.aistra.hail.utils.*
@@ -239,10 +240,14 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
 
                 7 -> exportToClipboard(listOf(info))
                 8 -> removeCheckedApp(pkg)
-                9 -> {
+                9 -> if (frozen) {
                     setListFrozen(false, listOf(info), false)
                     if (!AppManager.isAppFrozen(pkg)) removeCheckedApp(pkg)
-                }
+                } else keepAwakeDialog(info)
+                // "Keep screen awake" is appended after "Unfreeze and Remove from Home" in
+                // home_action_entries, which is itself only shown when frozen. So depending on
+                // frozen state it lands at index 9 (unfrozen) or 10 (frozen) in the filtered list.
+                10 -> keepAwakeDialog(info)
             }
         }.setNeutralButton(R.string.action_details) { _, _ ->
             HUI.startActivity(
@@ -272,6 +277,23 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
             updateCurrentList()
         }.setNeutralButton(R.string.action_tag_add) { _, _ ->
             showTagDialog(listOf(info))
+        }.setNegativeButton(android.R.string.cancel, null).show()
+    }
+
+    private fun keepAwakeDialog(info: AppInfo) {
+        // Pure configuration: picking a duration here doesn't start anything by itself. It's
+        // applied the next time this app is launched from Hail (see launchApp), and cleared by
+        // freezing the app (see AppManager.setAppFrozen) or by picking "None" again here.
+        val durationValues = resources.getIntArray(R.array.keep_awake_values)
+        val values = intArrayOf(-1) + durationValues
+        val entries = arrayOf(getString(R.string.keep_awake_none)) + durationValues.map {
+            if (it == 0) getString(R.string.keep_awake_until_stopped)
+            else resources.getQuantityString(R.plurals.keep_awake_entry, it, it)
+        }
+        MaterialAlertDialogBuilder(activity).setTitle(R.string.action_keep_awake).setItems(entries) { _, i ->
+            info.keepAwakeMinutes = values[i]
+            HailData.saveApps()
+            if (values[i] == -1) KeepAwakeService.stopIfTriggeredBy(activity, info.packageName)
         }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
@@ -409,9 +431,12 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false)) {
             updateCurrentList()
         }
-        app.packageManager.getLaunchIntentForPackage(packageName)?.let {
+        app.packageManager.getLaunchIntentForPackage(packageName)?.let { intent ->
             HShortcuts.addDynamicShortcut(packageName)
-            startActivity(it)
+            startActivity(intent)
+            HailData.checkedList.find { it.packageName == packageName }?.keepAwakeMinutes
+                ?.takeIf { it != -1 }
+                ?.let { minutes -> KeepAwakeService.start(activity, minutes, packageName) }
         } ?: HUI.showToast(R.string.activity_not_found)
     }
 

@@ -11,7 +11,7 @@ import org.json.JSONObject
 
 object HailData {
     const val URL_WHY_FREE_SOFTWARE = "https://www.gnu.org/philosophy/free-software-even-more-important.html"
-    const val URL_GITHUB = "https://github.com/aistra0528/Hail"
+    const val URL_GITHUB = "https://git.letmef.uk/glurp/Hail"
     const val URL_README = "$URL_GITHUB#readme"
     const val URL_RELEASES = "$URL_GITHUB/releases"
     const val URL_TELEGRAM = "https://t.me/+yvRXYTounDIxODFl"
@@ -29,6 +29,7 @@ object HailData {
     private const val KEY_TAGS = "tags"
     private const val KEY_PINNED = "pinned"
     private const val KEY_WHITELISTED = "whitelisted"
+    private const val KEY_KEEP_AWAKE_MINUTES = "keep_awake_minutes"
     const val KEY_PACKAGE = "package"
     const val KEY_FROZEN = "frozen"
     private const val SORT_BY = "sort_by"
@@ -177,7 +178,8 @@ object HailData {
                             whitelisted = optBoolean(KEY_WHITELISTED),
                             tagIdList = optJSONArray(KEY_TAGS)?.let {
                                 MutableList(it.length()) { index -> it.getInt(index) }
-                            } ?: mutableListOf(optInt(KEY_TAG))
+                            } ?: mutableListOf(optInt(KEY_TAG)),
+                            keepAwakeMinutes = optInt(KEY_KEEP_AWAKE_MINUTES, -1)
                         )
                     })
                 }
@@ -207,6 +209,7 @@ object HailData {
                         .put(KEY_PINNED, it.pinned)
                         .put(KEY_WHITELISTED, it.whitelisted)
                         .put(KEY_TAGS, JSONArray(it.tagIdList))
+                        .put(KEY_KEEP_AWAKE_MINUTES, it.keepAwakeMinutes)
                 )
             }
             toString()

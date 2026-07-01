@@ -2,3 +2,4 @@ storeFile=filename.keystore
 storePassword=password
 keyAlias=alias
 keyPassword=password
+# storeType=pkcs12 (optional, defaults to jks; set to pkcs12 for .p12 keystores)

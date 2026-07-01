@@ -2,7 +2,6 @@ package com.aistra.hail.services
 
 import android.app.PendingIntent
 import android.content.Intent
-import android.content.IntentFilter
 import android.service.notification.NotificationListenerService
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
@@ -11,11 +10,9 @@ import androidx.core.app.ServiceCompat
 import com.aistra.hail.R
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
-import com.aistra.hail.receiver.ScreenOffReceiver
 
 class AutoFreezeService : NotificationListenerService() {
     private val channelID = javaClass.simpleName
-    private val lockReceiver by lazy { ScreenOffReceiver() }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
@@ -54,16 +51,10 @@ class AutoFreezeService : NotificationListenerService() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        registerScreenReceiver()
-    }
-
-    private fun registerScreenReceiver() {
-        registerReceiver(lockReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(lockReceiver)
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
     }
 

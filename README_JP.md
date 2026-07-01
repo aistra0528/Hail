@@ -1,13 +1,10 @@
-[简体中文](README.md) | [English](README_EN.md) | 日本語
+[简体中文](README_ZH.md) | [English](README.md) | 日本語
 
 # 雹 Hail
 
-[![Android CI status](https://github.com/aistra0528/Hail/workflows/Android%20CI/badge.svg)](https://github.com/aistra0528/Hail/actions)
-[![翻訳状態](https://hosted.weblate.org/widgets/hail/-/svg-badge.svg)](https://hosted.weblate.org/engage/hail/)
-[![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)
 [![License](https://img.shields.io/github/license/aistra0528/Hail)](LICENSE)
 
-雹は、Androidアプリを凍結するための自由ソフトウェアです。[GitHub Releases](https://github.com/aistra0528/Hail/releases)
+雹は、Androidアプリを凍結するための自由ソフトウェアです。[GitHub Releases](https://git.letmef.uk/glurp/Hail/releases)
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.aistra.hail/)
 

@@ -8,7 +8,10 @@ class AppInfo(
     val packageName: String,
     var pinned: Boolean = false,
     var whitelisted: Boolean = false,
-    val tagIdList: MutableList<Int> = mutableListOf(0)
+    val tagIdList: MutableList<Int> = mutableListOf(0),
+    // Keep Awake duration for this app, in minutes (0 = until stopped), applied automatically
+    // whenever it's launched from Hail. -1 means the feature is off for this app ("None").
+    var keepAwakeMinutes: Int = -1
 ) {
     enum class State { NOT_FOUND, UNFROZEN, FROZEN }
 

@@ -30,6 +30,7 @@ import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
+import com.aistra.hail.services.KeepAwakeService
 import com.aistra.hail.ui.theme.AppTheme
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HShortcuts
@@ -197,6 +198,9 @@ class ApiActivity : ComponentActivity() {
         packageManager.getLaunchIntentForPackage(pkg)?.let {
             HShortcuts.addDynamicShortcut(pkg)
             startActivity(it)
+            HailData.checkedList.find { info -> info.packageName == pkg }?.keepAwakeMinutes
+                ?.takeIf { minutes -> minutes != -1 }
+                ?.let { minutes -> KeepAwakeService.start(this, minutes, pkg) }
         } ?: throw ActivityNotFoundException(getString(R.string.activity_not_found))
     }
 

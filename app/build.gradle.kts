@@ -22,8 +22,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 36
-        versionCode = 34
-        versionName = "1.10.0"
+        versionCode = 35
+        versionName = "1.11.0"
     }
 
     buildTypes {
@@ -42,6 +42,7 @@ android {
                     storePassword = props.getProperty("storePassword")
                     keyAlias = props.getProperty("keyAlias")
                     keyPassword = props.getProperty("keyPassword")
+                    storeType = props.getProperty("storeType", "jks")
                 }
             } else signingConfigs.getByName("debug")
             proguardFiles(

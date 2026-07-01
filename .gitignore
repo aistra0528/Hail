@@ -6,3 +6,5 @@
 *.iml
 *.jks
 *.keystore
+*.p12
+*.bks

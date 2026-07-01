@@ -1,5 +1,10 @@
 package com.aistra.hail.work
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.os.SystemClock
+import androidx.core.content.getSystemService
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -7,6 +12,7 @@ import androidx.work.workDataOf
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
+import com.aistra.hail.receiver.AutoFreezeAlarmReceiver
 import java.util.concurrent.TimeUnit
 
 object HWork {
@@ -26,15 +32,39 @@ object HWork {
         )
     }
 
+    // The screen-off (delayed) case uses AlarmManager.setAndAllowWhileIdle rather than
+    // WorkManager: a delayed WorkManager job can be deferred well past its due time once the
+    // device settles into Doze/App Standby with the screen off, which is exactly when this
+    // fires. The immediate (manual, screen-on) case keeps using WorkManager as before.
     fun setAutoFreeze(screenOff: Boolean) {
-        WorkManager.getInstance(app).enqueueUniqueWork(
-            HailApi.ACTION_FREEZE_ALL,
-            ExistingWorkPolicy.REPLACE,  // in case the old task has not been executed...
-            OneTimeWorkRequestBuilder<AutoFreezeWorker>().run {
-                if (screenOff) setInitialDelay(HailData.autoFreezeDelay, TimeUnit.MINUTES)
-                setInputData(workDataOf(HailData.ACTION_LOCK to screenOff))
-                build()
-            }
-        )
+        val alarmManager = app.getSystemService<AlarmManager>()!!
+        val pendingIntent = autoFreezeAlarmIntent()
+        if (screenOff) {
+            alarmManager.setAndAllowWhileIdle(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + TimeUnit.MINUTES.toMillis(HailData.autoFreezeDelay),
+                pendingIntent
+            )
+        } else {
+            alarmManager.cancel(pendingIntent)
+            WorkManager.getInstance(app).enqueueUniqueWork(
+                HailApi.ACTION_FREEZE_ALL,
+                ExistingWorkPolicy.REPLACE,
+                OneTimeWorkRequestBuilder<AutoFreezeWorker>().setInputData(
+                    workDataOf(HailData.ACTION_LOCK to false)
+                ).build()
+            )
+        }
     }
+
+    // Called when the "after screen locked" setting is turned off, so a delay already scheduled
+    // from a prior screen-off doesn't still fire after the user opted out.
+    fun cancelAutoFreeze() {
+        app.getSystemService<AlarmManager>()!!.cancel(autoFreezeAlarmIntent())
+    }
+
+    private fun autoFreezeAlarmIntent(): PendingIntent = PendingIntent.getBroadcast(
+        app, 0, Intent(app, AutoFreezeAlarmReceiver::class.java),
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
 }

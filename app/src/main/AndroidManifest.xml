@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission
             android:name="android.permission.PACKAGE_USAGE_STATS"
             tools:ignore="ProtectedPermissions"/>
@@ -120,6 +121,9 @@
                 android:name=".receiver.ScreenOffReceiver"
                 android:exported="false"/>
         <receiver
+                android:name=".receiver.AutoFreezeAlarmReceiver"
+                android:exported="false"/>
+        <receiver
                 android:name=".receiver.UnsuspendedReceiver"
                 android:exported="false">
             <intent-filter>
@@ -147,6 +151,14 @@
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
+        </service>
+        <service
+                android:name=".services.KeepAwakeService"
+                android:foregroundServiceType="specialUse"
+                android:exported="false">
+            <property
+                    android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                    android:value="Keeping the screen awake for a user-selected duration after freezing or otherwise managing an app."/>
         </service>
     </application>
 

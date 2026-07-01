@@ -8,6 +8,14 @@
         <item>90</item>
         <item>120</item>
     </integer-array>
+    <integer-array name="keep_awake_values">
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+        <item>0</item>
+    </integer-array>
     <string-array name="xposed_scope">
         <item>com.android.launcher</item>
         <item>com.android.launcher3</item>
@@ -26,6 +34,7 @@
         <item>@string/action_export_clipboard</item>
         <item>@string/action_remove_home</item>
         <item>@string/action_unfreeze_remove_home</item>
+        <item>@string/action_keep_awake</item>
     </string-array>
     <string-array name="apps_action_entries">
         <item>@string/action_details</item>

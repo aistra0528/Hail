@@ -2,6 +2,8 @@ package com.aistra.hail.app
 
 import android.content.Intent
 import com.aistra.hail.BuildConfig
+import com.aistra.hail.HailApp.Companion.app
+import com.aistra.hail.services.KeepAwakeService
 import com.aistra.hail.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -51,8 +53,8 @@ object AppManager {
         return if (denied && i == 0) null else if (i == 1) name else i.toString()
     }
 
-    fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =
-        packageName != BuildConfig.APPLICATION_ID && when (HailData.workingMode) {
+    fun setAppFrozen(packageName: String, frozen: Boolean): Boolean {
+        val result = packageName != BuildConfig.APPLICATION_ID && when (HailData.workingMode) {
             HailData.MODE_OWNER_HIDE -> HPolicy.setAppHidden(packageName, frozen)
             HailData.MODE_OWNER_SUSPEND -> HPolicy.setAppSuspended(packageName, frozen)
             HailData.MODE_DHIZUKU_HIDE -> HDhizuku.setAppHidden(packageName, frozen)
@@ -81,6 +83,12 @@ object AppManager {
             }
             else -> false
         }
+        // Every freeze path (manual, multi-select, tag/API-triggered, deferred task, auto-freeze
+        // after lock) funnels through here, so this is the one place that needs to know a Keep
+        // Awake session tied to this app should end now that it's being frozen.
+        if (result && frozen) KeepAwakeService.stopIfTriggeredBy(app, packageName)
+        return result
+    }
 
     fun uninstallApp(packageName: String): Boolean {
         when {
