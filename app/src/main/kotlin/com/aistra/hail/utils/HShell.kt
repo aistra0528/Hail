@@ -4,8 +4,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 
 object HShell {
-    fun execute(command: String, root: Boolean): Pair<Int, String?> = runCatching {
-        Runtime.getRuntime().exec(if (root) "su" else "sh").run {
+    fun execute(command: String, root: Boolean): Pair<Int, String?> =
+        executeShell(if (root) arrayOf("su") else arrayOf("sh"), command)
+
+    private fun executeShell(shell: Array<String>, command: String): Pair<Int, String?> = runCatching {
+        Runtime.getRuntime().exec(shell).run {
             outputStream.use {
                 it.write(command.toByteArray())
             }
@@ -32,7 +35,11 @@ object HShell {
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
         execSU("pm ${if (suspended) "suspend" else "unsuspend"} --user current $packageName").first == 0
 
-    fun clearAppCache(packageName: String): Boolean = execSU(
+    // Hail runs in an isolated mount namespace where other apps' /data/data is
+    // masked; Magisk su inherits it, so a plain-su rm no-ops. --mount-master
+    // enters the global namespace where the cache dirs are visible.
+    fun clearAppCache(packageName: String): Boolean = executeShell(
+        arrayOf("su", "--mount-master"),
         "rm -rf /data/data/$packageName/cache/* /data/data/$packageName/code_cache/* " +
             "/data/media/0/Android/data/$packageName/cache/*"
     ).first == 0
