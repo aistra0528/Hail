@@ -51,6 +51,7 @@
         <item>@string/mode_su_stop</item>
         <item>@string/mode_su_disable</item>
         <item>@string/mode_su_stop_disable</item>
+        <item>@string/mode_su_stop_clear_disable</item>
         <item>@string/mode_su_hide</item>
         <item>@string/mode_su_suspend</item>
         <item>@string/mode_dhizuku_hide</item>
@@ -62,6 +63,7 @@
         <item>@string/mode_privapp_stop</item>
         <item>@string/mode_privapp_disable</item>
         <item>@string/mode_privapp_stop_disable</item>
+        <item>@string/mode_privapp_stop_clear_disable</item>
     </string-array>
     <string-array name="app_theme_entries">
         <item>@string/follow_system</item>

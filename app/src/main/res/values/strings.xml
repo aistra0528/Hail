@@ -50,6 +50,7 @@
     <string name="mode_su_stop">Root - Force Stop</string>
     <string name="mode_su_disable">Root - Disable</string>
     <string name="mode_su_stop_disable">Root - Force Stop + Disable</string>
+    <string name="mode_su_stop_clear_disable">Root - SCD (Force Stop + Clear Cache + Disable)</string>
     <string name="mode_su_suspend">Root - Suspend</string>
     <string name="mode_shizuku_stop">Shizuku - Force Stop</string>
     <string name="mode_shizuku_disable">Shizuku - Disable</string>
@@ -58,6 +59,7 @@
     <string name="mode_privapp_stop">System App - Force Stop</string>
     <string name="mode_privapp_disable">System App - Disable</string>
     <string name="mode_privapp_stop_disable">System App - Force Stop + Disable</string>
+    <string name="mode_privapp_stop_clear_disable">System App - SCD (Force Stop + Clear Cache + Disable)</string>
     <string name="title_set_owner">Set Device Owner</string>
     <string name="msg_set_owner">Issue the command from adb:\n%s</string>
     <string name="title_remove_owner">Remove Device Owner</string>

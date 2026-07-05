@@ -49,6 +49,7 @@ object HailData {
     const val STOP = "stop"
     const val DISABLE = "disable"
     const val STOP_DISABLE = "stop_disable"
+    const val STOP_CLEAR_DISABLE = "stop_clear_disable"
     const val HIDE = "hide"
     const val SUSPEND = "suspend"
     const val WORKING_MODE = "working_mode"
@@ -60,6 +61,7 @@ object HailData {
     const val MODE_SU_STOP = SU + STOP
     const val MODE_SU_DISABLE = SU + DISABLE
     const val MODE_SU_STOP_DISABLE = SU + STOP_DISABLE
+    const val MODE_SU_STOP_CLEAR_DISABLE = SU + STOP_CLEAR_DISABLE
     const val MODE_SU_HIDE = SU + HIDE
     const val MODE_SU_SUSPEND = SU + SUSPEND
     const val MODE_DHIZUKU_HIDE = DHIZUKU + HIDE
@@ -71,6 +73,7 @@ object HailData {
     const val MODE_PRIVAPP_STOP = PRIVAPP + STOP
     const val MODE_PRIVAPP_DISABLE = PRIVAPP + DISABLE
     const val MODE_PRIVAPP_STOP_DISABLE = PRIVAPP + STOP_DISABLE
+    const val MODE_PRIVAPP_STOP_CLEAR_DISABLE = PRIVAPP + STOP_CLEAR_DISABLE
     val WORKING_MODE_VALUES = listOf(
         MODE_DEFAULT,
         MODE_SHIZUKU_STOP,
@@ -80,6 +83,7 @@ object HailData {
         MODE_SU_STOP,
         MODE_SU_DISABLE,
         MODE_SU_STOP_DISABLE,
+        MODE_SU_STOP_CLEAR_DISABLE,
         MODE_SU_HIDE,
         MODE_SU_SUSPEND,
         MODE_DHIZUKU_HIDE,
@@ -90,7 +94,8 @@ object HailData {
         MODE_ISLAND_SUSPEND,
         MODE_PRIVAPP_STOP,
         MODE_PRIVAPP_DISABLE,
-        MODE_PRIVAPP_STOP_DISABLE
+        MODE_PRIVAPP_STOP_DISABLE,
+        MODE_PRIVAPP_STOP_CLEAR_DISABLE
     )
     const val BIOMETRIC_LOGIN = "biometric_login"
     const val APP_THEME = "app_theme"
