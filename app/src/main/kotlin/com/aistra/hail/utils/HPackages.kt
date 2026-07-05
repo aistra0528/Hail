@@ -87,9 +87,17 @@ object HPackages {
 
     fun clearAppCache(packageName: String): Boolean = runCatching {
         val observerClass = Class.forName("android.content.pm.IPackageDataObserver")
-        app.packageManager.javaClass
-            .getMethod("deleteApplicationCacheFiles", String::class.java, observerClass)
-            .invoke(app.packageManager, packageName, null)
+        val pm = app.packageManager
+        // deleteApplicationCacheFiles is a hidden/@UnsupportedAppUsage member; on P+ plain
+        // reflection is blocked by the hidden-API policy, so resolve the Method through
+        // HiddenApiBypass (same mechanism as forceStopApp). We resolve by explicit parameter
+        // types rather than HiddenApiBypass.invoke because the observer arg is null, which
+        // would break invoke's runtime-type method inference.
+        if (HTarget.P) HiddenApiBypass.getDeclaredMethod(
+            PackageManager::class.java, "deleteApplicationCacheFiles", String::class.java, observerClass
+        ).invoke(pm, packageName, null)
+        else pm.javaClass.getMethod("deleteApplicationCacheFiles", String::class.java, observerClass)
+            .invoke(pm, packageName, null)
         true
     }.getOrElse {
         HLog.e(it)
