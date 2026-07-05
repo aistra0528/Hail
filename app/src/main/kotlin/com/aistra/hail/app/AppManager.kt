@@ -65,6 +65,13 @@ object AppManager {
             } else {
                 HShell.setAppDisabled(packageName, false)
             }
+            HailData.MODE_SU_STOP_CLEAR_DISABLE -> if (frozen) {
+                HShell.forceStopApp(packageName)
+                HShell.clearAppCache(packageName)
+                HShell.setAppDisabled(packageName, true)
+            } else {
+                HShell.setAppDisabled(packageName, false)
+            }
             HailData.MODE_SU_DISABLE -> HShell.setAppDisabled(packageName, frozen)
             HailData.MODE_SU_HIDE -> HShell.setAppHidden(packageName, frozen)
             HailData.MODE_SU_SUSPEND -> HShell.setAppSuspended(packageName, frozen)
@@ -78,6 +85,13 @@ object AppManager {
             HailData.MODE_PRIVAPP_DISABLE -> HPackages.setAppDisabled(packageName, frozen)
             HailData.MODE_PRIVAPP_STOP_DISABLE -> if (frozen) {
                 HPackages.forceStopApp(packageName) && HPackages.setAppDisabled(packageName, true)
+            } else {
+                HPackages.setAppDisabled(packageName, false)
+            }
+            HailData.MODE_PRIVAPP_STOP_CLEAR_DISABLE -> if (frozen) {
+                HPackages.forceStopApp(packageName)
+                HPackages.clearAppCache(packageName)
+                HPackages.setAppDisabled(packageName, true)
             } else {
                 HPackages.setAppDisabled(packageName, false)
             }
