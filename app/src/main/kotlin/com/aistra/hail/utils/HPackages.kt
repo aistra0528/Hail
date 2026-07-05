@@ -85,6 +85,17 @@ object HPackages {
         false
     }
 
+    fun clearAppCache(packageName: String): Boolean = runCatching {
+        val observerClass = Class.forName("android.content.pm.IPackageDataObserver")
+        app.packageManager.javaClass
+            .getMethod("deleteApplicationCacheFiles", String::class.java, observerClass)
+            .invoke(app.packageManager, packageName, null)
+        true
+    }.getOrElse {
+        HLog.e(it)
+        false
+    }
+
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean {
         getApplicationInfoOrNull(packageName) ?: return false
         if (disabled) forceStopApp(packageName)

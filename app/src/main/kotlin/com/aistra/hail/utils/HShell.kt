@@ -32,6 +32,11 @@ object HShell {
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
         execSU("pm ${if (suspended) "suspend" else "unsuspend"} --user current $packageName").first == 0
 
+    fun clearAppCache(packageName: String): Boolean = execSU(
+        "rm -rf /data/data/$packageName/cache/* /data/data/$packageName/code_cache/* " +
+            "/data/media/0/Android/data/$packageName/cache/*"
+    ).first == 0
+
     fun uninstallApp(packageName: String) = execSU(
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
     ).first == 0
