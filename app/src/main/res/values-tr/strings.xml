@@ -83,7 +83,7 @@
         <item quantity="other">%1$d dakika sonra %2$s: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Tüm dinamik kısayolları temizle</string>
-    <string name="tile_action">Hızlı eylem</string>
+    <string name="tile_action">Hızlı ayar kutusu eylemi</string>
     <string name="auto_freeze">Otomatik dondur</string>
     <string name="auto_freeze_notification_title">Otomatik dondurma hizmeti çalışıyor</string>
     <string name="msg_set_owner">adb komutu hatalı:
@@ -150,4 +150,9 @@
     <string name="mode_su_stop">Root - Durdurmaya Zorla</string>
     <string name="action_reinstall">Yeniden yükle</string>
     <string name="fuzzy_search">Yaklaşık Arama</string>
+    <string name="xposed_description">Kapsam dahilindeki uygulamalar için askıya alınan uygulamayı otomatik olarak çöz</string>
+    <string name="app_theme">Uygulama teması</string>
+    <string name="follow_system">Sistemi takip et</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
 </resources>
