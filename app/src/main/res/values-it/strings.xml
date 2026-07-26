@@ -94,7 +94,7 @@
         <item quantity="other">%2$s dopo %1$d minuti: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Cancella tutti i collegamenti dinamici</string>
-    <string name="tile_action">Azione della tessera</string>
+    <string name="tile_action">Azione della tessera rapida</string>
     <string name="auto_freeze">Congela automaticamente</string>
     <string name="auto_freeze_notification_title">Il servizio di congelazione automatica è avviato</string>
     <string name="auto_freeze_after_lock">Dopo blocco schermo</string>
@@ -156,4 +156,5 @@
     <string name="follow_system">Segui il sistema</string>
     <string name="theme_light">Chiaro</string>
     <string name="theme_dark">Scuro</string>
+    <string name="xposed_description">Scongela automaticamente le app sospese (per le app selezionate)</string>
 </resources>
