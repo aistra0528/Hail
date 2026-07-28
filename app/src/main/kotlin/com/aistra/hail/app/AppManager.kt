@@ -16,14 +16,14 @@ object AppManager {
             else -> false
         }
 
-    fun isAppFrozen(packageName: String): Boolean = when {
-        HailData.workingMode.endsWith(HailData.STOP) -> HPackages.isAppStopped(packageName)
-        HailData.workingMode.endsWith(HailData.DISABLE) -> HPackages.isAppDisabled(packageName)
-        HailData.workingMode.endsWith(HailData.HIDE) -> HPackages.isAppHidden(packageName)
-        HailData.workingMode.endsWith(HailData.SUSPEND) -> HPackages.isAppSuspended(packageName)
-        else -> HPackages.isAppDisabled(packageName)
-                || HPackages.isAppHidden(packageName)
-                || HPackages.isAppSuspended(packageName)
+    fun isAppFrozen(packageName: String, userId: Int = HPackages.myUserId): Boolean = when {
+        HailData.workingMode.endsWith(HailData.STOP) -> HPackages.isAppStopped(packageName, userId)
+        HailData.workingMode.endsWith(HailData.DISABLE) -> HPackages.isAppDisabled(packageName, userId)
+        HailData.workingMode.endsWith(HailData.HIDE) -> HPackages.isAppHidden(packageName, userId)
+        HailData.workingMode.endsWith(HailData.SUSPEND) -> HPackages.isAppSuspended(packageName, userId)
+        else -> HPackages.isAppDisabled(packageName, userId)
+                || HPackages.isAppHidden(packageName, userId)
+                || HPackages.isAppSuspended(packageName, userId)
     }
 
     fun setListFrozen(frozen: Boolean, vararg appInfo: AppInfo): String? {
@@ -37,7 +37,7 @@ object AppManager {
             else -> {
                 excludeMe.forEach {
                     when {
-                        setAppFrozen(it.packageName, frozen) -> {
+                        setAppFrozen(it.packageName, frozen, it.userId) -> {
                             i++
                             name = it.name.toString()
                         }
@@ -50,28 +50,28 @@ object AppManager {
         return if (denied && i == 0) null else if (i == 1) name else i.toString()
     }
 
-    fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =
+    fun setAppFrozen(packageName: String, frozen: Boolean, userId: Int = HPackages.myUserId): Boolean =
         packageName != BuildConfig.APPLICATION_ID && when (HailData.workingMode) {
             HailData.MODE_OWNER_HIDE -> HPolicy.setAppHidden(packageName, frozen)
             HailData.MODE_OWNER_SUSPEND -> HPolicy.setAppSuspended(packageName, frozen)
             HailData.MODE_DHIZUKU_HIDE -> HDhizuku.setAppHidden(packageName, frozen)
             HailData.MODE_DHIZUKU_SUSPEND -> HDhizuku.setAppSuspended(packageName, frozen)
-            HailData.MODE_SU_STOP -> !frozen || HShell.forceStopApp(packageName)
-            HailData.MODE_SU_DISABLE -> HShell.setAppDisabled(packageName, frozen)
-            HailData.MODE_SU_HIDE -> HShell.setAppHidden(packageName, frozen)
-            HailData.MODE_SU_SUSPEND -> HShell.setAppSuspended(packageName, frozen)
-            HailData.MODE_SHIZUKU_STOP -> !frozen || HShizuku.forceStopApp(packageName)
-            HailData.MODE_SHIZUKU_DISABLE -> HShizuku.setAppDisabled(packageName, frozen)
-            HailData.MODE_SHIZUKU_HIDE -> HShizuku.setAppHidden(packageName, frozen)
-            HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.setAppSuspended(packageName, frozen)
+            HailData.MODE_SU_STOP -> !frozen || HShell.forceStopApp(packageName, userId)
+            HailData.MODE_SU_DISABLE -> HShell.setAppDisabled(packageName, frozen, userId)
+            HailData.MODE_SU_HIDE -> HShell.setAppHidden(packageName, frozen, userId)
+            HailData.MODE_SU_SUSPEND -> HShell.setAppSuspended(packageName, frozen, userId)
+            HailData.MODE_SHIZUKU_STOP -> !frozen || HShizuku.forceStopApp(packageName, userId)
+            HailData.MODE_SHIZUKU_DISABLE -> HShizuku.setAppDisabled(packageName, frozen, userId)
+            HailData.MODE_SHIZUKU_HIDE -> HShizuku.setAppHidden(packageName, frozen, userId)
+            HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.setAppSuspended(packageName, frozen, userId)
             HailData.MODE_ISLAND_HIDE -> HIsland.setAppHidden(packageName, frozen)
             HailData.MODE_ISLAND_SUSPEND -> HIsland.setAppSuspended(packageName, frozen)
-            HailData.MODE_PRIVAPP_STOP -> !frozen || HPackages.forceStopApp(packageName)
-            HailData.MODE_PRIVAPP_DISABLE -> HPackages.setAppDisabled(packageName, frozen)
+            HailData.MODE_PRIVAPP_STOP -> !frozen || HPackages.forceStopApp(packageName, userId)
+            HailData.MODE_PRIVAPP_DISABLE -> HPackages.setAppDisabled(packageName, frozen, userId)
             else -> false
         }
 
-    fun uninstallApp(packageName: String): Boolean {
+    fun uninstallApp(packageName: String, userId: Int = HPackages.myUserId): Boolean {
         when {
             HailData.workingMode.startsWith(HailData.OWNER) ->
                 if (HPolicy.uninstallApp(packageName)) return true
@@ -80,18 +80,18 @@ object AppManager {
                 if (HDhizuku.uninstallApp(packageName)) return true
 
             HailData.workingMode.startsWith(HailData.SU) ->
-                if (HShell.uninstallApp(packageName)) return true
+                if (HShell.uninstallApp(packageName, userId)) return true
 
             HailData.workingMode.startsWith(HailData.SHIZUKU) ->
-                if (HShizuku.uninstallApp(packageName)) return true
+                if (HShizuku.uninstallApp(packageName, userId)) return true
         }
         HUI.startActivity(Intent.ACTION_DELETE, HPackages.packageUri(packageName))
         return false
     }
 
-    fun reinstallApp(packageName: String): Boolean = when {
-        HailData.workingMode.startsWith(HailData.SU) -> HShell.reinstallApp(packageName)
-        HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.reinstallApp(packageName)
+    fun reinstallApp(packageName: String, userId: Int = HPackages.myUserId): Boolean = when {
+        HailData.workingMode.startsWith(HailData.SU) -> HShell.reinstallApp(packageName, userId)
+        HailData.workingMode.startsWith(HailData.SHIZUKU) -> HShizuku.reinstallApp(packageName, userId)
         else -> false
     }
 

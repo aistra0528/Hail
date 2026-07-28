@@ -23,6 +23,8 @@ object HailData {
     const val URL_LIBERAPAY = "https://liberapay.com/aistra0528"
     const val URL_PAYPAL = "https://www.paypal.me/aistra0528"
     const val URL_TRANSLATE = "https://hosted.weblate.org/engage/hail/"
+    const val URL_WILD_THINKING_MASTER =
+        "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=Mzk1NzM5MTIyOQ==#wechat_redirect"
     const val VERSION = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     private const val KEY_ID = "id"
     const val KEY_TAG = "tag"
@@ -30,6 +32,7 @@ object HailData {
     private const val KEY_PINNED = "pinned"
     private const val KEY_WHITELISTED = "whitelisted"
     const val KEY_PACKAGE = "package"
+    const val KEY_USER = "user"
     const val KEY_FROZEN = "frozen"
     private const val SORT_BY = "sort_by"
     const val SORT_NAME = "name"
@@ -168,6 +171,7 @@ object HailData {
                     add(with(json.getJSONObject(i)) {
                         AppInfo(
                             packageName = getString(KEY_PACKAGE),
+                            userId = optInt(KEY_USER, com.aistra.hail.utils.HPackages.myUserId),
                             pinned = optBoolean(KEY_PINNED),
                             whitelisted = optBoolean(KEY_WHITELISTED),
                             tagIdList = optJSONArray(KEY_TAGS)?.let {
@@ -180,15 +184,25 @@ object HailData {
         }
     }
 
-    fun isChecked(packageName: String): Boolean = checkedList.any { it.packageName == packageName }
+    fun isChecked(packageName: String, userId: Int = com.aistra.hail.utils.HPackages.myUserId): Boolean =
+        checkedList.any { it.packageName == packageName && it.userId == userId }
 
-    fun addCheckedApp(packageName: String, tagId: Int = 0, saveApps: Boolean = true) {
-        checkedList.add(AppInfo(packageName, tagIdList = mutableListOf(tagId)))
+    fun addCheckedApp(
+        packageName: String,
+        tagId: Int = 0,
+        saveApps: Boolean = true,
+        userId: Int = com.aistra.hail.utils.HPackages.myUserId
+    ) {
+        checkedList.add(AppInfo(packageName, userId = userId, tagIdList = mutableListOf(tagId)))
         if (saveApps) saveApps()
     }
 
-    fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
-        checkedList.removeAll { it.packageName == packageName }
+    fun removeCheckedApp(
+        packageName: String,
+        saveApps: Boolean = true,
+        userId: Int = com.aistra.hail.utils.HPackages.myUserId
+    ) {
+        checkedList.removeAll { it.packageName == packageName && it.userId == userId }
         if (saveApps) saveApps()
     }
 
@@ -199,6 +213,7 @@ object HailData {
                 put(
                     JSONObject()
                         .put(KEY_PACKAGE, it.packageName)
+                        .put(KEY_USER, it.userId)
                         .put(KEY_PINNED, it.pinned)
                         .put(KEY_WHITELISTED, it.whitelisted)
                         .put(KEY_TAGS, JSONArray(it.tagIdList))

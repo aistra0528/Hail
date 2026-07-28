@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.FragmentAppsBinding
@@ -49,14 +50,15 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
     private var contextMenuInfo: ContextMenu.ContextMenuInfo? = null
 
 
-    private var exportApkPkg: String? = null
+    private var exportApkPkg: AppInfo? = null
     private val exportApk =
         registerForActivityResult(CreateDocument("application/vnd.android.package-archive")) { uri ->
             val exportApkPkg = exportApkPkg
             this.exportApkPkg = null
             if (exportApkPkg == null || uri == null) return@registerForActivityResult
             lifecycleScope.launch {
-                val applicationInfo = HPackages.getApplicationInfoOrNull(exportApkPkg) ?: return@launch
+                val applicationInfo =
+                    HPackages.getApplicationInfoOrNull(exportApkPkg.packageName, userId = exportApkPkg.userId) ?: return@launch
                 val dialog =
                     MaterialAlertDialogBuilder(activity).setView(R.layout.dialog_progress).setCancelable(false).show()
                 runCatching {
@@ -132,7 +134,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
     ) {
         contextMenuInfo = menuInfo
         val viewHolder = ((menuInfo as HRecyclerView.RecyclerViewContextMenuInfo).viewHolder as AppsAdapter.ViewHolder)
-        menu.setHeaderTitle(viewHolder.info.loadLabel(activity.packageManager))
+        menu.setHeaderTitle(viewHolder.info.name)
         activity.menuInflater.inflate(R.menu.menu_apps_action, menu)
         super.onCreateContextMenu(menu, v, menuInfo)
     }
@@ -141,7 +143,7 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
         val viewHolder =
             ((contextMenuInfo as HRecyclerView.RecyclerViewContextMenuInfo).viewHolder as AppsAdapter.ViewHolder)
         val info = viewHolder.info
-        val name = info.loadLabel(app.packageManager)
+        val name = info.name
         val pkg = info.packageName
         when (item.itemId) {
             R.id.action_details -> HUI.startActivity(
@@ -153,10 +155,10 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
                 HUI.showToast(R.string.msg_text_copied, pkg)
             }
 
-            R.id.action_extract_apk -> extractApk(pkg)
-            R.id.action_uninstall -> uninstallApp(name, pkg)
+            R.id.action_extract_apk -> extractApk(info)
+            R.id.action_uninstall -> uninstallApp(name, pkg, info.userId)
             R.id.action_reinstall -> {
-                if (AppManager.reinstallApp(pkg)) updateAppList()
+                if (AppManager.reinstallApp(pkg, info.userId)) updateAppList()
                 else HUI.showToast(R.string.operation_failed, name)
             }
 
@@ -165,14 +167,17 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
         return true
     }
 
-    private fun extractApk(pkg: String) {
-        exportApkPkg = pkg
-        exportApk.launch(HPackages.getUnhiddenPackageInfoOrNull(pkg)?.exportFileName ?: pkg)
+    private fun extractApk(info: AppInfo) {
+        exportApkPkg = info
+        exportApk.launch(
+            HPackages.getUnhiddenPackageInfoOrNull(info.packageName, userId = info.userId)?.exportFileName
+                ?: info.packageName
+        )
     }
 
-    private fun uninstallApp(name: CharSequence, pkg: String) {
+    private fun uninstallApp(name: CharSequence, pkg: String, userId: Int) {
         when {
-            HPackages.isAppUninstalled(pkg) -> HUI.showToast(R.string.app_not_installed)
+            HPackages.isAppUninstalled(pkg, userId) -> HUI.showToast(R.string.app_not_installed)
 
             pkg == app.packageName -> {
                 when {
@@ -183,24 +188,22 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
                 }
             }
 
-            HailData.workingMode == HailData.MODE_DEFAULT -> AppManager.uninstallApp(pkg)
-            else -> showUninstallDialog(name, pkg)
+            HailData.workingMode == HailData.MODE_DEFAULT -> AppManager.uninstallApp(pkg, userId)
+            else -> showUninstallDialog(name, pkg, userId)
         }
     }
 
-    private fun showUninstallDialog(name: CharSequence, pkg: String) {
+    private fun showUninstallDialog(name: CharSequence, pkg: String, userId: Int = HPackages.myUserId) {
         MaterialAlertDialogBuilder(activity).setTitle(name).setMessage(R.string.msg_uninstall)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                if (AppManager.uninstallApp(pkg)) updateAppList()
+                if (AppManager.uninstallApp(pkg, userId)) updateAppList()
             }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
-    override fun onItemCheckedChange(
-        buttonView: CompoundButton, isChecked: Boolean, packageName: String
-    ) {
-        if (isChecked) HailData.addCheckedApp(packageName)
-        else HailData.removeCheckedApp(packageName)
-        buttonView.isChecked = HailData.isChecked(packageName)
+    override fun onItemCheckedChange(buttonView: CompoundButton, isChecked: Boolean, info: AppInfo) {
+        if (isChecked) HailData.addCheckedApp(info.packageName, userId = info.userId)
+        else HailData.removeCheckedApp(info.packageName, userId = info.userId)
+        buttonView.isChecked = HailData.isChecked(info.packageName, info.userId)
     }
 
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {

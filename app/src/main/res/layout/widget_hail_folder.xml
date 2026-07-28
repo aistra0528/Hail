@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/widget_root"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <ImageView
+            android:id="@+id/widget_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_widget_folder"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+        <TextView
+                android:id="@+id/widget_title"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/widget_folder_title"
+                android:textColor="@color/md_theme_onSurface"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            <GridView
+                    android:id="@+id/widget_app_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:columnWidth="72dp"
+                    android:gravity="center"
+                    android:horizontalSpacing="4dp"
+                    android:numColumns="auto_fit"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="6dp"/>
+
+            <TextView
+                    android:id="@+id/widget_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/nothing_here"
+                    android:textColor="@color/md_theme_onSurfaceVariant"
+                    android:textSize="14sp"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <ImageButton
+            android:id="@+id/widget_freeze"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_widget_freeze"
+            android:contentDescription="@string/action_freeze_current"
+            android:padding="14dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_round_frozen"/>
+</FrameLayout>

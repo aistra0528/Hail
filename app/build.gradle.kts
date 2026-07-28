@@ -6,14 +6,18 @@ plugins {
 
 android {
     val signingProps = file("../signing.properties")
-    val commitHash = providers.exec {
-        workingDir = rootDir
-        commandLine = "git rev-parse --short HEAD".split(" ")
-    }.standardOutput.asText.get().trim()
-    val commitSubject = providers.exec {
-        workingDir = rootDir
-        commandLine = "git log -1 --pretty=%s".split(" ")
-    }.standardOutput.asText.get().trim()
+    val commitHash = runCatching {
+        providers.exec {
+            workingDir = rootDir
+            commandLine = "git rev-parse --short HEAD".split(" ")
+        }.standardOutput.asText.get().trim()
+    }.getOrDefault("nogit")
+    val commitSubject = runCatching {
+        providers.exec {
+            workingDir = rootDir
+            commandLine = "git log -1 --pretty=%s".split(" ")
+        }.standardOutput.asText.get().trim()
+    }.getOrDefault("")
 
     namespace = "com.aistra.hail"
     compileSdk = 36

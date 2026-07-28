@@ -38,8 +38,8 @@ object HailApi {
     /** @since 0.6.0 */
     const val ACTION_LOCK_FREEZE = "${BuildConfig.APPLICATION_ID}.action.LOCK_FREEZE"
 
-    fun getIntentForPackage(action: String, packageName: String) =
-        Intent(action).putExtra(HailData.KEY_PACKAGE, packageName)
+    fun getIntentForPackage(action: String, packageName: String, userId: Int = com.aistra.hail.utils.HPackages.myUserId) =
+        Intent(action).putExtra(HailData.KEY_PACKAGE, packageName).putExtra(HailData.KEY_USER, userId)
 
     fun Intent.addTag(tag: String) = putExtra(HailData.KEY_TAG, tag)
 

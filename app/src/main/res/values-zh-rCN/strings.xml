@@ -155,4 +155,22 @@
     <string name="theme_dark">深色</string>
     <string name="app_theme">应用主题</string>
     <string name="follow_system">跟随系统</string>
+    <string name="widget_folder_title">雹文件夹</string>
+    <string name="widget_folder_description">解冻并启动选中的应用</string>
+    <string name="widget_folder_configure">选择小组件应用</string>
+    <string name="widget_folder_title_label">文件夹标题</string>
+    <string name="widget_folder_title_hint">留空则隐藏标题</string>
+    <string name="widget_icon_size">图标大小</string>
+    <string name="widget_icon_size_value">图标大小：%d dp</string>
+    <string name="widget_show_app_names">显示应用名称</string>
+    <string name="widget_background_alpha">背景透明度：%d%%</string>
+    <string name="widget_folder_apps">冻结名单中的应用</string>
+    <string name="widget_folder_no_checked_apps">请先把应用添加到雹首页，然后它们才会出现在这里。</string>
+    <string name="secondary_development">二次开发：野生的烧烤大师</string>
+    <string name="follow_wechat_official_account">点击关注微信公众号</string>
+    <string name="wechat_official_account">公众号</string>
+    <string name="wechat_official_account_name">野生的烧烤大师</string>
+    <string name="wechat_official_account_msg">野生的烧烤大师公众号已经复制到粘贴板，打开微信搜索即可</string>
+    <string name="action_later">稍后再说</string>
+    <string name="action_follow">去关注</string>
 </resources>

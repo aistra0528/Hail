@@ -91,6 +91,7 @@ class AboutFragment : MainFragment() {
                 ClickableItem(
                     icon = Icons.Outlined.Update, title = R.string.label_version, desc = HailData.VERSION
                 ) { HUI.openLink(HailData.URL_RELEASES) }
+                DeveloperItem()
                 ClickableItem(
                     icon = Icons.Outlined.InstallMobile,
                     title = R.string.label_time,
@@ -125,6 +126,28 @@ class AboutFragment : MainFragment() {
                 ) { openLicenseDialog = true }
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
+        }
+    }
+
+    @Composable
+    private fun DeveloperItem() = Column(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = ::openWeChatOfficialAccount)
+            .padding(
+                horizontal = dimensionResource(R.dimen.padding_medium),
+                vertical = dimensionResource(R.dimen.padding_medium)
+            )
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(imageVector = Icons.Outlined.Code, contentDescription = null)
+            Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_medium)))
+            Column {
+                Text(text = stringResource(R.string.secondary_development), style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = stringResource(R.string.follow_wechat_official_account),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
         }
     }
 
@@ -204,5 +227,18 @@ class AboutFragment : MainFragment() {
                     4 -> HUI.openLink(HailData.URL_PAYPAL)
                 }
             }.setNegativeButton(android.R.string.cancel, null).show()
+    }
+
+    private fun openWeChatOfficialAccount() {
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(R.string.wechat_official_account)
+            .setMessage(R.string.wechat_official_account_msg)
+            .setNegativeButton(R.string.action_later, null)
+            .setPositiveButton(R.string.action_follow) { _, _ ->
+                HUI.copyText(getString(R.string.wechat_official_account_name))
+                app.packageManager.getLaunchIntentForPackage("com.tencent.mm")?.let(::startActivity)
+                    ?: HUI.showToast(R.string.app_not_installed)
+            }
+            .show()
     }
 }

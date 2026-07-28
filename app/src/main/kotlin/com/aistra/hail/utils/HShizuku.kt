@@ -49,14 +49,14 @@ object HShizuku {
             false
         }
 
-    fun forceStopApp(packageName: String): Boolean = runCatching {
+    fun forceStopApp(packageName: String, userId: Int = HPackages.myUserId): Boolean = runCatching {
         asInterface("android.app.IActivityManager", Context.ACTIVITY_SERVICE).let {
             if (HTarget.P) HiddenApiBypass.invoke(
-                it::class.java, it, "forceStopPackage", packageName, HPackages.myUserId
+                it::class.java, it, "forceStopPackage", packageName, userId
             ) else it::class.java.getMethod(
                 "forceStopPackage", String::class.java, Int::class.java
             ).invoke(
-                it, packageName, HPackages.myUserId
+                it, packageName, userId
             )
         }
         true
@@ -65,9 +65,9 @@ object HShizuku {
         false
     }
 
-    fun setAppDisabled(packageName: String, disabled: Boolean): Boolean {
-        HPackages.getApplicationInfoOrNull(packageName) ?: return false
-        if (disabled) forceStopApp(packageName)
+    fun setAppDisabled(packageName: String, disabled: Boolean, userId: Int = HPackages.myUserId): Boolean {
+        HPackages.getApplicationInfoOrNull(packageName, userId = userId) ?: return false
+        if (disabled) forceStopApp(packageName, userId)
         runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             val newState = when {
@@ -82,31 +82,31 @@ object HShizuku {
                 Int::class.java,
                 Int::class.java,
                 String::class.java
-            ).invoke(pm, packageName, newState, 0, HPackages.myUserId, BuildConfig.APPLICATION_ID)
+            ).invoke(pm, packageName, newState, 0, userId, BuildConfig.APPLICATION_ID)
         }.onFailure {
             HLog.e(it)
         }
-        return HPackages.isAppDisabled(packageName) == disabled
+        return HPackages.isAppDisabled(packageName, userId) == disabled
     }
 
-    fun setAppHidden(packageName: String, hidden: Boolean): Boolean {
-        HPackages.getApplicationInfoOrNull(packageName) ?: return false
-        if (hidden) forceStopApp(packageName)
+    fun setAppHidden(packageName: String, hidden: Boolean, userId: Int = HPackages.myUserId): Boolean {
+        HPackages.getApplicationInfoOrNull(packageName, userId = userId) ?: return false
+        if (hidden) forceStopApp(packageName, userId)
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             pm::class.java.getMethod(
                 "setApplicationHiddenSettingAsUser", String::class.java, Boolean::class.java, Int::class.java
-            ).invoke(pm, packageName, hidden, HPackages.myUserId) as Boolean
+            ).invoke(pm, packageName, hidden, userId) as Boolean
         }.getOrElse {
             HLog.e(it)
             false
         }
     }
 
-    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean {
-        HPackages.getApplicationInfoOrNull(packageName) ?: return false
-        if (HTarget.P) setAppRestricted(packageName, suspended)
-        if (suspended) forceStopApp(packageName)
+    fun setAppSuspended(packageName: String, suspended: Boolean, userId: Int = HPackages.myUserId): Boolean {
+        HPackages.getApplicationInfoOrNull(packageName, userId = userId) ?: return false
+        if (HTarget.P) setAppRestricted(packageName, suspended, userId)
+        if (suspended) forceStopApp(packageName, userId)
         return runCatching {
             val pm = asInterface("android.content.pm.IPackageManager", "package")
             (when {
@@ -122,26 +122,26 @@ object HShizuku {
                         if (suspended) suspendDialogInfo else null,
                         0,
                         callerPackage,
-                        HPackages.myUserId /*suspendingUserId*/,
-                        HPackages.myUserId /*targetUserId*/
+                        userId /*suspendingUserId*/,
+                        userId /*targetUserId*/
                     )
                 }.getOrElse {
-                    if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
+                    if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended, userId)
                     else throw it
                 }
 
                 HTarget.Q -> runCatching {
-                    setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
+                    setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended, userId)
                 }.getOrElse {
-                    if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceP(pm, packageName, suspended)
+                    if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceP(pm, packageName, suspended, userId)
                     else throw it
                 }
 
-                HTarget.P -> setPackagesSuspendedAsUserSinceP(pm, packageName, suspended)
+                HTarget.P -> setPackagesSuspendedAsUserSinceP(pm, packageName, suspended, userId)
 
                 HTarget.N -> pm::class.java.getMethod(
                     "setPackagesSuspendedAsUser", Array<String>::class.java, Boolean::class.java, Int::class.java
-                ).invoke(pm, arrayOf(packageName), suspended, HPackages.myUserId)
+                ).invoke(pm, arrayOf(packageName), suspended, userId)
 
                 else -> return false
             } as Array<*>).isEmpty()
@@ -152,7 +152,7 @@ object HShizuku {
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun setPackagesSuspendedAsUserSinceQ(pm: Any, packageName: String, suspended: Boolean): Any =
+    private fun setPackagesSuspendedAsUserSinceQ(pm: Any, packageName: String, suspended: Boolean, userId: Int): Any =
         HiddenApiBypass.invoke(
             pm::class.java,
             pm,
@@ -163,11 +163,11 @@ object HShizuku {
             null,
             if (suspended) suspendDialogInfo else null,
             callerPackage,
-            HPackages.myUserId
+            userId
         )
 
     @RequiresApi(Build.VERSION_CODES.P)
-    private fun setPackagesSuspendedAsUserSinceP(pm: Any, packageName: String, suspended: Boolean): Any =
+    private fun setPackagesSuspendedAsUserSinceP(pm: Any, packageName: String, suspended: Boolean, userId: Int): Any =
         HiddenApiBypass.invoke(
             pm::class.java,
             pm,
@@ -178,7 +178,7 @@ object HShizuku {
             null,
             null /*dialogMessage*/,
             callerPackage,
-            HPackages.myUserId
+            userId
         )
 
     private val suspendDialogInfo: Any
@@ -190,14 +190,14 @@ object HShizuku {
         }
 
     @RequiresApi(Build.VERSION_CODES.P)
-    fun setAppRestricted(packageName: String, restricted: Boolean): Boolean = runCatching {
+    fun setAppRestricted(packageName: String, restricted: Boolean, userId: Int = HPackages.myUserId): Boolean = runCatching {
         val appops = asInterface("com.android.internal.app.IAppOpsService", Context.APP_OPS_SERVICE)
         HiddenApiBypass.invoke(
             appops::class.java,
             appops,
             "setMode",
             HiddenApiBypass.invoke(AppOpsManager::class.java, null, "strOpToOp", "android:run_any_in_background"),
-            HPackages.packageUid(packageName),
+            HPackages.packageUid(packageName, userId),
             packageName,
             if (restricted) AppOpsManager.MODE_IGNORED else AppOpsManager.MODE_ALLOWED
         )
@@ -207,11 +207,11 @@ object HShizuku {
         false
     }
 
-    fun uninstallApp(packageName: String): Boolean =
-        execute("pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName").first == 0
+    fun uninstallApp(packageName: String, userId: Int = HPackages.myUserId): Boolean =
+        execute("pm ${if (HPackages.canUninstallNormally(packageName, userId)) "uninstall" else "uninstall --user $userId"} $packageName").first == 0
 
-    fun reinstallApp(packageName: String): Boolean =
-        execute("pm install-existing --user current $packageName").first == 0
+    fun reinstallApp(packageName: String, userId: Int = HPackages.myUserId): Boolean =
+        execute("pm install-existing --user $userId $packageName").first == 0
 
     fun execute(command: String, root: Boolean = isRoot): Pair<Int, String?> = runCatching {
         IShizukuService.Stub.asInterface(Shizuku.getBinder()).newProcess(arrayOf(if (root) "su" else "sh"), null, null)

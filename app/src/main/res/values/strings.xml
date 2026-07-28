@@ -101,7 +101,7 @@
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Clear all dynamic shortcuts</string>
-    <string name="tile_action">Quick setting tile action</string>
+    <string name="tile_action">Tile action</string>
     <string name="auto_freeze">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
     <string name="auto_freeze_after_lock">After screen locked</string>
@@ -154,4 +154,22 @@
     <string name="follow_system">Follow system</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+    <string name="widget_folder_title">Hail folder</string>
+    <string name="widget_folder_description">Launch selected apps after unfreezing them</string>
+    <string name="widget_folder_configure">Choose widget apps</string>
+    <string name="widget_folder_title_label">Folder title</string>
+    <string name="widget_folder_title_hint">Leave empty to hide the title</string>
+    <string name="widget_icon_size">Icon size</string>
+    <string name="widget_icon_size_value">Icon size: %d dp</string>
+    <string name="widget_show_app_names">Show app names</string>
+    <string name="widget_background_alpha">Background opacity: %d%%</string>
+    <string name="widget_folder_apps">Apps in freeze list</string>
+    <string name="widget_folder_no_checked_apps">Add apps to Hail Home first, then they can appear here.</string>
+    <string name="secondary_development">Secondary development: Wild Barbecue Master</string>
+    <string name="follow_wechat_official_account">Tap to follow WeChat official account</string>
+    <string name="wechat_official_account">Official account</string>
+    <string name="wechat_official_account_name">Wild Barbecue Master</string>
+    <string name="wechat_official_account_msg">Wild Barbecue Master official account has been copied to clipboard. Open WeChat and search for it.</string>
+    <string name="action_later">Later</string>
+    <string name="action_follow">Follow</string>
 </resources>

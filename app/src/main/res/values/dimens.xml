@@ -2,6 +2,10 @@
     <dimen name="header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_icon_size">64dp</dimen>
+    <dimen name="widget_app_icon_size_small">38dp</dimen>
+    <dimen name="widget_app_icon_size">48dp</dimen>
+    <dimen name="widget_app_icon_size_large">60dp</dimen>
+    <dimen name="widget_app_icon_canvas_size">96dp</dimen>
     <dimen name="padding_extra_small">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
