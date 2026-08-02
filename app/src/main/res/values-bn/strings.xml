@@ -1,3 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Hail</string>
+    <string name="app_slogan">ফ্রিজেই মুক্তি!</string>
+    <string name="title_home">হোম</string>
+    <string name="title_apps">অ্যাপস</string>
+    <string name="title_settings">সেটিংস</string>
+    <string name="title_about">তথ্য</string>
+    <string name="label_default">ডিফল্ট</string>
+    <string name="label_version">ভার্সন</string>
+    <string name="label_time">ইন্সটলের সময়</string>
+    <string name="action_telegram">টেলিগ্রাম গ্রুপ</string>
+    <string name="action_qq">QQ গ্রুপ</string>
+    <string name="action_donate">দান করুন</string>
+    <string name="action_github">গিটহাব</string>
+    <string name="action_translate">অনুবাদ করুন</string>
+    <string name="action_licenses">লাইসেন্স-সমূহ</string>
+    <string name="action_freeze_all">সব ফ্রিজ করুন</string>
+    <string name="action_unfreeze_all">সব আনফ্রিজ করুন</string>
+    <string name="action_freeze_current">দৃশ্যমান ফ্রিজ করুন</string>
+    <string name="action_unfreeze_current">দৃশ্যমান আনফ্রিজ করুন</string>
+    <string name="action_freeze_non_whitelisted">হোয়াইটলিস্ট ব্যতীত ফ্রিজ করুন</string>
+    <string name="action_lock">লক করুন</string>
+    <string name="action_lock_freeze">লক এবং ফ্রিজ করুন</string>
+    <string name="action_launch">লঞ্চ করুন</string>
+    <string name="action_freeze">ফ্রিজ করুন</string>
+    <string name="action_unfreeze">আনফ্রিজ করুন</string>
+    <string name="action_deferred_task">স্থগিত কাজ</string>
+    <string name="action_tag_add">ট্যাগ যুক্ত করুন</string>
+    <string name="action_tag_remove">ট্যাগ মুছুন</string>
+    <string name="action_tag_set">ট্যাগ নির্ধারণ করুন</string>
+    <string name="action_add_pin_shortcut">হোম স্ক্রিনে যুক্ত করুন</string>
+    <string name="action_export_clipboard">প্যাকেজের নাম কপি করুন</string>
+    <string name="action_import_clipboard">ক্লিপবোর্ড থেকে যুক্ত করুন</string>
+    <string name="action_remove_home">হোম থেকে মুছুন</string>
+    <string name="action_unfreeze_remove_home">আনফ্রিজ করে হোম থেকে মুছুন</string>
+    <string name="action_deselect">আনসিলেক্ট করুন</string>
+    <string name="action_undo">পুর্বাবস্থায় ফেরান</string>
+    <string name="action_help">সহায়তা</string>
+    <string name="action_search">অনুসন্ধান করুন</string>
+    <string name="action_details">অ্যাপ সম্পর্কে</string>
+    <string name="action_extract_apk">অ্যাপ এক্সট্রাক্ট করুন</string>
+    <string name="action_uninstall">আনইন্সটল করুন</string>
+    <string name="msg_uninstall">আপনি কি এই অ্যাপটি আনইন্সটল করতে চান?</string>
+    <string name="working_mode">কাজের ধরণ</string>
 </resources>
