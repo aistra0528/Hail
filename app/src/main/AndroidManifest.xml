@@ -83,6 +83,10 @@
                 <data android:scheme="hail"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".widgets.HailFolderWidgetConfigureActivity"
+                android:excludeFromRecents="true"
+                android:exported="true"/>
 
         <meta-data
                 android:name="xposedmodule"
@@ -126,6 +130,18 @@
                 <action android:name="android.intent.action.PACKAGE_UNSUSPENDED_MANUALLY"/>
             </intent-filter>
         </receiver>
+        <receiver
+                android:name=".widgets.HailFolderWidgetProvider"
+                android:exported="true"
+                android:icon="@mipmap/ic_launcher"
+                android:label="@string/widget_folder_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/hail_folder_widget"/>
+        </receiver>
 
 
         <service
@@ -148,6 +164,10 @@
                 <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
         </service>
+        <service
+                android:name=".widgets.HailFolderWidgetService"
+                android:exported="false"
+                android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

@@ -13,7 +13,6 @@ import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.AppIconCache
-import com.aistra.hail.utils.HPackages.myUserId
 import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.Job
 
@@ -31,7 +30,7 @@ class PagerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val info = currentList[position]
-        flags[info.packageName] = info.getFlag(selectedList)
+        flags[info.key] = info.getFlag(selectedList)
         holder.itemView.run {
             setOnClickListener { onItemClickListener.onItemClick(info) }
             setOnLongClickListener { onItemLongClickListener.onItemLongClick(info) }
@@ -40,7 +39,7 @@ class PagerAdapter(
                     loadIconJob = AppIconCache.loadIconBitmapAsync(
                         context,
                         it,
-                        myUserId,
+                        info.userId,
                         this,
                         HailData.grayscaleIcon && info.state == AppInfo.State.FROZEN
                     )
@@ -82,7 +81,7 @@ class PagerAdapter(
         override fun areItemsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
-            flags[oldItem.packageName] == newItem.getFlag(selectedList)
+            flags[oldItem.key] == newItem.getFlag(selectedList)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -98,5 +97,7 @@ class PagerAdapter(
 
 private fun AppInfo.getFlag(selectedList: List<AppInfo>) =
     (1 shl state.ordinal) or (this in selectedList).shl(3) or whitelisted.shl(4)
+
+private val AppInfo.key get() = "$packageName#$userId"
 
 private fun Boolean.shl(bitCount: Int) = if (this) 1 shl bitCount else 0

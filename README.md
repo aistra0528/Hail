@@ -2,6 +2,8 @@
 
 # 雹 Hail
 
+> 本仓库为基于 Hail 1.10.0 的二次开发版本，主要增加多用户/工作资料应用支持、桌面大文件夹小组件和关于页二开信息。完整修改说明见 [二次开发更新说明.md](二次开发更新说明.md)。
+
 [![Android CI status](https://github.com/aistra0528/Hail/workflows/Android%20CI/badge.svg)](https://github.com/aistra0528/Hail/actions)
 [![翻译状态](https://hosted.weblate.org/widgets/hail/-/svg-badge.svg)](https://hosted.weblate.org/engage/hail/)
 [![Downloads](https://img.shields.io/github/downloads/aistra0528/Hail/total.svg)](https://github.com/aistra0528/Hail/releases)

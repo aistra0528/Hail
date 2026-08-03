@@ -1,21 +1,21 @@
 package com.aistra.hail.ui.apps
 
 import android.app.Application
-import android.content.pm.ApplicationInfo
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aistra.hail.HailApp
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.*
 import kotlinx.coroutines.*
 
 class AppsViewModel(application: Application) : AndroidViewModel(application) {
-    val apps = MutableLiveData<List<ApplicationInfo>>()
+    val apps = MutableLiveData<List<AppInfo>>()
     val isRefreshing = MutableLiveData(false)
     val query = MutableLiveData("")
-    val displayApps = MutableLiveData<List<ApplicationInfo>>()
+    val displayApps = MutableLiveData<List<AppInfo>>()
 
     init {
         updateAppList()
@@ -58,7 +58,7 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     fun updateAppList() {
         viewModelScope.launch {
             postRefreshState(true)
-            apps.postValue(HPackages.getInstalledApplications())
+            apps.postValue(HPackages.getInstalledApps())
         }
     }
 
@@ -79,14 +79,14 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    private val ApplicationInfo.isSystemApp: Boolean
-        get() = flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
-    private val ApplicationInfo.isAppFrozen get() = AppManager.isAppFrozen(packageName)
+    private val AppInfo.isSystemApp: Boolean
+        get() = applicationInfo?.let { it.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM == android.content.pm.ApplicationInfo.FLAG_SYSTEM } ?: false
+    private val AppInfo.isAppFrozen get() = AppManager.isAppFrozen(packageName, userId)
 
     private suspend fun filterList(
-        appList: List<ApplicationInfo>,
+        appList: List<AppInfo>,
         query: String?
-    ): List<ApplicationInfo> {
+    ): List<AppInfo> {
         val pm = getApplication<HailApp>().packageManager
         return withContext(Dispatchers.Default) {
             return@withContext appList.filter {
@@ -97,19 +97,19 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
                         || (HailData.filterUnfrozenApps && !it.isAppFrozen))
                         // Search apps
                         && ((HailData.nineKeySearch
-                        && (NineKeySearch.search(query, it.packageName, it.loadLabel(pm).toString())))
+                        && (NineKeySearch.search(query, it.packageName, it.name.toString())))
                         || FuzzySearch.search(it.packageName, query)
-                        || FuzzySearch.search(it.loadLabel(pm).toString(), query)
-                        || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
+                        || FuzzySearch.search(it.name.toString(), query)
+                        || PinyinSearch.searchPinyinAll(it.name.toString(), query))
             }.run {
                 when (HailData.sortBy) {
                     HailData.SORT_INSTALL -> sortedBy {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
+                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName, userId = it.userId)
                             ?.firstInstallTime ?: 0
                     }
 
                     HailData.SORT_UPDATE -> sortedByDescending {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.lastUpdateTime ?: 0
+                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName, userId = it.userId)?.lastUpdateTime ?: 0
                     }
 
                     else -> sortedWith(NameComparator)

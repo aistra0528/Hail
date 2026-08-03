@@ -7,24 +7,25 @@ import android.widget.CompoundButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ItemAppsBinding
 import com.aistra.hail.utils.AppIconCache
-import com.aistra.hail.utils.HPackages
 import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.Job
 
-class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
+class AppsAdapter : ListAdapter<AppInfo, AppsAdapter.ViewHolder>(DIFF) {
 
     companion object {
-        val DIFF = object : DiffUtil.ItemCallback<ApplicationInfo>() {
+        val DIFF = object : DiffUtil.ItemCallback<AppInfo>() {
             override fun areItemsTheSame(
-                oldItem: ApplicationInfo, newItem: ApplicationInfo
-            ): Boolean = oldItem.packageName == newItem.packageName
+                oldItem: AppInfo, newItem: AppInfo
+            ): Boolean = oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: ApplicationInfo, newItem: ApplicationInfo): Boolean =
-                oldItem.flags and ApplicationInfo.FLAG_INSTALLED == newItem.flags and ApplicationInfo.FLAG_INSTALLED
+            override fun areContentsTheSame(oldItem: AppInfo, newItem: AppInfo): Boolean =
+                oldItem.applicationInfo?.flags?.and(ApplicationInfo.FLAG_INSTALLED) ==
+                        newItem.applicationInfo?.flags?.and(ApplicationInfo.FLAG_INSTALLED)
         }
     }
 
@@ -46,7 +47,7 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
     }
 
     inner class ViewHolder(private val binding: ItemAppsBinding) : RecyclerView.ViewHolder(binding.root) {
-        lateinit var info: ApplicationInfo
+        lateinit var info: AppInfo
         private val pkg get() = info.packageName
 
         /**
@@ -60,25 +61,28 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
                 isLongClickable = true
             }
             binding.appStar.setOnCheckedChangeListener { button, isChecked ->
-                if (!updating) onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, pkg)
+                if (!updating) onItemCheckedChangeListener.onItemCheckedChange(button, isChecked, info)
             }
         }
 
-        fun bindInfo(info: ApplicationInfo) {
+        fun bindInfo(info: AppInfo) {
             updating = true
             this.info = info
-            val frozen = AppManager.isAppFrozen(pkg)
+            val appInfo = info.applicationInfo
+            val frozen = AppManager.isAppFrozen(pkg, info.userId)
 
             binding.appIcon.apply {
-                loadIconJob = AppIconCache.loadIconBitmapAsync(
-                    context, info, HPackages.myUserId, this, HailData.grayscaleIcon && frozen
-                )
+                appInfo?.let {
+                    loadIconJob = AppIconCache.loadIconBitmapAsync(
+                        context, it, info.userId, this, HailData.grayscaleIcon && frozen
+                    )
+                } ?: setImageDrawable(context.packageManager.defaultActivityIcon)
             }
             binding.appName.apply {
-                val name = info.loadLabel(context.packageManager)
+                val name = info.name
                 text = if (!HailData.grayscaleIcon && frozen) "❄️$name" else name
                 isEnabled = !HailData.grayscaleIcon || !frozen
-                if (HPackages.isAppUninstalled(pkg)) setTextColor(
+                if (com.aistra.hail.utils.HPackages.isAppUninstalled(pkg, info.userId)) setTextColor(
                     MaterialColors.getColor(
                         this, androidx.appcompat.R.attr.colorError
                     )
@@ -86,10 +90,10 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
                 else setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodyMedium)
             }
             binding.appDesc.apply {
-                text = pkg
+                text = if (info.userId == com.aistra.hail.utils.HPackages.myUserId) pkg else "$pkg (${info.userId})"
                 isEnabled = !HailData.grayscaleIcon || !frozen
             }
-            binding.appStar.isChecked = HailData.isChecked(pkg)
+            binding.appStar.isChecked = HailData.isChecked(pkg, info.userId)
             updating = false
         }
     }
@@ -99,6 +103,6 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
     }
 
     interface OnItemCheckedChangeListener {
-        fun onItemCheckedChange(buttonView: CompoundButton, isChecked: Boolean, packageName: String)
+        fun onItemCheckedChange(buttonView: CompoundButton, isChecked: Boolean, info: AppInfo)
     }
 }

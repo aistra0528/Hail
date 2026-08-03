@@ -35,6 +35,7 @@ import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HShortcuts
 import com.aistra.hail.utils.HTarget
 import com.aistra.hail.utils.HUI
+import com.aistra.hail.widgets.HailFolderWidgetStore
 import com.aistra.hail.work.HWork.setAutoFreeze
 
 class ApiActivity : ComponentActivity() {
@@ -119,7 +120,7 @@ class ApiActivity : ComponentActivity() {
     ) {
         Column {
             Text(
-                text = HPackages.getApplicationInfoOrNull(pkg)?.loadLabel(packageManager)?.toString() ?: pkg,
+                text = HPackages.getApplicationInfoOrNull(pkg, userId = requireUserId)?.loadLabel(packageManager)?.toString() ?: pkg,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(R.dimen.padding_medium),
                     vertical = dimensionResource(R.dimen.padding_small)
@@ -132,7 +133,7 @@ class ApiActivity : ComponentActivity() {
             ClickableItem(
                 icon = Icons.Rounded.AcUnit, title = R.string.action_freeze
             ) {
-                if (!HailData.isChecked(pkg)) HailData.addCheckedApp(pkg)
+                if (!HailData.isChecked(pkg, requireUserId)) HailData.addCheckedApp(pkg, userId = requireUserId)
                 setAppFrozen(pkg, true)
             }
             ClickableItem(
@@ -177,8 +178,16 @@ class ApiActivity : ComponentActivity() {
                 else "android.intent.extra.PACKAGE_NAME"
             )
         }?.also {
-            HPackages.getApplicationInfoOrNull(it) ?: throw NameNotFoundException(getString(R.string.app_not_installed))
+            HPackages.getApplicationInfoOrNull(it, userId = requireUserId)
+                ?: throw NameNotFoundException(getString(R.string.app_not_installed))
         } ?: throw IllegalArgumentException("Package must not be null")
+
+    private val requireUserId: Int
+        get() = intent.run {
+            if (action == Intent.ACTION_VIEW) data?.getQueryParameter(HailData.KEY_USER)?.toIntOrNull()
+            else if (hasExtra(HailData.KEY_USER)) getIntExtra(HailData.KEY_USER, HPackages.myUserId)
+            else null
+        } ?: HPackages.myUserId
 
     private val requireTagId: Int
         get() = intent.run {
@@ -191,27 +200,39 @@ class ApiActivity : ComponentActivity() {
 
     private fun launchApp(pkg: String, tagId: Int? = null) {
         if (tagId != null) setListFrozen(false, HailData.checkedList.filter { tagId in it.tagIdList })
-        if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false)) {
+        val userId = requireUserId
+        if (AppManager.isAppFrozen(pkg, userId) && AppManager.setAppFrozen(pkg, false, userId)) {
             app.setAutoFreezeService()
+            HailFolderWidgetStore.updateAll(this)
         }
-        packageManager.getLaunchIntentForPackage(pkg)?.let {
+        if (userId == HPackages.myUserId) {
+            packageManager.getLaunchIntentForPackage(pkg)?.let {
+                HShortcuts.addDynamicShortcut(pkg)
+                startActivity(it)
+            } ?: throw ActivityNotFoundException(getString(R.string.activity_not_found))
+        } else {
+            val launcher = getSystemService(android.content.pm.LauncherApps::class.java)
+            val user = HPackages.userHandle(userId)
+            val activityInfo = launcher.getActivityList(pkg, user).firstOrNull()
+                ?: throw ActivityNotFoundException(getString(R.string.activity_not_found))
             HShortcuts.addDynamicShortcut(pkg)
-            startActivity(it)
-        } ?: throw ActivityNotFoundException(getString(R.string.activity_not_found))
+            launcher.startMainActivity(activityInfo.componentName, user, null, null)
+        }
     }
 
     private fun setAppFrozen(pkg: String, frozen: Boolean) = when {
-        frozen && !HailData.isChecked(pkg) -> throw SecurityException("Package not checked")
-        AppManager.isAppFrozen(pkg) != frozen && !AppManager.setAppFrozen(
-            pkg, frozen
+        frozen && !HailData.isChecked(pkg, requireUserId) -> throw SecurityException("Package not checked")
+        AppManager.isAppFrozen(pkg, requireUserId) != frozen && !AppManager.setAppFrozen(
+            pkg, frozen, requireUserId
         ) -> throw IllegalStateException(getString(R.string.permission_denied))
 
         else -> {
             HUI.showToast(
                 if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                HPackages.getApplicationInfoOrNull(pkg)?.loadLabel(packageManager) ?: pkg
+                HPackages.getApplicationInfoOrNull(pkg, userId = requireUserId)?.loadLabel(packageManager) ?: pkg
             )
             app.setAutoFreezeService()
+            HailFolderWidgetStore.updateAll(this)
         }
     }
 
@@ -219,7 +240,7 @@ class ApiActivity : ComponentActivity() {
         frozen: Boolean, list: List<AppInfo> = HailData.checkedList, skipWhitelisted: Boolean = false
     ) {
         val filtered =
-            list.filter { AppManager.isAppFrozen(it.packageName) != frozen && !(skipWhitelisted && it.whitelisted) }
+            list.filter { AppManager.isAppFrozen(it.packageName, it.userId) != frozen && !(skipWhitelisted && it.whitelisted) }
         when (val result = AppManager.setListFrozen(frozen, *filtered.toTypedArray())) {
             null -> throw IllegalStateException(getString(R.string.permission_denied))
             else -> {
@@ -227,6 +248,7 @@ class ApiActivity : ComponentActivity() {
                     if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, result
                 )
                 app.setAutoFreezeService()
+                HailFolderWidgetStore.updateAll(this)
             }
         }
     }
