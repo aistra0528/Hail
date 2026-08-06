@@ -16,6 +16,7 @@ import com.aistra.hail.HailApp.Companion.app
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
+import kotlin.time.Duration.Companion.milliseconds
 
 object HIsland {
     const val PERMISSION_FREEZE_PACKAGE = "com.oasisfeng.island.permission.FREEZE_PACKAGE"
@@ -65,8 +66,7 @@ object HIsland {
             setPackage(ownerApp)
             addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
             putExtra(
-                EXTRA_CALLER_ID,
-                PendingIntent.getActivity(app, 0, Intent(), PendingIntent.FLAG_IMMUTABLE)
+                EXTRA_CALLER_ID, PendingIntent.getActivity(app, 0, Intent(), PendingIntent.FLAG_IMMUTABLE)
             )
         }
         val result = CompletableDeferred<Boolean>()
@@ -82,9 +82,7 @@ object HIsland {
         )
         return runBlocking {
             runCatching {
-                withTimeout(500L) {
-                    result.await()
-                }
+                withTimeout(500.milliseconds) { result.await() }
             }.getOrElse { false }
         }
     }
@@ -94,4 +92,13 @@ object HIsland {
 
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
         HTarget.N && setAppFrozen(packageName, if (suspended) ACTION_SUSPEND else ACTION_UNSUSPEND)
+
+    fun ensureLaunchIntentExists(packageName: String) {
+        // Check every 100ms whether the launch intent for `packageName` exists.
+        // Stay for a maximum of 500ms.
+        for (i in 0..<5) {
+            if (app.packageManager.getLaunchIntentForPackage(packageName) != null) return
+            Thread.sleep(100)
+        }
+    }
 }
