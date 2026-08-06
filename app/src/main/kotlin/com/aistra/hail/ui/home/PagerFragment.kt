@@ -409,6 +409,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false)) {
             updateCurrentList()
         }
+        if (HailData.workingMode == HailData.MODE_ISLAND_HIDE || HailData.workingMode == HailData.MODE_ISLAND_SUSPEND) {
+            HIsland.ensureLaunchIntentExists(packageName)
+        }
         app.packageManager.getLaunchIntentForPackage(packageName)?.let {
             HShortcuts.addDynamicShortcut(packageName)
             startActivity(it)

@@ -94,4 +94,15 @@ object HIsland {
 
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
         HTarget.N && setAppFrozen(packageName, if (suspended) ACTION_SUSPEND else ACTION_UNSUSPEND)
+
+    fun ensureLaunchIntentExists(packageName: String) {
+        // Check every 100ms whether the launch intent for `packageName` exists.
+        // Stay for a maximum of 500ms.
+        for (i in 0..<5){
+            if (app.packageManager.getLaunchIntentForPackage(packageName) !== null) {
+                return
+            }
+            Thread.sleep(100)
+        }
+    }
 }

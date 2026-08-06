@@ -31,6 +31,7 @@ import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.ui.theme.AppTheme
+import com.aistra.hail.utils.HIsland
 import com.aistra.hail.utils.HPackages
 import com.aistra.hail.utils.HShortcuts
 import com.aistra.hail.utils.HTarget
@@ -193,6 +194,9 @@ class ApiActivity : ComponentActivity() {
         if (tagId != null) setListFrozen(false, HailData.checkedList.filter { tagId in it.tagIdList })
         if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false)) {
             app.setAutoFreezeService()
+        }
+        if (HailData.workingMode == HailData.MODE_ISLAND_HIDE || HailData.workingMode == HailData.MODE_ISLAND_SUSPEND) {
+            HIsland.ensureLaunchIntentExists(packageName)
         }
         packageManager.getLaunchIntentForPackage(pkg)?.let {
             HShortcuts.addDynamicShortcut(pkg)
