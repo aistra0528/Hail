@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -49,20 +48,6 @@ android {
             )
         }
     }
-    applicationVariants.configureEach {
-        outputs.configureEach {
-            (this as? com.android.build.gradle.internal.api.ApkVariantOutputImpl)?.outputFileName =
-                "Hail-v$versionName.apk"
-        }
-    }
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
-        }
-    }
-    kotlin {
-        jvmToolchain(21)
-    }
     androidResources {
         generateLocaleConfig = true
         // Do not compress the dex files, so the apk can be imported as a privileged app
@@ -77,6 +62,22 @@ android {
         includeInApk = false
         includeInBundle = false
     }
+}
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach {
+            if (it is com.android.build.api.variant.impl.VariantOutputImpl)
+                it.outputFileName = "Hail-v${it.versionName.get()}.apk"
+        }
+    }
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+kotlin {
+    jvmToolchain(21)
 }
 
 dependencies {
