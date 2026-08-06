@@ -4,6 +4,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 
 object HShell {
+    private fun getCurrentUserId(): Int =
+        execSU("am get-current-user")
+            .second
+            ?.trim()
+            ?.toIntOrNull()
+            ?: 0
+    private val userArg: String
+        get() = "--user ${getCurrentUserId()}"
+    
     fun execute(command: String, root: Boolean): Pair<Int, String?> = runCatching {
         Runtime.getRuntime().exec(if (root) "su" else "sh").run {
             outputStream.use {
@@ -21,25 +30,25 @@ object HShell {
 
     val lockScreen get() = execSU("input keyevent KEYCODE_POWER").first == 0
 
-    fun forceStopApp(packageName: String): Boolean = execSU("am force-stop --user current $packageName").first == 0
+    fun forceStopApp(packageName: String): Boolean = execSU("am force-stop $userArg $packageName").first == 0
 
     fun setAppDisabled(packageName: String, disabled: Boolean): Boolean =
-        execSU("pm ${if (disabled) "disable" else "enable"} --user current $packageName").first == 0
+        execSU("pm ${if (disabled) "disable" else "enable"} $userArg $packageName").first == 0
 
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean =
-        execSU("pm ${if (hidden) "hide" else "unhide"} --user current $packageName").first == 0
+        execSU("pm ${if (hidden) "hide" else "unhide"} $userArg $packageName").first == 0
 
     fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
-        execSU("pm ${if (suspended) "suspend" else "unsuspend"} --user current $packageName").first == 0
+        execSU("pm ${if (suspended) "suspend" else "unsuspend"} $userArg $packageName").first == 0
 
     fun uninstallApp(packageName: String) = execSU(
-        "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall --user current"} $packageName"
+        "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall $userArg"} $packageName"
     ).first == 0
 
-    fun reinstallApp(packageName: String) = execSU("pm install-existing --user current $packageName").first == 0
+    fun reinstallApp(packageName: String) = execSU("pm install-existing $userArg $packageName").first == 0
 
     @RequiresApi(Build.VERSION_CODES.P)
     fun setAppRestricted(packageName: String, restricted: Boolean) = execSU(
-        "appops set --user current $packageName RUN_ANY_IN_BACKGROUND ${if (restricted) "ignore" else "allow"}"
+        "appops set $userArg $packageName RUN_ANY_IN_BACKGROUND ${if (restricted) "ignore" else "allow"}"
     ).first == 0
 }
