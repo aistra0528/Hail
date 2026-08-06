@@ -158,5 +158,5 @@
     <string name="follow_system">Як в системі</string>
     <string name="theme_light">Світла</string>
     <string name="theme_dark">Темна</string>
-    <string name="xposed_description">Автоматично розморожувати призупинені застосунки для застосунків з обмеженою областю дії</string>
+    <string name="xposed_description">Дозволити ізольованим застосункам запускати призупинені застосунки</string>
 </resources>
