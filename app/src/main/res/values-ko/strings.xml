@@ -75,7 +75,7 @@
     <string name="action_continue">계속하기</string>
     <string name="nine_key">T9 검색</string>
     <string name="home_font_size">폰트 크기</string>
-    <string name="fuzzy_search">퍼지 검색</string>
+    <string name="fuzzy_search">퍼지 서치</string>
     <string name="follow_system">시스템에 따름</string>
     <string name="theme_light">밝음</string>
     <string name="theme_dark">어두움</string>
