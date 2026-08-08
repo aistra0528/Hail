@@ -130,6 +130,9 @@
                 android:exported="true"
                 android:label="@string/auto_freeze"
                 android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <property
+                    android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                    android:value="auto_freeze"/>
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
