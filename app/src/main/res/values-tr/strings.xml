@@ -150,7 +150,7 @@
     <string name="mode_su_stop">Root - Durdurmaya Zorla</string>
     <string name="action_reinstall">Yeniden yükle</string>
     <string name="fuzzy_search">Yaklaşık Arama</string>
-    <string name="xposed_description">Kapsam dahilindeki uygulamalar için askıya alınan uygulamayı otomatik olarak çöz</string>
+    <string name="xposed_description">Kapsam dahilindeki uygulamaların askıya alınan uygulamaları başlatmasına izin ver</string>
     <string name="app_theme">Uygulama teması</string>
     <string name="follow_system">Sistemi takip et</string>
     <string name="theme_light">Açık</string>
