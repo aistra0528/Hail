@@ -220,6 +220,92 @@ or use following `schema`:
 
 - `hail://lock_freeze`
 
+## Configuration Backup and Restore
+
+Hail can back up and restore its configuration from a `.hail` backup file. This allows your Hail configuration to be transferred to another device or restored after reinstalling Hail.
+
+The configuration backup includes:
+
+- Hail's working mode.
+- Hail preferences and settings.
+- The list of applications configured in Hail.
+- Application settings such as pinned and whitelisted state.
+- Application tag assignments.
+- The tags themselves.
+
+The backup does not contain the current frozen/unfrozen state of applications. Hail will apply the restored configuration to the device when the restore is completed.
+
+#### Save Configuration
+
+Select **Settings → Save configuration** to create a backup.
+
+Hail saves the configuration to a `.hail` file. The default filename contains the device name and the date and time the backup was created.
+
+For example:
+
+`My Phone--2026-08-14--13-30.hail`
+
+The Android file picker allows you to choose where the backup is stored.
+
+#### Restore Configuration
+
+Select **Settings → Restore configuration** and choose a `.hail` backup file.
+
+Before restoring, Hail validates the backup and displays a confirmation screen showing:
+
+- Device name from the backup.
+- Backup creation date and time.
+- Hail version used to create the backup.
+- Android SDK version used to create the backup.
+- Working mode.
+- Number of applications.
+- Number of tags.
+
+Hail also warns when the backup was created with a different Hail version or Android version.
+
+A restore replaces the current Hail configuration with the configuration contained in the backup. This includes the working mode, preferences, applications, and tags.
+
+If the backup changes the working mode while applications are currently frozen, Hail displays an additional warning before allowing the restore to proceed.
+
+#### Backup Validation
+
+Hail validates the backup before any configuration is restored. Invalid backups are rejected rather than being applied.
+
+Validation includes:
+
+- Backup format and version.
+- Configuration version compatibility.
+- Working mode validity.
+- Preferences JSON structure.
+- Supported preference types and values.
+- Required preference values.
+- Application count.
+- Application package names.
+- Duplicate application package names.
+- Application `pinned` and `whitelisted` values.
+- Application tag structure.
+- Invalid application tag IDs.
+- References to nonexistent tags.
+- Legacy application tag data.
+- Tag count.
+- Required tag fields.
+- Tag ID validity.
+- Duplicate tag IDs.
+
+The backup archive itself is also checked for structural problems, including missing or duplicate archive entries and entries that exceed the permitted size.
+
+If validation fails, Hail displays the specific validation errors and does not restore the configuration.
+
+#### Reset Configuration
+
+Select **Settings → Reset configuration** to remove Hail's saved configuration and return it to its initial state.
+
+Reset is useful before restoring a backup when you want to explicitly start from a clean Hail configuration.
+
+Resetting the configuration does not restore or preserve the configuration currently stored in Hail. If you may need the current configuration later, create a backup before resetting.
+
+After resetting, a previously created `.hail` backup can be restored using **Settings → Restore configuration**.
+
 ## Help Translate
 
 To translate Hail into your language, or to improve an existing translation,
