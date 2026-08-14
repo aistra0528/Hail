@@ -23,7 +23,9 @@ object HailData {
     const val URL_LIBERAPAY = "https://liberapay.com/aistra0528"
     const val URL_PAYPAL = "https://www.paypal.me/aistra0528"
     const val URL_TRANSLATE = "https://hosted.weblate.org/engage/hail/"
+
     const val VERSION = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+
     private const val KEY_ID = "id"
     const val KEY_TAG = "tag"
     private const val KEY_TAGS = "tags"
@@ -31,24 +33,29 @@ object HailData {
     private const val KEY_WHITELISTED = "whitelisted"
     const val KEY_PACKAGE = "package"
     const val KEY_FROZEN = "frozen"
+
     private const val SORT_BY = "sort_by"
     const val SORT_NAME = "name"
     const val SORT_INSTALL = "install"
     const val SORT_UPDATE = "update"
+
     const val FILTER_USER_APPS = "filter_user_apps"
     const val FILTER_SYSTEM_APPS = "filter_system_apps"
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
     const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
+
     const val OWNER = "owner_"
     const val DHIZUKU = "dhizuku_"
     const val SU = "su_"
     const val SHIZUKU = "shizuku_"
     const val ISLAND = "island_"
     const val PRIVAPP = "privapp_"
+
     const val STOP = "stop"
     const val DISABLE = "disable"
     const val HIDE = "hide"
     const val SUSPEND = "suspend"
+
     const val WORKING_MODE = "working_mode"
     const val MODE_DEFAULT = "default"
     const val MODE_SHIZUKU_STOP = SHIZUKU + STOP
@@ -67,6 +74,7 @@ object HailData {
     const val MODE_ISLAND_SUSPEND = ISLAND + SUSPEND
     const val MODE_PRIVAPP_STOP = PRIVAPP + STOP
     const val MODE_PRIVAPP_DISABLE = PRIVAPP + DISABLE
+
     val WORKING_MODE_VALUES = listOf(
         MODE_DEFAULT,
         MODE_SHIZUKU_STOP,
@@ -86,12 +94,14 @@ object HailData {
         MODE_PRIVAPP_STOP,
         MODE_PRIVAPP_DISABLE
     )
+
     const val BIOMETRIC_LOGIN = "biometric_login"
     const val APP_THEME = "app_theme"
     const val FOLLOW_SYSTEM = "follow_system"
     const val THEME_LIGHT = "theme_light"
     const val THEME_DARK = "theme_dark"
     val APP_THEME_VALUES = listOf(FOLLOW_SYSTEM, THEME_LIGHT, THEME_DARK)
+
     const val ICON_PACK = "icon_pack"
     const val GRAYSCALE_ICON = "grayscale_icon"
     const val COMPACT_ICON = "compact_icon"
@@ -106,21 +116,23 @@ object HailData {
     const val ACTION_FREEZE_NON_WHITELISTED = "freeze_non_whitelisted"
     const val ACTION_LOCK = "lock"
     const val ACTION_LOCK_FREEZE = "lock_freeze"
-    val TILE_ACTION_VALUES =
-        listOf(
-            AUTO_FREEZE_AFTER_LOCK,
-            ACTION_FREEZE_ALL,
-            ACTION_UNFREEZE_ALL,
-            ACTION_FREEZE_NON_WHITELISTED,
-            ACTION_LOCK,
-            ACTION_LOCK_FREEZE
-        )
+
+    val TILE_ACTION_VALUES = listOf(
+        AUTO_FREEZE_AFTER_LOCK,
+        ACTION_FREEZE_ALL,
+        ACTION_UNFREEZE_ALL,
+        ACTION_FREEZE_NON_WHITELISTED,
+        ACTION_LOCK,
+        ACTION_LOCK_FREEZE
+    )
+
     const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     const val AUTO_FREEZE_DELAY = "auto_freeze_delay_f"
     const val SKIP_WHILE_CHARGING = "skip_while_charging"
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
     const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
+
     val DYNAMIC_SHORTCUT_ACTIONS = listOf(
         ACTION_NONE,
         ACTION_FREEZE_ALL,
@@ -131,6 +143,12 @@ object HailData {
     )
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(app)
+
+    /**
+     * Returns all persisted Hail preferences.
+     */
+    fun getPreferences(): Map<String, *> = sp.all
+
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
     val filterUserApps get() = sp.getBoolean(FILTER_USER_APPS, true)
     val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)
@@ -147,9 +165,11 @@ object HailData {
     val fuzzySearch get() = sp.getBoolean(FUZZY_SEARCH, false)
     val nineKeySearch get() = sp.getBoolean(NINE_KEY_SEARCH, false)
     val tileAction get() = sp.getString(TILE_ACTION, AUTO_FREEZE_AFTER_LOCK)!!
+
     var autoFreezeAfterLock
         get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
         set(value) = sp.edit { putBoolean(AUTO_FREEZE_AFTER_LOCK, value) }
+
     val autoFreezeDelay get() = sp.getFloat(AUTO_FREEZE_DELAY, 0f).toLong()
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
@@ -160,78 +180,293 @@ object HailData {
     private val appsPath = "$dir/apps.json"
     private val tagsPath = "$dir/tags.json"
 
-    val checkedList: MutableList<AppInfo> by lazy {
-        mutableListOf<AppInfo>().apply {
-            runCatching {
-                val json = JSONArray(HFiles.read(appsPath))
-                for (i in 0 until json.length()) {
-                    add(with(json.getJSONObject(i)) {
-                        AppInfo(
-                            packageName = getString(KEY_PACKAGE),
-                            pinned = optBoolean(KEY_PINNED),
-                            whitelisted = optBoolean(KEY_WHITELISTED),
-                            tagIdList = optJSONArray(KEY_TAGS)?.let {
-                                MutableList(it.length()) { index -> it.getInt(index) }
-                            } ?: mutableListOf(optInt(KEY_TAG))
-                        )
-                    })
+    private fun writeConfiguration(
+        preferences: JSONObject,
+        apps: ByteArray,
+        tags: ByteArray
+    ) {
+        if (!HFiles.exists(dir)) {
+            HFiles.createDirectories(dir)
+        }
+
+        val preferencesEditor = sp.edit()
+
+        preferencesEditor.clear()
+
+        preferences.keys().forEach { key ->
+            val preference = preferences.getJSONObject(key)
+
+            when (preference.getString("type")) {
+                "string" ->
+                    preferencesEditor.putString(
+                        key,
+                        preference.getString("value")
+                    )
+
+                "boolean" ->
+                    preferencesEditor.putBoolean(
+                        key,
+                        preference.getBoolean("value")
+                    )
+
+                "int" ->
+                    preferencesEditor.putInt(
+                        key,
+                        preference.getInt("value")
+                    )
+
+                "long" ->
+                    preferencesEditor.putLong(
+                        key,
+                        preference.getLong("value")
+                    )
+
+                "float" ->
+                    preferencesEditor.putFloat(
+                        key,
+                        preference.getDouble("value").toFloat()
+                    )
+
+                "string_set" -> {
+                    val values = preference.getJSONArray("value")
+
+                    preferencesEditor.putStringSet(
+                        key,
+                        buildSet {
+                            for (i in 0 until values.length()) {
+                                add(values.getString(i))
+                            }
+                        }
+                    )
                 }
+
+                "null" -> Unit
+
+                else -> throw IllegalArgumentException(
+                    "Unsupported preference type for '$key'"
+                )
+            }
+        }
+
+        if (!preferencesEditor.commit()) {
+            throw IllegalStateException(
+                "Unable to save restored preferences"
+            )
+        }
+
+        if (!HFiles.write(
+                appsPath,
+                apps.toString(Charsets.UTF_8)
+            )
+        ) {
+            throw IllegalStateException(
+                "Unable to save restored application configuration"
+            )
+        }
+
+        if (!HFiles.write(
+                tagsPath,
+                tags.toString(Charsets.UTF_8)
+            )
+        ) {
+            throw IllegalStateException(
+                "Unable to save restored tag configuration"
+            )
+        }
+
+        reload()
+    }
+
+    fun restoreConfiguration(
+        preferences: JSONObject,
+        apps: ByteArray,
+        tags: ByteArray
+    ) {
+        writeConfiguration(
+            preferences = preferences,
+            apps = apps,
+            tags = tags
+        )
+    }
+
+    /**
+     * Returns the persisted application configuration.
+     */
+    fun getAppsJson(): ByteArray {
+        val json = HFiles.read(appsPath) ?: "[]"
+        return json.toByteArray(Charsets.UTF_8)
+    }
+
+    /**
+     * Returns the persisted tag configuration.
+     */
+    fun getTagsJson(): ByteArray {
+        val json = HFiles.read(tagsPath)
+            ?: JSONArray()
+                .put(
+                    JSONObject()
+                        .put(KEY_TAG, app.getString(R.string.label_default))
+                        .put(KEY_ID, 0)
+                )
+                .toString()
+
+        return json.toByteArray(Charsets.UTF_8)
+    }
+
+    /**
+     * Stores the applications configured for Hail.
+     */
+    val checkedList: MutableList<AppInfo> = mutableListOf()
+
+    /**
+     * Stores Hail's tags in their persisted display order.
+     */
+    val tags: MutableList<Pair<String, Int>> = mutableListOf()
+
+    init {
+        reload()
+    }
+
+    /**
+     * Reloads Hail's persisted application and tag configuration.
+     *
+     * This only reloads Hail's own configuration. It does not inspect or
+     * modify the actual package state of any application.
+     */
+    fun reload() {
+        loadApps()
+        loadTags()
+    }
+
+    /**
+     * Resets Hail's persisted configuration to its initial state.
+     *
+     * This clears Hail's configured application list, restores the single
+     * Default tag, and resets all persisted preferences to their defaults.
+     *
+     * This method does not modify the actual state of any Android package.
+     */
+    fun resetConfiguration() {
+        sp.edit { clear() }
+
+        checkedList.clear()
+
+        tags.clear()
+        tags.add(
+            app.getString(R.string.label_default) to 0
+        )
+
+        saveApps()
+        saveTags()
+    }
+
+    private fun loadApps() {
+        checkedList.clear()
+
+        runCatching {
+            val json = JSONArray(HFiles.read(appsPath))
+            for (i in 0 until json.length()) {
+                checkedList.add(with(json.getJSONObject(i)) {
+                    AppInfo(
+                        packageName = getString(KEY_PACKAGE),
+                        pinned = optBoolean(KEY_PINNED),
+                        whitelisted = optBoolean(KEY_WHITELISTED),
+                        tagIdList = optJSONArray(KEY_TAGS)?.let {
+                            MutableList(it.length()) { index -> it.getInt(index) }
+                        } ?: mutableListOf(optInt(KEY_TAG))
+                    )
+                })
             }
         }
     }
 
-    fun isChecked(packageName: String): Boolean = checkedList.any { it.packageName == packageName }
+    private fun loadTags() {
+        tags.clear()
 
-    fun addCheckedApp(packageName: String, tagId: Int = 0, saveApps: Boolean = true) {
-        checkedList.add(AppInfo(packageName, tagIdList = mutableListOf(tagId)))
+        runCatching {
+            val json = JSONArray(HFiles.read(tagsPath))
+            for (i in 0 until json.length()) {
+                tags.add(
+                    with(json.getJSONObject(i)) {
+                        getString(KEY_TAG) to getInt(KEY_ID)
+                    }
+                )
+            }
+        }.onFailure {
+            tags.add(app.getString(R.string.label_default) to 0)
+        }
+    }
+
+    fun isChecked(packageName: String): Boolean =
+        checkedList.any { it.packageName == packageName }
+
+    fun addCheckedApp(
+        packageName: String,
+        tagId: Int = 0,
+        saveApps: Boolean = true
+    ) {
+        checkedList.add(
+            AppInfo(
+                packageName,
+                tagIdList = mutableListOf(tagId)
+            )
+        )
+
         if (saveApps) saveApps()
     }
 
-    fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
+    fun removeCheckedApp(
+        packageName: String,
+        saveApps: Boolean = true
+    ) {
         checkedList.removeAll { it.packageName == packageName }
+
         if (saveApps) saveApps()
     }
 
     fun saveApps() {
         if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
-        HFiles.write(appsPath, JSONArray().run {
-            checkedList.forEach {
-                put(
-                    JSONObject()
-                        .put(KEY_PACKAGE, it.packageName)
-                        .put(KEY_PINNED, it.pinned)
-                        .put(KEY_WHITELISTED, it.whitelisted)
-                        .put(KEY_TAGS, JSONArray(it.tagIdList))
-                )
-            }
-            toString()
-        })
-    }
 
-    val tags: MutableList<Pair<String, Int>> by lazy {
-        mutableListOf<Pair<String, Int>>().apply {
-            runCatching {
-                val json = JSONArray(HFiles.read(tagsPath))
-                for (i in 0 until json.length()) {
-                    add(with(json.getJSONObject(i)) { getString(KEY_TAG) to getInt(KEY_ID) })
+        HFiles.write(
+            appsPath,
+            JSONArray().run {
+                checkedList.forEach {
+                    put(
+                        JSONObject()
+                            .put(KEY_PACKAGE, it.packageName)
+                            .put(KEY_PINNED, it.pinned)
+                            .put(KEY_WHITELISTED, it.whitelisted)
+                            .put(KEY_TAGS, JSONArray(it.tagIdList))
+                    )
                 }
-            }.onFailure {
-                add(app.getString(R.string.label_default) to 0)
+                toString()
             }
-        }
+        )
     }
 
     fun saveTags() {
         if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
-        HFiles.write(tagsPath, JSONArray().run {
-            tags.forEach {
-                put(JSONObject().put(KEY_TAG, it.first).put(KEY_ID, it.second))
+
+        HFiles.write(
+            tagsPath,
+            JSONArray().run {
+                tags.forEach {
+                    put(
+                        JSONObject()
+                            .put(KEY_TAG, it.first)
+                            .put(KEY_ID, it.second)
+                    )
+                }
+                toString()
             }
-            toString()
-        })
+        )
     }
 
-    fun changeAppsSort(sort: String) = sp.edit { putString(SORT_BY, sort) }
+    fun changeAppsSort(sort: String) =
+        sp.edit { putString(SORT_BY, sort) }
 
-    fun changeAppsFilter(filter: String, enabled: Boolean) = sp.edit { putBoolean(filter, enabled) }
+    fun changeAppsFilter(filter: String, enabled: Boolean) =
+        sp.edit { putBoolean(filter, enabled) }
+
+
 }
