@@ -15,14 +15,18 @@ android {
     }.standardOutput.asText.get().trim()
 
     namespace = "com.aistra.hail"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 36
-        versionCode = 34
-        versionName = "1.10.0"
+        versionCode = 37
+        versionName = "1.10.3"
+        ndk {
+            val abi = project.findProperty("abi") as String?
+            if (abi != null) abiFilters += abi
+        }
     }
 
     buildTypes {
@@ -33,7 +37,6 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            if (!commitSubject.startsWith("[release]")) versionNameSuffix = "-g$commitHash"
             signingConfig = if (signingProps.exists()) {
                 val props = `java.util`.Properties().apply { load(signingProps.reader()) }
                 signingConfigs.create("release") {
@@ -61,14 +64,6 @@ android {
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false
-    }
-}
-androidComponents {
-    onVariants { variant ->
-        variant.outputs.forEach {
-            if (it is com.android.build.api.variant.impl.VariantOutputImpl)
-                it.outputFileName = "Hail-v${it.versionName.get()}.apk"
-        }
     }
 }
 java {

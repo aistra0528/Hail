@@ -27,12 +27,7 @@ object HSystem {
     @Suppress("SameParameterValue")
     private fun checkOp(context: Context, op: String): Boolean {
         val opsManager = context.getSystemService<AppOpsManager>()!!
-        val result = if (HTarget.Q) {
-            opsManager.unsafeCheckOp(op, android.os.Process.myUid(), context.packageName)
-        } else {
-            @Suppress("DEPRECATION")
-            opsManager.checkOp(op, android.os.Process.myUid(), context.packageName)
-        }
+        val result = opsManager.checkOpNoThrow(op, android.os.Process.myUid(), context.packageName)
         return result == AppOpsManager.MODE_ALLOWED
     }
 

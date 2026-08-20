@@ -90,7 +90,8 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
         val pm = getApplication<HailApp>().packageManager
         return withContext(Dispatchers.Default) {
             return@withContext appList.filter {
-                ((HailData.filterUserApps && !it.isSystemApp)
+                (HailData.filterAllApps
+                        || (HailData.filterUserApps && !it.isSystemApp)
                         || (HailData.filterSystemApps && it.isSystemApp))
 
                         && ((HailData.filterFrozenApps && it.isAppFrozen)

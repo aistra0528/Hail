@@ -37,6 +37,7 @@ object HailData {
     const val SORT_UPDATE = "update"
     const val FILTER_USER_APPS = "filter_user_apps"
     const val FILTER_SYSTEM_APPS = "filter_system_apps"
+    const val FILTER_ALL_APPS = "filter_all_apps"
     const val FILTER_FROZEN_APPS = "filter_frozen_apps"
     const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
     const val OWNER = "owner_"
@@ -134,6 +135,7 @@ object HailData {
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
     val filterUserApps get() = sp.getBoolean(FILTER_USER_APPS, true)
     val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)
+    val filterAllApps get() = sp.getBoolean(FILTER_ALL_APPS, true)
     val filterFrozenApps get() = sp.getBoolean(FILTER_FROZEN_APPS, true)
     val filterUnfrozenApps get() = sp.getBoolean(FILTER_UNFROZEN_APPS, true)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)!!

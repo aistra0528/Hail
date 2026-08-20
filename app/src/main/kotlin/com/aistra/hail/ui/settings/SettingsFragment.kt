@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.fragment.findNavController
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -560,7 +561,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
         when (item.itemId) {
             R.id.action_terminal -> showTerminalDialog()
             R.id.action_remove_owner -> (requireActivity() as MainActivity).ownerRemoveDialog()
-            R.id.action_help -> HUI.openLink(HailData.URL_README)
+            R.id.action_help -> findNavController().navigate(R.id.nav_about)
         }
         return false
     }

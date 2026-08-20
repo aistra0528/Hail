@@ -14,7 +14,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_help"
-        android:icon="@drawable/ic_outline_help"
-        android:title="@string/action_help"
+        android:icon="@drawable/ic_outline_info"
+        android:title="@string/title_about"
         app:showAsAction="always" />
 </menu>

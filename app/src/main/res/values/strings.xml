@@ -63,6 +63,7 @@
     <string name="tap_to_select">Tap to multiselect</string>
     <string name="filter_by">Filter</string>
     <string name="filter_user_apps">User</string>
+    <string name="filter_all_apps">All</string>
     <string name="filter_system_apps">System</string>
     <string name="filter_frozen_apps">Frozen</string>
     <string name="filter_unfrozen_apps">Unfrozen</string>

@@ -9,6 +9,12 @@
             app:showAsAction="always|collapseActionView"
             tools:ignore="AlwaysShowAction"/>
     <item
+            android:id="@+id/action_select_all"
+            android:icon="@drawable/ic_outline_select_all"
+            android:title="@string/action_select_all"
+            app:showAsAction="always"
+            tools:ignore="AlwaysShowAction"/>
+    <item
             android:icon="@drawable/ic_outline_filter"
             android:title="@string/filter_by"
             app:showAsAction="ifRoom">
@@ -16,6 +22,9 @@
             <group
                     android:id="@+id/group_filter_apps"
                     android:checkableBehavior="single">
+                <item
+                        android:id="@+id/filter_all_apps"
+                        android:title="@string/filter_all_apps"/>
                 <item
                         android:id="@+id/filter_user_apps"
                         android:title="@string/filter_user_apps"/>

@@ -233,7 +233,9 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
             }
         ).isChecked = true
         menu.findItem(
-            if (HailData.filterSystemApps) R.id.filter_system_apps else R.id.filter_user_apps
+            if (HailData.filterAllApps) R.id.filter_all_apps
+            else if (HailData.filterSystemApps) R.id.filter_system_apps
+            else R.id.filter_user_apps
         ).isChecked = true
         menu.findItem(R.id.filter_frozen_apps).isChecked = HailData.filterFrozenApps
         menu.findItem(R.id.filter_unfrozen_apps).isChecked = HailData.filterUnfrozenApps
@@ -241,14 +243,24 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_select_all -> {
+                val displayedApps = model.displayApps.value.orEmpty()
+                val allChecked = displayedApps.isNotEmpty() && displayedApps.all { HailData.isChecked(it.packageName) }
+                if (allChecked) {
+                    displayedApps.forEach { HailData.removeCheckedApp(it.packageName, false) }
+                } else {
+                    displayedApps.forEach { HailData.addCheckedApp(it.packageName, 0, false) }
+                }
+                HailData.saveApps()
+                appsAdapter.notifyDataSetChanged()
+                return true
+            }
             R.id.sort_by_name -> changeAppsSort(HailData.SORT_NAME, item)
             R.id.sort_by_install -> changeAppsSort(HailData.SORT_INSTALL, item)
             R.id.sort_by_update -> changeAppsSort(HailData.SORT_UPDATE, item)
             R.id.filter_user_apps -> changeAppsFilter(HailData.FILTER_USER_APPS, item)
-            R.id.filter_system_apps -> MaterialAlertDialogBuilder(activity).setMessage(R.string.freeze_system_app)
-                .setPositiveButton(R.string.action_continue) { _, _ ->
-                    changeAppsFilter(HailData.FILTER_SYSTEM_APPS, item)
-                }.setNegativeButton(android.R.string.cancel, null).show()
+            R.id.filter_system_apps -> changeAppsFilter(HailData.FILTER_SYSTEM_APPS, item)
+            R.id.filter_all_apps -> changeAppsFilter(HailData.FILTER_ALL_APPS, item)
 
             R.id.filter_frozen_apps -> changeAppsFilter(HailData.FILTER_FROZEN_APPS, item)
             R.id.filter_unfrozen_apps -> changeAppsFilter(HailData.FILTER_UNFROZEN_APPS, item)
@@ -264,16 +276,25 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
 
     private fun changeAppsFilter(filter: String, item: MenuItem) {
         when (item.itemId) {
+            R.id.filter_all_apps -> {
+                item.isChecked = true
+                HailData.changeAppsFilter(HailData.FILTER_ALL_APPS, true)
+                HailData.changeAppsFilter(HailData.FILTER_USER_APPS, true)
+                HailData.changeAppsFilter(HailData.FILTER_SYSTEM_APPS, true)
+            }
+
             R.id.filter_user_apps -> {
                 item.isChecked = true
                 HailData.changeAppsFilter(filter, item.isChecked)
                 HailData.changeAppsFilter(HailData.FILTER_SYSTEM_APPS, false)
+                HailData.changeAppsFilter(HailData.FILTER_ALL_APPS, false)
             }
 
             R.id.filter_system_apps -> {
                 item.isChecked = true
                 HailData.changeAppsFilter(filter, item.isChecked)
                 HailData.changeAppsFilter(HailData.FILTER_USER_APPS, false)
+                HailData.changeAppsFilter(HailData.FILTER_ALL_APPS, false)
             }
 
             else -> {
