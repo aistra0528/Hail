@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.4] - 2026-08-21
+
+### Added
+- Long-press on multiselect button to select all/deselect all apps in current tab
+- Back press in multiselect mode now deselects all and exits multiselect
+- Visual feedback: icon changes from select_all to checkmark with color tint
+- Self-protection: Hail app cannot be selected for freeze/unfreeze operations (visible in list but checkbox disabled)
+
+### Fixed
+- Prevent accidental self-freeze via Select All, API intents, or bulk operations
+
 ## [1.10.3] - 2026-08-18
 
 ### Removed

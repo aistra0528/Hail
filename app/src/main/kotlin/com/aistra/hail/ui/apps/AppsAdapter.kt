@@ -7,6 +7,7 @@ import android.widget.CompoundButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.aistra.hail.BuildConfig
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ItemAppsBinding
@@ -68,6 +69,7 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
             updating = true
             this.info = info
             val frozen = AppManager.isAppFrozen(pkg)
+            val isSelf = pkg == BuildConfig.APPLICATION_ID
 
             binding.appIcon.apply {
                 loadIconJob = AppIconCache.loadIconBitmapAsync(
@@ -89,7 +91,10 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
                 text = pkg
                 isEnabled = !HailData.grayscaleIcon || !frozen
             }
-            binding.appStar.isChecked = HailData.isChecked(pkg)
+            binding.appStar.apply {
+                isEnabled = !isSelf
+                isChecked = if (isSelf) false else HailData.isChecked(pkg)
+            }
             updating = false
         }
     }

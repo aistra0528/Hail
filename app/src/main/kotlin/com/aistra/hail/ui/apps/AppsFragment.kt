@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.aistra.hail.BuildConfig
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
@@ -245,11 +246,12 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
         when (item.itemId) {
             R.id.action_select_all -> {
                 val displayedApps = model.displayApps.value.orEmpty()
-                val allChecked = displayedApps.isNotEmpty() && displayedApps.all { HailData.isChecked(it.packageName) }
+                val selfPkg = BuildConfig.APPLICATION_ID
+                val allChecked = displayedApps.isNotEmpty() && displayedApps.all { it.packageName == selfPkg || HailData.isChecked(it.packageName) }
                 if (allChecked) {
-                    displayedApps.forEach { HailData.removeCheckedApp(it.packageName, false) }
+                    displayedApps.forEach { if (it.packageName != selfPkg) HailData.removeCheckedApp(it.packageName, false) }
                 } else {
-                    displayedApps.forEach { HailData.addCheckedApp(it.packageName, 0, false) }
+                    displayedApps.forEach { if (it.packageName != selfPkg) HailData.addCheckedApp(it.packageName, 0, false) }
                 }
                 HailData.saveApps()
                 appsAdapter.notifyDataSetChanged()

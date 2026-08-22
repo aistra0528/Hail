@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/multiselect_button"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:scaleType="center"
+    android:src="@drawable/ic_outline_select_all"
+    android:contentDescription="@string/tap_to_select"
+    android:background="?attr/selectableItemBackgroundBorderless" />

@@ -21,8 +21,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 36
-        versionCode = 37
-        versionName = "1.10.3"
+        versionCode = 38
+        versionName = "1.10.4"
         ndk {
             val abi = project.findProperty("abi") as String?
             if (abi != null) abiFilters += abi
@@ -68,11 +68,11 @@ android {
 }
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(26)
     }
 }
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(26)
 }
 
 dependencies {
@@ -91,7 +91,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.swiperefreshlayout)
-    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.work.runtime)
     implementation(libs.pinyin4j)
     implementation(libs.material)
     implementation(libs.insetter)

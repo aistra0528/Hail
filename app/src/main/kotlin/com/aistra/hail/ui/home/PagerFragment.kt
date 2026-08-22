@@ -5,6 +5,8 @@ import android.provider.Settings
 import android.text.InputType
 import android.view.*
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -58,6 +60,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     private var _binding: FragmentPagerBinding? = null
     private val binding get() = _binding!!
     private lateinit var pagerAdapter: PagerAdapter
+    private var _menu: Menu? = null
+    private val menu get() = _menu!!
     private var multiselect: Boolean
         set(value) {
             (parentFragment as HomeFragment).multiselect = value
@@ -67,6 +71,20 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     private val tabs: TabLayout get() = (parentFragment as HomeFragment).binding.tabs
     private val adapter get() = (parentFragment as HomeFragment).binding.pager.adapter as HomeAdapter
     private val tag: Pair<String, Int> get() = HailData.tags[tabs.selectedTabPosition]
+
+    override fun onAttach(context: android.content.Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (multiselect) {
+                    deselect()
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                }
+            }
+        })
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -280,6 +298,57 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         if (!update) return
         updateCurrentList()
         updateBarTitle()
+        updateMultiselectButton()
+    }
+
+    private fun onMultiselectClick() {
+        multiselect = !multiselect
+        if (multiselect) {
+            updateBarTitle()
+            HUI.showToast(R.string.tap_to_select)
+        } else {
+            deselect()
+        }
+        updateMultiselectButton()
+    }
+
+    private fun onMultiselectLongClick() {
+        val currentList = pagerAdapter.currentList
+        if (currentList.isEmpty()) {
+            HUI.showToast(R.string.no_items_to_select)
+            return
+        }
+
+        val allSelected = selectedList.size == currentList.size &&
+                currentList.all { it in selectedList }
+
+        if (!multiselect || !allSelected) {
+            multiselect = true
+            selectedList.clear()
+            selectedList.addAll(currentList)
+            updateBarTitle()
+            HUI.showToast(getString(R.string.msg_selected, selectedList.size.toString()))
+        } else {
+            deselect()
+        }
+        updateCurrentList()
+        updateMultiselectButton()
+    }
+
+    private fun updateMultiselectButton() {
+        val multiselectItem = menu.findItem(R.id.action_multiselect)
+        val button = multiselectItem?.actionView?.findViewById<ImageView>(R.id.multiselect_button)
+        button?.let {
+            it.setImageResource(if (multiselect) R.drawable.ic_outline_check
+            else R.drawable.ic_outline_select_all)
+            val colorAttr = if (multiselect) androidx.appcompat.R.attr.colorPrimary
+            else com.google.android.material.R.attr.colorOnSurface
+            val color = MaterialColors.getColor(activity.findViewById(R.id.toolbar), colorAttr)
+            it.setColorFilter(color)
+            it.contentDescription = if (multiselect)
+                getString(R.string.msg_selected, selectedList.size.toString())
+            else getString(R.string.tap_to_select)
+        }
     }
 
     private fun onMultiSelect() {
@@ -548,15 +617,6 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_multiselect -> {
-                multiselect = !multiselect
-                item.updateIcon()
-                if (multiselect) {
-                    updateBarTitle()
-                    HUI.showToast(R.string.tap_to_select)
-                } else deselect()
-            }
-
             R.id.action_freeze_current -> setListFrozen(true, pagerAdapter.currentList.filterNot { it.whitelisted })
 
             R.id.action_unfreeze_current -> setListFrozen(false, pagerAdapter.currentList)
@@ -581,6 +641,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     }
 
     override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
+        _menu = menu
         inflater.inflate(R.menu.menu_home, menu)
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         if (HailData.nineKeySearch) {
@@ -600,10 +661,19 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
 
             override fun onQueryTextSubmit(query: String): Boolean = true
         })
-        menu.findItem(R.id.action_multiselect).updateIcon()
+
+        val multiselectItem = menu.findItem(R.id.action_multiselect)
+        val actionView = multiselectItem.actionView
+        val button = actionView?.findViewById<ImageView>(R.id.multiselect_button)
+
+        button?.setOnClickListener { onMultiselectClick() }
+        button?.setOnLongClickListener { onMultiselectLongClick(); true }
+
+        updateMultiselectButton()
     }
 
     override fun onDestroyView() {
+        _menu = null
         pagerAdapter.onDestroy()
         super.onDestroyView()
         _binding = null

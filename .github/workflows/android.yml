@@ -33,7 +33,7 @@ jobs:
           ./gradlew assembleRelease
           echo "filename=$(jq -r '.elements.[0].outputFile' app/build/outputs/apk/release/output-metadata.json)" >> $GITHUB_ENV
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.filename }}
           path: app/build/outputs/apk/release/${{ env.filename }}

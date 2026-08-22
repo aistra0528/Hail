@@ -182,9 +182,13 @@ object HailData {
         }
     }
 
-    fun isChecked(packageName: String): Boolean = checkedList.any { it.packageName == packageName }
+    fun isChecked(packageName: String): Boolean {
+        if (packageName == BuildConfig.APPLICATION_ID) return false
+        return checkedList.any { it.packageName == packageName }
+    }
 
     fun addCheckedApp(packageName: String, tagId: Int = 0, saveApps: Boolean = true) {
+        if (packageName == BuildConfig.APPLICATION_ID) return
         checkedList.add(AppInfo(packageName, tagIdList = mutableListOf(tagId)))
         if (saveApps) saveApps()
     }

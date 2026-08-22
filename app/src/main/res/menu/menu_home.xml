@@ -10,8 +10,7 @@
             tools:ignore="AlwaysShowAction"/>
     <item
             android:id="@+id/action_multiselect"
-            android:icon="@drawable/ic_outline_select_all"
-            android:title="@string/tap_to_select"
+            app:actionLayout="@layout/multiselect_action_view"
             app:showAsAction="always"
             tools:ignore="AlwaysShowAction"/>
     <group android:id="@+id/group_freeze_current">
