@@ -138,7 +138,7 @@
     <string name="mode_su_hide">Root - Hide</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">Skip</string>
-    <string name="xposed_description">Allow scoped apps to launch suspended apps</string>
+    <string name="xposed_description">Automatically unfreeze suspended app for scoped apps</string>
     <string name="mode_island_hide">Island/Insular - Hide</string>
     <string name="mode_island_suspend">Island/Insular - Suspend</string>
     <string name="shizuku_hide_adb">Shizuku is running as adb. To hide apps, please restart Shizuku with root.</string>
@@ -154,4 +154,66 @@
     <string name="follow_system">Follow system</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+
+    <string name="title_configuration">Configuration</string>
+    <string name="action_configuration_reset">Reset</string>
+    <string name="action_configuration_restore">Restore</string>
+    <string name="action_configuration_save">Save</string>
+
+    <string name="msg_configuration_restored">Configuration restored successfully</string>
+
+    <string name="msg_configuration_saved">Configuration backup saved</string>
+    <string name="msg_configuration_save_failed">Unable to save configuration backup</string>
+
+    <string name="msg_configuration_reset_confirm">This will reset all Hail configuration to its initial settings. Android package state will not be changed. Continue?</string>
+    <string name="msg_configuration_reset_success">Hail configuration reset successfully</string>
+
+    <string name="backup_warning_hail_version">This backup was created with a different version of Hail. Some configuration behavior may differ between versions.</string>
+    <string name="backup_warning_android_version">This backup was created on a different Android version. Package-management behavior may differ between Android versions.</string>
+
+    <string name="backup_detail_device">Device: %s</string>
+    <string name="backup_detail_created_utc">Created: %s</string>
+    <string name="backup_detail_created_local">Local: %s</string>
+    <string name="backup_detail_hail_version">Hail version: %s</string>
+    <string name="backup_detail_android_sdk">Android SDK: %d</string>
+    <string name="backup_detail_working_mode">Working mode: %s</string>
+    <string name="backup_detail_applications">Applications: %d</string>
+    <string name="backup_detail_tags">Tags: %d</string>
+
+    <string name="backup_warning">WARNING: %s</string>
+    <string name="msg_configuration_restore_replace">Restoring will replace your current Hail configuration.</string>
+
+    <string name="msg_configuration_backup_unsupported_format">Unsupported backup format: %1$d</string>
+    <string name="msg_configuration_backup_unsupported_configuration_version">Unsupported configuration version: %1$s</string>
+    <string name="msg_configuration_backup_unsupported_working_mode">Unsupported working mode: %1$s</string>
+
+    <string name="msg_configuration_backup_invalid_preferences">Invalid preferences data</string>
+
+    <string name="msg_configuration_backup_application_count_mismatch">Application count mismatch: metadata=%1$d, data=%2$d</string>
+    <string name="msg_configuration_backup_application_missing_package">Application entry %1$d is missing package name</string>
+    <string name="msg_configuration_backup_application_duplicate_package">Duplicate application package: %1$s</string>
+    <string name="msg_configuration_backup_application_invalid_pinned">Application entry %1$d has an invalid pinned value</string>
+    <string name="msg_configuration_backup_application_invalid_whitelisted">Application entry %1$d has an invalid whitelisted value</string>
+    <string name="msg_configuration_backup_application_invalid_tag_id">Application entry %1$d has an invalid tag ID at index %2$d</string>
+    <string name="msg_configuration_backup_application_unknown_tag_id">Application entry %1$d references unknown tag ID %2$d</string>
+    <string name="msg_configuration_backup_application_invalid_legacy_tag_id">Application entry %1$d has an invalid legacy tag ID</string>
+    <string name="msg_configuration_backup_invalid_application_data">Invalid application data</string>
+
+    <string name="msg_configuration_backup_tag_count_mismatch">Tag count mismatch: metadata=%1$d, data=%2$d</string>
+    <string name="msg_configuration_backup_tag_incomplete">Tag entry %1$d is incomplete</string>
+    <string name="msg_configuration_backup_tag_invalid_id">Tag entry %1$d has an invalid ID</string>
+    <string name="msg_configuration_backup_duplicate_tag_id">Duplicate tag ID: %1$d</string>
+    <string name="msg_configuration_backup_invalid_tag_data">Invalid tag data</string>
+
+    <string name="msg_configuration_backup_archive_entry_too_large">Backup archive entry is too large: %1$s (maximum %2$d bytes)</string>
+    <string name="msg_configuration_backup_archive_duplicate_entry">Backup archive contains a duplicate entry: %1$s</string>
+    <string name="msg_configuration_backup_archive_missing_entry">Backup archive is missing required entry: %1$s</string>
+
+    <string name="msg_configuration_backup_unsupported_preference_value">Unsupported value in preference: %1$s</string>
+    <string name="msg_configuration_backup_unsupported_preference_type">Unsupported preference type for %1$s: %2$s</string>
+
+    <string name="msg_configuration_backup_invalid_metadata">The backup contains invalid metadata.</string>
+    <string name="msg_configuration_backup_invalid_preference_entry">Preference \'%s\' has an invalid entry.</string>
+    <string name="msg_configuration_backup_missing_preference_value">Preference \'%s\' is missing its value.</string>
+    <string name="msg_configuration_backup_invalid_preference_value">Preference \'%s\' has an invalid value for type \'%s\'.</string>
 </resources>
