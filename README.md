@@ -54,6 +54,14 @@ background.
 
 2. For rooted devices, `Root` is an alternative. **It is slower.**
 
+In Root mode, Hail starts a cached libsu shell in the background when the app process starts. This moves the root
+authorization delay away from the first freeze or unfreeze action while keeping the UI responsive. The shell is reused
+for all Root operations in that process, including operations on different apps.
+
+If Root mode is not selected, no root shell is started. Switching away from Root mode closes the cached shell. If root
+authorization is denied or the shell exits unexpectedly, the failed shell is discarded and the next Root operation
+attempts to acquire a new one. A new shell is also acquired after Hail is restarted.
+
 | Privilege                                                                                         | Force Stop | Disable | Hide | Suspend | Uninstall/Reinstall (System Apps) |
 |---------------------------------------------------------------------------------------------------|------------|---------|------|---------|-----------------------------------|
 | Root                                                                                              | ✓          | ✓       | ✓    | ✓       | ✓                                 |

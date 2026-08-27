@@ -21,8 +21,8 @@ android {
         applicationId = "com.aistra.hail"
         minSdk = 23
         targetSdk = 36
-        versionCode = 39
-        versionName = "1.11.0"
+        versionCode = 40
+        versionName = "1.11.1"
         ndk {
             val abi = project.findProperty("abi") as String?
             if (abi != null) abiFilters += abi
@@ -103,5 +103,6 @@ dependencies {
     implementation(libs.commons.text)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.hiddenapibypass)
+    implementation(libs.libsu.core)
     compileOnly(libs.libxposed.api)
 }

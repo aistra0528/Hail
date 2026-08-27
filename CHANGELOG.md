@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.1] - 2026-08-27
+
+### Highlights
+- Persistent root shell support for all Root working modes
+
+### Added
+- Faster Root mode startup through cached libsu shell warm-up
+
+### Changed
+- Root shell warm-up runs in the background, so the first freeze or unfreeze no longer waits for shell startup
+- All Root operations reuse one shell while Hail is running, including freeze, unfreeze, and bulk operations
+- Root shell access is released when switching away from Root mode
+- Failed or unexpectedly closed shells are reacquired automatically on the next Root operation
+
 ## [1.11.0] - 2026-08-26
 
 ### Highlights

@@ -4,5 +4,5 @@
   "containerEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN}"
   },
-  "postCreateCommand": "git config --global credential.helper '!f() { printf \"username=oauth2\\npassword=%s\\n\" \"$GH_TOKEN\"; }; f'"
+  "postCreateCommand": "bash .devcontainer/setup-build-environment.sh && git config --global credential.helper '!f() { printf \"username=oauth2\\npassword=%s\\n\" \"$GH_TOKEN\"; }; f'"
 }
