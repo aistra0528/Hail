@@ -61,9 +61,6 @@
     <string name="title_donate">سپاس از شما!</string>
     <string name="donate_wechat">پرداخت وی‌چت</string>
     <string name="donate_wechat_scan">اسکن</string>
-    <string name="donate_bilibili">بیلی‌بیلی</string>
-    <string name="donate_bilibili_msg">مرا در بیلی‌بیلی دنبال کنید.</string>
-    <string name="donate_bilibili_space">فضای بیلی‌بیلی</string>
     <string name="donate_liberapay">لیبراپی</string>
     <string name="donate_paypal">پی‌پل</string>
     <string name="app_not_installed">برنامه نصب نشد</string>
@@ -95,7 +92,6 @@
     <string name="msg_set_owner">دستور زیر را از adb اجرا کنید:
 \n%s</string>
     <string name="donate_alipay">علی‌پی</string>
-    <string name="donate_bilibili_cancel">دست کشیدن</string>
     <string name="synthesize_adaptive_icons">آمیختن آیکون‌های سازگار</string>
     <string name="skip_notifying_app">رد کردن برنامه‌ی دارای نوتیفیکیشن</string>
     <string name="action_terminal">ترمینال</string>

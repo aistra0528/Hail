@@ -51,9 +51,6 @@
     <string name="filter_unfrozen_apps">غیر منجمد</string>
     <string name="donate_wechat">WeChat پے</string>
     <string name="donate_wechat_scan">اسکین کریں</string>
-    <string name="donate_bilibili">bilibili</string>
-    <string name="donate_bilibili_msg">bilibili پر مجھے فالو کریں۔</string>
-    <string name="donate_bilibili_space">میری جگہ</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">اجازت نہیں دی گئی</string>
@@ -114,7 +111,6 @@
     <string name="donate_alipay">علیپے</string>
     <string name="sort_name">نام</string>
     <string name="title_donate">شکریہ!</string>
-    <string name="donate_bilibili_cancel">\@android:string/کینسل</string>
     <string name="msg_unfreeze">غیر منجمد: %s</string>
     <string name="app_not_installed">ایپ انسٹال نہیں ہے</string>
     <string name="operation_failed">آپریشن ناکام ہو گیا: %s</string>

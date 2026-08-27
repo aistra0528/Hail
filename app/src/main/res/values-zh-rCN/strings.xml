@@ -65,13 +65,6 @@
     <string name="donate_alipay">支付宝</string>
     <string name="donate_wechat">微信支付</string>
     <string name="donate_wechat_scan">扫一扫</string>
-    <string name="donate_bilibili">哔哩哔哩</string>
-    <string name="donate_bilibili_msg">哔哩哔哩年度大会员每31天可至我的大会员-卡券包内领取1张5B币券，可用于承包番剧、给up主充电、兑换电池，兑换漫画赛季积分等。
-\n若您的B币券没有好去处，可为我充电，我愿收留它们。
-\n* 因B站会收取30%的渠道服务费，并不建议您充值充电。
-\n不是年度大会员？点个关注也可以。</string>
-    <string name="donate_bilibili_space">我的空间</string>
-    <string name="donate_bilibili_cancel">下次一定</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">没有权限</string>
@@ -93,11 +86,11 @@
         <item quantity="other">%1$d 分钟后%2$s：%3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">清除动态快捷方式</string>
-    <string name="tile_action">快捷设置操作</string>
+    <string name="tile_action">快捷设置行为</string>
     <string name="auto_freeze">自动冻结</string>
     <string name="auto_freeze_notification_title">自动冻结服务正在运行</string>
     <string name="auto_freeze_after_lock">锁屏后</string>
-    <string name="skip_while_charging">充电时例外</string>
+    <string name="skip_while_charging">仅未充电时</string>
     <string name="skip_foreground_app">保留前台应用</string>
     <string name="title_customize">自定义</string>
     <string name="grayscale_icon">灰度图标</string>
@@ -122,7 +115,7 @@
     <string name="action_freeze_non_whitelisted">冻结非白名单</string>
     <string name="title_shortcuts">快捷方式</string>
     <string name="msg_guide">在冻结应用前，请先在设置中选择一个工作模式。</string>
-    <string name="dynamic_shortcut_action">动态快捷方式操作</string>
+    <string name="dynamic_shortcut_action">动态快捷方式行为</string>
     <string name="action_none">无</string>
     <string name="mode_shizuku_hide">Shizuku - 隐藏</string>
     <string name="action_freeze_tag">标签冻结</string>

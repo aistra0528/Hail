@@ -62,8 +62,6 @@
     <string name="action_details">Thông tin ứng dụng</string>
     <string name="title_donate">Cam ơn bạn nha!</string>
     <string name="compact_icon">Biểu tượng nhỏ gọn</string>
-    <string name="donate_bilibili">Ủng hộ qua Bilibili</string>
-    <string name="donate_bilibili_cancel">Hủy</string>
     <string name="action_uninstall">Gỡ cài đặt</string>
     <string name="mode_dhizuku_hide">Dhizuku - Ẩn</string>
     <string name="action_extract_apk">Giải nén APK</string>
@@ -102,7 +100,6 @@
     <string name="action_licenses">Giấy phép</string>
     <string name="action_translate">Dịch thuật</string>
     <string name="mode_shizuku_disable">Shizuku - Tắt</string>
-    <string name="donate_bilibili_msg">Theo dõi mình trên Bilibili nhé.</string>
     <string name="action_donate">Ủng hộ</string>
     <string name="label_time">Thời gian cài đặt</string>
     <string name="action_github">Github</string>

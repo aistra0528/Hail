@@ -62,7 +62,6 @@
     <string name="mode_su_disable">روت - تعطيل</string>
     <string name="title_shortcuts">الاختصارات</string>
     <string name="title_about">لمحة</string>
-    <string name="donate_bilibili_space">مساحة Bilibili</string>
     <string name="tile_action">عمل الزر</string>
     <string name="action_export_all">تصدير الكل</string>
     <string name="grayscale_icon">أيقونة التدرج الرمادي</string>
@@ -73,8 +72,6 @@
     <string name="action_details">معلومات التطبيق</string>
     <string name="title_donate">شكرا لك!</string>
     <string name="compact_icon">أيقونة مضغوطة</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_cancel">إلغاء</string>
     <string name="action_uninstall">إلغاء التثبيت</string>
     <string name="mode_dhizuku_hide">Dhizuku - إخفاء</string>
     <string name="action_extract_apk">استخراج APK</string>
@@ -122,7 +119,6 @@
     <string name="action_licenses">التراخيص</string>
     <string name="action_translate">ترجمة</string>
     <string name="mode_shizuku_disable">Shizuku - تعطيل</string>
-    <string name="donate_bilibili_msg">تابعني على Bilibili.</string>
     <string name="action_donate">تبرّع</string>
     <string name="label_time">وقت التثبيت</string>
     <string name="action_github">GitHub</string>

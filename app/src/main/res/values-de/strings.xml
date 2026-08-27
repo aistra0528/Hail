@@ -69,10 +69,6 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Scan</string>
-    <string name="donate_bilibili">bilibili</string>
-    <string name="donate_bilibili_msg">Folge mir auf bilibili.</string>
-    <string name="donate_bilibili_space">Mein Bereich</string>
-    <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">Zugriff verweigert</string>

@@ -63,10 +63,6 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">スキャン</string>
-    <string name="donate_bilibili">ビリビリ動画</string>
-    <string name="donate_bilibili_msg">bilibiliチャンネルをフォローする</string>
-    <string name="donate_bilibili_space">ビリビリチャンネル</string>
-    <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">権限がありません</string>

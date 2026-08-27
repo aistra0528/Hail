@@ -68,7 +68,6 @@
     <string name="action_details">Informações do App</string>
     <string name="title_donate">Obrigado!</string>
     <string name="compact_icon">Ícone compacto</string>
-    <string name="donate_bilibili_cancel">Cancelar</string>
     <string name="action_uninstall">Desinstalar</string>
     <string name="mode_dhizuku_hide">Dhizuku – Oculto</string>
     <string name="action_extract_apk">Extrair APK</string>
@@ -114,7 +113,6 @@
     <string name="action_licenses">Licenças</string>
     <string name="action_translate">Traduzir</string>
     <string name="mode_shizuku_disable">Shizuku – Desativado</string>
-    <string name="donate_bilibili_msg">Siga-me no Bilibili.</string>
     <string name="action_donate">Doar</string>
     <string name="label_time">Tempo de instalação</string>
     <string name="action_github">GitHub</string>
@@ -136,8 +134,6 @@
     <string name="donate_wechat_scan">Escanear</string>
     <string name="action_remove_whitelist">Remover da lista de permissões</string>
     <string name="action_unpin">Unpin</string>
-    <string name="donate_bilibili_space">Bilibili space</string>
-    <string name="donate_bilibili">Bilibili</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="command">Comando</string>
     <string name="tag">Tag</string>

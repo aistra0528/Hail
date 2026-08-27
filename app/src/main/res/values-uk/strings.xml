@@ -52,10 +52,6 @@
     <string name="auto_freeze_notification_title">Запущено службу автозаморожування</string>
     <string name="compact_icon">Компактні іконки</string>
     <string name="donate_alipay">Alipay</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_cancel">Скасувати</string>
-    <string name="donate_bilibili_msg">Підпишіться на мій Bilibili.</string>
-    <string name="donate_bilibili_space">Простір Bilibili</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="donate_wechat">WeChat Pay</string>

@@ -43,6 +43,7 @@
     <string name="action_uninstall">Uninstall</string>
     <string name="msg_uninstall">Do you want to uninstall this app?</string>
     <string name="working_mode">Working mode</string>
+    <string name="working_mode_tag">Working mode of related apps</string>
     <string name="mode_default">Idle</string>
     <string name="mode_owner_hide">Device Owner - Hide</string>
     <string name="mode_owner_suspend">Device Owner - Suspend</string>
@@ -76,10 +77,7 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Scan</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_msg">Follow me on Bilibili.</string>
-    <string name="donate_bilibili_space">Bilibili space</string>
-    <string name="donate_bilibili_cancel">Cancel</string>
+    <string name="donate_kofi">Ko-fi</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">Permission denied</string>
@@ -156,4 +154,9 @@
     <string name="follow_system">Follow system</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+    <string name="state_running">Running</string>
+    <string name="state_disabled">Disabled</string>
+    <string name="state_hidden">Hidden</string>
+    <string name="state_suspended">Suspended</string>
+    <string name="state_uninstalled">Uninstalled</string>
 </resources>

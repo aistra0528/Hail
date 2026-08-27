@@ -61,7 +61,6 @@
     <string name="title_donate">Дзякуй!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
-    <string name="donate_bilibili_cancel">Скасаваць</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="app_not_installed">Праграма не ўсталявана</string>
@@ -81,8 +80,6 @@
     <string name="filter_unfrozen_apps">Незамарожаныя</string>
     <string name="sort_name">Назва</string>
     <string name="donate_wechat_scan">Сканаваць</string>
-    <string name="donate_bilibili_msg">Падпішыцеся на мой Bilibili.</string>
-    <string name="donate_bilibili_space">Прастора Bilibili</string>
     <string name="permission_denied">Дазвол адхілены</string>
     <string name="activity_not_found">Дзеянне пры запуску не знойдзена</string>
     <string name="shizuku_missing">Shizuku адсутнічае :(</string>
@@ -138,7 +135,6 @@
     <string name="action_unfreeze_current">Размарозіць бачныя</string>
     <string name="mode_owner_suspend">Уладальнік прылады - Прыпыніць</string>
     <string name="tap_to_select">Націсніце, каб выбраць некалькі</string>
-    <string name="donate_bilibili">Bilibili</string>
     <string name="auto_freeze">Аўтазамарожванне</string>
     <string name="mode_su_disable">Root - Адключыць</string>
     <string name="auto_freeze_notification_title">Служба аўтазамарозкі працуе</string>

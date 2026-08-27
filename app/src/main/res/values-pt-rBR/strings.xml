@@ -59,7 +59,6 @@
     <string name="mode_su_disable">Root - Desativar</string>
     <string name="title_shortcuts">Atalhos</string>
     <string name="title_about">Sobre</string>
-    <string name="donate_bilibili_space">Bilibili space</string>
     <string name="tile_action">Ação de bloco</string>
     <string name="action_export_all">Exportar tudo</string>
     <string name="grayscale_icon">Ícone em tons de cinza</string>
@@ -70,8 +69,6 @@
     <string name="action_details">Informações do App</string>
     <string name="title_donate">Obrigado!</string>
     <string name="compact_icon">Ícone compacto</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_cancel">Cancelar</string>
     <string name="action_uninstall">Desinstalar</string>
     <string name="mode_dhizuku_hide">Dhizuku – Oculto</string>
     <string name="action_extract_apk">Extrair APK</string>
@@ -116,7 +113,6 @@
     <string name="action_licenses">Licenças</string>
     <string name="action_translate">Traduzir</string>
     <string name="mode_shizuku_disable">Shizuku – Desativado</string>
-    <string name="donate_bilibili_msg">Siga-me no Bilibili.</string>
     <string name="action_donate">Doar</string>
     <string name="label_time">Tempo de instalação</string>
     <string name="action_github">GitHub</string>

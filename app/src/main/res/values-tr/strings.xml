@@ -59,9 +59,6 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Tara</string>
-    <string name="donate_bilibili">bilibili</string>
-    <string name="donate_bilibili_msg">Beni bilibili\'de takip et.</string>
-    <string name="donate_bilibili_space">Benim sayfam</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">İzin reddedildi</string>
@@ -128,7 +125,6 @@
     <string name="activity_not_found">Başlatma etkinliği bulunamadı</string>
     <string name="shizuku_missing">Shizuku kayıp :(</string>
     <string name="mode_owner_suspend">Cihaz Yöneticisi - Askıya Al</string>
-    <string name="donate_bilibili_cancel">\@android:string/cancel</string>
     <string name="action_terminal">Terminal</string>
     <string name="mode_dhizuku_suspend">Dhizuku - Askıya al</string>
     <string name="mode_dhizuku_hide">Dhizuku - Gizle</string>

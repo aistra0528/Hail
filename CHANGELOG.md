@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0] - 2026-08-26
+
+### Highlights
+- More reliable Root mode support across Android versions
+- Safer app launching in `Island/Insular - Hide` mode, including stock ROMs with compatibility differences
+- Faster bulk app management with select all / deselect all controls and an "All" apps filter
+- Updated Xposed integration with libxposed and clearer module information
+
+### Added
+- Select all / deselect all controls in the Apps tab, including long-press support and visual feedback
+- "All" filter option to display both user and system apps
+
+### Changed
+- About page access moved from bottom navigation to Settings
+- Xposed integration now uses libxposed, with clearer module information
+- Root and Shizuku command execution improved for more consistent operation
+
+### Fixed
+- Root modes not working on older Android versions, thanks to @LuoYunXi0407
+- `Island/Insular - Hide` mode unable to launch apps on some stock ROMs, thanks to @andy-math
+- Interface crash caused by a `NullPointerException`, thanks to @lerdb
+- Dynamic shortcut removal when biometric login is enabled (#377)
+- Foreground service behavior for Android's `specialUse` requirement (#409)
+- `pm` commands failing on older Android versions due to `--user current` (#416)
+- Launch intent existence check in `Island/Insular - Hide` mode
+- Hail being frozen through Select All, API intents, or bulk operations
+
+### Removed
+- Confirmation dialog when switching to the System apps filter
+- About tab from the bottom navigation bar
+
+### Translations
+- Updated Turkish, Spanish, Korean, Chinese, Indonesian, Ukrainian, Bengali, Italian, Belarusian, French, Russian, Tamil, Portuguese, Urdu, German, Japanese, Polish, Norwegian Bokmål, Finnish, Arabic, Persian, and Vietnamese translations
+
 ## [1.10.4] - 2026-08-21
 
 ### Added
