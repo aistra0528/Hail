@@ -5,8 +5,7 @@ import android.content.pm.ApplicationInfo
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.aistra.hail.HailApp
-import com.aistra.hail.app.AppManager
+import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.*
 import kotlinx.coroutines.*
@@ -58,7 +57,13 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     fun updateAppList() {
         viewModelScope.launch {
             postRefreshState(true)
-            apps.postValue(HPackages.getInstalledApplications())
+            val appList = withContext(Dispatchers.IO) { HPackages.getInstalledApplications() }
+            apps.postValue(appList)
+            updateDisplayAppList()
+            postRefreshState(false)
+            AppIconCache.prefetch(getApplication(), appList)
+            AppMetaCache.prefetch(appList).join()
+            updateDisplayAppList()
         }
     }
 
@@ -81,36 +86,37 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val ApplicationInfo.isSystemApp: Boolean
         get() = flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
-    private val ApplicationInfo.isAppFrozen get() = AppManager.isAppFrozen(packageName)
 
     private suspend fun filterList(
         appList: List<ApplicationInfo>,
         query: String?
     ): List<ApplicationInfo> {
-        val pm = getApplication<HailApp>().packageManager
         return withContext(Dispatchers.Default) {
             return@withContext appList.filter {
+                val metadata = AppMetaCache.get(it.packageName)
+                val isSystemApp = metadata?.isSystemApp ?: it.isSystemApp
+                val name = metadata?.name ?: it.packageName
+                val frozen = metadata?.state == AppInfo.State.FROZEN
                 (HailData.filterAllApps
-                        || (HailData.filterUserApps && !it.isSystemApp)
-                        || (HailData.filterSystemApps && it.isSystemApp))
+                        || (HailData.filterUserApps && !isSystemApp)
+                        || (HailData.filterSystemApps && isSystemApp))
 
-                        && ((HailData.filterFrozenApps && it.isAppFrozen)
-                        || (HailData.filterUnfrozenApps && !it.isAppFrozen))
+                        && ((HailData.filterFrozenApps && frozen)
+                        || (HailData.filterUnfrozenApps && !frozen))
                         // Search apps
                         && ((HailData.nineKeySearch
-                        && (NineKeySearch.search(query, it.packageName, it.loadLabel(pm).toString())))
+                        && (NineKeySearch.search(query, it.packageName, name)))
                         || FuzzySearch.search(it.packageName, query)
-                        || FuzzySearch.search(it.loadLabel(pm).toString(), query)
-                        || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
+                        || FuzzySearch.search(name, query)
+                        || PinyinSearch.searchPinyinAll(name, query))
             }.run {
                 when (HailData.sortBy) {
                     HailData.SORT_INSTALL -> sortedBy {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
-                            ?.firstInstallTime ?: 0
+                        AppMetaCache.get(it.packageName)?.firstInstallTime ?: 0
                     }
 
                     HailData.SORT_UPDATE -> sortedByDescending {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.lastUpdateTime ?: 0
+                        AppMetaCache.get(it.packageName)?.lastUpdateTime ?: 0
                     }
 
                     else -> sortedWith(NameComparator)

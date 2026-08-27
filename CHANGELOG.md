@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.2] - 2026-08-27
+
+### Highlights
+- Faster app loading with persistent metadata and icon caching
+
+### Added
+- Room-backed cache for all installed app metadata
+- Disk-backed icon cache with background warming
+- Settings action to clear and rebuild app caches
+- Battery optimization exemption option for background auto-freeze
+
+### Changed
+- App metadata and icons load from memory or disk before querying Android
+- Uninstalled app metadata is retained but hidden from Home and Apps lists
+- App inventory refreshes when the Apps screen resumes or is manually refreshed
+
+### Fixed
+- Frozen and unfrozen app visuals now update immediately without changing tabs
+
 ## [1.11.1] - 2026-08-27
 
 ### Highlights

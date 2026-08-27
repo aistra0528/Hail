@@ -23,6 +23,7 @@ swiperefreshlayout = "1.2.0"
 workRuntime = "2.11.2"
 libxposed = "102.0.0"
 libsu = "6.0.0"
+room = "2.8.3"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose" }
@@ -54,6 +55,8 @@ shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
 shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
 libxposed-api = { module = "io.github.libxposed:api", version.ref = "libxposed" }
 libsu-core = { module = "com.github.topjohnwu.libsu:core", version.ref = "libsu" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

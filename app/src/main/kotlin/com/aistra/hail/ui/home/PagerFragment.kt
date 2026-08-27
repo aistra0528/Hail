@@ -29,6 +29,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aistra.hail.HailApp.Companion.app
@@ -125,11 +126,18 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
             }
             applyDefaultInsetter { marginRelative(isRtl, start = !isLandscape, end = true) }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                AppMetaCache.revision.collect { updateCurrentList() }
+            }
+        }
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        AppMetaCache.invalidateState(HailData.checkedList.map { it.packageName })
+        AppMetaCache.prefetchPackages(HailData.checkedList.map { it.packageName })
         updateCurrentList()
         updateBarTitle()
         activity.appbar.setLiftOnScrollTargetView(binding.recyclerView)
@@ -148,7 +156,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         }
     }
 
-    private fun updateCurrentList() = HailData.checkedList.filter {
+    private fun updateCurrentList() = HailData.checkedList.filter { it.isInstalled }.filter {
         if (query.isEmpty()) tag?.second?.let { tagId -> tagId in it.tagIdList } ?: false
         else ((HailData.nineKeySearch && NineKeySearch.search(
             query, it.packageName, it.name.toString()
@@ -510,7 +518,9 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         when (val result = AppManager.setListFrozen(frozen, *filtered.toTypedArray())) {
             null -> HUI.showToast(R.string.permission_denied)
             else -> {
+                AppMetaCache.invalidateState(filtered.map { it.packageName })
                 if (updateList) updateCurrentList()
+                pagerAdapter.refreshVisualState()
                 HUI.showToast(
                     if (frozen) R.string.msg_freeze else R.string.msg_unfreeze, result
                 )

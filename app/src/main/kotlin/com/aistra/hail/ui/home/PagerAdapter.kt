@@ -76,6 +76,10 @@ class PagerAdapter(
         if (loadIconJob?.isActive == true) loadIconJob?.cancel()
     }
 
+    fun refreshVisualState() {
+        notifyItemRangeChanged(0, itemCount)
+    }
+
     private class HomeDiff(
         private val selectedList: List<AppInfo>, private val flags: Map<String, Int>
     ) : DiffUtil.ItemCallback<AppInfo>() {

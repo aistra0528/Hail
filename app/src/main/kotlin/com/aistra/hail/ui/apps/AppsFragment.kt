@@ -124,6 +124,11 @@ class AppsFragment : MainFragment(), AppsAdapter.OnItemClickListener, AppsAdapte
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateAppList()
+    }
+
     override fun onItemClick(buttonView: CompoundButton) {
 //        buttonView.toggle()
     }
