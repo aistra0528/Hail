@@ -49,9 +49,6 @@
     <string name="sort_update">Utoljára frissítettek</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_space">Bilibili tér</string>
-    <string name="donate_bilibili_cancel">Mégse</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="activity_not_found">Indítási tevékenység nem található</string>
     <string name="shizuku_missing">Shizuku hiányzik :(</string>
@@ -144,7 +141,6 @@
     <string name="app_not_installed">Az alkalmazás nincs telepítve</string>
     <string name="donate_wechat_scan">Vizsgálat</string>
     <string name="action_unfreeze_tag">Címke kiolvasztás</string>
-    <string name="donate_bilibili_msg">Kövessen a Bilibil-n.</string>
     <string name="msg_biometric">Bejelentkezés a biometrikus azonosítással</string>
     <string name="donate_paypal">PayPal</string>
     <string name="compact_icon">Kompakt ikon</string>

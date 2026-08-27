@@ -56,7 +56,7 @@
     <string-array name="donate_payment_entries">
         <item>@string/donate_alipay</item>
         <item>@string/donate_wechat</item>
-        <item>@string/donate_bilibili</item>
+        <item>@string/donate_kofi</item>
         <item>@string/donate_liberapay</item>
         <item>@string/donate_paypal</item>
     </string-array>

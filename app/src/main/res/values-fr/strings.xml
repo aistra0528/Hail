@@ -35,7 +35,6 @@
     <string name="action_tag_remove">Retirer l\'étiquette</string>
     <string name="icon_pack">Pack d\'icônes</string>
     <string name="msg_freeze">Gelée : %s</string>
-    <string name="donate_bilibili_space">Mon espace Bilibili</string>
     <string name="action_tag_set">Définir l\'étiquette</string>
     <string name="action_uninstall">Désinstaller</string>
     <string name="mode_default">Inactif</string>
@@ -103,8 +102,6 @@
     <string name="sort_by">Trier par</string>
     <string name="mode_su_hide">Superutilisateur - Masquer</string>
     <string name="compact_icon">Icône compacte</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_cancel">Annuler</string>
     <string name="mode_dhizuku_hide">Dhizuku - Masquer</string>
     <string name="action_select_all">Tout sélectionner</string>
     <string name="skip_while_charging">Ignorer pendant le chargement</string>
@@ -129,7 +126,6 @@
     <string name="app_slogan">Freezedom!</string>
     <string name="auto_freeze">Gel automatique</string>
     <string name="mode_shizuku_disable">Shizuku - Désactiver</string>
-    <string name="donate_bilibili_msg">Suivez-moi sur Bilibili.</string>
     <string name="activity_not_found">Aucune activité de démarrage</string>
     <string name="title_set_owner">Définir le propriétaire de l\'appareil</string>
     <string name="app_name">Hail</string>

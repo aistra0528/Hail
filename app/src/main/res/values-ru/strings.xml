@@ -64,10 +64,6 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Сканировать</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_msg">Подпишитесь на мой Bilibili.</string>
-    <string name="donate_bilibili_space">Пространство Bilibili</string>
-    <string name="donate_bilibili_cancel">Отменить</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">Разрешение отклонено</string>

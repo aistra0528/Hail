@@ -63,10 +63,6 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Escanear</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_msg">Sígueme en Bilibili.</string>
-    <string name="donate_bilibili_space">Espacio en Bilibili</string>
-    <string name="donate_bilibili_cancel">Cancelar</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">Permiso denegado</string>

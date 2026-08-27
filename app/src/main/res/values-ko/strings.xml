@@ -61,8 +61,6 @@
     <string name="title_donate">감사합니다!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat_scan">Scan</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_msg">Follow me on Bilibili.</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">권한이 거부되었습니다</string>
     <string name="app_not_installed">앱이 설치되어있지 않습니다.</string>
@@ -87,14 +85,12 @@
     <string name="mode_island_suspend">Island/Insular - 중지</string>
     <string name="action_tag_remove">태그 제거</string>
     <string name="filter_system_apps">시스템 앱순</string>
-    <string name="donate_bilibili_cancel">취소</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="mode_dhizuku_hide">Dhizuku - 숨김</string>
     <string name="freeze_system_app">시스템 애플리케이션을 중지하거나 제거하면 기기가 부팅 루프에 빠질 수 있습니다. 작업을 수행하는 방법을 정확히 알고 있어야 하며, 사전에 데이터를 백업하거나 파일 관리를 지원하는 복구 도구를 사용하세요.</string>
     <string name="app_theme">앱 테마</string>
     <string name="tap_to_select">복수 선택</string>
     <string name="sort_name">이름 순</string>
-    <string name="donate_bilibili_space">Bilibili space</string>
     <string name="action_deferred_task">동결 예약­</string>
     <string name="msg_remove_owner">Hail이 기기 소유자에서 제거되면 Hail 제거 후 앱을 재정리하는 데 어려움이 있을 수 있습니다.\n동결된 앱은 제거 후에도 동결된 상태로 유지되므로 중요한 앱은 동결을 해제했는지 확인하세요.</string>
     <string name="filter_user_apps">사용자 앱순</string>

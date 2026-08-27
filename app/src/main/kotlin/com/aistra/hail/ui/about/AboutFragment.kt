@@ -109,7 +109,7 @@ class AboutFragment : MainFragment() {
                     icon = Icons.Outlined.LocalMall, title = R.string.action_fdroid
                 ) { HUI.openLink(HailData.URL_FDROID) }
                 ClickableItem(
-                    icon = Icons.Outlined.CardGiftcard, title = R.string.action_donate, onClick = ::openDonateDialog
+                    icon = Icons.Outlined.Coffee, title = R.string.action_donate, onClick = ::openDonateDialog
                 )
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
@@ -194,12 +194,7 @@ class AboutFragment : MainFragment() {
                             } ?: HUI.showToast(R.string.app_not_installed)
                         }.setNegativeButton(android.R.string.cancel, null).show()
 
-                    2 -> MaterialAlertDialogBuilder(activity).setTitle(R.string.title_donate)
-                        .setMessage(R.string.donate_bilibili_msg)
-                        .setPositiveButton(R.string.donate_bilibili_space) { _, _ ->
-                            HUI.openLink(HailData.URL_BILIBILI)
-                        }.setNegativeButton(R.string.donate_bilibili_cancel, null).show()
-
+                    2 -> HUI.openLink(HailData.URL_KOFI)
                     3 -> HUI.openLink(HailData.URL_LIBERAPAY)
                     4 -> HUI.openLink(HailData.URL_PAYPAL)
                 }

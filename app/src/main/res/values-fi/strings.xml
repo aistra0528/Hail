@@ -35,7 +35,6 @@
     <string name="sort_name">Nimi</string>
     <string name="sort_update">Viimeisin päivitys</string>
     <string name="donate_wechat">WeChat Pay</string>
-    <string name="donate_bilibili_space">Bilibili tila</string>
     <string name="permission_denied">Lupa evätty</string>
     <string name="shizuku_missing">Shizuku puuttuu :(</string>
     <string name="msg_imported">Tuotu: %s</string>
@@ -91,15 +90,12 @@
     <string name="sort_install">Ensimmäinen asennus</string>
     <string name="title_donate">Kiitos!</string>
     <string name="donate_wechat_scan">Skannaa</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_msg">Seuraa minua Bilibili:ssä.</string>
     <string name="donate_paypal">PayPal</string>
     <string name="operation_failed">Toiminto epäonnistui: %s</string>
     <plurals name="deferred_task_entry">
         <item quantity="one">%d minuutti</item>
         <item quantity="other">%d minuuttia</item>
     </plurals>
-    <string name="donate_bilibili_cancel">Peruuta</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="app_not_installed">Sovellusta ei ole asennettu</string>
     <string name="msg_selected">Valittu: %s</string>

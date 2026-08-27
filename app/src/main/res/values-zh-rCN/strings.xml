@@ -65,13 +65,6 @@
     <string name="donate_alipay">支付宝</string>
     <string name="donate_wechat">微信支付</string>
     <string name="donate_wechat_scan">扫一扫</string>
-    <string name="donate_bilibili">哔哩哔哩</string>
-    <string name="donate_bilibili_msg">哔哩哔哩年度大会员每31天可至我的大会员-卡券包内领取1张5B币券，可用于承包番剧、给up主充电、兑换电池，兑换漫画赛季积分等。
-\n若您的B币券没有好去处，可为我充电，我愿收留它们。
-\n* 因B站会收取30%的渠道服务费，并不建议您充值充电。
-\n不是年度大会员？点个关注也可以。</string>
-    <string name="donate_bilibili_space">我的空间</string>
-    <string name="donate_bilibili_cancel">下次一定</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">没有权限</string>

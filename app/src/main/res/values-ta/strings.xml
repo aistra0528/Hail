@@ -105,10 +105,6 @@
     <string name="donate_alipay">அலிபே</string>
     <string name="donate_wechat">Wechat pay</string>
     <string name="donate_wechat_scan">ச்கேன்</string>
-    <string name="donate_bilibili">பிலியேட்</string>
-    <string name="donate_bilibili_msg">பிலிபிலியில் என்னைப் பின்தொடரவும்.</string>
-    <string name="donate_bilibili_space">பித்தம் இடம்</string>
-    <string name="donate_bilibili_cancel">ரத்துசெய்</string>
     <string name="donate_liberapay">லிபர்பே</string>
     <string name="donate_paypal">பேபால்</string>
     <string name="permission_denied">இசைவு மறுக்கப்பட்டது</string>

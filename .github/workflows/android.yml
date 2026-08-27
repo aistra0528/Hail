@@ -3,7 +3,7 @@ name: Android CI
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - '**.md'
       - 'fastlane/**'
