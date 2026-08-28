@@ -148,4 +148,11 @@
     <string name="theme_dark">深色</string>
     <string name="app_theme">应用主题</string>
     <string name="follow_system">跟随系统</string>
+    <string name="working_mode_tag">相关应用的工作模式</string>
+    <string name="state_running">正在运行</string>
+    <string name="state_disabled">已停用</string>
+    <string name="state_hidden">已隐藏</string>
+    <string name="state_suspended">已暂停</string>
+    <string name="state_uninstalled">已卸载</string>
+    <string name="donate_kofi">Ko-fi</string>
 </resources>
