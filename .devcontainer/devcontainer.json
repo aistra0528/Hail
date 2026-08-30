@@ -3,6 +3,5 @@
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "containerEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN}"
-  },
-  "postCreateCommand": "bash .devcontainer/setup-build-environment.sh && git config --global credential.helper '!f() { printf \"username=oauth2\\npassword=%s\\n\" \"$GH_TOKEN\"; }; f'"
+  }
 }
