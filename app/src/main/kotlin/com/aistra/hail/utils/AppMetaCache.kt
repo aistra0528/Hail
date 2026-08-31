@@ -41,7 +41,7 @@ object AppMetaCache {
     private val packageLocks = ConcurrentHashMap<String, Mutex>()
     private val database by lazy {
         Room.databaseBuilder(HailApp.app, AppMetadataDatabase::class.java, "app_metadata.db")
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
             .build()
     }
 
@@ -258,6 +258,33 @@ object AppMetaCache {
     private val MIGRATION_4_5 = object : Migration(4, 5) {
         override suspend fun migrate(connection: SQLiteConnection) {
             connection.execSQL("ALTER TABLE app_metadata ADD COLUMN frozen INTEGER NOT NULL DEFAULT 0")
+        }
+    }
+
+    private val MIGRATION_5_6 = object : Migration(5, 6) {
+        override suspend fun migrate(connection: SQLiteConnection) {
+            connection.execSQL(
+                "CREATE TABLE app_metadata_new (" +
+                    "packageName TEXT NOT NULL, " +
+                    "name TEXT NOT NULL, " +
+                    "systemApp INTEGER NOT NULL, " +
+                    "firstInstallTime INTEGER NOT NULL, " +
+                    "lastUpdateTime INTEGER NOT NULL, " +
+                    "flags INTEGER NOT NULL, " +
+                    "enabled INTEGER NOT NULL, " +
+                    "installed INTEGER NOT NULL, " +
+                    "frozen INTEGER NOT NULL DEFAULT 0, " +
+                    "sourceSignature TEXT NOT NULL, " +
+                    "PRIMARY KEY(packageName))"
+            )
+            connection.execSQL(
+                "INSERT INTO app_metadata_new " +
+                    "SELECT packageName, COALESCE(name, ''), systemApp, firstInstallTime, " +
+                    "lastUpdateTime, flags, enabled, installed, frozen, sourceSignature " +
+                    "FROM app_metadata"
+            )
+            connection.execSQL("DROP TABLE app_metadata")
+            connection.execSQL("ALTER TABLE app_metadata_new RENAME TO app_metadata")
         }
     }
 }

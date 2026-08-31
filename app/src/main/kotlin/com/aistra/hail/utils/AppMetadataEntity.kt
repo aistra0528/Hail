@@ -1,5 +1,6 @@
 package com.aistra.hail.utils
 
+import androidx.room3.ColumnInfo
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey
 
@@ -13,6 +14,6 @@ data class AppMetadataEntity(
     val flags: Int = 0,
     val enabled: Boolean = false,
     val installed: Boolean = false,
-    val frozen: Boolean = false,
+    @ColumnInfo(defaultValue = "0") val frozen: Boolean = false,
     val sourceSignature: String = ""
 )
