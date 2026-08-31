@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 #
-# Sends release notification to Telegram:
-#   1. Logo as photo with title + "See changelog" link
-#   2. APK files as grouped album (no caption)
+# Sends release notification to Telegram with APK files.
 # Called from release.yml with APK paths as args.
 #
 # Environment variables:
@@ -10,12 +8,11 @@
 #   VERSION      - version string (e.g. 1.11.3)
 #   RELEASE_URL  - GitHub release URL
 #   RELEASE_TYPE - "release" or "pre-release"
-#   CHANGELOG    - optional changelog text; if empty, script reads CHANGELOG.md
 #
 # Hardcoded destinations:
 #   TG_GROUP = -1004396394059
 #   RELEASE_TOPIC = 85
-#   CHAT_TOPIC = 85
+#   PRE_RELEASE_TOPIC = 95
 #
 # Never fails the calling workflow: any problem prints a warning and exits 0,
 # since a failed notification shouldn't block a successful release.
@@ -28,7 +25,7 @@ set -uo pipefail
 
 readonly TG_GROUP="-1004396394059"
 readonly RELEASE_TOPIC="85"
-readonly CHAT_TOPIC="85"
+readonly PRE_RELEASE_TOPIC="95"
 
 apk_files=("$@")
 
@@ -46,23 +43,19 @@ done
 
 echo "==> TG_GROUP: ${TG_GROUP}"
 echo "==> RELEASE_TOPIC: ${RELEASE_TOPIC}"
-echo "==> CHAT_TOPIC: ${CHAT_TOPIC}"
 echo "==> Version: ${VERSION}"
 echo "==> Release URL: ${RELEASE_URL}"
 echo "==> APK files: ${apk_files[*]}"
 
-# Determine title prefix and target topic
+# Determine target topic
 RELEASE_TYPE="${RELEASE_TYPE:-release}"
 if [[ "$RELEASE_TYPE" == "pre-release" ]]; then
-    title="Pre-release"
-    target_topic="95"
+    target_topic="${PRE_RELEASE_TOPIC}"
 else
-    title="Release"
-    target_topic="85"
+    target_topic="${RELEASE_TOPIC}"
 fi
 
 echo "==> Release type: ${RELEASE_TYPE}"
-echo "==> Title: ${title}"
 echo "==> Target topic: ${target_topic}"
 
 format_changelog() {
@@ -146,7 +139,7 @@ ${changelog_text}"
         doc_args+=(-F "message_thread_id=${topic_id}")
     fi
 
-    local response=""
+    local http_code=""
     if [[ ${#apk_files[@]} -eq 1 ]]; then
         response="$(curl -sS -w '\n%{http_code}' \
             "${doc_args[@]}" \
@@ -186,6 +179,5 @@ ${changelog_text}"
 }
 
 send_notification "${target_topic}" "release topic"
-send_notification "${CHAT_TOPIC}" "chat topic"
 
 echo "==> Done: release Telegram notification completed"
