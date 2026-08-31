@@ -36,6 +36,7 @@ jobs:
       version_name: ${{ steps.version.outputs.version_name }}
       version_code: ${{ steps.version.outputs.version_code }}
       tag: ${{ steps.version.outputs.tag }}
+      release_type: ${{ github.event.inputs.release_type }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
@@ -98,8 +99,9 @@ jobs:
           echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
           echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
           echo "tag=v$VERSION_NAME" >> $GITHUB_OUTPUT
+          echo "==> Detected version: $VERSION_NAME ($VERSION_CODE)"
 
-      - name: Build universal APK
+      - name: Build release APK
         shell: bash
         run: |
           printf '%s\n' \
@@ -110,16 +112,19 @@ jobs:
             > signing.properties
           echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
           VERSION="${{ steps.version.outputs.version_name }}"
+          RELEASE_TYPE="${{ github.event.inputs.release_type }}"
+          echo "==> Building ${RELEASE_TYPE} APK version ${VERSION}"
           ./gradlew assembleRelease --no-daemon --stacktrace
           FILENAME=$(jq -r '.elements[0].outputFile' app/build/outputs/apk/release/output-metadata.json)
-          cp "app/build/outputs/apk/release/$FILENAME" "app/build/outputs/apk/release/Hail-v${VERSION}.apk"
+          cp "app/build/outputs/apk/release/$FILENAME" "app/build/outputs/apk/release/Hail-v${VERSION}-${RELEASE_TYPE}.apk"
+          echo "==> Release APK built: app/build/outputs/apk/release/Hail-v${VERSION}-${RELEASE_TYPE}.apk"
           ls -la app/build/outputs/apk/release/
 
-      - name: Upload universal artifact
+      - name: Upload release artifact
         uses: actions/upload-artifact@v7
         with:
-          name: universal
-          path: app/build/outputs/apk/release/Hail-v${{ steps.version.outputs.version_name }}.apk
+          name: release
+          path: app/build/outputs/apk/release/Hail-v${{ steps.version.outputs.version_name }}-${{ github.event.inputs.release_type }}.apk
           retention-days: 7
 
   create-release:
@@ -136,7 +141,21 @@ jobs:
 
       - name: List artifacts
         shell: bash
-        run: find artifacts/ -type f
+        run: |
+          echo "==> Listing downloaded artifacts"
+          find artifacts/ -type f
+          echo "==> Artifact listing complete"
+
+      - name: Verify release artifact exists
+        shell: bash
+        run: |
+          APK="artifacts/Hail-v${{ needs.build-universal.outputs.version_name }}-${{ needs.build-universal.outputs.release_type }}.apk"
+          echo "==> Verifying release artifact at: $APK"
+          if [[ ! -f "$APK" ]]; then
+            echo "::error::Release APK not found at $APK"
+            exit 1
+          fi
+          echo "==> Release artifact verified: $APK"
 
       - name: Read changelog
         id: changelog
@@ -149,11 +168,13 @@ jobs:
             exit 0
           fi
           VERSION="${{ needs.build-universal.outputs.version_name }}"
+          echo "==> Reading changelog for version: $VERSION"
           {
             echo "body<<EOF"
             sed -n "/^## \[${VERSION}\]/,/^## \[/p" CHANGELOG.md | sed '1d;$d' | sed '/^$/d'
             echo "EOF"
           } >> $GITHUB_OUTPUT
+          echo "==> Changelog read complete"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
@@ -162,20 +183,27 @@ jobs:
           name: v${{ needs.build-universal.outputs.version_name }}
           body: ${{ steps.changelog.outputs.body }}
           prerelease: ${{ github.event.inputs.release_type == 'pre-release' }}
-          overwrite: true
+          overwrite_files: true
           files: |
-            artifacts/universal/Hail-v${{ needs.build-universal.outputs.version_name }}.apk
+            artifacts/Hail-v${{ needs.build-universal.outputs.version_name }}-${{ needs.build-universal.outputs.release_type }}.apk
 
       - name: Notify Telegram
         shell: bash
         continue-on-error: true
         env:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
-          TG_RELEASE: ${{ secrets.TG_RELEASE }}
+          TG_GROUP: ${{ secrets.TG_GROUP }}
           TG_LOGO: app/src/main/ic_launcher-playstore.png
           RELEASE_TYPE: ${{ github.event.inputs.release_type }}
           VERSION: ${{ needs.build-universal.outputs.version_name }}
           RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.build-universal.outputs.tag }}
         run: |
+          echo "==> Starting Telegram notification"
+          echo "==> TG_GROUP: ${TG_GROUP}"
+          echo "==> RELEASE_TYPE: ${RELEASE_TYPE}"
+          echo "==> TG_LOGO: ${TG_LOGO}"
+          echo "==> VERSION: ${VERSION}"
+          echo "==> RELEASE_URL: ${RELEASE_URL}"
           bash .github/scripts/tg_release.sh \
-            "artifacts/universal/Hail-v${VERSION}.apk"
+            "artifacts/Hail-v${VERSION}-${RELEASE_TYPE}.apk"
+          echo "==> Telegram notification completed"

@@ -6,12 +6,16 @@
 # Called from release.yml with APK paths as args.
 #
 # Environment variables:
-#   TG_TOKEN      - bot token
-#   TG_RELEASE    - chat ID
-#   VERSION       - version string (e.g. 1.11.3)
-#   RELEASE_URL   - GitHub release URL
-#   TG_LOGO       - path to logo image
-#   RELEASE_TYPE  - "release" or "pre-release"
+#   TG_TOKEN     - bot token
+#   VERSION      - version string (e.g. 1.11.3)
+#   RELEASE_URL  - GitHub release URL
+#   RELEASE_TYPE - "release" or "pre-release"
+#   CHANGELOG    - optional changelog text; if empty, script reads CHANGELOG.md
+#
+# Hardcoded destinations:
+#   TG_GROUP = -1004396394059
+#   RELEASE_TOPIC = 85
+#   CHAT_TOPIC = 85
 #
 # Never fails the calling workflow: any problem prints a warning and exits 0,
 # since a failed notification shouldn't block a successful release.
@@ -19,10 +23,12 @@
 set -uo pipefail
 
 : "${TG_TOKEN:?TG_TOKEN is not set}"
-: "${TG_RELEASE:?TG_RELEASE is not set}"
 : "${VERSION:?VERSION is not set}"
 : "${RELEASE_URL:?RELEASE_URL is not set}"
-: "${TG_LOGO:?TG_LOGO is not set}"
+
+readonly TG_GROUP="-1004396394059"
+readonly RELEASE_TOPIC="85"
+readonly CHAT_TOPIC="85"
 
 apk_files=("$@")
 
@@ -38,65 +44,148 @@ for f in "${apk_files[@]}"; do
     fi
 done
 
-# Determine title prefix
+echo "==> TG_GROUP: ${TG_GROUP}"
+echo "==> RELEASE_TOPIC: ${RELEASE_TOPIC}"
+echo "==> CHAT_TOPIC: ${CHAT_TOPIC}"
+echo "==> Version: ${VERSION}"
+echo "==> Release URL: ${RELEASE_URL}"
+echo "==> APK files: ${apk_files[*]}"
+
+# Determine title prefix and target topic
 RELEASE_TYPE="${RELEASE_TYPE:-release}"
 if [[ "$RELEASE_TYPE" == "pre-release" ]]; then
-    title="Pre-release v${VERSION}"
+    title="Pre-release"
+    target_topic="95"
 else
-    title="Release v${VERSION}"
+    title="Release"
+    target_topic="85"
 fi
 
-# Message 1: Logo photo with title + "See changelog" link
-caption="<b>${title}</b>
-<a href=\"${RELEASE_URL}\">See changelog</a>"
+echo "==> Release type: ${RELEASE_TYPE}"
+echo "==> Title: ${title}"
+echo "==> Target topic: ${target_topic}"
 
-response="$(curl -sS -w '\n%{http_code}' \
-    -F "chat_id=${TG_RELEASE}" \
-    -F "photo=@${TG_LOGO}" \
-    --form-string "caption=${caption}" \
-    --form-string "parse_mode=HTML" \
-    "https://api.telegram.org/bot${TG_TOKEN}/sendPhoto" 2>&1)" || true
+format_changelog() {
+    local text="$1"
+    text="${text//&/\&amp;}"
+    text="${text//</\&lt;}"
+    text="${text//>/\&gt;}"
+    text="$(echo "$text" | sed 's/\*\*\([^*]*\)\*\*/\<b\>\1\<\/b\>/g')"
+    text="$(echo "$text" | sed 's/^- /• /')"
+    printf '%s' "$text"
+}
 
-http_code="$(tail -n1 <<<"${response}")"
-body="$(sed '$d' <<<"${response}")"
+extract_changelog_section() {
+    local section="$1"
+    local text=""
+    if [[ -f "CHANGELOG.md" ]]; then
+        text="$(sed -n "/^## \[${VERSION}\]/,/^## \[/p" CHANGELOG.md | sed -n "/^### ${section}/,/^### /p" | sed '1d;$d' | sed '/^$/d')"
+    fi
+    echo "$text"
+}
 
-if [[ "${http_code}" != "200" ]]; then
-    echo "::warning::tg_release.sh: Telegram photo notification failed (HTTP ${http_code:-unknown}): ${body}"
-    exit 0
+changelog_sections=()
+highlights="$(extract_changelog_section "Highlights")"
+added="$(extract_changelog_section "Added")"
+changed="$(extract_changelog_section "Changed")"
+fixed="$(extract_changelog_section "Fixed")"
+removed="$(extract_changelog_section "Removed")"
+
+if [[ -n "$highlights" ]]; then
+    changelog_sections+=("<b>Highlights</b>")
+    changelog_sections+=("<blockquote expandable>$(format_changelog "$highlights")</blockquote>")
+fi
+if [[ -n "$added" ]]; then
+    changelog_sections+=("<b>Added</b>")
+    changelog_sections+=("<blockquote expandable>$(format_changelog "$added")</blockquote>")
+fi
+if [[ -n "$changed" ]]; then
+    changelog_sections+=("<b>Changed</b>")
+    changelog_sections+=("<blockquote expandable>$(format_changelog "$changed")</blockquote>")
+fi
+if [[ -n "$fixed" ]]; then
+    changelog_sections+=("<b>Fixed</b>")
+    changelog_sections+=("<blockquote expandable>$(format_changelog "$fixed")</blockquote>")
+fi
+if [[ -n "$removed" ]]; then
+    changelog_sections+=("<b>Removed</b>")
+    changelog_sections+=("<blockquote expandable>$(format_changelog "$removed")</blockquote>")
 fi
 
-echo "==> Sent logo photo to Telegram"
-
-# Message 2: APK files (sendDocument for 1 file, sendMediaGroup for 2+)
-if [[ ${#apk_files[@]} -eq 1 ]]; then
-    # sendMediaGroup requires 2-10 items; fall back to a single document
-    response="$(curl -sS -w '\n%{http_code}' \
-        -F "chat_id=${TG_RELEASE}" \
-        -F "document=@${apk_files[0]}" \
-        "https://api.telegram.org/bot${TG_TOKEN}/sendDocument" 2>&1)" || true
-else
-    curl_args=()
-    media_items=()
-    for i in "${!apk_files[@]}"; do
-        field="f${i}"
-        curl_args+=(-F "${field}=@${apk_files[$i]}")
-        media_items+=("{\"type\":\"document\",\"media\":\"attach://${field}\"}")
-    done
-    media_json="[$(IFS=,; echo "${media_items[*]}")]"
-
-    response="$(curl -sS -w '\n%{http_code}' \
-        -F "chat_id=${TG_RELEASE}" \
-        -F "media=${media_json}" \
-        "${curl_args[@]}" \
-        "https://api.telegram.org/bot${TG_TOKEN}/sendMediaGroup" 2>&1)" || true
+changelog_text=""
+if [[ ${#changelog_sections[@]} -gt 0 ]]; then
+    changelog_text="$(printf '%s\n' "${changelog_sections[@]}")"
 fi
 
-http_code="$(tail -n1 <<<"${response}")"
-body="$(sed '$d' <<<"${response}")"
-
-if [[ "${http_code}" != "200" ]]; then
-    echo "::warning::tg_release.sh: Telegram APK notification failed (HTTP ${http_code:-unknown}): ${body}"
-    exit 0
+if [[ -n "$changelog_text" ]]; then
+    echo "==> Changelog excerpt loaded"
 fi
 
-echo "==> Sent ${#apk_files[@]} APK(s) to Telegram"
+send_notification() {
+    local topic_id="$1"
+    local label="$2"
+
+    echo "==> Sending release notification to ${label} (chat=${TG_GROUP} topic=${topic_id:-none})"
+
+    local caption="<b>Version</b>
+<blockquote>${VERSION}</blockquote>"
+
+    if [[ -n "$changelog_text" ]]; then
+        caption="${caption}
+
+${changelog_text}"
+    fi
+
+    caption="${caption}
+
+<b>See more</b>
+<blockquote><a href=\"${RELEASE_URL}\">${RELEASE_URL}</a></blockquote>"
+
+    local doc_args=(-F "chat_id=${TG_GROUP}")
+    if [[ -n "$topic_id" ]]; then
+        doc_args+=(-F "message_thread_id=${topic_id}")
+    fi
+
+    local response=""
+    if [[ ${#apk_files[@]} -eq 1 ]]; then
+        response="$(curl -sS -w '\n%{http_code}' \
+            "${doc_args[@]}" \
+            -F "document=@${apk_files[0]}" \
+            --form-string "caption=${caption}" \
+            --form-string "parse_mode=HTML" \
+            "https://api.telegram.org/bot${TG_TOKEN}/sendDocument" 2>&1)" || true
+    else
+        local media_args=()
+        local media_items=()
+        for i in "${!apk_files[@]}"; do
+            local field="f${i}"
+            media_args+=(-F "${field}=@${apk_files[$i]}")
+            if [[ "$i" -eq 0 ]]; then
+                media_items+=("{\"type\":\"document\",\"media\":\"attach://${field}\",\"caption\":\"${caption}\",\"parse_mode\":\"HTML\"}")
+            else
+                media_items+=("{\"type\":\"document\",\"media\":\"attach://${field}\"}")
+            fi
+        done
+        local media_json="[$(IFS=,; echo "${media_items[*]}")]"
+
+        response="$(curl -sS -w '\n%{http_code}' \
+            "${doc_args[@]}" \
+            -F "media=${media_json}" \
+            "${media_args[@]}" \
+            "https://api.telegram.org/bot${TG_TOKEN}/sendMediaGroup" 2>&1)" || true
+    fi
+
+    local http_code="$(tail -n1 <<<"${response}")"
+    local body="$(sed '$d' <<<"${response}")"
+
+    if [[ "${http_code}" != "200" ]]; then
+        echo "::warning::tg_release.sh: Telegram document to ${label} failed (HTTP ${http_code:-unknown}): ${body}"
+    else
+        echo "==> Sent ${#apk_files[@]} APK(s) to ${label}"
+    fi
+}
+
+send_notification "${target_topic}" "release topic"
+send_notification "${CHAT_TOPIC}" "chat topic"
+
+echo "==> Done: release Telegram notification completed"
