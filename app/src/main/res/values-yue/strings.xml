@@ -21,4 +21,5 @@
     <string name="action_freeze_non_whitelisted">凍結非白名單</string>
     <string name="action_launch">啓動</string>
     <string name="action_freeze">凍結</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

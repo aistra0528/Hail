@@ -151,4 +151,5 @@
     <string name="theme_light">Clair</string>
     <string name="theme_dark">Sombre</string>
     <string name="xposed_description">Automatiquement dégeler l\'application suspendue pour les applicationss avec portée limitée</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

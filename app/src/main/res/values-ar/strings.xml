@@ -159,4 +159,5 @@
     <string name="theme_light">ساطع</string>
     <string name="theme_dark">داكن</string>
     <string name="xposed_description">فك تجميد التطبيق المعلق تلقائيا للتطبيقات ذات النطاق المحدد</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

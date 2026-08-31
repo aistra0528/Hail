@@ -131,7 +131,7 @@ object HailData {
         ACTION_LOCK_FREEZE
     )
 
-    private val sp = PreferenceManager.getDefaultSharedPreferences(app)
+    private val sp by lazy { PreferenceManager.getDefaultSharedPreferences(app) }
     val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
     val filterUserApps get() = sp.getBoolean(FILTER_USER_APPS, true)
     val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)

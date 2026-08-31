@@ -148,4 +148,5 @@
     <string name="action_terminal">Terminál</string>
     <string name="freeze_system_app">A rendszeralkalmazások fagyasztása vagy eltávolítása az eszközön bootloop-hoz vezethet. Győződjön meg arról, hogy tudja mit csinál, és előzetesen készítsen biztonsági másolatot adatairól, vagy használjon olyan helyreállítást, amely fájlkezelést támogat.</string>
     <string name="action_qq">QQ csoport</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

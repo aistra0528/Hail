@@ -6,7 +6,7 @@ appiconloader = "1.5.0"
 biometricKtx = "1.4.0-alpha02"
 commonsText = "1.15.0"
 composeBom = "2026.08.00"
-composePreference = "1.1.1"
+composePreference = "2.2.0"
 constraintlayout = "2.2.2"
 coreKtx = "1.19.0"
 dhizukuApi = "2.6.0"
@@ -23,7 +23,9 @@ swiperefreshlayout = "1.2.0"
 workRuntime = "2.11.2"
 libxposed = "102.0.0"
 libsu = "6.0.0"
-room = "2.8.3"
+room = "3.0.1"
+ksp = "2.3.10"
+sqlite = "2.7.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose" }
@@ -44,7 +46,7 @@ androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 appiconloader = { module = "me.zhanghai.android.appiconloader:appiconloader", version.ref = "appiconloader" }
 commons-text = { module = "org.apache.commons:commons-text", version.ref = "commonsText" }
-compose-preference = { module = "me.zhanghai.compose.preference:library", version.ref = "composePreference" }
+compose-preference = { module = "me.zhanghai.compose.preference:preference", version.ref = "composePreference" }
 dhizuku-api = { module = "io.github.iamr0s:Dhizuku-API", version.ref = "dhizukuApi" }
 hiddenapibypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version.ref = "hiddenapibypass" }
 insetter = { module = "dev.chrisbanes.insetter:insetter", version.ref = "insetter" }
@@ -55,9 +57,12 @@ shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
 shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
 libxposed-api = { module = "io.github.libxposed:api", version.ref = "libxposed" }
 libsu-core = { module = "com.github.topjohnwu.libsu:core", version.ref = "libsu" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room" }
+androidx-room-sqlite-wrapper = { module = "androidx.room3:room3-sqlite-wrapper", version.ref = "room" }
+androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

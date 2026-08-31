@@ -122,82 +122,9 @@ jobs:
           path: app/build/outputs/apk/release/Hail-v${{ steps.version.outputs.version_name }}.apk
           retention-days: 7
 
-  build-abi:
-    runs-on: ubuntu-latest
-    needs: setup-java
-    strategy:
-      fail-fast: false
-      matrix:
-        abi: [arm64-v8a, armeabi-v7a, x86, x86_64]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7.0.1
-
-      - name: Setup Java JDK
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '26'
-          cache: 'gradle'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v4
-        with:
-          api-level: 36
-          ndk-version: r28
-          emulator: false
-          licenses: all
-
-      - name: Cache Gradle
-        uses: actions/cache@v6
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
-
-      - name: Get version info
-        id: version
-        shell: bash
-        run: |
-          VERSION_NAME=$(sed -n 's/.*versionName\s*=\s*"\([^"]*\)".*/\1/p' app/build.gradle.kts | head -1)
-          VERSION_CODE=$(sed -n 's/.*versionCode\s*=\s*\([0-9]*\).*/\1/p' app/build.gradle.kts | head -1)
-          if [ -z "$VERSION_NAME" ] || [ -z "$VERSION_CODE" ]; then
-            echo "::error::Could not extract versionName or versionCode from app/build.gradle.kts"
-            exit 1
-          fi
-          echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
-          echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
-          echo "tag=v$VERSION_NAME" >> $GITHUB_OUTPUT
-
-      - name: Build ABI APK
-        shell: bash
-        run: |
-          printf '%s\n' \
-            "storeFile=../keystore.jks" \
-            "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" \
-            "keyAlias=${{ secrets.KEYSTORE_ALIAS }}" \
-            "keyPassword=${{ secrets.KEYSTORE_ALIAS_PASSWORD }}" \
-            > signing.properties
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
-          VERSION="${{ steps.version.outputs.version_name }}"
-          ./gradlew assembleRelease -Pabi=${{ matrix.abi }} --no-daemon --stacktrace
-          FILENAME=$(jq -r '.elements[0].outputFile' app/build/outputs/apk/release/output-metadata.json)
-          cp "app/build/outputs/apk/release/$FILENAME" "app/build/outputs/apk/release/Hail-v${VERSION}-${{ matrix.abi }}.apk"
-          ls -la app/build/outputs/apk/release/
-
-      - name: Upload ABI artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: ${{ matrix.abi }}
-          path: app/build/outputs/apk/release/Hail-v${{ steps.version.outputs.version_name }}-${{ matrix.abi }}.apk
-          retention-days: 7
-
   create-release:
     runs-on: ubuntu-latest
-    needs: [build-universal, build-abi]
+    needs: [build-universal]
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
@@ -238,7 +165,17 @@ jobs:
           overwrite: true
           files: |
             artifacts/universal/Hail-v${{ needs.build-universal.outputs.version_name }}.apk
-            artifacts/arm64-v8a/Hail-v${{ needs.build-universal.outputs.version_name }}-arm64-v8a.apk
-            artifacts/armeabi-v7a/Hail-v${{ needs.build-universal.outputs.version_name }}-armeabi-v7a.apk
-            artifacts/x86/Hail-v${{ needs.build-universal.outputs.version_name }}-x86.apk
-            artifacts/x86_64/Hail-v${{ needs.build-universal.outputs.version_name }}-x86_64.apk
+
+      - name: Notify Telegram
+        shell: bash
+        continue-on-error: true
+        env:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_RELEASE: ${{ secrets.TG_RELEASE }}
+          TG_LOGO: app/src/main/ic_launcher-playstore.png
+          RELEASE_TYPE: ${{ github.event.inputs.release_type }}
+          VERSION: ${{ needs.build-universal.outputs.version_name }}
+          RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.build-universal.outputs.tag }}
+        run: |
+          bash .github/scripts/tg_release.sh \
+            "artifacts/universal/Hail-v${VERSION}.apk"

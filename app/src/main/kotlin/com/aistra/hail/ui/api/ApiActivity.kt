@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
+import androidx.lifecycle.lifecycleScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.ui.theme.AppTheme
 import com.aistra.hail.utils.*
 import com.aistra.hail.work.HWork.setAutoFreeze
+import kotlinx.coroutines.launch
 
 class ApiActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +54,19 @@ class ApiActivity : ComponentActivity() {
             Intent.ACTION_VIEW -> return handleSchema(intent.data)
 
             HailApi.ACTION_LAUNCH -> launchApp(requirePackage, runCatching { requireTagId }.getOrNull())
+            HailApi.ACTION_LAUNCH_ACTION -> {
+                lifecycleScope.launch {
+                    val actionId = intent.getStringExtra(HailApi.EXTRA_ACTION_ID)
+                        ?: throw IllegalArgumentException(getString(R.string.action_unavailable))
+                    val action = ActionsRepository.loadById(actionId)
+                        ?: throw IllegalArgumentException(getString(R.string.action_unavailable))
+                    ActionExecutor.prepare(action).onSuccess {
+                        startActivity(it)
+                        finish()
+                    }.onFailure(::setErrorDialog)
+                }
+                return false
+            }
             HailApi.ACTION_FREEZE -> setAppFrozen(requirePackage, true)
             HailApi.ACTION_UNFREEZE -> setAppFrozen(requirePackage, false)
             HailApi.ACTION_FREEZE_TAG -> setListFrozen(

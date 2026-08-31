@@ -13,9 +13,13 @@ import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 import me.zhanghai.android.appiconloader.AppIconLoader
 
-object HShortcuts {
+object HShortcuts : CoroutineScope {
+    override val coroutineContext: CoroutineContext get() = Dispatchers.Main
+
     private val iconLoader by lazy {
         AppIconLoader(
             app.resources.getDimensionPixelSize(R.dimen.app_icon_size),
@@ -25,15 +29,53 @@ object HShortcuts {
     }
 
     fun addPinShortcut(icon: Drawable, id: String, label: CharSequence, intent: Intent) {
-        addPinShortcut(getDrawableIcon(icon), id, label, intent)
+        launch {
+            addPinShortcut(getDrawableIcon(icon), id, label, intent)
+        }
     }
 
     fun addPinShortcut(appInfo: AppInfo, id: String, label: CharSequence, intent: Intent) {
-        appInfo.applicationInfo?.let {
-            val icon = IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
-            addPinShortcut(IconCompat.createWithBitmap(icon), id, label, intent)
-        } ?: run {
-            addPinShortcut(app.packageManager.defaultActivityIcon, id, label, intent)
+        launch {
+            val icon = appInfo.applicationInfo?.let {
+                withContext(Dispatchers.IO) {
+                    IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
+                }
+            }
+            if (icon != null) {
+                addPinShortcut(IconCompat.createWithBitmap(icon), id, label, intent)
+            } else {
+                addPinShortcut(app.packageManager.defaultActivityIcon, id, label, intent)
+            }
+        }
+    }
+
+    fun addActionShortcut(action: LaunchAction) {
+        val label = AppInfo(action.launchPackage).name
+        launch {
+            addPinShortcut(
+                AppInfo(action.launchPackage),
+                "action_${action.id}",
+                label,
+                Intent(HailApi.ACTION_LAUNCH_ACTION).putExtra(HailApi.EXTRA_ACTION_ID, action.id)
+            )
+        }
+    }
+
+    fun updateActionShortcut(action: LaunchAction) {
+        val label = AppInfo(action.launchPackage).name
+        launch {
+            val icon = AppInfo(action.launchPackage).applicationInfo?.let {
+                withContext(Dispatchers.IO) {
+                    IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
+                }
+            }
+            val builder = ShortcutInfoCompat.Builder(app, "action_${action.id}")
+                .setShortLabel(label)
+                .setIntent(Intent(HailApi.ACTION_LAUNCH_ACTION).putExtra(HailApi.EXTRA_ACTION_ID, action.id))
+            if (icon != null) {
+                builder.setIcon(IconCompat.createWithBitmap(icon))
+            }
+            ShortcutManagerCompat.updateShortcuts(app, listOf(builder.build()))
         }
     }
 
@@ -51,17 +93,21 @@ object HShortcuts {
     fun addDynamicShortcut(packageName: String) {
         if (HailData.biometricLogin) return
         val applicationInfo = HPackages.getApplicationInfoOrNull(packageName)
-        val shortcut =
-            ShortcutInfoCompat.Builder(app, packageName.hashCode().toString()) // Make id different from pin
-                .setIcon(IconCompat.createWithBitmap(applicationInfo?.let {
-                    IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
-                } ?: getBitmapFromDrawable(
-                    app.packageManager.defaultActivityIcon
-                ))).setShortLabel(
-                    applicationInfo?.loadLabel(app.packageManager) ?: packageName
-                ).setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName)).build()
-        ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
-        addDynamicShortcutAction(HailData.dynamicShortcutAction)
+        launch {
+            val shortcut =
+                ShortcutInfoCompat.Builder(app, packageName.hashCode().toString())
+                    .setIcon(IconCompat.createWithBitmap(applicationInfo?.let {
+                        withContext(Dispatchers.IO) {
+                            IconPack.loadIcon(it.packageName) ?: iconLoader.loadIcon(it)
+                        }
+                    } ?: getBitmapFromDrawable(
+                        app.packageManager.defaultActivityIcon
+                    ))).setShortLabel(
+                        applicationInfo?.loadLabel(app.packageManager) ?: packageName
+                    ).setIntent(HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, packageName)).build()
+            ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
+            addDynamicShortcutAction(HailData.dynamicShortcutAction)
+        }
     }
 
     fun addDynamicShortcutAction(action: String) {
@@ -85,29 +131,33 @@ object HShortcuts {
             HailData.ACTION_LOCK_FREEZE -> R.string.action_lock_freeze
             else -> R.string.action_unfreeze_all
         }
-        val shortcut = ShortcutInfoCompat.Builder(app, id).setIcon(
-            getDrawableIcon(
-                AppCompatResources.getDrawable(
-                    app, icon
-                )!!
-            )
-        ).setShortLabel(app.getString(label)).setIntent(Intent(id)).build()
-        ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
+        launch {
+            val shortcut = ShortcutInfoCompat.Builder(app, id).setIcon(
+                getDrawableIcon(
+                    AppCompatResources.getDrawable(
+                        app, icon
+                    )!!
+                )
+            ).setShortLabel(app.getString(label)).setIntent(Intent(id)).build()
+            ShortcutManagerCompat.pushDynamicShortcut(app, shortcut)
+        }
     }
 
     fun removeAllDynamicShortcuts() {
         ShortcutManagerCompat.removeAllDynamicShortcuts(app)
     }
 
-    private fun getDrawableIcon(drawable: Drawable): IconCompat =
+    private suspend fun getDrawableIcon(drawable: Drawable): IconCompat =
         IconCompat.createWithBitmap(getBitmapFromDrawable(drawable))
 
-    private fun getBitmapFromDrawable(drawable: Drawable): Bitmap = Bitmap.createBitmap(
-        drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
-    ).also {
-        with(Canvas(it)) {
-            drawable.setBounds(0, 0, width, height)
-            drawable.draw(this)
+    private suspend fun getBitmapFromDrawable(drawable: Drawable): Bitmap = withContext(Dispatchers.IO) {
+        Bitmap.createBitmap(
+            drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        ).also {
+            with(Canvas(it)) {
+                drawable.setBounds(0, 0, width, height)
+                drawable.draw(this)
+            }
         }
     }
 }

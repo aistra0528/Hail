@@ -150,4 +150,5 @@
     <string name="theme_light">روشن</string>
     <string name="theme_dark">تیره</string>
     <string name="xposed_description">بازکردن خودکار برنامه‌های معلق شده برای برنامه‌های نشان شده</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

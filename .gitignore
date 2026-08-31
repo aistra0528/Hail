@@ -6,7 +6,8 @@
 *.iml
 *.jks
 *.keystore.secrets
-/.kilo/
-/.kilocode/
+ /.kilocode/
 /.secrets
 commits_since_v1.10.3.txt
+/.vscode/
+/docs/

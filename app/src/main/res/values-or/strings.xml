@@ -38,4 +38,5 @@
     <string name="mode_owner_hide">ଡିଵାଇସ୍ ଅଧିପତି - ଲୁଚାଅ</string>
     <string name="mode_default">ଅକାମ</string>
     <string name="mode_dhizuku_hide">Dhizuku - ଲୁଚାଅ</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

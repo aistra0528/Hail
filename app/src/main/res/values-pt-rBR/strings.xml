@@ -152,4 +152,5 @@
     <string name="follow_system">Siga o sistema</string>
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

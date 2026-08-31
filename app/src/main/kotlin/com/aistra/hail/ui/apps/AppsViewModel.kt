@@ -9,6 +9,7 @@ import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
 
 class AppsViewModel(application: Application) : AndroidViewModel(application) {
     val apps = MutableLiveData<List<ApplicationInfo>>()
@@ -17,11 +18,17 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     val displayApps = MutableLiveData<List<ApplicationInfo>>()
 
     init {
+        viewModelScope.launch {
+            AppMetaCache.installedApplicationsReady.first { it }
+            updateAppList()
+        }
         updateAppList()
     }
 
     private var refreshJob: Job? = null
     private var refreshStateJob: Job? = null
+    private var lastUpdateTime: Long = 0
+    private var appListRefreshJob: Job? = null
 
     /**
      * Delaying changes to the refreshing state prevents the progress bar from flickering.
@@ -54,16 +61,38 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
      * This method is only used to refresh all the applications that the user has installed
      * and has no filtering or sorting effect.
      * */
-    fun updateAppList() {
-        viewModelScope.launch {
+    fun updateAppList(forceRefresh: Boolean = false) {
+        val now = System.currentTimeMillis()
+        if (!forceRefresh && now - lastUpdateTime < 1000) return
+        lastUpdateTime = now
+        if (forceRefresh) {
+            appListRefreshJob?.cancel()
             postRefreshState(true)
-            val appList = withContext(Dispatchers.IO) { HPackages.getInstalledApplications() }
-            apps.postValue(appList)
-            updateDisplayAppList()
-            postRefreshState(false)
-            AppIconCache.prefetch(getApplication(), appList)
-            AppMetaCache.prefetch(appList).join()
-            updateDisplayAppList()
+        }
+        viewModelScope.launch {
+            val appList = withContext(Dispatchers.IO) {
+                AppMetaCache.getInstalledApplicationsCacheFirst(forceRefresh)
+            }
+            if (appList.isNotEmpty()) {
+                apps.postValue(appList)
+                updateDisplayAppList()
+            }
+            if (forceRefresh) {
+                postRefreshState(false)
+            } else if (appList.isNotEmpty()) {
+                appListRefreshJob = viewModelScope.launch {
+                    withContext(Dispatchers.IO) { HPackages.getInstalledApplications() }.let { refreshed ->
+                        val currentPackages = apps.value?.map { it.packageName }?.toSet() ?: emptySet()
+                        val newPackages = refreshed.map { it.packageName }.toSet()
+                        if (currentPackages != newPackages) {
+                            apps.postValue(refreshed)
+                            updateDisplayAppList()
+                        }
+                        AppMetaCache.prefetch(refreshed)
+                        AppIconCache.prefetch(getApplication(), refreshed)
+                    }
+                }
+            }
         }
     }
 
@@ -76,9 +105,7 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     fun updateDisplayAppList() {
         apps.value?.let {
             viewModelScope.launch {
-                postRefreshState(true)
                 displayApps.postValue(filterList(it, query.value))
-                postRefreshState(false)
             }
         }
     }

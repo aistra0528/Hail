@@ -153,4 +153,5 @@
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
     <string name="xposed_description">Automaticamente descongelar apps suspensas para as apps em âmbito</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

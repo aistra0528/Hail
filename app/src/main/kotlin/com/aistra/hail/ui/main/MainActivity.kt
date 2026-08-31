@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener(this@MainActivity)
         appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.nav_home, R.id.nav_apps, R.id.nav_settings
+            R.id.nav_home, R.id.nav_actions, R.id.nav_settings
         ).build()
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav?.setupWithNavController(navController)
@@ -114,8 +114,28 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     override fun onDestinationChanged(
         controller: NavController, destination: NavDestination, arguments: Bundle?
     ) {
-        fab.tag = destination.id == R.id.nav_home
-        if (fab.tag == true) fab.show() else fab.hide()
+        fab.setOnClickListener(null)
+        fab.tag = destination.id == R.id.nav_home || destination.id == R.id.nav_actions
+        when (destination.id) {
+            R.id.nav_home -> {
+                fab.setIconResource(R.drawable.ic_round_add)
+                fab.contentDescription = getString(R.string.title_apps)
+                fab.setOnClickListener { controller.navigate(R.id.nav_apps) }
+                fab.show()
+            }
+            R.id.nav_actions -> {
+                fab.setIconResource(R.drawable.ic_round_add)
+                fab.contentDescription = getString(R.string.action_create_action)
+                fab.setOnClickListener {
+                    (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment)
+                        ?.childFragmentManager?.primaryNavigationFragment?.let { fragment ->
+                            (fragment as? com.aistra.hail.ui.actions.ActionsFragment)?.showEditor(null)
+                        }
+                }
+                fab.show()
+            }
+            else -> fab.hide()
+        }
         binding.bottomNav?.isVisible = destination.id != R.id.nav_about
         binding.navRail?.isVisible = destination.id != R.id.nav_about
     }

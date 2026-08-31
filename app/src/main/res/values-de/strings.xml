@@ -143,4 +143,5 @@
     <string name="mode_su_stop">Root - Beenden erzwingen</string>
     <string name="nine_key">T9-Suche</string>
     <string name="home_font_size">Schriftgröße der Startseite</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

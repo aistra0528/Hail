@@ -7,6 +7,8 @@ object HailApi {
     /** @since 0.5.0 */
     const val ACTION_LAUNCH = "${BuildConfig.APPLICATION_ID}.action.LAUNCH"
 
+    const val ACTION_LAUNCH_ACTION = "${BuildConfig.APPLICATION_ID}.action.LAUNCH_ACTION"
+
     /** @since 0.5.0 */
     const val ACTION_FREEZE = "${BuildConfig.APPLICATION_ID}.action.FREEZE"
 
@@ -37,6 +39,8 @@ object HailApi {
 
     /** @since 0.6.0 */
     const val ACTION_LOCK_FREEZE = "${BuildConfig.APPLICATION_ID}.action.LOCK_FREEZE"
+
+    const val EXTRA_ACTION_ID = "action_id"
 
     fun getIntentForPackage(action: String, packageName: String) =
         Intent(action).putExtra(HailData.KEY_PACKAGE, packageName)

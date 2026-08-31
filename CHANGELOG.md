@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.3] - 2026-08-31
+
+### Highlights
+- New Actions tab for creating and managing launch shortcuts with two or multiple apps
+- Home and Actions screens now have dedicated add FABs
+
+### Added
+- Actions screen for creating and managing launch actions
+- Create, edit, duplicate, and delete actions
+- Pin actions to the home screen
+- Silent background app list refresh with cancelable pull-to-refresh
+- Faster app picker with cached app data
+
+### Changed
+- Apps access moved from bottom navigation to Home FAB
+- Bottom navigation now shows Home, Actions, and Settings
+- Settings screen opens faster
+- Apps tab shows cached data instantly on cold start
+- Shortcut icons load in the background
+
+### Fixed
+- Apps context menu shows the correct app name
+- App list stays up to date when switching between screens
+- Clearer message when freezing an app fails
+
+### Translations
+- Updated Spanish, Chinese (Simplified), and Ukrainian translations via Weblate
+
 ## [1.11.2] - 2026-08-27
 
 ### Highlights

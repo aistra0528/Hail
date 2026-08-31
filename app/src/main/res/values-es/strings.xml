@@ -154,4 +154,5 @@
     <string name="working_mode_tag">Modo de funcionamiento de las aplicaciones relacionadas</string>
     <string name="state_running">En ejecución</string>
     <string name="donate_kofi">Ko-fi</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

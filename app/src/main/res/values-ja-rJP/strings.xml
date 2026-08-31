@@ -146,4 +146,5 @@
     <string name="command">コマンド</string>
     <string name="nine_key">T9 Search</string>
     <string name="freeze_system_app">システムアプリを無効化やアンインストールすると、デバイスがブートループに陥る可能性があります。操作内容を十分に理解し、事前にデータをバックアップするか、ファイル管理に対応したリカバリーツールをご利用ください。</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

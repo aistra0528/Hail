@@ -147,4 +147,5 @@
     <string name="action_skip">건너뛰기</string>
     <string name="xposed_description">범위가 지정된 앱의 경우 일시 중단된 앱을 자동으로 다시 활성화합니다.</string>
     <string name="action_fdroid">F-Droid</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

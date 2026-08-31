@@ -128,4 +128,5 @@
     <string name="action_pin">پن</string>
     <string name="action_unpin">ان پن</string>
     <string name="action_import_frozen">منجمد ایپ درآمد کریں</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

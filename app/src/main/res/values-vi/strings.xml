@@ -137,4 +137,5 @@
     <string name="mode_privapp_stop">Ứng dụng hệ thống - Buộc dừng</string>
     <string name="mode_privapp_disable">Ứng dụng hệ thống - Tắt</string>
     <string name="action_reinstall">Cài đặt lại</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

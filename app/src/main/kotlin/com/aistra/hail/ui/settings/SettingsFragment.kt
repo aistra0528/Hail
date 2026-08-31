@@ -6,8 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.SideEffect
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
@@ -23,6 +25,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
@@ -36,6 +42,7 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.aistra.hail.HailApp.Companion.app
+import com.aistra.hail.BuildConfig
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
@@ -61,10 +68,31 @@ import rikka.shizuku.Shizuku
 
 class SettingsFragment : MainFragment(), MenuProvider {
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+    private val _iconPackValues = mutableStateOf(listOf(HailData.ACTION_NONE))
+    private val _iconPackNames = mutableStateOf(mapOf<String, String>())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val menuHost = requireActivity() as MenuHost
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        if (_iconPackValues.value.size == 1) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                val values = mutableListOf(HailData.ACTION_NONE).apply {
+                    addAll(Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
+                        if (HTarget.T) app.packageManager.queryIntentActivities(
+                            it, PackageManager.ResolveInfoFlags.of(0)
+                        ) else app.packageManager.queryIntentActivities(it, 0)
+                    }.map { it.activityInfo.packageName })
+                }
+                val names = values.associateWith { pack ->
+                    if (pack == HailData.ACTION_NONE) app.getString(R.string.action_none)
+                    else HPackages.getApplicationInfoOrNull(pack)?.loadLabel(app.packageManager)?.toString() ?: pack
+                }
+                withContext(Dispatchers.Main) {
+                    _iconPackValues.value = values
+                    _iconPackNames.value = names
+                }
+            }
+        }
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
@@ -79,6 +107,12 @@ class SettingsFragment : MainFragment(), MenuProvider {
 
     @Composable
     private fun SettingsScreen() {
+        if (BuildConfig.DEBUG) {
+            SideEffect {
+                Log.d("SettingsRecompose", "SettingsScreen recomposed")
+            }
+        }
+        val iconPackValues by _iconPackValues
         val autoFreezeAfterLock = rememberPreferenceState(HailData.AUTO_FREEZE_AFTER_LOCK, false)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             listPreference(
@@ -122,17 +156,11 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     AppIconCache.clear()
                     true
                 },
-                values = mutableListOf(HailData.ACTION_NONE).apply {
-                    addAll(Intent(Intent.ACTION_MAIN).addCategory("com.anddoes.launcher.THEME").let {
-                        if (HTarget.T) app.packageManager.queryIntentActivities(
-                            it, PackageManager.ResolveInfoFlags.of(0)
-                        ) else app.packageManager.queryIntentActivities(it, 0)
-                    }.map { it.activityInfo.packageName })
-                },
+                values = iconPackValues,
                 titleId = R.string.icon_pack,
                 icon = Icons.Outlined.Palette,
                 summary = { iconPackName(it) },
-                valueToText = ::iconPackName
+                valueToText = { iconPackName(it) }
             )
             switchPreference(
                 key = HailData.GRAYSCALE_ICON,
@@ -315,6 +343,11 @@ class SettingsFragment : MainFragment(), MenuProvider {
         enabled: Boolean = true,
         icon: ImageVector,
     ) = item(key = titleId, contentType = "SwitchPreference") {
+        if (BuildConfig.DEBUG) {
+            SideEffect {
+                Log.d("SettingsRecompose", "switchPreference(${app.getString(titleId)}) recomposed")
+            }
+        }
         val state = rememberState()
         SwitchPreference(
             value = state.value,
@@ -350,6 +383,11 @@ class SettingsFragment : MainFragment(), MenuProvider {
         type: ListPreferenceType = ListPreferenceType.DROPDOWN_MENU,
         valueToText: (String) -> String
     ) = item(key = key, contentType = "ListPreference") {
+        if (BuildConfig.DEBUG) {
+            SideEffect {
+                Log.d("SettingsRecompose", "listPreference(${app.getString(titleId)}) recomposed")
+            }
+        }
         val state = rememberPreferenceState(key, defaultValue)
         ListPreference(
             value = state.value,
@@ -391,7 +429,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     }
 
     private fun iconPackName(pack: String): String = if (pack == HailData.ACTION_NONE) getString(R.string.action_none)
-    else HPackages.getApplicationInfoOrNull(pack)?.loadLabel(app.packageManager)?.toString() ?: pack
+    else _iconPackNames.value[pack] ?: pack
 
     private fun addPinShortcut() {
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_add_pin_shortcut)

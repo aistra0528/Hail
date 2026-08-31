@@ -153,4 +153,5 @@
     <string name="theme_dark">Цёмная</string>
     <string name="xposed_description">Аўтаразмарожванне прыпыненых праграм ізаляванага профілю</string>
     <string name="fuzzy_search">Недакладны пошук</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

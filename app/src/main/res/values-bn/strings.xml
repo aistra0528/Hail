@@ -43,4 +43,5 @@
     <string name="action_uninstall">আনইন্সটল করুন</string>
     <string name="msg_uninstall">আপনি কি এই অ্যাপটি আনইন্সটল করতে চান?</string>
     <string name="working_mode">কাজের ধরণ</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

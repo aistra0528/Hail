@@ -46,4 +46,5 @@
     <string name="action_details">Informace o aplikaci</string>
     <string name="mode_owner_suspend">Majitel Zařízení - Suspendovat</string>
     <string name="mode_su_disable">Superuser - Deaktivovat</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

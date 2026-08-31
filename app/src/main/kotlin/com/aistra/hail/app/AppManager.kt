@@ -39,7 +39,7 @@ object AppManager {
                     when {
                         setAppFrozen(it.packageName, frozen) -> {
                             i++
-                            name = it.name.toString()
+                            name = it.name
                         }
 
                         it.applicationInfo != null -> denied = true

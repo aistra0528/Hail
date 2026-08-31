@@ -153,4 +153,5 @@
     <string name="theme_light">Chiaro</string>
     <string name="theme_dark">Scuro</string>
     <string name="xposed_description">Scongela automaticamente le app sospese (per le app selezionate)</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

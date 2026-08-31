@@ -151,4 +151,5 @@
     <string name="follow_system">Sistemi takip et</string>
     <string name="theme_light">Açık</string>
     <string name="theme_dark">Koyu</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

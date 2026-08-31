@@ -155,4 +155,5 @@
     <string name="state_suspended">已暂停</string>
     <string name="state_uninstalled">已卸载</string>
     <string name="donate_kofi">Ko-fi</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

@@ -153,4 +153,5 @@
     <string name="action_biometric">Odblokowywanie biometryczne</string>
     <string name="msg_biometric">Zaloguj używając twoich danych biometrycznych</string>
     <string name="xposed_description">Automatycznie odmróź aplikacje w określonym zakresie</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

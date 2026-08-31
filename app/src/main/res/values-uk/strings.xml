@@ -162,4 +162,5 @@
     <string name="state_hidden">Приховано</string>
     <string name="state_suspended">Призупинено</string>
     <string name="state_uninstalled">Видалено</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>

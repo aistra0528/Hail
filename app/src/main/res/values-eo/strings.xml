@@ -20,4 +20,5 @@
     <string name="label_default">Defaŭlto</string>
     <string name="action_qq">QQ Grupo</string>
     <string name="action_licenses">Permesilo</string>
+    <string name="action_freeze_failed">Could not freeze: %s</string>
 </resources>
