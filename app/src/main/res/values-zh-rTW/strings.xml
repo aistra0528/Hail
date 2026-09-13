@@ -85,7 +85,7 @@
         <item quantity="other">%1$d 分鐘後 %2$s：%3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">清除所有動態捷徑</string>
-    <string name="tile_action">圖塊動作</string>
+    <string name="tile_action">快速設定圖塊動作</string>
     <string name="auto_freeze">自動凍結</string>
     <string name="auto_freeze_notification_title">自動凍結正在執行的服務</string>
     <string name="auto_freeze_after_lock">螢幕鎖定後</string>
@@ -147,5 +147,10 @@
     <string name="follow_system">遵循系統</string>
     <string name="theme_light">淺色模式</string>
     <string name="theme_dark">深色模式</string>
-    <string name="xposed_description">為作用域内的程式自動解凍被暫停的應用程式</string>
+    <string name="xposed_description">允許受範圍限制的應用程式啟動已暫停的應用程式</string>
+    <string name="working_mode_tag">相關應用程式的工作模式</string>
+    <string name="state_running">執行中</string>
+    <string name="state_disabled">已停用</string>
+    <string name="state_hidden">已隱藏</string>
+    <string name="state_suspended">已暫停</string>
 </resources>
