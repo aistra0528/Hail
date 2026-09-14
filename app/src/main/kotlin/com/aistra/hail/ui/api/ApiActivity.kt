@@ -61,6 +61,11 @@ class ApiActivity : ComponentActivity() {
             HailApi.ACTION_UNFREEZE_TAG -> setListFrozen(
                 false, HailData.checkedList.filter { requireTagId in it.tagIdList })
 
+            HailApi.ACTION_WHITELIST -> setAppWhitelisted(requirePackage, true)
+            HailApi.ACTION_UNWHITELIST -> setAppWhitelisted(requirePackage, false)
+            HailApi.ACTION_WHITELIST_TAG -> setTagWhitelisted(requireTagId, true)
+            HailApi.ACTION_UNWHITELIST_TAG -> setTagWhitelisted(requireTagId, false)
+
             HailApi.ACTION_FREEZE_ALL -> setListFrozen(true)
             HailApi.ACTION_UNFREEZE_ALL -> setListFrozen(false)
             HailApi.ACTION_FREEZE_NON_WHITELISTED -> setListFrozen(true, skipWhitelisted = true)
@@ -96,6 +101,10 @@ class ApiActivity : ComponentActivity() {
                 "unfreeze" -> HailApi.ACTION_UNFREEZE
                 "freeze_tag" -> HailApi.ACTION_FREEZE_TAG
                 "unfreeze_tag" -> HailApi.ACTION_UNFREEZE_TAG
+                "whitelist" -> HailApi.ACTION_WHITELIST
+                "unwhitelist" -> HailApi.ACTION_UNWHITELIST
+                "whitelist_tag" -> HailApi.ACTION_WHITELIST_TAG
+                "unwhitelist_tag" -> HailApi.ACTION_UNWHITELIST_TAG
                 "freeze_all" -> HailApi.ACTION_FREEZE_ALL
                 "unfreeze_all" -> HailApi.ACTION_UNFREEZE_ALL
                 "freeze_non_whitelisted" -> HailApi.ACTION_FREEZE_NON_WHITELISTED
@@ -229,6 +238,20 @@ class ApiActivity : ComponentActivity() {
                 app.setAutoFreezeService()
             }
         }
+    }
+
+    private fun setAppWhitelisted(packageName: String, whitelisted: Boolean) {
+        val appsToUpdate = HailData.checkedList.filter { it.packageName == packageName }
+        appsToUpdate.forEach { it.whitelisted = whitelisted }
+        HailData.saveApps()
+        HUI.showToast(if (whitelisted) R.string.action_whitelist else R.string.action_remove_whitelist, HPackages.getApplicationInfoOrNull(packageName)?.loadLabel(packageManager) ?: packageName)
+    }
+
+    private fun setTagWhitelisted(tagId: Int, whitelisted: Boolean) {
+        val appsToUpdate = HailData.checkedList.filter { tagId in it.tagIdList }
+        appsToUpdate.forEach { it.whitelisted = whitelisted }
+        HailData.saveApps()
+        HUI.showToast(if (whitelisted) R.string.action_whitelist else R.string.action_remove_whitelist, getString(R.string.action_tag_set))
     }
 
     private fun lockScreen(freezeAll: Boolean) {
