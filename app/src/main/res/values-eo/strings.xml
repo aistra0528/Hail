@@ -89,4 +89,25 @@
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minutoj</item>
     </plurals>
+    <plurals name="msg_deferred_task">
+        <item quantity="one">%2$s post %1$d minuto: %3$s</item>
+        <item quantity="other">%2$s post %1$d minutoj: %3$s</item>
+    </plurals>
+    <string name="action_clear_dynamic_shortcuts">Forigi ĉiujn dinamikajn fulmoklavojn</string>
+    <string name="tile_action">Agado de rapidagorda kahelo</string>
+    <string name="auto_freeze">Aŭtomate frostigi</string>
+    <string name="auto_freeze_notification_title">Aŭtomata frostiga servo funkcias</string>
+    <string name="auto_freeze_after_lock">Post kiam la ekrano ŝlosiĝis</string>
+    <string name="skip_while_charging">Preterlasi dum ŝargado</string>
+    <string name="skip_foreground_app">Preterlasi malfonajn aplikaĵojn</string>
+    <string name="title_customize">Adapti</string>
+    <string name="grayscale_icon">Grizoskala ikono</string>
+    <string name="compact_icon">Kompakta ikono</string>
+    <string name="action_biometric">Biometrika ensaluto</string>
+    <string name="msg_biometric">Ensaluti per via biometrika identigilo</string>
+    <string name="action_pin">PIN</string>
+    <string name="action_unpin">Malpingli</string>
+    <string name="action_whitelist">Aldoni al blanklisto</string>
+    <string name="action_remove_whitelist">Forigi el blanklisto</string>
+    <string name="nothing_here">Nenio ĉi tie</string>
 </resources>
