@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hail</string>
-    <string name="app_slogan">Freezedom!</string>
+    <string name="app_slogan">Frierheit!</string>
     <string name="title_home">Startseite</string>
     <string name="title_apps">Apps</string>
     <string name="title_settings">Einstellungen</string>
@@ -33,7 +33,7 @@
     <string name="action_export_clipboard">In die Zwischenablage exportieren</string>
     <string name="action_import_clipboard">Aus der Zwischenablage importieren</string>
     <string name="action_remove_home">Aus Start löschen</string>
-    <string name="action_unfreeze_remove_home">Auftauen und von Startseite löchen</string>
+    <string name="action_unfreeze_remove_home">Auftauen und von Startseite entfernen</string>
     <string name="action_deselect">Deselektieren</string>
     <string name="action_undo">Rückgängig machen</string>
     <string name="action_help">Hilfe</string>
@@ -52,7 +52,7 @@
     <string name="mode_shizuku_suspend">Shizuku - Aussetzen (Suspend)</string>
     <string name="title_set_owner">Geräteeigentümer festlegen</string>
     <string name="msg_set_owner">Dieses Kommando per adb ausfüren:\n%s</string>
-    <string name="title_remove_owner">Geräteeigentümer entffernen</string>
+    <string name="title_remove_owner">Geräteeigentümer entfernen</string>
     <string name="msg_remove_owner">Der Geräteeigentümer wird entfernt. Es könnte ggf. nicht mehr funktionieren, ihn nach dem Entfernen wieder zu setzen.
 \nAusgeblendete (hidden) Anwendungen sind nach dem Entfernen weiterhin versteckt. Ausgeblendete Anwendungen unbedingt vorher wieder einblenden.</string>
     <string name="tap_to_select">Antippen für Mehrfachauswahl</string>
@@ -63,12 +63,12 @@
     <string name="filter_unfrozen_apps">Nicht eingefroren</string>
     <string name="sort_by">Sortieren nach</string>
     <string name="sort_name">Name</string>
-    <string name="sort_install">Installationszeitpunkt</string>
+    <string name="sort_install">erste Installation</string>
     <string name="sort_update">Letztes Update</string>
     <string name="title_donate">Vielen Dank!</string>
     <string name="donate_alipay">Alipay</string>
-    <string name="donate_wechat">WeChat Pay</string>
-    <string name="donate_wechat_scan">Scan</string>
+    <string name="donate_wechat">WeChat Bezahlung</string>
+    <string name="donate_wechat_scan">scanen</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">Zugriff verweigert</string>
@@ -111,12 +111,12 @@
     <string name="action_import_frozen">Eingefrorene App importieren</string>
     <string name="action_import_app">App importieren</string>
     <string name="synthesize_adaptive_icons">Adaptive Icons synthetisieren</string>
-    <string name="action_export_current">Sichtbare exportieren</string>
+    <string name="action_export_current">Aktuelles exportieren</string>
     <string name="action_export_all">Alle exportieren</string>
     <string name="skip_notifying_app">Apps die Benachrichtigungen senden ignorieren</string>
     <string name="auto_freeze_delay">Einfrierverzögerung in Minuten</string>
     <string name="title_shortcuts">Verknüpfungen</string>
-    <string name="msg_guide">Vor dem Einfrieren, bitte in den Einstellungen einen Arbeitsmodus auswälen.</string>
+    <string name="msg_guide">Vor dem Einfrieren, bitte in den Einstellungen einen Arbeitsmodus auswählen.</string>
     <string name="dynamic_shortcut_action">Aktion für dynamische Verknüpfung</string>
     <string name="action_none">Keine</string>
     <string name="mode_shizuku_hide">Shizuku - Ausblenden (Hide)</string>
@@ -138,9 +138,23 @@
     <string name="shizuku_hide_adb">Shizuku wird mit adb ausgeführt. Um Apps zu verstecken, bitte Shizuku als Root neu starten.</string>
     <string name="mode_island_hide">Island/Insular - Verstecken (Hide)</string>
     <string name="mode_island_suspend">Island/Insular - Aussetzen (Suspend)</string>
-    <string name="freeze_system_app">System-Apps einzufrieren kann einen Bootloop verursachen. Vergewissern Sie sich, dass Sie wissen was Sie tun und machen Sie vorher ein Backup Ihrer Daten, oder verwenden Sie ein Recovery-Werkzeug welches Dateimanagement unterstützt.</string>
+    <string name="freeze_system_app">System-Apps einzufrieren oder zu deinstallieren kann einen Bootloop verursachen. Vergewissern Sie sich, dass Sie wissen was Sie tun und machen Sie vorher ein Backup Ihrer Daten, oder verwenden Sie ein Recovery-Werkzeug welches Dateimanagement unterstützt.</string>
     <string name="mode_privapp_stop">System-App - Beenden erzwingen</string>
     <string name="mode_su_stop">Root - Beenden erzwingen</string>
     <string name="nine_key">T9-Suche</string>
     <string name="home_font_size">Schriftgröße der Startseite</string>
+    <string name="working_mode_tag">Arbeitsmodus von verbundenen Apps</string>
+    <string name="donate_kofi">Ko-fi</string>
+    <string name="fuzzy_search">unscharfe Suche</string>
+    <string name="app_theme">App Aussehen</string>
+    <string name="follow_system">folge dem System</string>
+    <string name="theme_light">hell</string>
+    <string name="theme_dark">dunkel</string>
+    <string name="state_running">läuft</string>
+    <string name="state_disabled">deaktiviert</string>
+    <string name="state_hidden">versteckt</string>
+    <string name="state_suspended">pausiert</string>
+    <string name="state_uninstalled">deinstalliert</string>
+    <string name="xposed_description">erlaube verbundene Apps ausgesetzte Apps zu starten</string>
+    <string name="action_reinstall">erneut installieren</string>
 </resources>
