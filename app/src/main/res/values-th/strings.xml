@@ -49,4 +49,5 @@
     <string name="mode_owner_suspend">ใช้สิทธิ์ผู้ดูแลอุปกรณ์ระงับ</string>
     <string name="mode_su_stop">ใช้สิทธิ์รูทระงับ</string>
     <string name="mode_su_disable">ใช้สิทธิ์รูทปิดการใช้งาน</string>
+    <string name="mode_shizuku_stop">ชิซึกุ- Force Stop</string>
 </resources>
