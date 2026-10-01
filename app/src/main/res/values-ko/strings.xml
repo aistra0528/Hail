@@ -35,7 +35,7 @@
     <string name="action_help">도움말</string>
     <string name="action_search">검색</string>
     <string name="action_uninstall">제거</string>
-    <string name="msg_uninstall">이 앱을 제거하시겠어요?</string>
+    <string name="msg_uninstall">이 앱을 제거하시겠습니까?</string>
     <string name="working_mode">동작 모드</string>
     <string name="mode_owner_hide">기기 관리자 - 숨김</string>
     <string name="mode_owner_suspend">기기 관리자 - 중지</string>
@@ -57,7 +57,7 @@
     <string name="filter_unfrozen_apps">동결 해제</string>
     <string name="sort_by">정렬 기준</string>
     <string name="sort_install">첫 설치­ 순</string>
-    <string name="sort_update">마지막 업데이트 순</string>
+    <string name="sort_update">최근 업데이트 순</string>
     <string name="title_donate">감사합니다!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat_scan">Scan</string>
@@ -74,7 +74,7 @@
     <string name="nine_key">T9 검색</string>
     <string name="home_font_size">폰트 크기</string>
     <string name="fuzzy_search">퍼지 서치</string>
-    <string name="follow_system">시스템에 따름</string>
+    <string name="follow_system">시스템 테마에 따름</string>
     <string name="theme_light">밝음</string>
     <string name="theme_dark">어두움</string>
     <string name="action_deselect">선택 해제</string>
@@ -87,16 +87,16 @@
     <string name="filter_system_apps">시스템 앱순</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="mode_dhizuku_hide">Dhizuku - 숨김</string>
-    <string name="freeze_system_app">시스템 애플리케이션을 중지하거나 제거하면 기기가 부팅 루프에 빠질 수 있습니다. 작업을 수행하는 방법을 정확히 알고 있어야 하며, 사전에 데이터를 백업하거나 파일 관리를 지원하는 복구 도구를 사용하세요.</string>
+    <string name="freeze_system_app">시스템 애플리케이션을 중지하거나 제거하면 기기가 부팅루프에 빠질 수 있습니다. 작업을 수행하는 방법을 정확히 알고 있어야 하며, 사전에 데이터를 백업하거나 파일매니저가 지원하는 리커버리 도구를 사용하세요.</string>
     <string name="app_theme">앱 테마</string>
-    <string name="tap_to_select">복수 선택</string>
+    <string name="tap_to_select">다중선택</string>
     <string name="sort_name">이름 순</string>
     <string name="action_deferred_task">동결 예약­</string>
     <string name="msg_remove_owner">Hail이 기기 소유자에서 제거되면 Hail 제거 후 앱을 재정리하는 데 어려움이 있을 수 있습니다.\n동결된 앱은 제거 후에도 동결된 상태로 유지되므로 중요한 앱은 동결을 해제했는지 확인하세요.</string>
     <string name="filter_user_apps">사용자 앱순</string>
     <string name="action_reinstall">재설치</string>
     <string name="activity_not_found">실행 액티비티가 없습니다.</string>
-    <string name="shizuku_missing">Shizuku 연결 실패 :(</string>
+    <string name="shizuku_missing">Shizuku 연결실패 :(</string>
     <string name="operation_failed">작업 실패: %s</string>
     <string name="msg_selected">선택됨: %s</string>
     <string name="msg_exported">내보내짐: %s</string>
@@ -114,7 +114,7 @@
     <string name="skip_foreground_app">포그라운드 앱 건너뛰기</string>
     <string name="title_customize">사용자 지정</string>
     <string name="grayscale_icon">회색 아이콘</string>
-    <string name="compact_icon">완벽한 아이콘</string>
+    <string name="compact_icon">맞춤 아이콘</string>
     <string name="action_biometric">지문으로 로그인</string>
     <string name="msg_biometric">지문으로 사용하여 ­로그인</string>
     <string name="action_pin">고정</string>
@@ -136,7 +136,7 @@
     </plurals>
     <string name="auto_freeze_delay">동결 지연 (분)</string>
     <string name="title_shortcuts">바로가기</string>
-    <string name="msg_guide">애플리케이션을 동결하기 전에 설정에서 작업 모드를 선택하세요.</string>
+    <string name="msg_guide">선택한 동작 모드가 없습니다. 설정에서 동작 모드를 선택하세요.</string>
     <string name="dynamic_shortcut_action">바로가기</string>
     <string name="action_none">없음</string>
     <string name="action_freeze_tag">동결 태그</string>
@@ -147,4 +147,10 @@
     <string name="action_skip">건너뛰기</string>
     <string name="xposed_description">범위가 지정된 앱의 경우 일시 중단된 앱을 자동으로 다시 활성화합니다.</string>
     <string name="action_fdroid">F-Droid</string>
+    <string name="working_mode_tag">관련 앱의 작동 모드</string>
+    <string name="state_running">실행중</string>
+    <string name="state_disabled">비활성화됨</string>
+    <string name="state_hidden">숨겨짐</string>
+    <string name="state_suspended">중지됨</string>
+    <string name="state_uninstalled">제거됨</string>
 </resources>
