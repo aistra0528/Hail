@@ -153,4 +153,6 @@
     <string name="state_disabled">已停用</string>
     <string name="state_hidden">已隱藏</string>
     <string name="state_suspended">已暫停</string>
+    <string name="donate_kofi">Ko-fi</string>
+    <string name="state_uninstalled">已解除安裝</string>
 </resources>
