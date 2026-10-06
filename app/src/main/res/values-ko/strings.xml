@@ -153,4 +153,5 @@
     <string name="state_hidden">숨겨짐</string>
     <string name="state_suspended">중지됨</string>
     <string name="state_uninstalled">제거됨</string>
+    <string name="donate_kofi">Ko-fi</string>
 </resources>
