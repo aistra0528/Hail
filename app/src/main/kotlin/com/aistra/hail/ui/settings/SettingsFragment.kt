@@ -170,6 +170,12 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 titleId = R.string.nine_key,
                 icon = Icons.Outlined.Dialpad
             )
+            switchPreference(
+                key = HailData.ROW_TAP_SELECT,
+                defaultValue = false,
+                titleId = R.string.row_tap_select,
+                icon = Icons.Outlined.TouchApp
+            )
             listPreference(
                 key = HailData.TILE_ACTION,
                 defaultValue = HailData.tileAction,
