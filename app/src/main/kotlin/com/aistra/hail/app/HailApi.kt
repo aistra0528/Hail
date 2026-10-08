@@ -19,6 +19,12 @@ object HailApi {
     /** @since 1.1.0 */
     const val ACTION_UNFREEZE_TAG = "${BuildConfig.APPLICATION_ID}.action.UNFREEZE_TAG"
 
+    /** @since 1.3.1 */
+    const val ACTION_WHITELIST = "${BuildConfig.APPLICATION_ID}.action.WHITELIST"
+    const val ACTION_UNWHITELIST = "${BuildConfig.APPLICATION_ID}.action.UNWHITELIST"
+    const val ACTION_WHITELIST_TAG = "${BuildConfig.APPLICATION_ID}.action.WHITELIST_TAG"
+    const val ACTION_UNWHITELIST_TAG = "${BuildConfig.APPLICATION_ID}.action.UNWHITELIST_TAG"
+
     /** @since 0.5.0 */
     const val ACTION_FREEZE_ALL = "${BuildConfig.APPLICATION_ID}.action.FREEZE_ALL"
 
