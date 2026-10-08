@@ -93,6 +93,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 defaultValue = false,
                 onValueChange = { _, value ->
                     if (value) resetDynamicShortcuts()
+                    app.setAutoFreezeService()
                     true
                 },
                 titleId = R.string.action_biometric,

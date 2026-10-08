@@ -46,6 +46,7 @@ object HailData {
     const val ISLAND = "island_"
     const val PRIVAPP = "privapp_"
     const val STOP = "stop"
+    const val NEEDS_VERIFY = "needs_verify"
     const val DISABLE = "disable"
     const val HIDE = "hide"
     const val SUSPEND = "suspend"
@@ -150,6 +151,9 @@ object HailData {
     var autoFreezeAfterLock
         get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
         set(value) = sp.edit { putBoolean(AUTO_FREEZE_AFTER_LOCK, value) }
+    var needsVerify
+        get() = sp.getBoolean(NEEDS_VERIFY, false)
+        set(value) = sp.edit { putBoolean(NEEDS_VERIFY, value) }
     val autoFreezeDelay get() = sp.getFloat(AUTO_FREEZE_DELAY, 0f).toLong()
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
