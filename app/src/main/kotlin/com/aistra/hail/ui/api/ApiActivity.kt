@@ -188,13 +188,16 @@ class ApiActivity : ComponentActivity() {
 
     private fun launchApp(pkg: String, tagId: Int? = null) {
         if (tagId != null) setListFrozen(false, HailData.checkedList.filter { tagId in it.tagIdList })
-        if (AppManager.isAppFrozen(pkg) && AppManager.setAppFrozen(pkg, false)) {
+        if (!AppManager.unfreezeForLaunch(pkg)) {
+            throw IllegalStateException(getString(R.string.permission_denied))
+        } else {
             app.setAutoFreezeService()
         }
         if (HailData.workingMode == HailData.MODE_ISLAND_HIDE) {
-            HIsland.ensureLaunchIntentExists(packageName)
+            HIsland.ensureLaunchIntentExists(pkg)
         }
         packageManager.getLaunchIntentForPackage(pkg)?.let {
+            HailData.recordAppLaunch(pkg)
             HShortcuts.addDynamicShortcut(pkg)
             startActivity(it)
         } ?: throw ActivityNotFoundException(getString(R.string.activity_not_found))

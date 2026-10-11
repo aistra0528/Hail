@@ -20,6 +20,7 @@ class HomeFragment : MainFragment() {
     val selectedList: MutableList<AppInfo> = mutableListOf()
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
+    private lateinit var tabMediator: TabLayoutMediator
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -27,11 +28,22 @@ class HomeFragment : MainFragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         if (tags.size == 1) binding.tabs.isVisible = false
         binding.pager.adapter = HomeAdapter(this)
-        TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
+        tabMediator = TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = tags[position].first
-        }.attach()
+        }.also { it.attach() }
         binding.tabs.applyDefaultInsetter { paddingRelative(isRtl, start = !activity.isLandscape, end = true) }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (_binding != null) {
+            tabMediator.detach()
+            binding.tabs.removeAllTabs()
+            binding.pager.adapter?.notifyDataSetChanged()
+            tabMediator.attach()
+            binding.tabs.isVisible = tags.size > 1
+        }
     }
 
     override fun onDestroyView() {

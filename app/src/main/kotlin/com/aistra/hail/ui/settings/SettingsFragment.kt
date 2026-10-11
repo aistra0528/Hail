@@ -9,29 +9,47 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ManageSearch
 import androidx.compose.material.icons.automirrored.outlined.Shortcut
+import androidx.compose.material.icons.automirrored.outlined.TrendingUp
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
@@ -58,6 +76,35 @@ import rikka.shizuku.Shizuku
 
 class SettingsFragment : MainFragment(), MenuProvider {
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+    private val exportManagementBackup = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        uri ?: return@registerForActivityResult
+        lifecycleScope.launch {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    val output = requireContext().contentResolver.openOutputStream(uri, "wt")
+                        ?: throw IllegalStateException("Unable to open export file")
+                    output.bufferedWriter().use { it.write(HailData.exportManagementBackup()) }
+                }
+            }.onSuccess {
+                HUI.showToast(R.string.backup_exported)
+            }.onFailure {
+                HUI.showToast(R.string.operation_failed, it.localizedMessage ?: "Unknown")
+            }
+        }
+    }
+    private val importManagementBackup = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        uri ?: return@registerForActivityResult
+        lifecycleScope.launch {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    val input = requireContext().contentResolver.openInputStream(uri)
+                        ?: throw IllegalArgumentException("Unable to read import file")
+                    input.bufferedReader().use { HailData.parseManagementBackup(it.readText()) }
+                }
+            }.onSuccess(::confirmRestoreManagementBackup)
+                .onFailure { HUI.showToast(R.string.backup_invalid) }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val menuHost = requireActivity() as MenuHost
@@ -142,6 +189,56 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 defaultValue = false,
                 titleId = R.string.compact_icon,
                 icon = Icons.Outlined.Apps
+            )
+            switchPreference(
+                key = HailData.HIGH_FREQUENCY_PAGE,
+                defaultValue = false,
+                onValueChange = { _, value ->
+                    activity.updateHighFrequencyNavigation(value)
+                    true
+                },
+                titleId = R.string.high_frequency_page,
+                icon = Icons.AutoMirrored.Outlined.TrendingUp
+            )
+            preference(
+                key = "tag_order",
+                title = { Text(text = stringResource(R.string.tag_order)) },
+                icon = { Icon(imageVector = Icons.Outlined.SwapVert, contentDescription = null) },
+                onClick = ::showTagOrderDialog
+            )
+            preference(
+                key = "launch_records",
+                title = { Text(text = stringResource(R.string.launch_records)) },
+                icon = { Icon(imageVector = Icons.Outlined.History, contentDescription = null) },
+                onClick = { findNavController().navigate(R.id.nav_launch_records) }
+            )
+            preference(
+                key = "import_disabled_apps",
+                title = { Text(text = stringResource(R.string.action_import_disabled_apps)) },
+                summary = { Text(text = stringResource(R.string.import_disabled_apps_summary)) },
+                icon = { Icon(imageVector = Icons.Outlined.Download, contentDescription = null) },
+                onClick = { findNavController().navigate(R.id.nav_disabled_apps) }
+            )
+            preference(
+                key = "launch_associations",
+                title = { Text(text = stringResource(R.string.title_launch_associations)) },
+                summary = { Text(text = stringResource(R.string.launch_association_settings_summary)) },
+                icon = { Icon(imageVector = Icons.Outlined.Link, contentDescription = null) },
+                onClick = { findNavController().navigate(R.id.nav_launch_associations) }
+            )
+            preference(
+                key = "export_management_backup",
+                title = { Text(text = stringResource(R.string.action_export_management_backup)) },
+                summary = { Text(text = stringResource(R.string.management_backup_summary)) },
+                icon = { Icon(imageVector = Icons.Outlined.Upload, contentDescription = null) },
+                onClick = { exportManagementBackup.launch("hail-management-backup.json") }
+            )
+            preference(
+                key = "import_management_backup",
+                title = { Text(text = stringResource(R.string.action_import_management_backup)) },
+                summary = { Text(text = stringResource(R.string.management_restore_summary)) },
+                icon = { Icon(imageVector = Icons.Outlined.Download, contentDescription = null) },
+                onClick = { importManagementBackup.launch(arrayOf("application/json", "text/json", "text/plain")) }
             )
             switchPreference(
                 key = HailData.SYNTHESIZE_ADAPTIVE_ICONS,
@@ -262,6 +359,208 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 icon = { Icon(imageVector = Icons.Outlined.CleaningServices, contentDescription = null) },
                 onClick = ::resetDynamicShortcuts
             )
+        }
+    }
+
+    private fun showTagOrderDialog() {
+        val view = ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindow)
+            setContent {
+                AppTheme {
+                    TagOrderDialog(
+                        initialTags = HailData.tags,
+                        onDismiss = { (parent as? ViewGroup)?.removeView(this@apply) },
+                        onConfirm = { tags ->
+                            HailData.tags.clear()
+                            HailData.tags.addAll(tags)
+                            HailData.saveTags()
+                        }
+                    )
+                }
+            }
+        }
+        (view.parent as? ViewGroup)?.removeView(view)
+        requireActivity().addContentView(view, ViewGroup.LayoutParams(1, 1))
+    }
+
+    private fun confirmRestoreManagementBackup(backup: HailData.ManagementBackup) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.title_restore_management_backup)
+            .setMessage(getString(R.string.msg_restore_management_backup, backup.apps.size, backup.tags.size))
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(R.string.action_restore) { _, _ ->
+                lifecycleScope.launch {
+                    runCatching {
+                        withContext(Dispatchers.IO) { HailData.restoreManagementBackup(backup) }
+                    }.onSuccess {
+                        app.setAutoFreezeService()
+                        HUI.showToast(R.string.backup_restored)
+                    }.onFailure {
+                        HUI.showToast(R.string.operation_failed, it.localizedMessage ?: "Unknown")
+                    }
+                }
+            }
+            .show()
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun TagOrderDialog(
+        initialTags: List<Pair<String, Int>>,
+        onDismiss: () -> Unit,
+        onConfirm: (List<Pair<String, Int>>) -> Unit,
+    ) {
+        val orderedTags = remember { mutableStateListOf<Pair<String, Int>>().apply { addAll(initialTags) } }
+        val draggedTag = remember { androidx.compose.runtime.mutableStateOf<Pair<String, Int>?>(null) }
+        val draggedStartIndex = remember { androidx.compose.runtime.mutableStateOf<Int?>(null) }
+        val dropTargetIndex = remember { androidx.compose.runtime.mutableStateOf<Int?>(null) }
+        val draggedDistance = remember { androidx.compose.runtime.mutableFloatStateOf(0f) }
+        val rowHeight = with(androidx.compose.ui.platform.LocalDensity.current) { 72.dp.toPx() }
+        ModalBottomSheet(
+            onDismissRequest = onDismiss,
+            dragHandle = { BottomSheetDefaults.DragHandle() },
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+                    .padding(bottom = 8.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.tag_order),
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Text(
+                    text = stringResource(R.string.tag_order_hint),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 16.dp)
+                )
+                LazyColumn(
+                    modifier = Modifier.heightIn(max = 520.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)
+                ) {
+                    itemsIndexed(orderedTags, key = { _, tag -> tag.second }) { index, tag ->
+                        val isFixed = index == 0
+                        if (dropTargetIndex.value == index && draggedStartIndex.value != index) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 8.dp, vertical = 3.dp)
+                                    .height(5.dp)
+                                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(50))
+                            )
+                        }
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .zIndex(if (draggedTag.value == tag) 1f else 0f)
+                                .graphicsLayer {
+                                    val isDragged = draggedTag.value == tag
+                                    translationY = if (isDragged) draggedDistance.value else 0f
+                                    alpha = if (isDragged) 0.82f else 1f
+                                    scaleX = if (isDragged) 1.02f else 1f
+                                    scaleY = if (isDragged) 1.02f else 1f
+                                    shadowElevation = if (isDragged) 14.dp.toPx() else 0f
+                                }
+                                .pointerInput(tag.second) {
+                                    detectDragGesturesAfterLongPress(
+                                        onDragStart = {
+                                            if (!isFixed) {
+                                                draggedTag.value = tag
+                                                draggedStartIndex.value = index
+                                                dropTargetIndex.value = index
+                                                draggedDistance.value = 0f
+                                            }
+                                        },
+                                        onDragCancel = {
+                                            draggedTag.value = null
+                                            draggedStartIndex.value = null
+                                            dropTargetIndex.value = null
+                                            draggedDistance.value = 0f
+                                        },
+                                        onDragEnd = {
+                                            val moving = draggedTag.value
+                                            val target = dropTargetIndex.value
+                                            if (moving != null && target != null) {
+                                                orderedTags.remove(moving)
+                                                orderedTags.add(target.coerceAtMost(orderedTags.size), moving)
+                                            }
+                                            draggedTag.value = null
+                                            draggedStartIndex.value = null
+                                            dropTargetIndex.value = null
+                                            draggedDistance.value = 0f
+                                        },
+                                        onDrag = { _, dragAmount ->
+                                            if (draggedTag.value == null || isFixed) return@detectDragGesturesAfterLongPress
+                                            draggedDistance.value += dragAmount.y
+                                            val startIndex = draggedStartIndex.value ?: return@detectDragGesturesAfterLongPress
+                                            dropTargetIndex.value = (startIndex + (draggedDistance.value / rowHeight).toInt())
+                                                .coerceIn(1, orderedTags.lastIndex)
+                                        }
+                                    )
+                                },
+                            shape = MaterialTheme.shapes.large,
+                            color = if (draggedTag.value == tag) {
+                                MaterialTheme.colorScheme.primaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.surfaceContainerHigh
+                            },
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "${index + 1}",
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.width(28.dp)
+                                )
+                                Icon(
+                                    imageVector = if (isFixed) Icons.Outlined.Lock else Icons.Outlined.DragHandle,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                                Column(modifier = Modifier.weight(1f).padding(start = 12.dp)) {
+                                    Text(text = tag.first, style = MaterialTheme.typography.bodyLarge)
+                                    if (isFixed) {
+                                        Text(
+                                            text = stringResource(R.string.tag_order_fixed),
+                                            style = MaterialTheme.typography.labelMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                }
+                            }
+                        }
+                        }
+                        if (index < orderedTags.lastIndex) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp, end = 16.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    androidx.compose.material3.TextButton(onClick = onDismiss) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                    androidx.compose.material3.Button(
+                        onClick = { onConfirm(orderedTags.toList()); onDismiss() },
+                        modifier = Modifier.padding(start = 8.dp)
+                    ) {
+                        Text(stringResource(android.R.string.ok))
+                    }
+                }
+            }
         }
     }
 
