@@ -1,5 +1,6 @@
 package com.aistra.hail.ui.settings
 
+import android.Manifest.permission.CHANGE_COMPONENT_ENABLED_STATE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -28,6 +29,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -469,6 +471,17 @@ class SettingsFragment : MainFragment(), MenuProvider {
             }
 
             mode.startsWith(HailData.SU) -> if (!HShell.checkSU) {
+                HUI.showToast(R.string.permission_denied)
+                return false
+            }
+
+            mode == HailData.MODE_JAILBREAK_DISABLE -> if (
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    CHANGE_COMPONENT_ENABLED_STATE
+                ) == PackageManager.PERMISSION_DENIED
+                && !HShell.grantPermission(requireContext().packageName, CHANGE_COMPONENT_ENABLED_STATE)
+            ) {
                 HUI.showToast(R.string.permission_denied)
                 return false
             }

@@ -157,4 +157,5 @@
     <string name="state_hidden">Hidden</string>
     <string name="state_suspended">Suspended</string>
     <string name="state_uninstalled">Uninstalled</string>
+    <string name="mode_jailbreak_disable">Jailbreak - Disable</string>
 </resources>
