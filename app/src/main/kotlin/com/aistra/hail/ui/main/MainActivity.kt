@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 }
             })
         val promptInfo = BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.action_biometric))
-            .setSubtitle(getString(R.string.msg_biometric)).setNegativeButtonText(getString(android.R.string.cancel))
+            .setSubtitle(getString(R.string.msg_biometric)).setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
             .build()
         biometricPrompt.authenticate(promptInfo)
     }
