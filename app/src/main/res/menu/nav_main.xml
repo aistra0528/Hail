@@ -5,6 +5,11 @@
         android:icon="@drawable/ic_round_frozen"
         android:title="@string/title_home" />
     <item
+        android:id="@+id/nav_high_frequency"
+        android:icon="@drawable/ic_trending_up"
+        android:visible="false"
+        android:title="@string/high_frequency" />
+    <item
         android:id="@+id/nav_apps"
         android:icon="@drawable/ic_baseline_android"
         android:title="@string/title_apps" />

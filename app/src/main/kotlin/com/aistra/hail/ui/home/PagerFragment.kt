@@ -34,7 +34,6 @@ import com.aistra.hail.R
 import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
-import com.aistra.hail.app.HailApi.addTag
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
 import com.aistra.hail.databinding.FragmentPagerBinding
@@ -115,6 +114,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         super.onResume()
         updateCurrentList()
         updateBarTitle()
+        requireActivity().invalidateOptionsMenu()
         activity.appbar.setLiftOnScrollTargetView(binding.recyclerView)
         tabs?.let { tabLayout ->
             tabLayout.getTabAt(tabLayout.selectedTabPosition)?.view?.setOnLongClickListener {
@@ -223,21 +223,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
 
                 5 -> tagDialog(info)
 
-                6 -> tabs?.takeIf { it.tabCount > 1 }?.let {
-                    MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_unfreeze_tag)
-                        .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
-                            HShortcuts.addPinShortcut(
-                                info,
-                                pkg,
-                                info.name,
-                                HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg).addTag(HailData.tags[index].first)
-                            )
-                        }.setPositiveButton(R.string.action_skip) { _, _ ->
-                            HShortcuts.addPinShortcut(
-                                info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
-                            )
-                        }.setNegativeButton(android.R.string.cancel, null).show()
-                } ?: HShortcuts.addPinShortcut(
+                6 -> HShortcuts.addPinShortcut(
                     info, pkg, info.name, HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
                 )
 
@@ -410,13 +396,17 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     }
 
     private fun launchApp(packageName: String) {
-        if (AppManager.isAppFrozen(packageName) && AppManager.setAppFrozen(packageName, false)) {
+        if (!AppManager.unfreezeForLaunch(packageName)) {
+            HUI.showToast(R.string.permission_denied)
+            return
+        } else {
             updateCurrentList()
         }
         if (HailData.workingMode == HailData.MODE_ISLAND_HIDE) {
             HIsland.ensureLaunchIntentExists(packageName)
         }
         app.packageManager.getLaunchIntentForPackage(packageName)?.let {
+            HailData.recordAppLaunch(packageName)
             HShortcuts.addDynamicShortcut(packageName)
             startActivity(it)
         } ?: HUI.showToast(R.string.activity_not_found)
@@ -512,22 +502,19 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         )
     }
 
-    private fun importFromClipboard() = runCatching {
-        val str = HUI.pasteText() ?: throw IllegalArgumentException()
-        val json = if (str.contains('[')) JSONArray(
-            str.substring(
-                str.indexOf('[')..str.indexOf(']', str.indexOf('['))
-            )
-        )
-        else JSONArray().put(str)
-        var i = 0
-        for (index in 0 until json.length()) {
-            val pkg = json.getString(index)
-            if (HPackages.getApplicationInfoOrNull(pkg) != null && !HailData.isChecked(pkg)) {
-                HailData.addCheckedApp(pkg, tag?.second ?: 0, false)
-                i++
-            }
+    private fun importFromClipboard() {
+        val text = HUI.pasteText()?.trim()
+        if (text.isNullOrEmpty()) {
+            HUI.showToast(R.string.msg_clipboard_empty)
+            return
         }
+
+        val packages = runCatching { parseClipboardPackages(text) }.getOrElse {
+            HUI.showToast(R.string.msg_clipboard_invalid)
+            return
+        }
+
+        val i = addAppsToCurrentTag(packages)
         if (i > 0) {
             HailData.saveApps()
             updateCurrentList()
@@ -535,10 +522,74 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
         HUI.showToast(getString(R.string.msg_imported, i.toString()))
     }
 
+    private fun addAppsToCurrentTag(packages: Iterable<String>): Int {
+        val tagId = tag?.second ?: 0
+        var added = 0
+        packages.forEach { pkg ->
+            if (HPackages.getApplicationInfoOrNull(pkg) == null) return@forEach
+            val existing = HailData.checkedList.find { it.packageName == pkg }
+            when {
+                existing == null -> HailData.addCheckedApp(pkg, tagId, false)
+                tagId !in existing.tagIdList -> existing.tagIdList.add(tagId)
+                else -> return@forEach
+            }
+            added++
+        }
+        return added
+    }
+
+    private fun parseClipboardPackages(text: String): List<String> {
+        val trimmed = text.trim()
+        if (trimmed.startsWith("[")) {
+            val json = JSONArray(trimmed)
+            return buildList(json.length()) {
+                for (index in 0 until json.length()) {
+                    json.optString(index).trim().takeIf { it.isNotEmpty() }?.let(::add)
+                }
+            }.distinct()
+        }
+
+        return Regex("[A-Za-z0-9_]+(?:\\.[A-Za-z0-9_]+)+")
+            .findAll(trimmed)
+            .map { it.value }
+            .distinct()
+            .toList()
+            .also { if (it.isEmpty()) throw IllegalArgumentException() }
+    }
+
     private suspend fun importFrozenApp() = withContext(Dispatchers.IO) {
         HPackages.getInstalledApplications().map { it.packageName }
-            .filter { AppManager.isAppFrozen(it) && !HailData.isChecked(it) }
-            .onEach { HailData.addCheckedApp(it, tag?.second ?: 0, false) }.size
+            .filter { AppManager.isAppFrozen(it) }
+            .let(::addAppsToCurrentTag)
+    }
+
+    private fun moveCurrentTagToDefault() {
+        val currentTag = tag ?: return
+        val currentTagId = currentTag.second
+        if (currentTagId == 0) return
+
+        val apps = HailData.checkedList.filter { currentTagId in it.tagIdList }
+        if (apps.isEmpty()) {
+            HUI.showToast(R.string.nothing_here)
+            return
+        }
+
+        MaterialAlertDialogBuilder(activity)
+            .setTitle(R.string.action_move_current_to_default)
+            .setMessage(getString(R.string.msg_move_current_to_default, currentTag.first, apps.size))
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                apps.forEach { info ->
+                    if (0 !in info.tagIdList) info.tagIdList.add(0, 0)
+                    info.tagIdList.remove(currentTagId)
+                }
+                selectedList.removeAll(apps.toSet())
+                HailData.saveApps()
+                updateCurrentList()
+                updateBarTitle()
+                HUI.showToast(getString(R.string.msg_moved_to_default, apps.size))
+            }
+            .show()
     }
 
     private fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
@@ -583,6 +634,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
 
             R.id.action_export_current -> exportToClipboard(pagerAdapter.currentList)
             R.id.action_export_all -> exportToClipboard(HailData.checkedList)
+            R.id.action_move_current_to_default -> moveCurrentTagToDefault()
         }
         return false
     }
@@ -610,6 +662,7 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
             override fun onQueryTextSubmit(query: String): Boolean = true
         })
         menu.findItem(R.id.action_multiselect).updateIcon()
+        menu.findItem(R.id.action_move_current_to_default).isVisible = tag?.second != 0
     }
 
     override fun onDestroyView() {
