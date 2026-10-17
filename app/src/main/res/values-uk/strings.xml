@@ -161,6 +161,6 @@
     <string name="state_disabled">Вимкнено</string>
     <string name="state_hidden">Приховано</string>
     <string name="state_suspended">Призупинено</string>
-    <string name="state_uninstalled">Видалено</string>
+    <string name="state_uninstalled">Деінстальовано</string>
     <string name="mode_jailbreak_disable">Jailbreak — Вимкнути</string>
 </resources>
