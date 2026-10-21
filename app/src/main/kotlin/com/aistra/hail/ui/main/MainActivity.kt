@@ -1,113 +1,146 @@
 package com.aistra.hail.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Menu
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.biometric.AuthenticationRequest
+import androidx.biometric.AuthenticationRequest.Companion.biometricRequest
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
-import androidx.core.view.MenuCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.isVisible
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.biometric.compose.rememberAuthenticationLauncher
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_EXPANDED_LOWER_BOUND
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
-import com.aistra.hail.databinding.ActivityMainBinding
-import com.aistra.hail.extensions.*
-import com.aistra.hail.utils.HPolicy
+import com.aistra.hail.ui.about.AboutScreen
+import com.aistra.hail.ui.apps.AppsScreen
+import com.aistra.hail.ui.apps.AppsViewModel
+import com.aistra.hail.ui.components.AppDestinations
+import com.aistra.hail.ui.components.AppDestinations.*
+import com.aistra.hail.ui.components.navigateTo
+import com.aistra.hail.ui.home.HomeScreen
+import com.aistra.hail.ui.settings.SettingsScreen
+import com.aistra.hail.ui.theme.AppTheme
 import com.aistra.hail.utils.HUI
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import me.zhanghai.compose.preference.ProvidePreferenceLocals
+import me.zhanghai.compose.preference.rememberPreferenceState
 
-class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
-    lateinit var fab: ExtendedFloatingActionButton
-    lateinit var appbar: AppBarLayout
+class MainActivity : ComponentActivity() {
+    private val appsViewModel by viewModels<AppsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        val binding = initView()
-        if (!HailData.biometricLogin || BiometricManager.from(this)
-                .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) != BiometricManager.BIOMETRIC_SUCCESS
-        ) return
-        binding.root.isVisible = false
-        val biometricPrompt = BiometricPrompt(
-            this,
-            ContextCompat.getMainExecutor(this),
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    HUI.showToast(errString)
-                    finishAndRemoveTask()
+        enableEdgeToEdge() // Comment this line to make 3-button navigation bar transparent
+        setContent {
+            AppTheme {
+                var authenticated by rememberSaveable {
+                    mutableStateOf(
+                        !HailData.biometricLogin || BiometricManager.from(this)
+                            .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) != BiometricManager.BIOMETRIC_SUCCESS
+                    )
                 }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    binding.root.isVisible = true
-                }
-            })
-        val promptInfo = BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.action_biometric))
-            .setSubtitle(getString(R.string.msg_biometric)).setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
-            .build()
-        biometricPrompt.authenticate(promptInfo)
-    }
-
-    private fun initView() = ActivityMainBinding.inflate(layoutInflater).apply {
-        setContentView(root)
-        setSupportActionBar(appBarMain.toolbar)
-        fab = appBarMain.fab
-        appbar = appBarMain.appBarLayout
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        navController.addOnDestinationChangedListener(this@MainActivity)
-        val appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.nav_home, R.id.nav_apps, R.id.nav_settings, R.id.nav_about
-        ).build()
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        bottomNav?.setupWithNavController(navController)
-        navRail?.setupWithNavController(navController)
-
-        val isRtl = isRtl
-        val isLandscape = isLandscape
-        appBarMain.appBarLayout.applyDefaultInsetter {
-            paddingRelative(isRtl, start = !isLandscape, end = true, top = true)
+                if (!authenticated) {
+                    val launcher = rememberAuthenticationLauncher { authResult ->
+                        if (authResult.isSuccess()) authenticated = true
+                        else {
+                            HUI.showToast(authResult.error()!!.errString)
+                            finishAndRemoveTask()
+                        }
+                    }
+                    LaunchedEffect(authenticated) {
+                        launcher.launch(
+                            biometricRequest(
+                                title = getString(R.string.action_biometric),
+                                AuthenticationRequest.Biometric.Fallback.DeviceCredential,
+                            ) {
+                                setSubtitle(getString(R.string.msg_biometric))
+                            })
+                    }
+                } else ProvidePreferenceLocals { MainContent() }
+            }
         }
-        bottomNav?.applyDefaultInsetter { paddingRelative(isRtl, start = true, end = true, bottom = true) }
-        navRail?.applyDefaultInsetter { paddingRelative(isRtl, start = true, top = true, bottom = true) }
-        fab.applyDefaultInsetter { marginRelative(isRtl, end = true, bottom = isLandscape) }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menu?.let { MenuCompat.setGroupDividerEnabled(it, true) }
-        return super.onCreateOptionsMenu(menu)
+    override fun onResume() {
+        super.onResume()
+        appsViewModel.updateAppList()
     }
 
-    fun ownerRemoveDialog() {
-        MaterialAlertDialogBuilder(this).setTitle(R.string.title_remove_owner).setMessage(R.string.msg_remove_owner)
-            .setPositiveButton(R.string.action_continue) { _, _ ->
-                HPolicy.setOrganizationName()
-                HPolicy.removeDeviceOwner()
-            }.setNegativeButton(android.R.string.cancel, null).show()
+    @SuppressLint("PrivateResource")
+    @Composable
+    private fun MainContent() {
+        val navController = rememberNavController()
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = backStackEntry?.destination?.route
+        val showNavigationBar by rememberPreferenceState(HailData.SHOW_NAVIGATION_BAR, HailData.showNavigationBar)
+        if (showNavigationBar) {
+            val layoutType = with(currentWindowAdaptiveInfo()) {
+                if (windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_EXPANDED_LOWER_BOUND)) NavigationSuiteType.NavigationRail
+                else NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(this)
+            }
+            NavigationSuiteScaffold(
+                navigationSuiteItems = {
+                    AppDestinations.entries.forEach {
+                        val selected = currentDestination == it.route
+                        item(
+                            icon = {
+                                Icon(
+                                    imageVector = if (selected) it.iconSelected else it.icon, contentDescription = null
+                                )
+                            },
+                            label = { Text(stringResource(it.label)) },
+                            selected = selected,
+                            onClick = { navController.navigateTo(it) })
+                    }
+                }, layoutType = layoutType
+            ) {
+                AppNavHost(navController = navController)
+            }
+        } else AppNavHost(navController = navController)
     }
 
-    /* override fun onStop() {
-        super.onStop()
-        if (HailData.biometricLogin) finishAndRemoveTask()
-    } */
-
-    override fun onDestinationChanged(
-        controller: NavController, destination: NavDestination, arguments: Bundle?
-    ) {
-        fab.tag = destination.id == R.id.nav_home
-        if (fab.tag == true) fab.show() else fab.hide()
+    @Composable
+    private fun AppNavHost(navController: NavHostController) = NavHost(
+        navController = navController,
+        startDestination = HOME.route,
+        modifier = Modifier.fillMaxSize(),
+        enterTransition = { fadeIn(animationSpec = tween(300)) },
+        exitTransition = { fadeOut(animationSpec = tween(300)) },
+        popEnterTransition = { fadeIn(animationSpec = tween(300)) },
+        popExitTransition = { fadeOut(animationSpec = tween(300)) }) {
+        composable(HOME.route) {
+            HomeScreen(navController = navController)
+        }
+        composable(APPS.route) {
+            AppsScreen(model = appsViewModel, navController = navController)
+        }
+        composable(SETTINGS.route) {
+            SettingsScreen(navController = navController)
+        }
+        composable(ABOUT.route) {
+            AboutScreen(navController = navController)
+        }
     }
 }

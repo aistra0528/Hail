@@ -1,5 +1,6 @@
 package com.aistra.hail.app
 
+import androidx.annotation.ArrayRes
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.aistra.hail.BuildConfig
@@ -31,14 +32,23 @@ object HailData {
     private const val KEY_WHITELISTED = "whitelisted"
     const val KEY_PACKAGE = "package"
     const val KEY_FROZEN = "frozen"
-    private const val SORT_BY = "sort_by"
+    const val SORT_ORDER = "sort_order"
     const val SORT_NAME = "name"
     const val SORT_INSTALL = "install"
     const val SORT_UPDATE = "update"
-    const val FILTER_USER_APPS = "filter_user_apps"
-    const val FILTER_SYSTEM_APPS = "filter_system_apps"
-    const val FILTER_FROZEN_APPS = "filter_frozen_apps"
-    const val FILTER_UNFROZEN_APPS = "filter_unfrozen_apps"
+    val SORT_ORDER_VALUES = listOf(SORT_NAME, SORT_INSTALL, SORT_UPDATE)
+    const val FILTER_TYPE = "filter_type"
+    const val FILTER_TYPE_USER = "user"
+    const val FILTER_TYPE_SYSTEM = "system"
+    val FILTER_TYPE_VALUES = listOf(ACTION_ALL, FILTER_TYPE_USER, FILTER_TYPE_SYSTEM)
+    const val FILTER_STATE = "filter_state"
+    const val FILTER_RUNNING = "running"
+    const val FILTER_SUSPENDED = "suspended"
+    const val FILTER_DISABLED = "disabled"
+    const val FILTER_HIDDEN = "hidden"
+    const val FILTER_UNINSTALLED = "uninstalled"
+    val FILTER_STATE_VALUES =
+        listOf(ACTION_NONE, FILTER_RUNNING, FILTER_SUSPENDED, FILTER_DISABLED, FILTER_HIDDEN, FILTER_UNINSTALLED)
     const val OWNER = "owner_"
     const val DHIZUKU = "dhizuku_"
     const val SU = "su_"
@@ -100,24 +110,25 @@ object HailData {
     const val COMPACT_ICON = "compact_icon"
     const val SYNTHESIZE_ADAPTIVE_ICONS = "synthesize_adaptive_icons"
     const val HOME_FONT_SIZE = "home_font_size_f"
+    const val SHOW_NAVIGATION_BAR = "show_navigation_bar"
     const val FUZZY_SEARCH = "fuzzy_search"
     const val NINE_KEY_SEARCH = "nine_key"
     const val TILE_ACTION = "tile_action"
     const val ACTION_NONE = "none"
+    const val ACTION_ALL = "all"
     const val ACTION_FREEZE_ALL = "freeze_all"
     const val ACTION_UNFREEZE_ALL = "unfreeze_all"
     const val ACTION_FREEZE_NON_WHITELISTED = "freeze_non_whitelisted"
     const val ACTION_LOCK = "lock"
     const val ACTION_LOCK_FREEZE = "lock_freeze"
-    val TILE_ACTION_VALUES =
-        listOf(
-            AUTO_FREEZE_AFTER_LOCK,
-            ACTION_FREEZE_ALL,
-            ACTION_UNFREEZE_ALL,
-            ACTION_FREEZE_NON_WHITELISTED,
-            ACTION_LOCK,
-            ACTION_LOCK_FREEZE
-        )
+    val TILE_ACTION_VALUES = listOf(
+        AUTO_FREEZE_AFTER_LOCK,
+        ACTION_FREEZE_ALL,
+        ACTION_UNFREEZE_ALL,
+        ACTION_FREEZE_NON_WHITELISTED,
+        ACTION_LOCK,
+        ACTION_LOCK_FREEZE
+    )
     const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     const val AUTO_FREEZE_DELAY = "auto_freeze_delay_f"
     const val SKIP_WHILE_CHARGING = "skip_while_charging"
@@ -134,11 +145,9 @@ object HailData {
     )
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(app)
-    val sortBy get() = sp.getString(SORT_BY, SORT_NAME)
-    val filterUserApps get() = sp.getBoolean(FILTER_USER_APPS, true)
-    val filterSystemApps get() = sp.getBoolean(FILTER_SYSTEM_APPS, false)
-    val filterFrozenApps get() = sp.getBoolean(FILTER_FROZEN_APPS, true)
-    val filterUnfrozenApps get() = sp.getBoolean(FILTER_UNFROZEN_APPS, true)
+    val sortOrder get() = sp.getString(SORT_ORDER, SORT_NAME)!!
+    val filterType get() = sp.getString(FILTER_TYPE, FILTER_TYPE_USER)!!
+    val filterState get() = sp.getString(FILTER_STATE, ACTION_NONE)!!
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)!!
     val biometricLogin get() = sp.getBoolean(BIOMETRIC_LOGIN, false)
     val appTheme get() = sp.getString(APP_THEME, FOLLOW_SYSTEM)!!
@@ -147,6 +156,7 @@ object HailData {
     val compactIcon get() = sp.getBoolean(COMPACT_ICON, false)
     val synthesizeAdaptiveIcons get() = sp.getBoolean(SYNTHESIZE_ADAPTIVE_ICONS, false)
     val homeFontSize get() = sp.getFloat(HOME_FONT_SIZE, 14f)
+    val showNavigationBar get() = sp.getBoolean(SHOW_NAVIGATION_BAR, true)
     val fuzzySearch get() = sp.getBoolean(FUZZY_SEARCH, false)
     val nineKeySearch get() = sp.getBoolean(NINE_KEY_SEARCH, false)
     val tileAction get() = sp.getString(TILE_ACTION, AUTO_FREEZE_AFTER_LOCK)!!
@@ -175,8 +185,7 @@ object HailData {
                             whitelisted = optBoolean(KEY_WHITELISTED),
                             tagIdList = optJSONArray(KEY_TAGS)?.let {
                                 MutableList(it.length()) { index -> it.getInt(index) }
-                            } ?: mutableListOf(optInt(KEY_TAG))
-                        )
+                            } ?: mutableListOf(optInt(KEY_TAG)))
                     })
                 }
             }
@@ -234,7 +243,6 @@ object HailData {
         })
     }
 
-    fun changeAppsSort(sort: String) = sp.edit { putString(SORT_BY, sort) }
-
-    fun changeAppsFilter(filter: String, enabled: Boolean) = sp.edit { putBoolean(filter, enabled) }
+    fun String.toEntry(values: List<String>, @ArrayRes entriesId: Int): String =
+        app.resources.getStringArray(entriesId)[values.indexOf(this)]
 }

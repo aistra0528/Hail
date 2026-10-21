@@ -52,10 +52,10 @@
     <string name="msg_uninstall">Вы хочаце выдаліць гэту праграму?</string>
     <string name="mode_default">У чаканні</string>
     <string name="mode_owner_hide">Уладальнік прылады - Схаваць</string>
-    <string name="filter_by">Фільтр</string>
+    <string name="filter_title">Фільтр</string>
     <string name="filter_user_apps">Карыстальніцкія</string>
     <string name="filter_system_apps">Сістэмныя</string>
-    <string name="sort_by">Сартаваць паводле</string>
+    <string name="sort_order">Сартаваць паводле</string>
     <string name="sort_install">Дата ўсталявання</string>
     <string name="sort_update">Апошняе абнаўленне</string>
     <string name="title_donate">Дзякуй!</string>

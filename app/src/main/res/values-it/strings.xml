@@ -52,12 +52,12 @@
     <string name="msg_remove_owner">Device Owner will be removed, it might be difficult to set it again after removal.
 \nHidden apps are still hidden after removal, make sure you have unhide important apps.</string>
     <string name="tap_to_select">Tocca per selezionare più elementi</string>
-    <string name="filter_by">Filter</string>
+    <string name="filter_title">Filter</string>
     <string name="filter_user_apps">User</string>
     <string name="filter_system_apps">System</string>
     <string name="filter_frozen_apps">Congelato</string>
     <string name="filter_unfrozen_apps">Sgelato</string>
-    <string name="sort_by">Ordina per</string>
+    <string name="sort_order">Ordina per</string>
     <string name="sort_name">Name</string>
     <string name="sort_install">Prima installazione</string>
     <string name="sort_update">Ultimo aggiornamento</string>

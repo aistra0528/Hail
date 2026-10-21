@@ -99,14 +99,14 @@
     <string name="grayscale_icon">Icone en niveaux de gris</string>
     <string name="action_skip">Ignorer</string>
     <string name="app_not_installed">Application non installée</string>
-    <string name="sort_by">Trier par</string>
+    <string name="sort_order">Trier par</string>
     <string name="mode_su_hide">Superutilisateur - Masquer</string>
     <string name="compact_icon">Icône compacte</string>
     <string name="mode_dhizuku_hide">Dhizuku - Masquer</string>
     <string name="action_select_all">Tout sélectionner</string>
     <string name="skip_while_charging">Ignorer pendant le chargement</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="filter_by">Filtrer</string>
+    <string name="filter_title">Filtrer</string>
     <string name="operation_failed">Opération échouée : %s</string>
     <string name="mode_island_hide">Island/Insular - Masquer</string>
     <string name="mode_shizuku_hide">Shizuku - Cacher</string>

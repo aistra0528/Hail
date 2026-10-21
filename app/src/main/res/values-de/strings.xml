@@ -56,12 +56,12 @@
     <string name="msg_remove_owner">Der Geräteeigentümer wird entfernt. Es könnte ggf. nicht mehr funktionieren, ihn nach dem Entfernen wieder zu setzen.
 \nAusgeblendete (hidden) Anwendungen sind nach dem Entfernen weiterhin versteckt. Ausgeblendete Anwendungen unbedingt vorher wieder einblenden.</string>
     <string name="tap_to_select">Antippen für Mehrfachauswahl</string>
-    <string name="filter_by">Filter</string>
+    <string name="filter_title">Filter</string>
     <string name="filter_user_apps">Benutzer</string>
     <string name="filter_system_apps">System</string>
     <string name="filter_frozen_apps">Eingefroren</string>
     <string name="filter_unfrozen_apps">Nicht eingefroren</string>
-    <string name="sort_by">Sortieren nach</string>
+    <string name="sort_order">Sortieren nach</string>
     <string name="sort_name">Name</string>
     <string name="sort_install">erste Installation</string>
     <string name="sort_update">Letztes Update</string>

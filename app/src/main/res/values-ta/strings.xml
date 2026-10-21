@@ -91,13 +91,13 @@
     <string name="title_remove_owner">சாதன உரிமையாளரை அகற்று</string>
     <string name="msg_remove_owner">ஹெயில் சாதன உரிமையாளராக இருந்து நீக்கப்பட்டால், ஹெயிலை நீக்கிய பிறகு செயலிகளை மீண்டும் ஒழுங்குபடுத்துவதில் சிக்கல்கள் ஏற்படலாம்.\nஉறையவைக்கப்பட்ட செயலிகள் நீக்கப்பட்ட பிறகும் அதே நிலையில் இருக்கும். முக்கியமான செயலிகளை முன்கூட்டியே உறைநீக்கம் செய்துள்ளீர்களா என்பதை உறுதிப்படுத்துங்கள்.</string>
     <string name="tap_to_select">மல்டிசெலெக்டுக்கு தட்டவும்</string>
-    <string name="filter_by">வடிப்பி</string>
+    <string name="filter_title">வடிப்பி</string>
     <string name="msg_set_owner">adb இலிருந்து கட்டளையை வெளியிடுங்கள்:\n%s</string>
     <string name="filter_user_apps">பயனர்</string>
     <string name="filter_system_apps">மண்டலம்</string>
     <string name="filter_frozen_apps">உறைந்த</string>
     <string name="filter_unfrozen_apps">அன்ரோசன்</string>
-    <string name="sort_by">வரிசைப்படுத்தவும்</string>
+    <string name="sort_order">வரிசைப்படுத்தவும்</string>
     <string name="sort_name">பெயர்</string>
     <string name="sort_install">முதல் நிறுவல்</string>
     <string name="sort_update">கடைசி புதுப்பிப்பு</string>

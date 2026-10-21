@@ -1,42 +1,41 @@
 package com.aistra.hail.app
 
 import android.content.Intent
-import com.aistra.hail.BuildConfig
 
 object HailApi {
     /** @since 0.5.0 */
-    const val ACTION_LAUNCH = "${BuildConfig.APPLICATION_ID}.action.LAUNCH"
+    const val ACTION_LAUNCH = "com.aistra.hail.action.LAUNCH"
 
     /** @since 0.5.0 */
-    const val ACTION_FREEZE = "${BuildConfig.APPLICATION_ID}.action.FREEZE"
+    const val ACTION_FREEZE = "com.aistra.hail.action.FREEZE"
 
     /** @since 0.5.0 */
-    const val ACTION_UNFREEZE = "${BuildConfig.APPLICATION_ID}.action.UNFREEZE"
+    const val ACTION_UNFREEZE = "com.aistra.hail.action.UNFREEZE"
 
     /** @since 1.1.0 */
-    const val ACTION_FREEZE_TAG = "${BuildConfig.APPLICATION_ID}.action.FREEZE_TAG"
+    const val ACTION_FREEZE_TAG = "com.aistra.hail.action.FREEZE_TAG"
 
     /** @since 1.1.0 */
-    const val ACTION_UNFREEZE_TAG = "${BuildConfig.APPLICATION_ID}.action.UNFREEZE_TAG"
+    const val ACTION_UNFREEZE_TAG = "com.aistra.hail.action.UNFREEZE_TAG"
 
     /** @since 0.5.0 */
-    const val ACTION_FREEZE_ALL = "${BuildConfig.APPLICATION_ID}.action.FREEZE_ALL"
+    const val ACTION_FREEZE_ALL = "com.aistra.hail.action.FREEZE_ALL"
 
     /** @since 0.5.0 */
-    const val ACTION_UNFREEZE_ALL = "${BuildConfig.APPLICATION_ID}.action.UNFREEZE_ALL"
+    const val ACTION_UNFREEZE_ALL = "com.aistra.hail.action.UNFREEZE_ALL"
 
     /** @since 1.0.0 */
     const val ACTION_FREEZE_NON_WHITELISTED =
-        "${BuildConfig.APPLICATION_ID}.action.FREEZE_NON_WHITELISTED"
+        "com.aistra.hail.action.FREEZE_NON_WHITELISTED"
 
     /** @since 1.3.0 */
-    const val ACTION_FREEZE_AUTO = "${BuildConfig.APPLICATION_ID}.action.FREEZE_AUTO"
+    const val ACTION_FREEZE_AUTO = "com.aistra.hail.action.FREEZE_AUTO"
 
     /** @since 0.6.0 */
-    const val ACTION_LOCK = "${BuildConfig.APPLICATION_ID}.action.LOCK"
+    const val ACTION_LOCK = "com.aistra.hail.action.LOCK"
 
     /** @since 0.6.0 */
-    const val ACTION_LOCK_FREEZE = "${BuildConfig.APPLICATION_ID}.action.LOCK_FREEZE"
+    const val ACTION_LOCK_FREEZE = "com.aistra.hail.action.LOCK_FREEZE"
 
     fun getIntentForPackage(action: String, packageName: String) =
         Intent(action).putExtra(HailData.KEY_PACKAGE, packageName)

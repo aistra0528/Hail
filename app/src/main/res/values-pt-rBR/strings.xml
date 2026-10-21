@@ -64,7 +64,7 @@
     <string name="grayscale_icon">Ícone em tons de cinza</string>
     <string name="action_tag_set">Definir tag</string>
     <string name="app_not_installed">Aplicativo não instalado</string>
-    <string name="sort_by">Ordenar por</string>
+    <string name="sort_order">Ordenar por</string>
     <string name="mode_su_hide">Root - Ocultar</string>
     <string name="action_details">Informações do App</string>
     <string name="title_donate">Obrigado!</string>
@@ -78,7 +78,7 @@
     <string name="skip_while_charging">Pular durante o carregamento</string>
     <string name="donate_paypal">PayPal</string>
     <string name="label_default">Padrão</string>
-    <string name="filter_by">Filtro</string>
+    <string name="filter_title">Filtro</string>
     <string name="operation_failed">Falha na operação: %s</string>
     <string name="action_add_pin_shortcut">Adicionar à tela inicial</string>
     <string name="mode_shizuku_hide">Shizuku - Oculto</string>

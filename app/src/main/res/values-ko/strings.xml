@@ -52,10 +52,10 @@
     <string name="title_set_owner">기기 관리자로 설정하기</string>
     <string name="msg_set_owner">복사하여 adb에서 %s를 실행하세요</string>
     <string name="title_remove_owner">기기 관리자 권한 삭제하기</string>
-    <string name="filter_by">필터</string>
+    <string name="filter_title">필터</string>
     <string name="filter_frozen_apps">동결한 앱 표시</string>
     <string name="filter_unfrozen_apps">동결 해제한 앱 표시</string>
-    <string name="sort_by">정렬 기준</string>
+    <string name="sort_order">정렬 기준</string>
     <string name="sort_install">처음으로 설치­한 앱 순</string>
     <string name="sort_update">최근에 업데이트한 앱 순</string>
     <string name="title_donate">감사합니다!</string>

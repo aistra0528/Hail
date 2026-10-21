@@ -134,10 +134,10 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
     private fun updateCurrentList() = HailData.checkedList.filter {
         if (query.isEmpty()) tag?.second?.let { tagId -> tagId in it.tagIdList } ?: false
         else ((HailData.nineKeySearch && NineKeySearch.search(
-            query, it.packageName, it.name.toString()
+            query, it.packageName, it.name
         )) || FuzzySearch.search(it.packageName, query) || FuzzySearch.search(
-            it.name.toString(), query
-        ) || PinyinSearch.searchPinyinAll(it.name.toString(), query))
+            it.name, query
+        ) || PinyinSearch.searchPinyinAll(it.name, query))
     }.sortedWith(NameComparator).let {
         binding.empty.isVisible = it.isEmpty()
         pagerAdapter.submitList(it)
@@ -230,7 +230,8 @@ class PagerFragment : MainFragment(), PagerAdapter.OnItemClickListener, PagerAda
                                 info,
                                 pkg,
                                 info.name,
-                                HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg).addTag(HailData.tags[index].first)
+                                HailApi.getIntentForPackage(HailApi.ACTION_LAUNCH, pkg)
+                                    .addTag(HailData.tags[index].first)
                             )
                         }.setPositiveButton(R.string.action_skip) { _, _ ->
                             HShortcuts.addPinShortcut(

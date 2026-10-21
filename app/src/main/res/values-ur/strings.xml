@@ -44,7 +44,7 @@
     <string name="msg_remove_owner">ڈیوائس کے مالک کو ہٹا دیا جائے گا، ہٹانے کے بعد اسے دوبارہ سیٹ کرنا مشکل ہو سکتا ہے۔
 \n منجمد ایپس ہٹانے کے بعد منجمد رہیں گی، براہ کرم یقینی بنائیں کہ آپ نے اہم ایپس کو غیر منجمد کر دیا ہے۔</string>
     <string name="tap_to_select">ملٹی سلیکٹ کرنے کے لیے ٹیپ کریں</string>
-    <string name="filter_by">فلٹر</string>
+    <string name="filter_title">فلٹر</string>
     <string name="filter_user_apps">صارف</string>
     <string name="filter_system_apps">سسٹم</string>
     <string name="filter_frozen_apps">منجمد</string>
@@ -105,7 +105,7 @@
     <string name="msg_uninstall">کیا آپ اس ایپ کو اَن انسٹال کرنا چاہتے ہیں؟</string>
     <string name="mode_su_suspend">سپر یوزر - معطل</string>
     <string name="mode_shizuku_disable">شیزوکو - غیر فعال کریں</string>
-    <string name="sort_by">ترتیب دیں</string>
+    <string name="sort_order">ترتیب دیں</string>
     <string name="sort_install">پہلے انسٹال کریں</string>
     <string name="sort_update">آخری اپ ڈیٹ</string>
     <string name="donate_alipay">علیپے</string>

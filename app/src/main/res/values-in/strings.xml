@@ -45,7 +45,7 @@
     <string name="activity_not_found">Peluncur tidak ditemukan</string>
     <string name="tap_to_select">Tandai pilihan</string>
     <string name="title_set_owner">Atur Pemilik Perangkat</string>
-    <string name="filter_by">Filter</string>
+    <string name="filter_title">Filter</string>
     <string name="filter_user_apps">Pengguna</string>
     <string name="filter_frozen_apps">Dibekukan</string>
     <string name="filter_unfrozen_apps">Diaktifkan</string>
@@ -105,7 +105,7 @@
     <string name="action_tag_set">Pasang label</string>
     <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
-    <string name="sort_by">Urutkan</string>
+    <string name="sort_order">Urutkan</string>
     <string name="sort_update">Terakhir diperbarui</string>
     <string name="sort_install">Terinstal pertama</string>
     <string name="donate_paypal">Paypal</string>

@@ -1,13 +1,10 @@
 package com.aistra.hail.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
-import android.widget.ImageView
 import androidx.collection.LruCache
+import androidx.core.graphics.drawable.toBitmap
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import kotlinx.coroutines.*
@@ -23,8 +20,7 @@ import kotlin.coroutines.CoroutineContext
  */
 object AppIconCache : CoroutineScope {
 
-    private class AppIconLruCache constructor(maxSize: Int) :
-        LruCache<Triple<String, Int, Int>, Bitmap>(maxSize) {
+    private class AppIconLruCache(maxSize: Int) : LruCache<Triple<String, Int, Int>, Bitmap>(maxSize) {
 
         override fun sizeOf(key: Triple<String, Int, Int>, value: Bitmap): Int {
             return value.byteCount / 1024
@@ -40,8 +36,6 @@ object AppIconCache : CoroutineScope {
     private var appIconLoaders = mutableMapOf<Int, AppIconLoader>()
 
     private var shrinkNonAdaptiveIcons: Boolean
-
-    private val cf by lazy { ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) }) }
 
     init {
         // Initialize app icon lru cache
@@ -73,7 +67,6 @@ object AppIconCache : CoroutineScope {
 
     fun clear() = lruCache.evictAll()
 
-    @SuppressLint("NewApi")
     fun getOrLoadBitmap(context: Context, info: ApplicationInfo, userId: Int, size: Int): Bitmap {
         val cachedBitmap = get(info.packageName, userId, size)
         if (cachedBitmap != null) {
@@ -92,44 +85,31 @@ object AppIconCache : CoroutineScope {
 
     @JvmStatic
     fun loadIconBitmapAsync(
-        context: Context,
-        info: ApplicationInfo,
-        userId: Int,
-        view: ImageView,
-        setColorFilter: Boolean = false
+        context: Context, info: ApplicationInfo, userId: Int, onLoad: (Bitmap) -> Unit
     ): Job {
         return launch {
-            val size = view.measuredWidth.let {
-                if (it > 0) it else context.resources.getDimensionPixelSize(R.dimen.app_icon_size)
-            }
+            val size = context.resources.getDimensionPixelSize(R.dimen.app_icon_size)
             if (shrinkNonAdaptiveIcons != HailData.synthesizeAdaptiveIcons) {
                 lruCache.evictAll()
             } else {
                 val cachedBitmap = get(info.packageName, userId, size)
                 if (cachedBitmap != null) {
-                    view.setImageBitmap(cachedBitmap)
-                    view.colorFilter = if (setColorFilter) cf else null
+                    onLoad(cachedBitmap)
                     return@launch
                 }
             }
 
-            val bitmap = try {
+            val bitmap = runCatching {
                 withContext(dispatcher) {
                     getOrLoadBitmap(context, info, userId, size)
                 }
-            } catch (e: CancellationException) {
+            }.getOrElse {
                 // do nothing if canceled
-                return@launch
-            } catch (e: Throwable) {
+                if (it is CancellationException) return@launch
                 null
             }
 
-            if (bitmap != null) {
-                view.setImageBitmap(bitmap)
-            } else {
-                view.setImageDrawable(if (HTarget.O) context.packageManager.defaultActivityIcon else null)
-            }
-            view.colorFilter = if (setColorFilter) cf else null
+            onLoad(bitmap ?: context.packageManager.defaultActivityIcon.toBitmap())
         }
     }
 }

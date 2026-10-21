@@ -47,6 +47,16 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
+        create("play") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            applicationIdSuffix = ".gp"
+            if (!commitSubject.startsWith("[release]")) versionNameSuffix = "-g$commitHash"
+            signingConfig = signingConfigs.getByName("release")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+        }
     }
     androidResources {
         generateLocaleConfig = true
@@ -83,30 +93,32 @@ kotlin {
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.biometric.compose)
+    implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.ui.tooling.preview)
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.biometric.ktx)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.pinyin4j)
-    implementation(libs.material)
+    implementation(libs.appiconloader)
+    implementation(libs.commons.text)
+    implementation(libs.compose.preference)
+    implementation(libs.dhizuku.api)
+    implementation(libs.hiddenapibypass)
     implementation(libs.insetter)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.material)
+    implementation(libs.pinyin4j)
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
-    implementation(libs.dhizuku.api)
-    implementation(libs.appiconloader)
-    implementation(libs.compose.preference)
-    implementation(libs.commons.text)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.hiddenapibypass)
     compileOnly(libs.libxposed.api)
 }

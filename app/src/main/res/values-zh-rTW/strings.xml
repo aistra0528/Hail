@@ -51,12 +51,12 @@
     <string name="msg_remove_owner">如果「雹」作為装置擁有者被移除，則在「雹」移除後重新組織應用程式可能會遇到困難。
 \n已凍結的應用程式在移除後仍會保持凍結，請確保您已將重要的應用程式解凍。</string>
     <string name="tap_to_select">輕觸多選</string>
-    <string name="filter_by">篩選</string>
+    <string name="filter_title">篩選</string>
     <string name="filter_user_apps">使用者</string>
     <string name="filter_system_apps">系統</string>
     <string name="filter_frozen_apps">已凍結</string>
     <string name="filter_unfrozen_apps">未凍結</string>
-    <string name="sort_by">排序方式</string>
+    <string name="sort_order">排序方式</string>
     <string name="sort_name">名稱</string>
     <string name="sort_install">首次安裝</string>
     <string name="sort_update">最近更新</string>

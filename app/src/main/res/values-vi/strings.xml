@@ -57,7 +57,7 @@
     <string name="action_skip">Bỏ qua</string>
     <string name="action_tag_set">Thiết lập nhãn</string>
     <string name="app_not_installed">Ứng dụng chưa được cài đặt</string>
-    <string name="sort_by">Sắp xếp theo</string>
+    <string name="sort_order">Sắp xếp theo</string>
     <string name="mode_su_hide">Superuser - Ẩn</string>
     <string name="action_details">Thông tin ứng dụng</string>
     <string name="title_donate">Cam ơn bạn nha!</string>
@@ -70,7 +70,7 @@
     <string name="action_unfreeze_remove_home">Giá băng và xóa khỏi trang chủ</string>
     <string name="skip_while_charging">Bỏ qua trong khi sạc</string>
     <string name="label_default">Mặc định</string>
-    <string name="filter_by">Lọc</string>
+    <string name="filter_title">Lọc</string>
     <string name="operation_failed">Thao tác thất bại: %s</string>
     <string name="action_add_pin_shortcut">Thêm vào màn hình chính</string>
     <string name="mode_shizuku_hide">Shizuku - Ẩn</string>

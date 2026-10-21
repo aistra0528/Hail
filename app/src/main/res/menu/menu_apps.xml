@@ -10,7 +10,7 @@
             tools:ignore="AlwaysShowAction"/>
     <item
             android:icon="@drawable/ic_outline_filter"
-            android:title="@string/filter_by"
+            android:title="@string/filter_title"
             app:showAsAction="ifRoom">
         <menu>
             <group
@@ -37,7 +37,7 @@
     </item>
     <item
             android:icon="@drawable/ic_outline_sort"
-            android:title="@string/sort_by"
+            android:title="@string/sort_order"
             app:showAsAction="ifRoom">
         <menu>
             <group android:checkableBehavior="single">

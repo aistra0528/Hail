@@ -24,11 +24,12 @@ object AppManager {
             endsWith(HailData.DISABLE) -> HPackages.isAppDisabled(packageName)
             endsWith(HailData.HIDE) -> HPackages.isAppHidden(packageName)
             endsWith(HailData.SUSPEND) -> HPackages.isAppSuspended(packageName)
-            else -> HPackages.isAppDisabled(packageName)
-                    || HPackages.isAppHidden(packageName)
-                    || HPackages.isAppSuspended(packageName)
+            else -> isAnyFrozen(packageName)
         }
     }
+
+    fun isAnyFrozen(packageName: String): Boolean = HPackages.isAppSuspended(packageName)
+            || HPackages.isAppDisabled(packageName) || HPackages.isAppHidden(packageName)
 
     fun setListFrozen(frozen: Boolean, vararg appInfo: AppInfo): String? {
         val excludeMe = appInfo.filter { it.packageName != BuildConfig.APPLICATION_ID }
@@ -43,7 +44,7 @@ object AppManager {
                     when {
                         setAppFrozen(it.packageName, frozen) -> {
                             i++
-                            name = it.name.toString()
+                            name = it.name
                         }
 
                         it.applicationInfo != null -> denied = true

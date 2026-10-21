@@ -44,7 +44,7 @@
     <string name="tap_to_select">Klikk a többszörös kiválasztáshoz</string>
     <string name="filter_system_apps">Rendszer</string>
     <string name="filter_unfrozen_apps">Kiolvasztva</string>
-    <string name="sort_by">Rendezés eszerint</string>
+    <string name="sort_order">Rendezés eszerint</string>
     <string name="sort_install">Korábban telepítettek</string>
     <string name="sort_update">Utoljára frissítettek</string>
     <string name="donate_alipay">Alipay</string>
@@ -121,7 +121,7 @@
     <string name="mode_shizuku_disable">Shizuku - Letiltás</string>
     <string name="msg_set_owner">Parancskiadás ADB-ből: \n%s</string>
     <string name="action_unfreeze_all">Mind felolvasztása</string>
-    <string name="filter_by">Szűrő</string>
+    <string name="filter_title">Szűrő</string>
     <string name="sort_name">Név</string>
     <string name="mode_owner_hide">Eszköztulajdonos - Elrejtés</string>
     <string name="action_undo">Visszavonás</string>

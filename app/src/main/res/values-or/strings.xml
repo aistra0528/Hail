@@ -21,10 +21,10 @@
     <string name="label_version">ସଂସ୍କରଣ</string>
     <string name="action_undo">ପୂର୍ଵଵତ୍</string>
     <string name="nothing_here">ଏଠାରେ କିଛି ନାହିଁ</string>
-    <string name="sort_by">ଏହା ଅନୁଯାୟୀ ସଜାନ୍ତୁ</string>
+    <string name="sort_order">ଏହା ଅନୁଯାୟୀ ସଜାନ୍ତୁ</string>
     <string name="filter_user_apps">ଉପଭୋକ୍ତା</string>
     <string name="filter_system_apps">ସିଷ୍ଟମ୍</string>
-    <string name="filter_by">ଶୋଧନ</string>
+    <string name="filter_title">ଶୋଧନ</string>
     <string name="label_time">ଅଧିସ୍ଥାପନ ସମୟ</string>
     <string name="action_add_pin_shortcut">ଗୃହ ପରଦାରେ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="mode_su_disable">Superuser - ଅକ୍ଷମ କର</string>

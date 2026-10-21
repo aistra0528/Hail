@@ -1,6 +1,8 @@
 package com.aistra.hail.ui.apps
 
 import android.content.pm.ApplicationInfo
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
@@ -12,6 +14,7 @@ import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ItemAppsBinding
 import com.aistra.hail.utils.AppIconCache
 import com.aistra.hail.utils.HPackages
+import com.aistra.hail.utils.HPackages.labelString
 import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.Job
 
@@ -71,11 +74,15 @@ class AppsAdapter : ListAdapter<ApplicationInfo, AppsAdapter.ViewHolder>(DIFF) {
 
             binding.appIcon.apply {
                 loadIconJob = AppIconCache.loadIconBitmapAsync(
-                    context, info, HPackages.myUserId, this, HailData.grayscaleIcon && frozen
-                )
+                    context, info, HPackages.myUserId
+                ) {
+                    setImageBitmap(it)
+                    colorFilter = if (HailData.grayscaleIcon && frozen)
+                        ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) }) else null
+                }
             }
             binding.appName.apply {
-                val name = info.loadLabel(context.packageManager)
+                val name = info.labelString
                 text = if (!HailData.grayscaleIcon && frozen) "❄️$name" else name
                 isEnabled = !HailData.grayscaleIcon || !frozen
                 if (HPackages.isAppUninstalled(pkg)) setTextColor(

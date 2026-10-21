@@ -49,12 +49,12 @@
     <string name="title_set_owner">تنظیم مالک دستگاه</string>
     <string name="title_remove_owner">حذف مالک دستگاه</string>
     <string name="tap_to_select">برای چندگزینشی بزنید</string>
-    <string name="filter_by">فیلتر</string>
+    <string name="filter_title">فیلتر</string>
     <string name="filter_user_apps">کاربر</string>
     <string name="filter_system_apps">سامانه</string>
     <string name="filter_frozen_apps">یخ‌زده</string>
     <string name="filter_unfrozen_apps">یخ‌زدوده</string>
-    <string name="sort_by">چینش با</string>
+    <string name="sort_order">چینش با</string>
     <string name="sort_name">نام</string>
     <string name="sort_install">نصب نخست</string>
     <string name="sort_update">آخرین بروزرسانی</string>

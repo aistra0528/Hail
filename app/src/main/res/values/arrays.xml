@@ -29,6 +29,24 @@
         <item>@string/action_extract_apk</item>
         <item>@string/action_uninstall</item>
     </string-array>
+    <string-array name="filter_type_entries">
+        <item>@string/action_all</item>
+        <item>@string/filter_user_apps</item>
+        <item>@string/filter_system_apps</item>
+    </string-array>
+    <string-array name="filter_state_entries">
+        <item>@string/action_none</item>
+        <item>@string/state_running</item>
+        <item>@string/state_suspended</item>
+        <item>@string/state_disabled</item>
+        <item>@string/state_hidden</item>
+        <item>@string/state_uninstalled</item>
+    </string-array>
+    <string-array name="sort_order_entries">
+        <item>@string/sort_name</item>
+        <item>@string/sort_install</item>
+        <item>@string/sort_update</item>
+    </string-array>
     <string-array name="working_mode_entries">
         <item>@string/mode_default</item>
         <item>@string/mode_shizuku_stop</item>

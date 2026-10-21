@@ -56,7 +56,7 @@
     <string name="donate_paypal">PayPal</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Сканувати</string>
-    <string name="filter_by">Фільтр</string>
+    <string name="filter_title">Фільтр</string>
     <string name="filter_frozen_apps">Заморожені</string>
     <string name="filter_system_apps">Системні</string>
     <string name="filter_unfrozen_apps">Незаморожені</string>
@@ -93,7 +93,7 @@
     <string name="skip_foreground_app">Не заморожувати застосунки переднього плану</string>
     <string name="skip_notifying_app">Пропустити застосунок зі сповіщенням</string>
     <string name="skip_while_charging">Не заморожувати під час зарядки</string>
-    <string name="sort_by">Сортувати за</string>
+    <string name="sort_order">Сортувати за</string>
     <string name="sort_install">Дата встановлення</string>
     <string name="sort_name">Назва</string>
     <string name="sort_update">Останнє оновлення</string>

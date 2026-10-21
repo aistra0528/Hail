@@ -1,5 +1,7 @@
 package com.aistra.hail.ui.home
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -40,10 +42,14 @@ class PagerAdapter(
                     loadIconJob = AppIconCache.loadIconBitmapAsync(
                         context,
                         it,
-                        myUserId,
-                        this,
-                        HailData.grayscaleIcon && info.state == AppInfo.State.FROZEN
-                    )
+                        myUserId
+                    ) { bitmap ->
+                        setImageBitmap(bitmap)
+                        colorFilter =
+                            if (HailData.grayscaleIcon && info.state == AppInfo.State.FROZEN)
+                                ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
+                            else null
+                    }
                 } ?: run {
                     setImageDrawable(context.packageManager.defaultActivityIcon)
                     colorFilter = null

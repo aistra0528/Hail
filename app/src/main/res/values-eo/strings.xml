@@ -59,12 +59,12 @@
     <string name="title_set_owner">Agordi Aparatan Posedanton</string>
     <string name="title_remove_owner">Forigi Aparatan Posedanton</string>
     <string name="tap_to_select">Frapu por multoblaj elektoj</string>
-    <string name="filter_by">Filtri</string>
+    <string name="filter_title">Filtri</string>
     <string name="filter_user_apps">Uzanto</string>
     <string name="filter_system_apps">Sistemo</string>
     <string name="filter_frozen_apps">Frostigita</string>
     <string name="filter_unfrozen_apps">Malfrostigita</string>
-    <string name="sort_by">Ordigi laŭ</string>
+    <string name="sort_order">Ordigi laŭ</string>
     <string name="sort_name">Nomo</string>
     <string name="sort_install">Unua instalado</string>
     <string name="sort_update">Lasta ĝisdatigo</string>

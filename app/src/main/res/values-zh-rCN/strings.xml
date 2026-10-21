@@ -52,12 +52,13 @@
     <string name="msg_remove_owner">将移除雹的设备所有者，移除后便无法冻结与解冻应用。
 \n已冻结的应用在移除设备所有者后仍会保持冻结状态，请确保您已将重要的应用解冻。</string>
     <string name="tap_to_select">点按多选</string>
-    <string name="filter_by">筛选</string>
+    <string name="filter_title">筛选</string>
+    <string name="action_all">全部</string>
     <string name="filter_user_apps">用户</string>
     <string name="filter_system_apps">系统</string>
     <string name="filter_frozen_apps">已冻结</string>
     <string name="filter_unfrozen_apps">未冻结</string>
-    <string name="sort_by">排序方式</string>
+    <string name="sort_order">排序方式</string>
     <string name="sort_name">名称</string>
     <string name="sort_install">首次安装</string>
     <string name="sort_update">最近更新</string>
@@ -137,6 +138,7 @@
     <string name="command">命令</string>
     <string name="tag">标签</string>
     <string name="nine_key">T9 搜索</string>
+    <string name="nine_key_description">使用拨号盘搜索</string>
     <string name="home_font_size">首页字体大小</string>
     <string name="mode_privapp_disable">系统应用 - 停用</string>
     <string name="mode_shizuku_stop">Shizuku - 强行停止</string>
@@ -156,4 +158,8 @@
     <string name="state_uninstalled">已卸载</string>
     <string name="donate_kofi">Ko-fi</string>
     <string name="mode_jailbreak_disable">越狱 - 停用</string>
+    <string name="device_admin_description">可在应用内移除</string>
+    <string name="show_navigation_bar">显示导航栏</string>
+    <string name="denied_get_installed_apps">没有应用？可能需要获取应用列表权限</string>
+    <string name="no_matching_results">没有匹配的应用</string>
 </resources>

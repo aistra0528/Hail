@@ -50,12 +50,12 @@
     <string name="title_remove_owner">Quitar como propietario del dispositivo</string>
     <string name="msg_remove_owner">Si se quita a Hail como propietario del dispositivo, podrías tener dificultades para reorganizar las aplicaciones tras haberlo quitado. \nLas aplicaciones congeladas seguirán congeladas tras quitarlo; asegúrate de haber descongelado las importantes.</string>
     <string name="tap_to_select">Toca para selección múltiple</string>
-    <string name="filter_by">Filtro</string>
+    <string name="filter_title">Filtro</string>
     <string name="filter_user_apps">Usuario</string>
     <string name="filter_system_apps">Sistema</string>
     <string name="filter_frozen_apps">Congeladas</string>
     <string name="filter_unfrozen_apps">Descongeladas</string>
-    <string name="sort_by">Ordenar por</string>
+    <string name="sort_order">Ordenar por</string>
     <string name="sort_name">Nombre</string>
     <string name="sort_install">Primera instalación</string>
     <string name="sort_update">Fecha de actualización</string>

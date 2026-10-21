@@ -51,12 +51,12 @@
     <string name="msg_remove_owner">Если Hail удален как владелец устройства, после его удаления могут возникнуть трудности с реорганизацией приложений.
 \nЗамороженные приложения останутся замороженными после удаления, пожалуйста, убедитесь, что вы разморозили важные приложения.</string>
     <string name="tap_to_select">Нажмите, чтобы выбрать несколько</string>
-    <string name="filter_by">Фильтр</string>
+    <string name="filter_title">Фильтр</string>
     <string name="filter_user_apps">Пользовательские</string>
     <string name="filter_system_apps">Системные</string>
     <string name="filter_frozen_apps">Замороженые</string>
     <string name="filter_unfrozen_apps">Незамороженые</string>
-    <string name="sort_by">Сортировка по</string>
+    <string name="sort_order">Сортировка по</string>
     <string name="sort_name">Название</string>
     <string name="sort_install">Дата установки</string>
     <string name="sort_update">Дата обновления</string>

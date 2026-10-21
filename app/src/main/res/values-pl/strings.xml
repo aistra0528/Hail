@@ -36,10 +36,10 @@
     <string name="title_set_owner">Ustaw właściciela urządzenia</string>
     <string name="title_remove_owner">Usuń właściciela urządzenia</string>
     <string name="tap_to_select">Dotknij, aby wybrać wiele</string>
-    <string name="filter_by">Filtruj według</string>
+    <string name="filter_title">Filtruj według</string>
     <string name="filter_user_apps">Użytkownik</string>
     <string name="filter_system_apps">System</string>
-    <string name="sort_by">Sortuj według</string>
+    <string name="sort_order">Sortuj według</string>
     <string name="sort_name">Nazwa</string>
     <string name="sort_install">Pierwsza instalacja</string>
     <string name="sort_update">Ostatnia aktualizacja</string>

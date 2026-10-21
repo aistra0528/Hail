@@ -9,7 +9,6 @@ import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -40,10 +39,11 @@ import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.DialogInputBinding
-import com.aistra.hail.ui.main.MainActivity
+import com.aistra.hail.ui.main.MainActivityLegacy
 import com.aistra.hail.ui.main.MainFragment
 import com.aistra.hail.ui.theme.AppTheme
 import com.aistra.hail.utils.*
+import com.aistra.hail.utils.HPackages.labelString
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import com.rosan.dhizuku.api.Dhizuku
@@ -170,7 +170,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 key = HailData.NINE_KEY_SEARCH,
                 defaultValue = false,
                 titleId = R.string.nine_key,
-                icon = Icons.Outlined.Dialpad
+                icon = Icons.Outlined.Dialpad,
+                summaryId = R.string.nine_key_description
             )
             listPreference(
                 key = HailData.TILE_ACTION,
@@ -275,6 +276,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
         @StringRes titleId: Int,
         enabled: Boolean = true,
         icon: ImageVector,
+        @StringRes summaryId: Int? = null
     ) = item(key = titleId, contentType = "SwitchPreference") {
         val state = rememberState()
         SwitchPreference(
@@ -282,7 +284,8 @@ class SettingsFragment : MainFragment(), MenuProvider {
             onValueChange = { if (onValueChange(state, it)) state.value = it },
             title = { Text(text = stringResource(titleId)) },
             enabled = enabled,
-            icon = { Icon(imageVector = icon, contentDescription = null) })
+            icon = { Icon(imageVector = icon, contentDescription = null) },
+            summary = { if (summaryId != null) Text(text = stringResource(summaryId)) })
     }
 
     private fun LazyListScope.switchPreference(
@@ -292,12 +295,14 @@ class SettingsFragment : MainFragment(), MenuProvider {
         @StringRes titleId: Int,
         enabled: Boolean = true,
         icon: ImageVector,
+        @StringRes summaryId: Int? = null
     ) = switchPreference(
         rememberState = { rememberPreferenceState(key, defaultValue) },
         onValueChange = onValueChange,
         titleId = titleId,
         enabled = enabled,
-        icon = icon
+        icon = icon,
+        summaryId = summaryId
     )
 
     private fun LazyListScope.listPreference(
@@ -352,7 +357,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     }
 
     private fun iconPackName(pack: String): String = if (pack == HailData.ACTION_NONE) getString(R.string.action_none)
-    else HPackages.getApplicationInfoOrNull(pack)?.loadLabel(app.packageManager)?.toString() ?: pack
+    else HPackages.getApplicationInfoOrNull(pack)?.labelString ?: pack
 
     private fun addPinShortcut() {
         MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.action_add_pin_shortcut)
@@ -362,9 +367,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                         .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
                             val tag = HailData.tags[index].first
                             HShortcuts.addPinShortcut(
-                                AppCompatResources.getDrawable(
-                                    requireContext(), R.drawable.ic_round_frozen_shortcut
-                                )!!,
+                                R.drawable.ic_round_frozen_shortcut,
                                 HailApi.ACTION_FREEZE_TAG + tag,
                                 tag,
                                 HailApi.getIntentForTag(HailApi.ACTION_FREEZE_TAG, tag)
@@ -375,9 +378,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
                         .setItems(HailData.tags.map { it.first }.toTypedArray()) { _, index ->
                             val tag = HailData.tags[index].first
                             HShortcuts.addPinShortcut(
-                                AppCompatResources.getDrawable(
-                                    requireContext(), R.drawable.ic_round_unfrozen_shortcut
-                                )!!,
+                                R.drawable.ic_round_unfrozen_shortcut,
                                 HailApi.ACTION_UNFREEZE_TAG + tag,
                                 tag,
                                 HailApi.getIntentForTag(HailApi.ACTION_UNFREEZE_TAG, tag)
@@ -385,42 +386,35 @@ class SettingsFragment : MainFragment(), MenuProvider {
                         }.setNegativeButton(android.R.string.cancel, null).show()
 
                     2 -> HShortcuts.addPinShortcut(
-                        AppCompatResources.getDrawable(
-                            requireContext(), R.drawable.ic_round_frozen_shortcut
-                        )!!,
+                        R.drawable.ic_round_frozen_shortcut,
                         HailApi.ACTION_FREEZE_ALL,
                         getString(R.string.action_freeze_all),
                         Intent(HailApi.ACTION_FREEZE_ALL)
                     )
 
                     3 -> HShortcuts.addPinShortcut(
-                        AppCompatResources.getDrawable(
-                            requireContext(), R.drawable.ic_round_unfrozen_shortcut
-                        )!!,
+                        R.drawable.ic_round_unfrozen_shortcut,
                         HailApi.ACTION_UNFREEZE_ALL,
                         getString(R.string.action_unfreeze_all),
                         Intent(HailApi.ACTION_UNFREEZE_ALL)
                     )
 
                     4 -> HShortcuts.addPinShortcut(
-                        AppCompatResources.getDrawable(
-                            requireContext(), R.drawable.ic_round_frozen_shortcut
-                        )!!,
+                        R.drawable.ic_round_frozen_shortcut,
                         HailApi.ACTION_FREEZE_NON_WHITELISTED,
                         getString(R.string.action_freeze_non_whitelisted),
                         Intent(HailApi.ACTION_FREEZE_NON_WHITELISTED)
                     )
 
                     5 -> HShortcuts.addPinShortcut(
-                        AppCompatResources.getDrawable(
-                            requireContext(), R.drawable.ic_outline_lock_shortcut
-                        )!!, HailApi.ACTION_LOCK, getString(R.string.action_lock), Intent(HailApi.ACTION_LOCK)
+                        R.drawable.ic_outline_lock_shortcut,
+                        HailApi.ACTION_LOCK,
+                        getString(R.string.action_lock),
+                        Intent(HailApi.ACTION_LOCK)
                     )
 
                     6 -> HShortcuts.addPinShortcut(
-                        AppCompatResources.getDrawable(
-                            requireContext(), R.drawable.ic_outline_lock_shortcut
-                        )!!,
+                        R.drawable.ic_outline_lock_shortcut,
                         HailApi.ACTION_LOCK_FREEZE,
                         getString(R.string.action_lock_freeze),
                         Intent(HailApi.ACTION_LOCK_FREEZE)
@@ -572,7 +566,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_terminal -> showTerminalDialog()
-            R.id.action_remove_owner -> (requireActivity() as MainActivity).ownerRemoveDialog()
+            R.id.action_remove_owner -> (requireActivity() as MainActivityLegacy).ownerRemoveDialog()
             R.id.action_help -> HUI.openLink(HailData.URL_README)
         }
         return false

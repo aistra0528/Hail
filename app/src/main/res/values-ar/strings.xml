@@ -67,7 +67,7 @@
     <string name="grayscale_icon">أيقونة التدرج الرمادي</string>
     <string name="action_tag_set">تحديد علامة</string>
     <string name="app_not_installed">التطبيق ليس مثبتاً</string>
-    <string name="sort_by">ترتيب حسب</string>
+    <string name="sort_order">ترتيب حسب</string>
     <string name="mode_su_hide">روت - إخفاء</string>
     <string name="action_details">معلومات التطبيق</string>
     <string name="title_donate">شكرا لك!</string>
@@ -81,7 +81,7 @@
     <string name="skip_while_charging">تخطي أثناء الشحن</string>
     <string name="donate_paypal">PayPal</string>
     <string name="label_default">افتراضي</string>
-    <string name="filter_by">فلتر</string>
+    <string name="filter_title">فلتر</string>
     <string name="operation_failed">فشلت العملية: %s</string>
     <string name="action_add_pin_shortcut">إضافة إلى الشاشة الرئيسية</string>
     <string name="mode_shizuku_hide">Shizuku - إخفاء</string>

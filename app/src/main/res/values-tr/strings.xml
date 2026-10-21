@@ -46,12 +46,12 @@
     <string name="title_set_owner">Cihaz yöneticisi ayarla</string>
     <string name="title_remove_owner">Cihaz Yöneticisini Kaldır</string>
     <string name="tap_to_select">Çoklu seçim için tıkla</string>
-    <string name="filter_by">Filtrele</string>
+    <string name="filter_title">Filtrele</string>
     <string name="filter_user_apps">Kullanıcı</string>
     <string name="filter_system_apps">Sistem</string>
     <string name="filter_frozen_apps">Dondurulmuş</string>
     <string name="filter_unfrozen_apps">Çözülmüş</string>
-    <string name="sort_by">Şuna göre sırala</string>
+    <string name="sort_order">Şuna göre sırala</string>
     <string name="sort_name">İsim</string>
     <string name="sort_install">İlk yüklenme</string>
     <string name="sort_update">Son güncellenme</string>

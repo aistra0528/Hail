@@ -1,8 +1,8 @@
 package com.aistra.hail.app
 
 import android.content.pm.ApplicationInfo
-import com.aistra.hail.HailApp.Companion.app
 import com.aistra.hail.utils.HPackages
+import com.aistra.hail.utils.HPackages.labelString
 
 class AppInfo(
     val packageName: String,
@@ -13,7 +13,7 @@ class AppInfo(
     enum class State { NOT_FOUND, UNFROZEN, FROZEN }
 
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
-    val name get() = applicationInfo?.loadLabel(app.packageManager) ?: packageName
+    val name get() = applicationInfo?.labelString ?: packageName
     val state
         get() = when {
             applicationInfo == null -> State.NOT_FOUND

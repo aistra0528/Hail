@@ -1,9 +1,9 @@
 [versions]
-androidGradlePlugin = "9.2.1"
+androidGradlePlugin = "9.1.1"
 kotlin = "2.3.21"
 appcompat = "1.7.1"
 appiconloader = "1.5.0"
-biometricKtx = "1.2.0-alpha05"
+biometricCompose = "1.4.0-alpha07"
 commonsText = "1.15.0"
 composeBom = "2025.12.01"
 composePreference = "1.1.1"
@@ -13,33 +13,36 @@ dhizukuApi = "2.5.4"
 hiddenapibypass = "6.1"
 insetter = "0.6.1"
 kotlinxCoroutinesAndroid = "1.10.2"
-lifecycleLivedataKtx = "2.10.0"
+libxposed = "102.0.0"
+lifecycleViewmodelCompose = "2.10.0"
 material = "1.13.0"
-navigationKtx = "2.9.6"
+material3AdaptiveNavigationSuite = "1.4.0"
+navigationCompose = "2.9.6"
 pinyin4j = "2.5.1"
 preferenceKtx = "1.2.1"
 shizuku = "13.1.5"
 swiperefreshlayout = "1.2.0"
 workRuntimeKtx = "2.11.0"
-libxposed = "102.0.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
-androidx-biometric-ktx = { module = "androidx.biometric:biometric-ktx", version.ref = "biometricKtx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
-androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-biometric-compose = { module = "androidx.biometric:biometric-compose", version.ref = "biometricCompose" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-material3-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite", version.ref = "material3AdaptiveNavigationSuite" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationCompose" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationCompose" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
-androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationKtx" }
-androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationKtx" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
-androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 appiconloader = { module = "me.zhanghai.android.appiconloader:appiconloader", version.ref = "appiconloader" }
 commons-text = { module = "org.apache.commons:commons-text", version.ref = "commonsText" }
 compose-preference = { module = "me.zhanghai.compose.preference:library", version.ref = "composePreference" }
@@ -47,11 +50,11 @@ dhizuku-api = { module = "io.github.iamr0s:Dhizuku-API", version.ref = "dhizukuA
 hiddenapibypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version.ref = "hiddenapibypass" }
 insetter = { module = "dev.chrisbanes.insetter:insetter", version.ref = "insetter" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+libxposed-api = { module = "io.github.libxposed:api", version.ref = "libxposed" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 pinyin4j = { module = "com.belerweb:pinyin4j", version.ref = "pinyin4j" }
 shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
 shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
-libxposed-api = { module = "io.github.libxposed:api", version.ref = "libxposed" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

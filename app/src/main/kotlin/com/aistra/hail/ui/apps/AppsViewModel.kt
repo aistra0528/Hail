@@ -1,25 +1,21 @@
 package com.aistra.hail.ui.apps
 
-import android.app.Application
 import android.content.pm.ApplicationInfo
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aistra.hail.HailApp
-import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.utils.*
+import com.aistra.hail.utils.HPackages.labelString
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
-class AppsViewModel(application: Application) : AndroidViewModel(application) {
-    val apps = MutableLiveData<List<ApplicationInfo>>()
-    val isRefreshing = MutableLiveData(false)
-    val query = MutableLiveData("")
-    val displayApps = MutableLiveData<List<ApplicationInfo>>()
-
-    init {
-        updateAppList()
-    }
+class AppsViewModel : ViewModel() {
+    val apps = MutableStateFlow<List<ApplicationInfo>>(emptyList())
+    val isRefreshing = MutableStateFlow(false)
+    val query = MutableStateFlow<String?>(null)
+    val displayApps = MutableStateFlow<List<ApplicationInfo>>(emptyList())
 
     private var refreshJob: Job? = null
     private var refreshStateJob: Job? = null
@@ -27,27 +23,25 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * Delaying changes to the refreshing state prevents the progress bar from flickering.
      * */
-    private fun postRefreshState(state: Boolean, delayTime: Long = 200L) {
+    private fun postRefreshState(state: Boolean, delayTime: Duration = 200.milliseconds) {
         if (!state) {
             refreshStateJob?.cancel()
-            isRefreshing.postValue(false)
-        } else if (refreshStateJob == null || refreshStateJob!!.isCompleted) {
+            isRefreshing.value = false
+        } else if (refreshStateJob?.isCompleted ?: true) {
             refreshStateJob = viewModelScope.launch {
                 delay(delayTime)
-                isRefreshing.postValue(true)
+                isRefreshing.value = true
             }
         }
     }
 
-    fun postQuery(text: String, delayTime: Long = 300L) {
+    fun postQuery(text: String?, delayTime: Duration = 300.milliseconds) {
         refreshJob?.cancel()
-        if (delayTime == 0L)
-            query.postValue(text)
-        else {
-            refreshJob = viewModelScope.launch {
-                delay(delayTime)
-                query.postValue(text)
-            }
+        query.value = text
+        if (text.isNullOrEmpty()) updateDisplayAppList()
+        else refreshJob = viewModelScope.launch {
+            delay(delayTime)
+            updateDisplayAppList()
         }
     }
 
@@ -58,7 +52,11 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
     fun updateAppList() {
         viewModelScope.launch {
             postRefreshState(true)
-            apps.postValue(HPackages.getInstalledApplications())
+            val lastApps = HPackages.getInstalledApplications()
+            if (apps.value != lastApps) {
+                apps.value = lastApps
+                updateDisplayAppList()
+            }
         }
     }
 
@@ -69,43 +67,40 @@ class AppsViewModel(application: Application) : AndroidViewModel(application) {
      * from `apps` and places it in `displayApps`.
      * */
     fun updateDisplayAppList() {
-        apps.value?.let {
-            viewModelScope.launch {
-                postRefreshState(true)
-                displayApps.postValue(filterList(it, query.value))
-                postRefreshState(false)
-            }
+        viewModelScope.launch {
+            postRefreshState(true)
+            displayApps.value = filterList(apps.value, query.value)
+            postRefreshState(false)
         }
     }
-
-
-    private val ApplicationInfo.isSystemApp: Boolean
-        get() = flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
-    private val ApplicationInfo.isAppFrozen get() = AppManager.isAppFrozen(packageName)
 
     private suspend fun filterList(
         appList: List<ApplicationInfo>,
         query: String?
     ): List<ApplicationInfo> {
-        val pm = getApplication<HailApp>().packageManager
         return withContext(Dispatchers.Default) {
-            return@withContext appList.filter {
-                ((HailData.filterUserApps && !it.isSystemApp)
-                        || (HailData.filterSystemApps && it.isSystemApp))
-
-                        && ((HailData.filterFrozenApps && it.isAppFrozen)
-                        || (HailData.filterUnfrozenApps && !it.isAppFrozen))
-                        // Search apps
+            return@withContext appList.filter { info ->
+                when (HailData.filterType) {
+                    HailData.FILTER_TYPE_SYSTEM -> HPackages.isSystemApp(info.packageName)
+                    HailData.FILTER_TYPE_USER -> HPackages.isSystemApp(info.packageName).not()
+                    else -> true
+                } && when (HailData.filterState) {
+                    HailData.FILTER_RUNNING -> HPackages.isAppStopped(info.packageName).not()
+                    HailData.FILTER_SUSPENDED -> HPackages.isAppSuspended(info.packageName)
+                    HailData.FILTER_DISABLED -> HPackages.isAppDisabled(info.packageName)
+                    HailData.FILTER_HIDDEN -> HPackages.isAppHidden(info.packageName)
+                    HailData.FILTER_UNINSTALLED -> HPackages.isAppUninstalled(info.packageName)
+                    else -> true
+                }
                         && ((HailData.nineKeySearch
-                        && (NineKeySearch.search(query, it.packageName, it.loadLabel(pm).toString())))
-                        || FuzzySearch.search(it.packageName, query)
-                        || FuzzySearch.search(it.loadLabel(pm).toString(), query)
-                        || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
+                        && (NineKeySearch.search(query, info.packageName, info.labelString)))
+                        || FuzzySearch.search(info.packageName, query)
+                        || FuzzySearch.search(info.labelString, query)
+                        || PinyinSearch.searchPinyinAll(info.labelString, query))
             }.run {
-                when (HailData.sortBy) {
+                when (HailData.sortOrder) {
                     HailData.SORT_INSTALL -> sortedBy {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
-                            ?.firstInstallTime ?: 0
+                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.firstInstallTime ?: 0
                     }
 
                     HailData.SORT_UPDATE -> sortedByDescending {

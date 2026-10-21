@@ -7,11 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.StringRes
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Launch
@@ -19,9 +15,7 @@ import androidx.compose.material.icons.rounded.AcUnit
 import androidx.compose.material.icons.rounded.BrightnessLow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.aistra.hail.HailApp.Companion.app
@@ -30,8 +24,10 @@ import com.aistra.hail.app.AppInfo
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailApi
 import com.aistra.hail.app.HailData
+import com.aistra.hail.ui.components.ClickableItem
 import com.aistra.hail.ui.theme.AppTheme
 import com.aistra.hail.utils.*
+import com.aistra.hail.utils.HPackages.labelString
 import com.aistra.hail.work.HWork.setAutoFreeze
 
 class ApiActivity : ComponentActivity() {
@@ -116,43 +112,33 @@ class ApiActivity : ComponentActivity() {
     ) {
         Column {
             Text(
-                text = HPackages.getApplicationInfoOrNull(pkg)?.loadLabel(packageManager)?.toString() ?: pkg,
+                text = HPackages.getApplicationInfoOrNull(pkg)?.labelString ?: pkg,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(R.dimen.padding_medium),
                     vertical = dimensionResource(R.dimen.padding_small)
                 ),
                 style = MaterialTheme.typography.headlineSmall
             )
-            ClickableItem(
-                icon = Icons.AutoMirrored.Outlined.Launch, title = R.string.action_launch
-            ) { launchApp(pkg) }
-            ClickableItem(
-                icon = Icons.Rounded.AcUnit, title = R.string.action_freeze
-            ) {
-                if (!HailData.isChecked(pkg)) HailData.addCheckedApp(pkg)
-                setAppFrozen(pkg, true)
+            ClickableItem(icon = Icons.AutoMirrored.Outlined.Launch, titleId = R.string.action_launch) {
+                runCatching {
+                    launchApp(pkg)
+                    finish()
+                }.onFailure(::setErrorDialog)
             }
-            ClickableItem(
-                icon = Icons.Rounded.BrightnessLow, title = R.string.action_unfreeze
-            ) { setAppFrozen(pkg, false) }
+            ClickableItem(icon = Icons.Rounded.AcUnit, titleId = R.string.action_freeze) {
+                runCatching {
+                    if (!HailData.isChecked(pkg)) HailData.addCheckedApp(pkg)
+                    setAppFrozen(pkg, true)
+                    finish()
+                }.onFailure(::setErrorDialog)
+            }
+            ClickableItem(icon = Icons.Rounded.BrightnessLow, titleId = R.string.action_unfreeze) {
+                runCatching {
+                    setAppFrozen(pkg, false)
+                    finish()
+                }.onFailure(::setErrorDialog)
+            }
         }
-    }
-
-    @Composable
-    private fun ClickableItem(icon: ImageVector, @StringRes title: Int, onClick: () -> Unit) = Row(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = {
-            runCatching {
-                onClick()
-                finish()
-            }.onFailure(::setErrorDialog)
-        }), verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
-        )
-        Text(text = stringResource(title), style = MaterialTheme.typography.bodyLarge)
     }
 
     @Composable
@@ -209,7 +195,7 @@ class ApiActivity : ComponentActivity() {
         else -> {
             HUI.showToast(
                 if (frozen) R.string.msg_freeze else R.string.msg_unfreeze,
-                HPackages.getApplicationInfoOrNull(pkg)?.loadLabel(packageManager) ?: pkg
+                HPackages.getApplicationInfoOrNull(pkg)?.labelString ?: pkg
             )
             app.setAutoFreezeService()
         }
