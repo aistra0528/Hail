@@ -148,4 +148,12 @@
     <string name="app_theme">Tema aplikasi</string>
     <string name="theme_dark">Gelap</string>
     <string name="xposed_description">Izinkan aplikasi terdaftar mengaktifkan aplikasi yang ditangguhkan</string>
+    <string name="working_mode_tag">Mode kerja aplikasi terkait</string>
+    <string name="donate_kofi">Ko-fi</string>
+    <string name="state_running">Berjalan</string>
+    <string name="state_disabled">Dinonaktifkan</string>
+    <string name="state_hidden">Tersembunyi</string>
+    <string name="state_suspended">Ditangguhkan</string>
+    <string name="state_uninstalled">Dihapus</string>
+    <string name="mode_jailbreak_disable">Jailbreak - Nonaktifkan</string>
 </resources>
