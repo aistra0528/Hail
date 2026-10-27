@@ -150,5 +150,10 @@
     <string name="follow_system">Seuraa järjestelmää</string>
     <string name="theme_light">Vaalea</string>
     <string name="theme_dark">Tumma</string>
-    <string name="xposed_description">Automaattisesti poista jäädytys keskeytetyistä- sekä rajatuista sovelluksista</string>
+    <string name="xposed_description">Salli rajattujen sovellusten käynnistää keskeytettyjä sovelluksia</string>
+    <string name="donate_kofi">Ko-fi</string>
+    <string name="state_running">Päällä</string>
+    <string name="state_hidden">Piilotettu</string>
+    <string name="state_suspended">Keskeytetty</string>
+    <string name="state_uninstalled">Poistettu</string>
 </resources>
