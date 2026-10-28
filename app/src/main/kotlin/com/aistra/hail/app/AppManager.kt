@@ -63,11 +63,15 @@ object AppManager {
             HailData.MODE_SU_STOP -> !frozen || HShell.forceStopApp(packageName)
             HailData.MODE_SU_DISABLE -> HShell.setAppDisabled(packageName, frozen)
             HailData.MODE_SU_HIDE -> HShell.setAppHidden(packageName, frozen)
-            HailData.MODE_SU_SUSPEND -> HShell.setAppSuspended(packageName, frozen)
+            HailData.MODE_SU_SUSPEND -> HShell.setAppSuspended(
+                packageName, frozen, HailData.forceStopBeforeSuspend
+            )
             HailData.MODE_SHIZUKU_STOP -> !frozen || HShizuku.forceStopApp(packageName)
             HailData.MODE_SHIZUKU_DISABLE -> HShizuku.setAppDisabled(packageName, frozen)
             HailData.MODE_SHIZUKU_HIDE -> HShizuku.setAppHidden(packageName, frozen)
-            HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.setAppSuspended(packageName, frozen)
+            HailData.MODE_SHIZUKU_SUSPEND -> HShizuku.setAppSuspended(
+                packageName, frozen, HailData.forceStopBeforeSuspend
+            )
             HailData.MODE_ISLAND_HIDE -> HIsland.setAppHidden(packageName, frozen)
             HailData.MODE_ISLAND_SUSPEND -> HIsland.setAppSuspended(packageName, frozen)
             HailData.MODE_PRIVAPP_STOP -> !frozen || HPackages.forceStopApp(packageName)

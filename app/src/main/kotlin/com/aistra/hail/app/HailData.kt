@@ -51,6 +51,7 @@ object HailData {
     const val HIDE = "hide"
     const val SUSPEND = "suspend"
     const val WORKING_MODE = "working_mode"
+    const val FORCE_STOP_BEFORE_SUSPEND = "force_stop_before_suspend"
     const val MODE_DEFAULT = "default"
     const val MODE_SHIZUKU_STOP = SHIZUKU + STOP
     const val MODE_SHIZUKU_DISABLE = SHIZUKU + DISABLE
@@ -140,6 +141,7 @@ object HailData {
     val filterFrozenApps get() = sp.getBoolean(FILTER_FROZEN_APPS, true)
     val filterUnfrozenApps get() = sp.getBoolean(FILTER_UNFROZEN_APPS, true)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)!!
+    val forceStopBeforeSuspend get() = sp.getBoolean(FORCE_STOP_BEFORE_SUSPEND, false)
     val biometricLogin get() = sp.getBoolean(BIOMETRIC_LOGIN, false)
     val appTheme get() = sp.getString(APP_THEME, FOLLOW_SYSTEM)!!
     val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE)!!
