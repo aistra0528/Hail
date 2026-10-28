@@ -103,51 +103,56 @@ object HShizuku {
         }
     }
 
-    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean {
+    fun setAppSuspended(
+        packageName: String, suspended: Boolean, forceStopBeforeSuspend: Boolean
+    ): Boolean {
         HPackages.getApplicationInfoOrNull(packageName) ?: return false
         if (HTarget.P) setAppRestricted(packageName, suspended)
-        if (suspended) forceStopApp(packageName)
-        return runCatching {
-            val pm = asInterface("android.content.pm.IPackageManager", "package")
-            (when {
-                HTarget.U -> runCatching {
-                    HiddenApiBypass.invoke(
-                        pm::class.java,
-                        pm,
-                        "setPackagesSuspendedAsUser",
-                        arrayOf(packageName),
-                        suspended,
-                        null,
-                        null,
-                        if (suspended) suspendDialogInfo else null,
-                        0,
-                        callerPackage,
-                        HPackages.myUserId /*suspendingUserId*/,
-                        HPackages.myUserId /*targetUserId*/
-                    )
-                }.getOrElse {
-                    if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
-                    else throw it
-                }
+        return suspendWithOptionalForceStop(
+            suspended, forceStopBeforeSuspend, { forceStopApp(packageName) }
+        ) {
+            runCatching {
+                val pm = asInterface("android.content.pm.IPackageManager", "package")
+                (when {
+                    HTarget.U -> runCatching {
+                        HiddenApiBypass.invoke(
+                            pm::class.java,
+                            pm,
+                            "setPackagesSuspendedAsUser",
+                            arrayOf(packageName),
+                            suspended,
+                            null,
+                            null,
+                            if (suspended) suspendDialogInfo else null,
+                            0,
+                            callerPackage,
+                            HPackages.myUserId /*suspendingUserId*/,
+                            HPackages.myUserId /*targetUserId*/
+                        )
+                    }.getOrElse {
+                        if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
+                        else throw it
+                    }
 
-                HTarget.Q -> runCatching {
-                    setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
-                }.getOrElse {
-                    if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceP(pm, packageName, suspended)
-                    else throw it
-                }
+                    HTarget.Q -> runCatching {
+                        setPackagesSuspendedAsUserSinceQ(pm, packageName, suspended)
+                    }.getOrElse {
+                        if (it is NoSuchMethodException) setPackagesSuspendedAsUserSinceP(pm, packageName, suspended)
+                        else throw it
+                    }
 
-                HTarget.P -> setPackagesSuspendedAsUserSinceP(pm, packageName, suspended)
+                    HTarget.P -> setPackagesSuspendedAsUserSinceP(pm, packageName, suspended)
 
-                HTarget.N -> pm::class.java.getMethod(
-                    "setPackagesSuspendedAsUser", Array<String>::class.java, Boolean::class.java, Int::class.java
-                ).invoke(pm, arrayOf(packageName), suspended, HPackages.myUserId)
+                    HTarget.N -> pm::class.java.getMethod(
+                        "setPackagesSuspendedAsUser", Array<String>::class.java, Boolean::class.java, Int::class.java
+                    ).invoke(pm, arrayOf(packageName), suspended, HPackages.myUserId)
 
-                else -> return false
-            } as Array<*>).isEmpty()
-        }.getOrElse {
-            HLog.e(it)
-            false
+                    else -> return@runCatching false
+                } as Array<*>).isEmpty()
+            }.getOrElse {
+                HLog.e(it)
+                false
+            }
         }
     }
 
