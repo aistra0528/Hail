@@ -6,3 +6,12 @@
 *.iml
 *.jks
 *.keystore
+
+# Local debug artifacts (not part of the project)
+/tmp_launcher/
+/gradle/gradle-daemon-jvm.properties
+/current-screen*.png
+/home-screen-settings*.png
+/hail-*.png
+/hail-*.xml
+/import-empty.png

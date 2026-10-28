@@ -70,4 +70,8 @@
             </group>
         </menu>
     </item>
+    <item
+            android:id="@+id/action_move_current_to_default"
+            android:title="@string/action_move_current_to_default"
+            app:showAsAction="never"/>
 </menu>

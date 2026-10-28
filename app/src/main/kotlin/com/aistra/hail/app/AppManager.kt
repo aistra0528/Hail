@@ -54,8 +54,13 @@ object AppManager {
         return if (denied && i == 0) null else if (i == 1) name else i.toString()
     }
 
-    fun setAppFrozen(packageName: String, frozen: Boolean): Boolean =
-        packageName != BuildConfig.APPLICATION_ID && when (HailData.workingMode) {
+    fun setAppFrozen(packageName: String, frozen: Boolean): Boolean = setAppFrozen(
+        packageName, frozen, mutableSetOf()
+    )
+
+    private fun setAppFrozen(packageName: String, frozen: Boolean, visited: MutableSet<String>): Boolean {
+        if (packageName == BuildConfig.APPLICATION_ID || !visited.add(packageName)) return false
+        val changed = when (HailData.workingMode) {
             HailData.MODE_OWNER_HIDE -> HPolicy.setAppHidden(packageName, frozen)
             HailData.MODE_OWNER_SUSPEND -> HPolicy.setAppSuspended(packageName, frozen)
             HailData.MODE_DHIZUKU_HIDE -> HDhizuku.setAppHidden(packageName, frozen)
@@ -76,6 +81,21 @@ object AppManager {
 
             else -> false
         }
+        if (changed && frozen) {
+            HailData.secondaryPackagesFor(packageName).forEach { secondaryPackageName ->
+                if (!isAppFrozen(secondaryPackageName)) {
+                    setAppFrozen(secondaryPackageName, true, visited)
+                }
+            }
+        }
+        return changed
+    }
+
+    /** Unfreezes a primary app and its linked secondary apps without launching the latter. */
+    fun unfreezeForLaunch(packageName: String): Boolean {
+        val targets = listOf(packageName) + HailData.secondaryPackagesFor(packageName)
+        return targets.all { target -> !isAppFrozen(target) || setAppFrozen(target, false) }
+    }
 
     fun uninstallApp(packageName: String): Boolean = with(HailData.workingMode) {
         if (
