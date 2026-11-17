@@ -148,5 +148,13 @@
     <string name="follow_system">அமைப்பைப் பின்தொடரவும்</string>
     <string name="theme_light">ஒளி</string>
     <string name="theme_dark">இருண்ட</string>
-    <string name="xposed_description">வரையறுக்கப்பட்ட செயலிகளுக்கான இடைநிறுத்தப்பட்ட செயலியைத் தானாகவே விடுவிக்கவும்</string>
+    <string name="xposed_description">வரையறுக்கப்பட்ட செயலிகளை இடைநிறுத்தப்பட்ட செயலியைத் தொடங்க அனுமதிக்கவும்</string>
+    <string name="working_mode_tag">தொடர்புடைய செயலிகளின் செயல்பாட்டு முறை</string>
+    <string name="donate_kofi">கோ-ஃபி</string>
+    <string name="state_running">இயங்குகிறது</string>
+    <string name="state_disabled">முடக்கப்பட்டுள்ளது</string>
+    <string name="state_hidden">மறைக்கப்பட்டுள்ளது</string>
+    <string name="state_suspended">இடைநிறுத்தப்பட்டுள்ளது</string>
+    <string name="state_uninstalled">நீக்கப்பட்டது</string>
+    <string name="mode_jailbreak_disable">ஜெயில்பிரேக் - முடக்கு</string>
 </resources>
