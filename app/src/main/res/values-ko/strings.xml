@@ -38,18 +38,18 @@
     <string name="msg_uninstall">이 앱을 제거하시겠습니까?</string>
     <string name="working_mode">동작 모드</string>
     <string name="mode_owner_hide">기기 관리자 - 숨김</string>
-    <string name="mode_owner_suspend">기기 관리자 - 중지</string>
+    <string name="mode_owner_suspend">기기 소유자 - 중지</string>
     <string name="mode_default">없음</string>
     <string name="mode_su_stop">루트 - 강제 종료</string>
-    <string name="mode_su_disable">루트 - 비활성화</string>
-    <string name="mode_su_suspend">루트 - 중지</string>
+    <string name="mode_su_disable">Root - 비활성화</string>
+    <string name="mode_su_suspend">Root - 중지</string>
     <string name="mode_shizuku_stop">Shizuku - 강제 종료</string>
     <string name="mode_shizuku_disable">Shizuku - 비활성화</string>
     <string name="mode_shizuku_hide">Shizuku - 숨김</string>
     <string name="mode_shizuku_suspend">Shizuku - 중지</string>
     <string name="mode_privapp_stop">시스템 앱 - 강제 종료</string>
     <string name="mode_privapp_disable">시스템 앱 - 비활성화</string>
-    <string name="title_set_owner">기기 관리자로 설정하기</string>
+    <string name="title_set_owner">기기 소유자로 설정하기</string>
     <string name="msg_set_owner">복사하여 adb에서 %s를 실행하세요</string>
     <string name="title_remove_owner">기기 관리자 권한 삭제하기</string>
     <string name="filter_by">필터</string>
@@ -60,7 +60,7 @@
     <string name="sort_update">최근에 업데이트한 앱 순</string>
     <string name="title_donate">감사합니다!</string>
     <string name="donate_alipay">Alipay</string>
-    <string name="donate_wechat_scan">Scan</string>
+    <string name="donate_wechat_scan">스캔</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">권한이 거부되었습니다</string>
     <string name="app_not_installed">앱이 설치되어있지 않습니다.</string>
@@ -115,7 +115,7 @@
     <string name="title_customize">사용자 지정</string>
     <string name="grayscale_icon">회색 아이콘</string>
     <string name="compact_icon">맞춤형 아이콘</string>
-    <string name="action_biometric">지문으로 로그인</string>
+    <string name="action_biometric">생체 인식 로그인</string>
     <string name="msg_biometric">지문으로 사용하여 ­로그인</string>
     <string name="action_pin">고정</string>
     <string name="action_unpin">고정해제</string>
@@ -132,7 +132,7 @@
         <item quantity="other">%d 분</item>
     </plurals>
     <plurals name="msg_deferred_task">
-        <item quantity="other">%2$s 후 %1$d 분: %3$s</item>
+        <item quantity="other">%1$d분 후 %2$s: %3$s</item>
     </plurals>
     <string name="auto_freeze_delay">동결 예약 (분)</string>
     <string name="title_shortcuts">위젯</string>
@@ -154,4 +154,5 @@
     <string name="state_suspended">중지됨</string>
     <string name="state_uninstalled">제거됨</string>
     <string name="donate_kofi">Ko-fi</string>
+    <string name="mode_jailbreak_disable">탈옥 - 비활성</string>
 </resources>
