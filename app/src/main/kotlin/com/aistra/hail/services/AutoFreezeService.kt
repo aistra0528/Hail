@@ -67,6 +67,11 @@ class AutoFreezeService : NotificationListenerService() {
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
     }
 
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        if (HailData.biometricLogin) HailData.needsVerify = true
+    }
+
     companion object {
         lateinit var instance: AutoFreezeService private set
     }

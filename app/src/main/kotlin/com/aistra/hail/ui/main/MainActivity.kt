@@ -30,14 +30,21 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
     lateinit var fab: ExtendedFloatingActionButton
     lateinit var appbar: AppBarLayout
+    private lateinit var binding: ActivityMainBinding
+    private var isPromptShowing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val binding = initView()
-        if (!HailData.biometricLogin || BiometricManager.from(this)
+        binding = initView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!HailData.biometricLogin || !HailData.needsVerify || isPromptShowing || BiometricManager.from(this)
                 .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) != BiometricManager.BIOMETRIC_SUCCESS
         ) return
+        isPromptShowing = true
         binding.root.isVisible = false
         val biometricPrompt = BiometricPrompt(
             this,
@@ -45,13 +52,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
+                    isPromptShowing = false
                     HUI.showToast(errString)
                     finishAndRemoveTask()
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
+                    isPromptShowing = false
                     binding.root.isVisible = true
+                    HailData.needsVerify = false
                 }
             })
         val promptInfo = BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.action_biometric))
