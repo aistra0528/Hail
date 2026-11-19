@@ -12,6 +12,7 @@ coreKtx = "1.17.0"
 dhizukuApi = "2.5.4"
 hiddenapibypass = "6.1"
 insetter = "0.6.1"
+junit4 = "4.13.2"
 kotlinxCoroutinesAndroid = "1.10.2"
 lifecycleLivedataKtx = "2.10.0"
 material = "1.13.0"
@@ -46,6 +47,7 @@ compose-preference = { module = "me.zhanghai.compose.preference:library", versio
 dhizuku-api = { module = "io.github.iamr0s:Dhizuku-API", version.ref = "dhizukuApi" }
 hiddenapibypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version.ref = "hiddenapibypass" }
 insetter = { module = "dev.chrisbanes.insetter:insetter", version.ref = "insetter" }
+junit = { module = "junit:junit", version.ref = "junit4" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 pinyin4j = { module = "com.belerweb:pinyin4j", version.ref = "pinyin4j" }

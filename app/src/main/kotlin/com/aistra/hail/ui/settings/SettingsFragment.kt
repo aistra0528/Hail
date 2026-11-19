@@ -79,10 +79,12 @@ class SettingsFragment : MainFragment(), MenuProvider {
     @Composable
     private fun SettingsScreen() {
         val autoFreezeAfterLock = rememberPreferenceState(HailData.AUTO_FREEZE_AFTER_LOCK, false)
+        val workingMode = rememberPreferenceState(HailData.WORKING_MODE, HailData.MODE_DEFAULT)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             listPreference(
                 key = HailData.WORKING_MODE,
                 defaultValue = HailData.MODE_DEFAULT,
+                rememberState = { workingMode },
                 onValueChange = ::onWorkingModeChange,
                 values = HailData.WORKING_MODE_VALUES,
                 entriesId = R.array.working_mode_entries,
@@ -90,6 +92,17 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 icon = Icons.Outlined.Adb,
                 type = ListPreferenceType.ALERT_DIALOG
             )
+            if (
+                workingMode.value == HailData.MODE_SHIZUKU_SUSPEND
+                || workingMode.value == HailData.MODE_SU_SUSPEND
+            ) {
+                switchPreference(
+                    key = HailData.FORCE_STOP_BEFORE_SUSPEND,
+                    defaultValue = false,
+                    titleId = R.string.force_stop_before_suspend,
+                    icon = Icons.Outlined.Stop
+                )
+            }
             switchPreference(
                 key = HailData.BIOMETRIC_LOGIN,
                 defaultValue = false,
@@ -303,6 +316,9 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.listPreference(
         key: String,
         defaultValue: String,
+        rememberState: @Composable () -> MutableState<String> = {
+            rememberPreferenceState(key, defaultValue)
+        },
         onValueChange: (MutableState<String>, String) -> Boolean = { _, _ -> true },
         values: List<String>,
         @StringRes titleId: Int,
@@ -311,7 +327,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
         type: ListPreferenceType = ListPreferenceType.DROPDOWN_MENU,
         valueToText: (String) -> String
     ) = item(key = key, contentType = "ListPreference") {
-        val state = rememberPreferenceState(key, defaultValue)
+        val state = rememberState()
         ListPreference(
             value = state.value,
             onValueChange = { if (onValueChange(state, it)) state.value = it },
@@ -326,6 +342,9 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.listPreference(
         key: String,
         defaultValue: String,
+        rememberState: @Composable () -> MutableState<String> = {
+            rememberPreferenceState(key, defaultValue)
+        },
         onValueChange: (MutableState<String>, String) -> Boolean = { _, _ -> true },
         values: List<String>,
         @ArrayRes entriesId: Int,
@@ -335,6 +354,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     ) = listPreference(
         key = key,
         defaultValue = defaultValue,
+        rememberState = rememberState,
         onValueChange = onValueChange,
         values = values,
         titleId = titleId,
