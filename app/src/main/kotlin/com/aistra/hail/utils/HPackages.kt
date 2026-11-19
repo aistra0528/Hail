@@ -20,11 +20,28 @@ object HPackages {
         packageName, PackageManager.PackageInfoFlags.of(PackageManager.MATCH_UNINSTALLED_PACKAGES.toLong())
     ) else app.packageManager.getPackageUid(packageName, PackageManager.MATCH_UNINSTALLED_PACKAGES)
 
-    fun getInstalledApplications(flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192): List<ApplicationInfo> =
-        if (HTarget.T) app.packageManager.getInstalledApplications(
-            PackageManager.ApplicationInfoFlags.of(flags.toLong())
-        )
-        else app.packageManager.getInstalledApplications(flags)
+    /**
+     * The query including uninstalled packages is needed to retain entries Hail hid or froze,
+     * but Android may return less information about installed apps with that flag. Merge it
+     * with a normal installed-app query so the Apps tab does not omit installed packages.
+     */
+    fun getInstalledApplications(
+        flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192
+    ): List<ApplicationInfo> {
+        fun query(queryFlags: Int): List<ApplicationInfo> = if (HTarget.T) {
+            app.packageManager.getInstalledApplications(
+                PackageManager.ApplicationInfoFlags.of(queryFlags.toLong())
+            )
+        } else {
+            app.packageManager.getInstalledApplications(queryFlags)
+        }
+
+        val installedApps = query(0)
+        if (flags == 0) return installedApps
+
+        // Prefer the complete info from the installed-app query, then append retained packages.
+        return (installedApps + query(flags)).distinctBy(ApplicationInfo::packageName)
+    }
 
     fun getUnhiddenPackageInfoOrNull(
         packageName: String, flags: Int = if (HTarget.N) PackageManager.MATCH_UNINSTALLED_PACKAGES else 8192
@@ -45,6 +62,20 @@ object HPackages {
     }.getOrNull()
 
     fun isAppDisabled(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.enabled?.not() ?: false
+
+    /**
+     * Returns whether PackageManager explicitly disabled the application. This differs from
+     * [ApplicationInfo.enabled], which can be false for manufacturer preinstalled packages
+     * whose launcher components are still available. DISABLED_UNTIL_USED is deliberately
+     * excluded because manufacturers use it for apps that are re-enabled automatically.
+     */
+    fun isAppExplicitlyDisabled(packageName: String): Boolean = runCatching {
+        when (app.packageManager.getApplicationEnabledSetting(packageName)) {
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER -> true
+            else -> false
+        }
+    }.getOrDefault(false)
 
     fun isAppHidden(packageName: String): Boolean = getApplicationInfoOrNull(packageName)?.let {
         (ApplicationInfo::class.java.getField("privateFlags").get(it) as Int) and 1 == 1

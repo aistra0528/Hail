@@ -11,6 +11,11 @@
         android:label="@string/app_name" />
 
     <fragment
+        android:id="@+id/nav_high_frequency"
+        android:name="com.aistra.hail.ui.records.HighFrequencyFragment"
+        android:label="@string/high_frequency" />
+
+    <fragment
         android:id="@+id/nav_apps"
         android:name="com.aistra.hail.ui.apps.AppsFragment"
         android:label="@string/title_apps" />
@@ -19,6 +24,21 @@
         android:id="@+id/nav_settings"
         android:name="com.aistra.hail.ui.settings.SettingsFragment"
         android:label="@string/title_settings" />
+
+    <fragment
+        android:id="@+id/nav_launch_records"
+        android:name="com.aistra.hail.ui.records.LaunchRecordsFragment"
+        android:label="@string/launch_records" />
+
+    <fragment
+        android:id="@+id/nav_disabled_apps"
+        android:name="com.aistra.hail.ui.apps.DisabledAppsFragment"
+        android:label="@string/title_unmanaged_disabled_apps" />
+
+    <fragment
+        android:id="@+id/nav_launch_associations"
+        android:name="com.aistra.hail.ui.apps.LaunchAssociationsFragment"
+        android:label="@string/title_launch_associations" />
 
     <fragment
         android:id="@+id/nav_about"

@@ -29,6 +29,14 @@ object HailData {
     private const val KEY_TAGS = "tags"
     private const val KEY_PINNED = "pinned"
     private const val KEY_WHITELISTED = "whitelisted"
+    private const val KEY_FORMAT = "format"
+    private const val KEY_VERSION = "version"
+    private const val KEY_APPS = "apps"
+    private const val KEY_LAUNCH_ASSOCIATIONS = "launch_associations"
+    private const val KEY_PRIMARY = "primary"
+    private const val KEY_SECONDARIES = "secondaries"
+    private const val BACKUP_FORMAT = "hail-management-backup"
+    private const val BACKUP_VERSION = 2
     const val KEY_PACKAGE = "package"
     const val KEY_FROZEN = "frozen"
     private const val SORT_BY = "sort_by"
@@ -124,6 +132,7 @@ object HailData {
     const val SKIP_FOREGROUND_APP = "skip_foreground_app"
     const val SKIP_NOTIFYING_APP = "skip_notifying_app"
     const val DYNAMIC_SHORTCUT_ACTION = "dynamic_shortcut_action"
+    const val HIGH_FREQUENCY_PAGE = "high_frequency_page"
     val DYNAMIC_SHORTCUT_ACTIONS = listOf(
         ACTION_NONE,
         ACTION_FREEZE_ALL,
@@ -158,10 +167,26 @@ object HailData {
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
     val skipNotifyingApp get() = sp.getBoolean(SKIP_NOTIFYING_APP, false)
     val dynamicShortcutAction get() = sp.getString(DYNAMIC_SHORTCUT_ACTION, ACTION_NONE)!!
+    val highFrequencyPage get() = sp.getBoolean(HIGH_FREQUENCY_PAGE, false)
 
     private val dir = "${app.filesDir.path}/v1"
     private val appsPath = "$dir/apps.json"
     private val tagsPath = "$dir/tags.json"
+    private val launchRecordsPath = "$dir/launch_records.json"
+    private val launchAssociationsPath = "$dir/launch_associations.json"
+
+    data class AppLaunchRecord(val packageName: String, val timestamp: Long)
+
+    data class LaunchAssociation(
+        val primaryPackageName: String,
+        val secondaryPackageNames: List<String>,
+    )
+
+    data class ManagementBackup(
+        val apps: List<AppInfo>,
+        val tags: List<Pair<String, Int>>,
+        val launchAssociations: List<LaunchAssociation>,
+    )
 
     val checkedList: MutableList<AppInfo> by lazy {
         mutableListOf<AppInfo>().apply {
@@ -192,7 +217,11 @@ object HailData {
 
     fun removeCheckedApp(packageName: String, saveApps: Boolean = true) {
         checkedList.removeAll { it.packageName == packageName }
+        val associationsChanged = launchAssociations.removeAll {
+            it.primaryPackageName == packageName || packageName in it.secondaryPackageNames
+        }
         if (saveApps) saveApps()
+        if (associationsChanged) saveLaunchAssociations()
     }
 
     fun saveApps() {
@@ -232,6 +261,199 @@ object HailData {
             }
             toString()
         })
+    }
+
+    val launchAssociations: MutableList<LaunchAssociation> by lazy {
+        mutableListOf<LaunchAssociation>().apply {
+            runCatching {
+                val managedPackages = checkedList.mapTo(mutableSetOf()) { it.packageName }
+                val json = JSONArray(HFiles.read(launchAssociationsPath))
+                for (i in 0 until json.length()) {
+                    json.getJSONObject(i).run {
+                        val primary = getString(KEY_PRIMARY)
+                        val secondaries = getJSONArray(KEY_SECONDARIES).let { array ->
+                            MutableList(array.length()) { index -> array.getString(index) }
+                        }
+                        if (primary in managedPackages && secondaries.isNotEmpty() &&
+                            primary !in secondaries && secondaries.distinct().size == secondaries.size &&
+                            secondaries.all { it in managedPackages }
+                        ) add(LaunchAssociation(primary, secondaries))
+                    }
+                }
+            }
+        }
+    }
+
+    fun saveLaunchAssociations() {
+        if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
+        HFiles.write(launchAssociationsPath, JSONArray().apply {
+            launchAssociations.forEach { association ->
+                put(JSONObject()
+                    .put(KEY_PRIMARY, association.primaryPackageName)
+                    .put(KEY_SECONDARIES, JSONArray(association.secondaryPackageNames)))
+            }
+        }.toString())
+    }
+
+    fun setLaunchAssociation(primaryPackageName: String, secondaryPackageNames: List<String>) {
+        val managedPackages = checkedList.mapTo(mutableSetOf()) { it.packageName }
+        require(primaryPackageName in managedPackages)
+        require(secondaryPackageNames.isNotEmpty() && primaryPackageName !in secondaryPackageNames)
+        require(secondaryPackageNames.distinct().size == secondaryPackageNames.size)
+        require(secondaryPackageNames.all { it in managedPackages })
+        launchAssociations.removeAll { it.primaryPackageName == primaryPackageName }
+        launchAssociations.add(LaunchAssociation(primaryPackageName, secondaryPackageNames))
+        saveLaunchAssociations()
+    }
+
+    fun removeLaunchAssociation(primaryPackageName: String) {
+        if (launchAssociations.removeAll { it.primaryPackageName == primaryPackageName }) {
+            saveLaunchAssociations()
+        }
+    }
+
+    fun secondaryPackagesFor(primaryPackageName: String): List<String> =
+        launchAssociations.firstOrNull { it.primaryPackageName == primaryPackageName }
+            ?.secondaryPackageNames.orEmpty()
+
+    /** Serializes all managed apps, categories, and their current ordering into a portable JSON backup. */
+    fun exportManagementBackup(): String = JSONObject().apply {
+        put(KEY_FORMAT, BACKUP_FORMAT)
+        put(KEY_VERSION, BACKUP_VERSION)
+        put(KEY_TAGS, JSONArray().apply {
+            tags.forEach { (name, id) -> put(JSONObject().put(KEY_TAG, name).put(KEY_ID, id)) }
+        })
+        put(KEY_APPS, JSONArray().apply {
+            checkedList.forEach { info ->
+                put(
+                    JSONObject()
+                        .put(KEY_PACKAGE, info.packageName)
+                        .put(KEY_PINNED, info.pinned)
+                        .put(KEY_WHITELISTED, info.whitelisted)
+                        .put(KEY_TAGS, JSONArray(info.tagIdList))
+                )
+            }
+        })
+        put(KEY_LAUNCH_ASSOCIATIONS, JSONArray().apply {
+            launchAssociations.forEach { association ->
+                put(JSONObject()
+                    .put(KEY_PRIMARY, association.primaryPackageName)
+                    .put(KEY_SECONDARIES, JSONArray(association.secondaryPackageNames)))
+            }
+        })
+    }.toString(2)
+
+    /** Parses and validates a backup before any in-memory or on-disk management data is changed. */
+    fun parseManagementBackup(json: String): ManagementBackup {
+        val root = JSONObject(json)
+        require(root.getString(KEY_FORMAT) == BACKUP_FORMAT)
+        val version = root.getInt(KEY_VERSION)
+        require(version in 1..BACKUP_VERSION)
+
+        val importedTags = root.getJSONArray(KEY_TAGS).let { array ->
+            MutableList(array.length()) { index ->
+                array.getJSONObject(index).run { getString(KEY_TAG).trim() to getInt(KEY_ID) }
+            }
+        }
+        require(importedTags.isNotEmpty() && importedTags.count { it.second == 0 } == 1)
+        require(importedTags.none { it.first.isEmpty() })
+        require(importedTags.map { it.first }.distinct().size == importedTags.size)
+        require(importedTags.map { it.second }.distinct().size == importedTags.size)
+        val knownTagIds = importedTags.mapTo(mutableSetOf()) { it.second }
+
+        val importedApps = root.getJSONArray(KEY_APPS).let { array ->
+            MutableList(array.length()) { index ->
+                array.getJSONObject(index).run {
+                    val tagIds = getJSONArray(KEY_TAGS).let { tags ->
+                        MutableList(tags.length()) { tagIndex -> tags.getInt(tagIndex) }
+                    }
+                    require(
+                        tagIds.isNotEmpty() &&
+                            tagIds.distinct().size == tagIds.size &&
+                            tagIds.all { it in knownTagIds },
+                    )
+                    AppInfo(
+                        packageName = getString(KEY_PACKAGE).trim().also { require(it.isNotEmpty()) },
+                        pinned = optBoolean(KEY_PINNED),
+                        whitelisted = optBoolean(KEY_WHITELISTED),
+                        tagIdList = tagIds,
+                    )
+                }
+            }
+        }
+        require(importedApps.map { it.packageName }.distinct().size == importedApps.size)
+        val importedPackages = importedApps.mapTo(mutableSetOf()) { it.packageName }
+        val importedAssociations = if (version == 1) emptyList() else root.getJSONArray(KEY_LAUNCH_ASSOCIATIONS).let { array ->
+            MutableList(array.length()) { index ->
+                array.getJSONObject(index).run {
+                    val primary = getString(KEY_PRIMARY)
+                    val secondaries = getJSONArray(KEY_SECONDARIES).let { secondaryArray ->
+                        MutableList(secondaryArray.length()) { secondaryIndex -> secondaryArray.getString(secondaryIndex) }
+                    }
+                    require(primary in importedPackages && secondaries.isNotEmpty())
+                    require(primary !in secondaries && secondaries.distinct().size == secondaries.size)
+                    require(secondaries.all { it in importedPackages })
+                    LaunchAssociation(primary, secondaries)
+                }
+            }
+        }
+        require(importedAssociations.map { it.primaryPackageName }.distinct().size == importedAssociations.size)
+        return ManagementBackup(importedApps, importedTags, importedAssociations)
+    }
+
+    /** Replaces the managed app list and category list with a backup that was already validated. */
+    @Synchronized
+    fun restoreManagementBackup(backup: ManagementBackup) {
+        checkedList.clear()
+        checkedList.addAll(backup.apps)
+        tags.clear()
+        tags.addAll(backup.tags)
+        launchAssociations.clear()
+        launchAssociations.addAll(backup.launchAssociations)
+        saveApps()
+        saveTags()
+        saveLaunchAssociations()
+    }
+
+    val launchRecords: MutableList<AppLaunchRecord> by lazy {
+        mutableListOf<AppLaunchRecord>().apply {
+            runCatching {
+                val json = JSONArray(HFiles.read(launchRecordsPath))
+                for (i in 0 until json.length()) {
+                    json.getJSONObject(i).run {
+                        val packageName = getString(KEY_PACKAGE)
+                        // Only retain apps that are currently managed by Hail.
+                        if (isChecked(packageName)) add(AppLaunchRecord(packageName, getLong("time")))
+                    }
+                }
+            }
+        }
+    }
+
+    @Synchronized
+    fun recordAppLaunch(packageName: String, timestamp: Long = System.currentTimeMillis()) {
+        if (!isChecked(packageName)) return
+        launchRecords.add(AppLaunchRecord(packageName, timestamp))
+        // Keep a bounded history so recording remains lightweight on long-lived installs.
+        if (launchRecords.size > 10000) launchRecords.subList(0, launchRecords.size - 10000).clear()
+        saveLaunchRecords()
+    }
+
+    @Synchronized
+    fun saveLaunchRecords() {
+        if (!HFiles.exists(dir)) HFiles.createDirectories(dir)
+        HFiles.write(launchRecordsPath, JSONArray().run {
+            launchRecords.forEach {
+                put(JSONObject().put(KEY_PACKAGE, it.packageName).put("time", it.timestamp))
+            }
+            toString()
+        })
+    }
+
+    @Synchronized
+    fun clearLaunchRecords() {
+        launchRecords.clear()
+        saveLaunchRecords()
     }
 
     fun changeAppsSort(sort: String) = sp.edit { putString(SORT_BY, sort) }
