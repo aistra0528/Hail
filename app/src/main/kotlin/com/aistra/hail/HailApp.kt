@@ -25,8 +25,13 @@ class HailApp : Application() {
     }
 
     fun setAutoFreezeService(autoFreezeAfterLock: Boolean = HailData.autoFreezeAfterLock, context: Context = app) {
+        // Launching an app clears FLAG_STOPPED outside Hail, so STOP modes need a persistent service.
+        val stopMode = HailData.workingMode.endsWith(HailData.STOP)
         val start = autoFreezeAfterLock && HailData.checkedList.any {
-            it.packageName != packageName && it.applicationInfo != null && !AppManager.isAppFrozen(it.packageName) && !it.whitelisted
+            it.packageName != packageName &&
+                it.applicationInfo != null &&
+                !it.whitelisted &&
+                (stopMode || !AppManager.isAppFrozen(it.packageName))
         }
         val intent = Intent(app, AutoFreezeService::class.java)
         if (start) {
