@@ -2,6 +2,7 @@ package com.aistra.hail.ui.main
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
@@ -30,6 +31,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
     lateinit var fab: ExtendedFloatingActionButton
     lateinit var appbar: AppBarLayout
+    private val highFrequencyMenuItems = mutableListOf<MenuItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,11 +72,16 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         val navController = navHostFragment.navController
         navController.addOnDestinationChangedListener(this@MainActivity)
         val appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.nav_home, R.id.nav_apps, R.id.nav_settings, R.id.nav_about
+            R.id.nav_home, R.id.nav_high_frequency, R.id.nav_apps, R.id.nav_settings, R.id.nav_about
         ).build()
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav?.setupWithNavController(navController)
         navRail?.setupWithNavController(navController)
+        highFrequencyMenuItems += listOfNotNull(
+            bottomNav?.menu?.findItem(R.id.nav_high_frequency),
+            navRail?.menu?.findItem(R.id.nav_high_frequency)
+        )
+        updateHighFrequencyNavigation()
 
         val isRtl = isRtl
         val isLandscape = isLandscape
@@ -89,6 +96,15 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menu?.let { MenuCompat.setGroupDividerEnabled(it, true) }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+        return navHostFragment?.navController?.navigateUp() ?: super.onSupportNavigateUp()
+    }
+
+    fun updateHighFrequencyNavigation(enabled: Boolean = HailData.highFrequencyPage) {
+        highFrequencyMenuItems.forEach { it.isVisible = enabled }
     }
 
     fun ownerRemoveDialog() {
@@ -107,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     override fun onDestinationChanged(
         controller: NavController, destination: NavDestination, arguments: Bundle?
     ) {
-        fab.tag = destination.id == R.id.nav_home
+        fab.tag = destination.id == R.id.nav_home || destination.id == R.id.nav_high_frequency
         if (fab.tag == true) fab.show() else fab.hide()
     }
 }
