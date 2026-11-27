@@ -43,6 +43,7 @@
     <string name="action_uninstall">Uninstall</string>
     <string name="msg_uninstall">Do you want to uninstall this app?</string>
     <string name="working_mode">Working mode</string>
+    <string name="force_stop_before_suspend">Force stop before suspend</string>
     <string name="working_mode_tag">Working mode of related apps</string>
     <string name="mode_default">Idle</string>
     <string name="mode_owner_hide">Device Owner - Hide</string>

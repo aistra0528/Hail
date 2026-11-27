@@ -30,8 +30,13 @@ object HShell {
     fun setAppHidden(packageName: String, hidden: Boolean): Boolean =
         execSU("pm ${if (hidden) "hide" else "unhide"} $userArg $packageName").first == 0
 
-    fun setAppSuspended(packageName: String, suspended: Boolean): Boolean =
+    fun setAppSuspended(
+        packageName: String, suspended: Boolean, forceStopBeforeSuspend: Boolean
+    ): Boolean = suspendWithOptionalForceStop(
+        suspended, forceStopBeforeSuspend, { forceStopApp(packageName) }
+    ) {
         execSU("pm ${if (suspended) "suspend" else "unsuspend"} $userArg $packageName").first == 0
+    }
 
     fun uninstallApp(packageName: String) = execSU(
         "pm ${if (HPackages.canUninstallNormally(packageName)) "uninstall" else "uninstall $userArg"} $packageName"
